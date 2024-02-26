@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>가입</title>
+    <link rel="stylesheet" href="register.css">
+</head>
+<body>
+<main>
+    <div class="form-container">
+        <h2>식후땡</h2>
+        <form id="registrationForm">
+            <label for="memberType">
+                <select id="memberType" name="memberType" class="form-input" required onchange="toggleMembershipFields()">
+                    <option value="student">학생</option>
+                    <option value="teacher">선생님</option>
+                </select>
+            </label>
+            <label>
+                <input id="name" name="name" type="text" placeholder="이름" required>
+            </label>
+            <label>
+                <input id="email" name="email" type="email" placeholder="이메일" required>
+            </label>
+            <label>
+                <input id="generation" name="generation" type="number" min="0" placeholder="기수" required>
+            </label>
+            <label>
+                <input id="password" name="password" type="password" placeholder="비밀번호" required>
+            </label>
+            <!-- Additional fields based on the user type selection -->
+            <button type="submit">가입하기</button>
+        </form>
+    </div>
+</main>
+<script src="register.js"></script>
+</body>
+</html>
