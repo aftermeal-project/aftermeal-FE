@@ -9,7 +9,7 @@ function toggleMembershipFields() {
 
 document.getElementById('registrationForm')?.addEventListener('submit', async (event) => {
     event.preventDefault(); // Prevent the form from submitting the traditional way
-Z
+
     // Collect form data based on membership type
     const memberType = document.getElementById('memberType').value;
     const name = document.getElementById('name').value;
