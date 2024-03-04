@@ -1,10 +1,5 @@
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-const url = process.env.BASE_URL;
-
 document.addEventListener('DOMContentLoaded', () => {
-    fetch(`${url}/api/v1/activities`)
+    fetch(`${process.env.BASE_URL}/v1/activities`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch activities');
@@ -34,11 +29,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // Simulating applying for an activity
 function applyForActivity(activityId) {
     // TODO(로그인되어 있지 않다면 로그인 페이지로 리다이렉션)
-    fetch(`${url}api/v1/participation`, {
+    fetch(`${process.env.BASE_URL}/v1/participation`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + 'hi', // TODO(Bring Auth Token)
+            'Authorization': 'Bearer ' + '', // TODO(Bring Auth Token)
         },
         body: JSON.stringify({ activityId }),
     })

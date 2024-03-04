@@ -1,5 +1,3 @@
-const url = process.env.BASE_URL;
-
 function toggleMembershipFields() {
     const memberType = document.getElementById('memberType').value;
     const generationFields = document.getElementById('generation');
@@ -21,7 +19,7 @@ Z
 
     // Simulate an API call for registration
     try {
-        const response = await fetch(`${url}/api/v1/users/register`, {
+        const response = await fetch(`${process.env.BASE_URL}/v1/users/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
