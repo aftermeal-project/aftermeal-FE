@@ -11,7 +11,7 @@ async function login(event) {
 
     // Simulate an API call for login
     try {
-        const response = await fetch(`${process.env.BASE_URL}/v1/auth/login`, {
+        const response = await fetch(`${process.env.API_BASE_URL}/v1/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
