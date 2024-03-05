@@ -1,5 +1,5 @@
-document.addEventListener('DOMContentLoaded', () => {
-    fetch(`${process.env.BASE_URL}/v1/activities`)
+async function loadActivities() {
+    return await fetch(`${process.env.BASE_URL}/v1/activities`)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch activities');
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             console.error('Error loading activities:', error);
         });
-});
+}
 
 // Simulating applying for an activity
 function applyForActivity(activityId) {
@@ -49,3 +49,5 @@ function applyForActivity(activityId) {
             // Update the UI accordingly
         })
 }
+
+document.addEventListener('DOMContentLoaded', () => loadActivities());

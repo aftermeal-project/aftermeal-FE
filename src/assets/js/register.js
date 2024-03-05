@@ -7,7 +7,7 @@ function toggleMembershipFields() {
     }
 }
 
-document.getElementById('registrationForm')?.addEventListener('submit', async (event) => {
+async function register(event) {
     event.preventDefault(); // Prevent the form from submitting the traditional way
 
     // Collect form data based on membership type
@@ -36,4 +36,6 @@ document.getElementById('registrationForm')?.addEventListener('submit', async (e
         console.error('Error:', error);
         alert('An error occurred during registration. Please try again.');
     }
-});
+}
+
+document.getElementById('registrationForm')?.addEventListener('submit', (event) => register(event));

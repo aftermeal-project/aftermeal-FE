@@ -1,4 +1,4 @@
-document.getElementById('loginForm')?.addEventListener('submit', async (event)=> {
+async function login(event) {
     event.preventDefault(); // Prevent the form from submitting the traditional way
 
     const email = document.getElementById('email');
@@ -26,4 +26,6 @@ document.getElementById('loginForm')?.addEventListener('submit', async (event)=>
         console.error('Error:', error.response);
         alert('An error occurred during login. Please try again.');
     }
-});
+}
+
+document.getElementById('loginForm')?.addEventListener('submit',  (event)=> login(event));
