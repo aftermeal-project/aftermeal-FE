@@ -28,8 +28,8 @@ module.exports = {
             template: './src/register.html',
             chunks: ['register'],
             minify: {
-                removeRedundantAttributes: false, // Prevention remove type="text"
-            }
+                removeRedundantAttributes: false,
+            },
         }),
     ],
     optimization: {
@@ -46,7 +46,6 @@ module.exports = {
             {
                 test: /\.html$/i,
                 loader: "html-loader",
-                removeRedundantAttributes: false
             },
         ],
     },
