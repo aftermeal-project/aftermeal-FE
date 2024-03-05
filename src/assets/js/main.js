@@ -1,3 +1,8 @@
+require('../styles/main.css');
+require ('../../index.html');
+
+document.addEventListener('DOMContentLoaded', () => loadActivities());
+
 async function loadActivities() {
     return await fetch(`${process.env.BASE_URL}/v1/activities`)
         .then(response => {
@@ -49,5 +54,3 @@ function applyForActivity(activityId) {
             // Update the UI accordingly
         })
 }
-
-document.addEventListener('DOMContentLoaded', () => loadActivities());

@@ -1,3 +1,8 @@
+require('../styles/register.css');
+require('../../register.html');
+
+document.getElementById('registrationForm')?.addEventListener('submit', (event) => register(event));
+
 function toggleMembershipFields() {
     const memberType = document.getElementById('memberType').value;
     const generationFields = document.getElementById('generation');
@@ -38,4 +43,3 @@ async function register(event) {
     }
 }
 
-document.getElementById('registrationForm')?.addEventListener('submit', (event) => register(event));

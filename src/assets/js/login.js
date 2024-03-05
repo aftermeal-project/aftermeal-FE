@@ -1,3 +1,8 @@
+require('../styles/login.css');
+require('../../login.html');
+
+document.getElementById('loginForm')?.addEventListener('submit',  (event)=> login(event));
+
 async function login(event) {
     event.preventDefault(); // Prevent the form from submitting the traditional way
 
@@ -27,5 +32,3 @@ async function login(event) {
         alert('An error occurred during login. Please try again.');
     }
 }
-
-document.getElementById('loginForm')?.addEventListener('submit',  (event)=> login(event));
