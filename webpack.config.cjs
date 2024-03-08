@@ -1,7 +1,9 @@
 const { resolve } = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const Dotenv = require("dotenv-webpack");
 
 module.exports = {
+    mode: 'production',
     entry: {
         index: './src/assets/js/main.js',
         login: './src/assets/js/login.js',
@@ -31,6 +33,7 @@ module.exports = {
                 removeRedundantAttributes: false,
             },
         }),
+        new Dotenv(),
     ],
     optimization: {
         splitChunks: {
@@ -49,4 +52,4 @@ module.exports = {
             },
         ],
     },
-}
+};
