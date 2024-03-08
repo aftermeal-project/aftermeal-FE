@@ -33,7 +33,9 @@ module.exports = {
                 removeRedundantAttributes: false,
             },
         }),
-        new Dotenv(),
+        new Dotenv({
+            systemvars: true,
+        }),
     ],
     optimization: {
         splitChunks: {
