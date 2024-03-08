@@ -1,6 +1,8 @@
 require('../styles/register.css');
 require('../../register.html');
 
+const BASE_URL = process.env.API_BASE_URL;
+
 document.getElementById('registrationForm')?.addEventListener('submit', (event) => register(event));
 
 function toggleMembershipFields() {
@@ -24,7 +26,7 @@ async function register(event) {
 
     // Simulate an API call for registration
     try {
-        const response = await fetch(`${process.env.API_BASE_URL}/v1/users/register`, {
+        const response = await fetch(`${BASE_URL}/v1/users/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

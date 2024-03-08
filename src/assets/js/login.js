@@ -1,6 +1,8 @@
 require('../styles/login.css');
 require('../../login.html');
 
+const BASE_URL = process.env.API_BASE_URL;
+
 document.getElementById('loginForm')?.addEventListener('submit',  (event)=> login(event));
 
 async function login(event) {
@@ -11,7 +13,7 @@ async function login(event) {
 
     // Simulate an API call for login
     try {
-        const response = await fetch(`${process.env.API_BASE_URL}/v1/auth/login`, {
+        const response = await fetch(`${BASE_URL}/v1/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
