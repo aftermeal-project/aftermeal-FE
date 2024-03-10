@@ -26,7 +26,7 @@ async function register(event) {
 
     // Simulate an API call for registration
     try {
-        const response = await fetch(`${BASE_URL}/v1/users/register`, {
+        const response = await fetch(`${BASE_URL}/v1/users`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
