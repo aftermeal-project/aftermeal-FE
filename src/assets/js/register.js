@@ -21,7 +21,7 @@ async function register(event) {
     const memberType = document.getElementById('memberType').value;
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
-    const generation = memberType === 'student' ? document.getElementById('generation').value : undefined;
+    const generationNumber = memberType === 'student' ? document.getElementById('generationNumber').value : undefined;
     const password = document.getElementById('password').value;
 
     // Simulate an API call for registration
@@ -31,7 +31,7 @@ async function register(event) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ membershipType: memberType, name, email, number: generation, password })
+            body: JSON.stringify({ name, email, memberType, generationNumber, password })
         });
         if (response.ok) {
             alert('Registration successful.');
