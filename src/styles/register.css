@@ -88,6 +88,15 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus,
     overflow: hidden;
 }
 
+.toggle-container span:hover {
+    background-color: #f0f0f0;
+}
+
+input[type="radio"]:checked + span {
+    background-color: #5563DE;
+    color: white;
+}
+
 /* 버튼 스타일 */
 button {
     width: 100%;

@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("registrationForm");
     const studentRadio = document.getElementById("studentRadio");
     const teacherRadio = document.getElementById("teacherRadio");
-    // const emailInput = document.getElementById("email");
     const emailLabel = document.querySelector('label[for="email"]');
     const generationGroup = document.getElementById("generationGroup");
 
