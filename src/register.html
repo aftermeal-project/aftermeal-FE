@@ -1,37 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>가입</title>
+    <title>회원가입</title>
+    <link rel="stylesheet" href="styles/register.css">
 </head>
 <body>
-<main>
-    <div class="form-container">
-        <h2>식후땡</h2>
+    <div class="container">
+        <h1>에프터밀</h1>
         <form id="registrationForm">
-            <label for="memberType">
-                <select id="memberType" name="memberType" class="form-input" required>
-                    <option value="student">학생</option>
-                    <option value="teacher">선생님</option>
-                </select>
-            </label>
-            <label>
-                <input id="name" name="name" type="text" placeholder="이름" required>
-            </label>
-            <label>
-                <input id="email" name="email" type="email" placeholder="이메일" required>
-            </label>
-            <label>
-                <input id="generation" name="generation" type="number" min="0" placeholder="기수" required>
-            </label>
-            <label>
-                <input id="password" name="password" type="password" placeholder="비밀번호" required>
-            </label>
-            <!-- Additional fields based on the user type selection -->
-            <button type="submit">가입하기</button>
+            <div class="toggle-container">
+                <label>
+                    <input type="radio" name="memberType" value="STUDENT" id="studentRadio" required>
+                    <span>학생</span>
+                </label>
+                <label>
+                    <input type="radio" name="memberType" value="TEACHER" id="teacherRadio" required>
+                    <span>선생님</span>
+                </label>
+            </div>
+            <div class="form-group">
+                <label for="name">이름</label>
+                <input type="text" id="name" name="name" maxlength="40" required>
+            </div>
+            <div class="form-group">
+                <label for="email">이메일</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group" id="generationGroup" style="display: none;">
+                <label for="generationNumber">기수</label>
+                <input type="number" id="generationNumber" name="generationNumber">
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">등록</button>
         </form>
     </div>
-</main>
+    <script src="../dist/js/main.bundle.js"></script>
 </body>
 </html>

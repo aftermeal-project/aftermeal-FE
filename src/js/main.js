@@ -1,12 +1,7 @@
-require('../styles/main.css');
-require ('../../index.html');
-
-const BASE_URL = process.env.API_BASE_URL;
-
 document.addEventListener('DOMContentLoaded', () => loadActivities());
 
 async function loadActivities() {
-    return await fetch(`${BASE_URL}/v1/activities`)
+    return await fetch('https://api.aftermeal.online/v1/activities')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Failed to fetch activities');
@@ -36,7 +31,7 @@ async function loadActivities() {
 // Simulating applying for an activity
 function applyForActivity(activityId) {
     // TODO(로그인되어 있지 않다면 로그인 페이지로 리다이렉션)
-    fetch(`${BASE_URL}/v1/participation`, {
+    fetch(`https://api.aftermeal.online/v1/participation`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
