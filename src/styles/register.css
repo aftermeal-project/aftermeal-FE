@@ -60,12 +60,12 @@ input[type="text"]:focus, input[type="email"]:focus, input[type="number"]:focus,
     align-items: center;
     margin-bottom: 20px;
     gap: 20px; /* 토글 사이의 간격 */
-    width: 100%
+    width: 100%;
 }
 
 .toggle-container label {
-    flex: 0 0 120px; /* 고정 너비 설정 */
-    min-width: 120px;
+    flex: 0 0 100px; /* 고정 너비 설정 */
+    min-width: 100px;
     text-align: center;
     position: relative;
     margin: 0;

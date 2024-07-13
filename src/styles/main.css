@@ -1,8 +1,7 @@
-/* styles.css */
 body, html {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Updated font-family */
     background-color: #f4f4f4;
 }
 
@@ -11,7 +10,7 @@ nav {
     justify-content: space-between;
     align-items: center;
     padding: 20px 20px;
-    background: linear-gradient(45deg, #007bff, #6610f2);
+    background: linear-gradient(45deg, #007bff, #5563DE); /* Updated gradient */
     color: white;
 }
 
@@ -19,6 +18,11 @@ nav {
     font-size: 24px;
     font-weight: bold;
     padding-left: 100px;
+}
+
+.nav-brand a {
+    color: white;
+    text-decoration: none;
 }
 
 .nav-links {
@@ -68,7 +72,7 @@ main {
 }
 
 .button {
-    background-color: #007bff;
+    background-color: #5563DE; /* Updated color */
     border: none;
     color: white;
     padding: 10px 20px;
@@ -82,7 +86,7 @@ main {
 }
 
 .button:hover {
-    background-color: #0056b3;
+    background-color: #4051b5; /* Updated color */
 }
 
 .form-input {
@@ -144,7 +148,7 @@ select.form-input {
 
 .activity-card h3 {
     margin-top: 0;
-    color: #007bff;
+    color: #5563DE; /* Updated color */
 }
 
 .activity-card p {
@@ -160,7 +164,7 @@ select.form-input {
 }
 
 .activity-meta button {
-    background-color: #007bff;
+    background-color: #5563DE; /* Updated color */
     color: white;
     border: none;
     border-radius: 5px;
@@ -169,5 +173,5 @@ select.form-input {
 }
 
 .activity-meta button:hover {
-    background-color: #0056b3;
+    background-color: #4051b5; /* Updated color */
 }
