@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // 학교 이메일 검증
-        if (data.memberType === "STUDENT" && !data.email.endsWith(".gsm.hs.kr")) {
+        if (data.memberType === "STUDENT" && !data.email.endsWith("@gsm.hs.kr")) {
             alert("학생은 학교 이메일을 입력해야 합니다.");
             return;
         }
@@ -54,8 +54,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 window.location.href = 'login.html'
             }
         } catch (e) {
-            console.error("Error:", error);
             alert("사용자 등록 중 오류가 발생했습니다.");
+            console.error("Error:", e);
         }
     });
 
