@@ -7,13 +7,17 @@ document.addEventListener("DOMContentLoaded", function() {
     const emailLabel = document.querySelector('label[for="email"]');
     const generationGroup = document.getElementById("generationGroup");
 
+    const generationNumberInput = document.getElementById("generationNumber");
+
     function toggleFormFields() {
         if (studentRadio.checked) {
             generationGroup.style.display = "block"
             emailLabel.textContent = "학교 이메일";
+            generationNumberInput.required = true;
         } else if (teacherRadio.checked) {
             generationGroup.style.display = "none";
             emailLabel.textContent = "이메일";
+            generationNumberInput.required = false;
         }
     }
 
