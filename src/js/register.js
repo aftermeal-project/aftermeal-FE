@@ -48,6 +48,11 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
+        // 선생님일 경우 generationNumber 속성 제거
+        if (data.memberType === "TEACHER") {
+            delete data.generationNumber;
+        }
+
         // 사용자 등록 API 호출
         try {
             const response = await fetch('https://api.aftermeal.online/v1/users', {
