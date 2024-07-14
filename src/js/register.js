@@ -1,7 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
     const form = document.getElementById("registrationForm");
+
     const studentRadio = document.getElementById("studentRadio");
     const teacherRadio = document.getElementById("teacherRadio");
+
     const emailLabel = document.querySelector('label[for="email"]');
     const generationGroup = document.getElementById("generationGroup");
 
@@ -40,7 +42,13 @@ document.addEventListener("DOMContentLoaded", function() {
             return;
         }
 
-        // 등록 API 호출
+        // 비밀번호 안전도 검증
+        if (!data.password.match(/^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*()_+]).{8,}$/)) {
+            alert("비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상으로 입력하세요.");
+            return;
+        }
+
+        // 사용자 등록 API 호출
         try {
             const response = await fetch('https://api.aftermeal.online/v1/users', {
                 method: "POST",
@@ -49,6 +57,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 },
                 body: JSON.stringify(data)
             });
+
             if (response.ok) {
                 alert("사용자 등록이 완료되었습니다.");
                 window.location.href = 'login.html'
