@@ -1,4 +1,7 @@
 {
+  "name": "aftermeal",
+  "version": "1.0.0",
+  "type": "module",
   "dependencies": {
     "dotenv-webpack": "^8.1.0",
     "webpack": "^5.93.0",

@@ -1,10 +1,15 @@
-const path = require("path");
-const Dotenv = require("dotenv-webpack");
-const HtmlWebpackPlugin = require("html-webpack-plugin");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const webpack = require("webpack");
+import path from "path";
+import { fileURLToPath } from "url";
+import Dotenv from "dotenv-webpack";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
+import webpack from "webpack";
 
-module.exports = (_, argv) => {
+// __dirname 대체
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+export default (_, argv) => {
   const mode = argv.mode || "development";
 
   return {
