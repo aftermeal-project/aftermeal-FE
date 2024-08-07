@@ -1,18 +1,19 @@
+import { BASE_URL } from "../constants/index.js";
 import "../styles/login.css";
+import TokenService from "../utils/tokenService.js";
 
 document
   .getElementById("loginForm")
   ?.addEventListener("submit", (event) => login(event));
 
 async function login(event) {
-  event.preventDefault(); // Prevent the form from submitting the traditional way
+  event.preventDefault();
 
-  const email = document.getElementById("email");
-  const password = document.getElementById("password");
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-  // Simulate an API call for login
   try {
-    const response = await fetch("https://api.aftermeal.online/v1/auth/login", {
+    const response = await fetch(BASE_URL + "/v1/auth/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,10 +22,9 @@ async function login(event) {
     });
     if (response.ok) {
       const { data } = await response.json();
-      // Store received token for future requests
-      localStorage.setItem("accessToken", data.accessToken);
+      TokenService.setUser(data);
       alert("Login successful.");
-      window.location.href = "index.html"; // Redirect to main page
+      window.location.href = "index.html";
     } else {
       alert("Login failed. Please check your credentials.");
     }
