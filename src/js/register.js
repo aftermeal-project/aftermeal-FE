@@ -1,5 +1,5 @@
 import "../styles/register.css";
-import { BASE_URL } from "../constants/index.js";
+import { registerApi } from "../libs/api/users.js";
 
 const form = document.getElementById("registrationForm");
 const studentRadio = document.getElementById("studentRadio");
@@ -8,8 +8,27 @@ const emailLabel = document.querySelector('label[for="email"]');
 const generationGroup = document.getElementById("generationGroup");
 const generationNumberInput = document.getElementById("generationNumber");
 
+studentRadio.addEventListener("change", toggleFormFields);
+teacherRadio.addEventListener("change", toggleFormFields);
+
+form.addEventListener("submit", function (event) {
+  event.preventDefault();
+  register();
+});
+
+function toggleFormFields() {
+  if (studentRadio.checked) {
+    generationGroup.style.display = "block";
+    emailLabel.textContent = "학교 이메일";
+    generationNumberInput.required = true;
+  } else if (teacherRadio.checked) {
+    generationGroup.style.display = "none";
+    emailLabel.textContent = "이메일";
+    generationNumberInput.required = false;
+  }
+}
+
 async function register() {
-  console.log("execute");
   const formData = new FormData(form);
 
   const data = {};
@@ -44,7 +63,6 @@ async function register() {
 
   // 사용자 등록 API 호출
   try {
-    // 기수를 number 타입으로 변환
     data.generationNumber = Number(data.generationNumber);
 
     // 선생님일 경우 generationNumber 속성 제거
@@ -52,48 +70,17 @@ async function register() {
       delete data.generationNumber;
     }
 
-    const response = await fetch(BASE_URL + "/v1/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    });
+    await registerApi(data);
 
-    if (response.ok) {
-      alert("사용자 등록이 완료되었습니다.");
-      window.location.href = "login.html";
+    alert("사용자 등록이 완료되었습니다.");
+    window.location.href = "login.html";
+  } catch (error) {
+    const statusCode = error?.response?.status;
+
+    if (statusCode === 400 || statusCode === 404) {
+      alert(error?.response?.data?.message);
     } else {
-      const error = await response.json();
-
-      if (error.statusCode === 400 || error.statusCode === 404) {
-        alert(error.message);
-      } else {
-        alert("사용자 등록 중 오류가 발생했습니다.");
-      }
+      alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
     }
-  } catch {
-    alert("네트워크 오류가 발생했습니다. 다시 시도해주세요.");
   }
 }
-
-function toggleFormFields() {
-  if (studentRadio.checked) {
-    generationGroup.style.display = "block";
-    emailLabel.textContent = "학교 이메일";
-    generationNumberInput.required = true;
-  } else if (teacherRadio.checked) {
-    generationGroup.style.display = "none";
-    emailLabel.textContent = "이메일";
-    generationNumberInput.required = false;
-  }
-}
-
-studentRadio.addEventListener("change", toggleFormFields);
-teacherRadio.addEventListener("change", toggleFormFields);
-
-form.addEventListener("submit", async function (event) {
-  event.preventDefault();
-
-  await register().then(toggleFormFields());
-});
