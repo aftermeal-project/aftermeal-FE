@@ -6,6 +6,7 @@ class TokenService {
 
   updateUser(type, token) {
     const user = this.getUser();
+
     if (user) {
       if (type === "accessToken") {
         user.accessToken = token;
@@ -15,6 +16,7 @@ class TokenService {
       localStorage.setItem("token", JSON.stringify(user));
     }
   }
+
   setUser(user) {
     localStorage.setItem("token", JSON.stringify(user));
   }
