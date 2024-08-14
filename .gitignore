@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/src/legacy
+/src/_legacy
 /.pnp
 .pnp.js
 
