@@ -1,5 +1,8 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { LoginRequest } from '../../../../types/auth';
+import { LoginRequest } from '../../../types/auth';
+import { AxiosError } from 'axios';
+import { mockLoginAPI } from '../../../mocks/api/auth';
+// import { LoginAPI } from '../../../../libs/api/auth';
 
 export default function LoginPage() {
   const {
@@ -9,8 +12,22 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginRequest>();
 
-  const onSubmit: SubmitHandler<LoginRequest> = data => {
+  const onValid: SubmitHandler<LoginRequest> = async data => {
     console.log(data);
+
+    try {
+      const response = await mockLoginAPI(data);
+    } catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        // Error Handling
+      } else {
+        // Unexcepted Error Occurred
+      }
+    }
+  };
+
+  const onInvalid = () => {
+    console.log(errors);
   };
 
   return (
@@ -19,7 +36,7 @@ export default function LoginPage() {
         <header>
           <h1 className="mb-5 text-2xl font-bold text-gray-800">에프터밀</h1>
         </header>
-        <form id="loginForm" onSubmit={handleSubmit(onSubmit)}>
+        <form id="loginForm" onSubmit={handleSubmit(onValid, onInvalid)}>
           <div className="mb-5">
             <label htmlFor="email" className="sr-only">
               이메일
@@ -41,7 +58,17 @@ export default function LoginPage() {
               type="password"
               placeholder="비밀번호"
               className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              {...register('password', { required: true })}
+              {...register('password', {
+                required: '비밀번호는 필수 입력입니다',
+                minLength: {
+                  value: 8,
+                  message: '8자 이상의 비밀번호를 입력해주세요.',
+                },
+                maxLength: {
+                  value: 20,
+                  message: '20자 이하 비밀번호를 입력해주세요.',
+                },
+              })}
             />
           </div>
           <button
