@@ -8,5 +8,5 @@ export const LoginAPI = async (loginRequest: LoginRequest) => {
     data: loginRequest,
   });
 
-  return response;
+  return response.data;
 };

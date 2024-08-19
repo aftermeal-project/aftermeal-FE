@@ -23,7 +23,7 @@ export default function LoginPage() {
   const onValid: SubmitHandler<LoginRequest> = async data => {
     try {
       const response = await LoginAPI(data);
-      Token.setUser(response.data);
+      Token.setUser(response);
       alert('로그인 되었습니다.');
       navigate('/');
     } catch (error: unknown) {

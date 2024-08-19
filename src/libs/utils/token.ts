@@ -13,7 +13,7 @@ class Token {
     return JSON.parse(localStorage.getItem('token') || '{}');
   }
   setUser(user: LoginResponse) {
-    localStorage.setItem('token', JSON.stringify(user));
+    localStorage.setItem('token', JSON.stringify(user.data));
   }
   removeUser() {
     localStorage.removeItem('token');
