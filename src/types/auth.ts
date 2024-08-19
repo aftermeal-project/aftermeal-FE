@@ -9,7 +9,7 @@ export interface LoginResponse {
 }
 
 export interface SignupRequest extends LoginRequest {
-  type: 'STUDENT' | 'TEACHER';
+  userType: 'STUDENT' | 'TEACHER';
   name: string;
   generationNumber?: number;
 }
