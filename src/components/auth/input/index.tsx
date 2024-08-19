@@ -9,6 +9,7 @@ interface AuthInputProps<T extends FieldValues>
   validationRules?: object;
   margin?: string;
   error?: string;
+  srOnlyClass?: string;
 }
 
 export default function AuthInput<T extends FieldValues>({
@@ -18,11 +19,12 @@ export default function AuthInput<T extends FieldValues>({
   validationRules,
   margin,
   error,
+  srOnlyClass = '',
   ...rest
 }: AuthInputProps<T>) {
   return (
     <div className={`text-left ${margin}`}>
-      <label htmlFor={rest.id} className="sr-only">
+      <label htmlFor={rest.id} className={srOnlyClass}>
         {label}
       </label>
       <input
