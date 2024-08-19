@@ -3,7 +3,7 @@ import { LoginRequest } from '../../../types/auth';
 import { AxiosError } from 'axios';
 import { LoginAPI } from '../../../libs/api/auth';
 import Token from '../../../libs/utils/token';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthButton from '../../../components/auth/button';
 import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
@@ -73,6 +73,14 @@ export default function LoginPage() {
           <AuthErrorText message={errors.password.message} />
         )}
         <AuthButton text="로그인" type="submit" />
+        <div className="mt-5">
+          <Link
+            to="/signup"
+            className="text-sm text-[#0b57d0] transition duration-300 hover:underline"
+          >
+            계정 만들기
+          </Link>
+        </div>
       </form>
     </AuthFormContainer>
   );
