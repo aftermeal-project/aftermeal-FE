@@ -1,5 +1,10 @@
 import { InputHTMLAttributes } from 'react';
-import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
+import {
+  FieldError,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from 'react-hook-form';
 
 interface AuthInputProps<T extends FieldValues>
   extends InputHTMLAttributes<HTMLInputElement> {
@@ -8,7 +13,7 @@ interface AuthInputProps<T extends FieldValues>
   register: UseFormRegister<T>;
   validationRules?: object;
   margin?: string;
-  error?: string;
+  error?: FieldError;
   srOnlyClass?: string;
 }
 
@@ -24,7 +29,10 @@ export default function AuthInput<T extends FieldValues>({
 }: AuthInputProps<T>) {
   return (
     <div className={`text-left ${margin}`}>
-      <label htmlFor={rest.id} className={srOnlyClass}>
+      <label
+        htmlFor={rest.id}
+        className={`${srOnlyClass} ${!srOnlyClass && 'mb-2 inline-block'} text-base`}
+      >
         {label}
       </label>
       <input
