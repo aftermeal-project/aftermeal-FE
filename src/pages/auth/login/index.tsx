@@ -8,6 +8,7 @@ import AuthButton from '../../../components/auth/button';
 import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
 import AuthErrorText from '../../../components/auth/errorText/indext';
+import { validationMessages } from '../../../constants/validationMessages';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -31,8 +32,7 @@ export default function LoginPage() {
           case 404:
             setError('email', {
               type: 'Credentials Error',
-              message:
-                '이메일 또는 비밀번호가 잘못되었습니다. 이메일과 비밀번호를 정확히 입력해 주세요.',
+              message: validationMessages.INVALID_CREDENTIALS,
             });
             break;
           case 500:
@@ -54,7 +54,9 @@ export default function LoginPage() {
           type="email"
           placeholder="이메일"
           register={register}
-          validationRules={{ required: '이메일은 필수 입력입니다.' }}
+          validationRules={{
+            required: validationMessages.REQUIRED_EMAIL,
+          }}
           margin="mb-4"
           srOnlyClass="sr-only"
         />
@@ -64,7 +66,9 @@ export default function LoginPage() {
           type="password"
           placeholder="비밀번호"
           register={register}
-          validationRules={{ required: '비밀번호는 필수 입력입니다.' }}
+          validationRules={{
+            required: validationMessages.REQUIRED_PASSWORD,
+          }}
           margin={`${errors.email || errors.password ? '' : 'mb-7'}`}
           srOnlyClass="sr-only"
         />
