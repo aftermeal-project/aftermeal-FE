@@ -4,8 +4,14 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
-  accessToken: string;
-  refreshToken: string;
+  data: {
+    accessToken: string;
+    tokenType: string;
+    refreshToken: string;
+    eXpiredIn: number;
+  };
+  message: string;
+  success: boolean;
 }
 
 export interface SignupRequest extends LoginRequest {
