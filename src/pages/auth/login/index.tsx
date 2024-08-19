@@ -2,13 +2,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginRequest } from '../../../types/auth';
 import { AxiosError } from 'axios';
 import { LoginAPI } from '../../../libs/api/auth';
-import Token from '../../../libs/utils/token';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthButton from '../../../components/auth/button';
 import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
 import AuthErrorText from '../../../components/auth/errorText/indext';
 import { validationMessages } from '../../../constants/validationMessages';
+import token from '../../../libs/utils/token';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ export default function LoginPage() {
   const onValid: SubmitHandler<LoginRequest> = async data => {
     try {
       const response = await LoginAPI(data);
-      Token.setUser(response);
+      token.setUser(response);
       alert('로그인 되었습니다.');
       navigate('/');
     } catch (error: unknown) {
