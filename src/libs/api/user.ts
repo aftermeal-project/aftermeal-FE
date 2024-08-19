@@ -2,7 +2,7 @@ import { SignupRequest } from '../../types/auth';
 import { instance } from '../instance';
 
 export const SignupAPI = async (signupRequest: SignupRequest) => {
-  if (signupRequest.type === 'TEACHER') {
+  if (signupRequest.userType === 'TEACHER') {
     delete signupRequest.generationNumber;
   }
 
