@@ -24,7 +24,8 @@ export default function SignupPage() {
   } = useForm<SignupRequest>();
 
   const onValid: SubmitHandler<SignupRequest> = async data => {
-    data.type = type;
+    data.userType = type;
+    data.generationNumber = Number(data.generationNumber);
 
     const GSM_EMAIL_FORMAT = '@gsm.hs.kr';
     if (type === 'STUDENT' && !data.email.endsWith(GSM_EMAIL_FORMAT)) {
@@ -43,6 +44,12 @@ export default function SignupPage() {
             setError('generationNumber', {
               type: 'Range Error',
               message: validationMessages.GENERATION_RANGE_ERROR,
+            });
+            break;
+          case 404:
+            setError('generationNumber', {
+              type: 'Not Found Error',
+              message: validationMessages.GENERATION_NOT_FOUND_ERROR,
             });
             break;
           case 409:
@@ -171,7 +178,7 @@ export default function SignupPage() {
               message: validationMessages.INVALID_PASSWORD,
             },
           }}
-          margin={`${errors.type || errors.name || errors.email || errors.password || errors.generationNumber ? '' : 'mb-7'}`}
+          margin={`${errors.userType || errors.name || errors.email || errors.password || errors.generationNumber ? '' : 'mb-9'}`}
           error={errors.password}
         />
         {errors.name && <AuthErrorText message={errors.name.message} />}
