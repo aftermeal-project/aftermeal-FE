@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import AuthButton from '../../../components/auth/button';
 import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
+import AuthErrorText from '../../../components/auth/errorText/indext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -67,15 +68,9 @@ export default function LoginPage() {
           margin={`${errors.email || errors.password ? '' : 'mb-7'}`}
           srOnlyClass="sr-only"
         />
-        {errors.email && (
-          <p className="my-5 text-left text-[13px] leading-4 tracking-[-.75px] text-[#ff0101]">
-            {errors.email.message}
-          </p>
-        )}
+        {errors.email && <AuthErrorText message={errors.email.message} />}
         {!errors.email && errors.password && (
-          <p className="my-5 px-2 text-left text-[13px] leading-4 tracking-[-.75px] text-[#ff0101]">
-            {errors.password.message}
-          </p>
+          <AuthErrorText message={errors.password.message} />
         )}
         <AuthButton text="로그인" type="submit" />
       </form>
