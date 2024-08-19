@@ -1,38 +1,50 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoginRequest } from '../../../types/auth';
 import { AxiosError } from 'axios';
-import { mockLoginAPI } from '../../../mocks/api/auth';
-// import { LoginAPI } from '../../../../libs/api/auth';
+import { LoginAPI } from '../../../libs/api/auth';
+import Token from '../../../libs/utils/token';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function LoginPage() {
   const {
     register,
     handleSubmit,
-    watch,
+    setError,
     formState: { errors },
   } = useForm<LoginRequest>();
+  const navigate = useNavigate();
 
   const onValid: SubmitHandler<LoginRequest> = async data => {
-    console.log(data);
-
     try {
-      const response = await mockLoginAPI(data);
-    } catch (e: unknown) {
-      if (e instanceof AxiosError) {
-        // Error Handling
-      } else {
-        // Unexcepted Error Occurred
-      }
+      const response = await LoginAPI(data);
+      Token.setUser(response.data);
+      alert('로그인 되었습니다.');
+      navigate('/');
+    } catch (error: unknown) {
+      if (error instanceof AxiosError)
+        switch (error.response?.status) {
+          case 404:
+            setError('email', {
+              type: 'Credentials Error',
+              message:
+                '이메일 또는 비밀번호가 잘못되었습니다. 이메일과 비밀번호를 정확히 입력해 주세요.',
+            });
+            break;
+          case 500:
+            alert('서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.');
+            break;
+          default:
+            alert('오류가 발생했습니다. 나중에 다시 시도해 주세요.');
+            break;
+        }
     }
   };
 
-  const onInvalid = () => {
-    console.log(errors);
-  };
+  const onInvalid = () => {};
 
   return (
-    <main className="flex h-screen items-center justify-center bg-gradient-to-br from-blue-300 to-indigo-600">
-      <section className="w-96 rounded-xl bg-white p-8 text-center shadow-lg">
+    <main className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-300 to-indigo-600">
+      <section className="p-8 text-center bg-white shadow-lg w-96 rounded-xl">
         <header>
           <h1 className="mb-5 text-2xl font-bold text-gray-800">에프터밀</h1>
         </header>
@@ -45,11 +57,11 @@ export default function LoginPage() {
               id="email"
               type="email"
               placeholder="이메일"
-              className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              {...register('email', { required: true })}
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              {...register('email', { required: '이메일은 필수 입력입니다.' })}
             />
           </div>
-          <div className="mb-5">
+          <div className={`${errors.email || errors.password ? '' : 'mb-7'}`}>
             <label htmlFor="password" className="sr-only">
               비밀번호
             </label>
@@ -57,26 +69,36 @@ export default function LoginPage() {
               id="password"
               type="password"
               placeholder="비밀번호"
-              className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
               {...register('password', {
-                required: '비밀번호는 필수 입력입니다',
-                minLength: {
-                  value: 8,
-                  message: '8자 이상의 비밀번호를 입력해주세요.',
-                },
-                maxLength: {
-                  value: 20,
-                  message: '20자 이하 비밀번호를 입력해주세요.',
-                },
+                required: '비밀번호는 필수 입력입니다.',
               })}
             />
           </div>
+          {errors.email && (
+            <p className="my-5 text-left text-[13px] leading-4 tracking-[-.75px] text-[#ff0101]">
+              {errors.email.message}
+            </p>
+          )}
+          {!errors.email && errors.password && (
+            <p className="my-5 text-left text-[13px] leading-4 tracking-[-.75px] text-[#ff0101]">
+              {errors.password.message}
+            </p>
+          )}
           <button
             type="submit"
-            className="w-full rounded-md bg-indigo-600 p-3 font-medium text-white transition duration-300 hover:bg-indigo-500"
+            className="w-full p-3 font-medium text-white transition duration-300 bg-indigo-600 rounded -md hover:bg-indigo-500"
           >
             로그인
           </button>
+          {/* <div className="mt-5">
+            <Link
+              to="/signup"
+              className="text-sm text-[#0b57d0] transition duration-300 hover:underline"
+            >
+              계정 만들기
+            </Link>
+          </div> */}
         </form>
       </section>
     </main>
