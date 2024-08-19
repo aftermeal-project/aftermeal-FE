@@ -1,4 +1,4 @@
-import { SignupRequest } from '../../types/auth';
+import { SignupRequest } from '../../types/user';
 import { instance } from '../instance';
 
 export const SignupAPI = async (signupRequest: SignupRequest) => {

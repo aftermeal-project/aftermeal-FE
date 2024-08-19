@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
-import { SignupRequest } from '../../../types/auth';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import AuthButton from '../../../components/auth/button';
 import AuthErrorText from '../../../components/auth/errorText/indext';
@@ -9,6 +8,7 @@ import { SignupAPI } from '../../../libs/api/user';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { validationMessages } from '../../../constants/validationMessages';
+import { SignupRequest } from '../../../types/user';
 
 type UserType = 'STUDENT' | 'TEACHER';
 

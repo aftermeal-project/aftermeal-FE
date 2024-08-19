@@ -13,9 +13,3 @@ export interface LoginResponse {
   message: string;
   success: boolean;
 }
-
-export interface SignupRequest extends LoginRequest {
-  userType: 'STUDENT' | 'TEACHER';
-  name: string;
-  generationNumber?: number;
-}
