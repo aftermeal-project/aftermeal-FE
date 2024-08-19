@@ -2,7 +2,6 @@ import { AxiosError } from 'axios';
 
 export function errorHandler(error: unknown) {
   if (error instanceof AxiosError) {
-    console.log('asd');
     if (!error.response) {
       alert('네트워크 오류가 발생했습니다. 인터넷 연결을 확인해 주세요.');
     }
