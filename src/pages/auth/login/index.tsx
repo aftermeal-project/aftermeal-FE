@@ -55,6 +55,7 @@ export default function LoginPage() {
           register={register}
           validationRules={{ required: '이메일은 필수 입력입니다.' }}
           margin="mb-4"
+          srOnlyClass="sr-only"
         />
         <AuthInput<LoginRequest>
           label="비밀번호"
@@ -64,6 +65,7 @@ export default function LoginPage() {
           register={register}
           validationRules={{ required: '비밀번호는 필수 입력입니다.' }}
           margin={`${errors.email || errors.password ? '' : 'mb-7'}`}
+          srOnlyClass="sr-only"
         />
         {errors.email && (
           <p className="my-5 text-left text-[13px] leading-4 tracking-[-.75px] text-[#ff0101]">
