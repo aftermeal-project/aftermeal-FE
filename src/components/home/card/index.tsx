@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react';
 import { Activity } from '../../../types/activities';
 
 interface BaseActivityCardProps extends Omit<Activity, 'id'> {
-  activityId: number; // 'id'를 'activityId'로 변경
+  activityId: number;
 }
 
 type ActivityCardProps = BaseActivityCardProps &
