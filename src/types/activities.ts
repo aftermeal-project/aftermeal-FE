@@ -1,9 +1,7 @@
 import { BaseResponse } from './base';
 
 export interface GetActivitiesResponse extends BaseResponse {
-  data: {
-    activities: Activity[];
-  };
+  data: Activity[];
 }
 
 export interface Activity {
