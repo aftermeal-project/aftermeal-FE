@@ -1,4 +1,8 @@
+import { useNavigate } from 'react-router-dom';
+
 export default function Header() {
+  const navigate = useNavigate();
+
   return (
     <header className="relative flex items-center w-full h-16 px-4 bg-header-gradient sm:h-20 lg:h-24">
       <div className="relative flex items-center justify-between w-full max-w-screen-xl mx-auto text-white">
@@ -6,7 +10,8 @@ export default function Header() {
           <img
             src="/after-meal.png"
             alt="logo"
-            className="w-12 h-12 border-2 border-white rounded-full"
+            className="object-cover w-12 h-12 border-2 border-white rounded-full cursor-pointer"
+            onClick={() => navigate('/')}
           />
           <a href="/" className="text-2xl font-bold sm:text-3xl">
             에프터밀
