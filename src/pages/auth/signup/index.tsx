@@ -15,11 +15,13 @@ import {
   nameValidationRules,
   generationValidationRules,
 } from '../../../constants/rules/signupValidationRules';
+import AuthLoadingSpinner from '../../../components/auth/loading';
 
 type UserType = 'STUDENT' | 'TEACHER';
 
 export default function SignupPage() {
   const [type, setType] = useState<UserType>('STUDENT');
+  const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const {
@@ -63,6 +65,7 @@ export default function SignupPage() {
   }
 
   async function onValid(data: SignupRequest) {
+    setLoading(true);
     data.userType = type;
     data.generationNumber = Number(data.generationNumber);
 
@@ -74,10 +77,11 @@ export default function SignupPage() {
 
     try {
       await SignupAPI(data);
-      alert('가입 되었습니다.');
       navigate('/login');
     } catch (error: unknown) {
       handleSignupError(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -140,6 +144,7 @@ export default function SignupPage() {
         />
         <AuthButton text="등록" type="submit" />
       </form>
+      <AuthLoadingSpinner loading={loading} text={'가입 중'} />
     </AuthFormContainer>
   );
 }
