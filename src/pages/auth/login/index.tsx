@@ -1,4 +1,4 @@
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { LoginRequest } from '../../../types/auth';
 import { AxiosError } from 'axios';
 import { LoginAPI } from '../../../libs/api/auth';
@@ -6,9 +6,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthButton from '../../../components/auth/button';
 import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
-import AuthErrorText from '../../../components/auth/errorText/indext';
-import { validationMessages } from '../../../constants/validationMessages';
 import token from '../../../libs/utils/token';
+import AuthErrorMessages from '../../../components/auth/error';
+import { emailValidationRules } from '../../../constants/validations/loginValidationRules';
+import { passwordValidationRules } from '../../../constants/validations/loginValidationRules';
+import { validationMessages } from '../../../constants/validations/validationMessages';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -20,30 +22,29 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginRequest>();
 
-  const onValid: SubmitHandler<LoginRequest> = async data => {
+  function handleLoginError(error: unknown) {
+    if (error instanceof AxiosError) {
+      const code = error.response?.status;
+
+      if (code === 404) {
+        setError('email', {
+          type: 'Credentials Error',
+          message: validationMessages.INVALID_CREDENTIALS,
+        });
+      }
+    }
+  }
+
+  async function onValid(data: LoginRequest) {
     try {
       const response = await LoginAPI(data);
       token.setUser(response);
       alert('로그인 되었습니다.');
       navigate('/');
     } catch (error: unknown) {
-      if (error instanceof AxiosError)
-        switch (error.response?.status) {
-          case 404:
-            setError('email', {
-              type: 'Credentials Error',
-              message: validationMessages.INVALID_CREDENTIALS,
-            });
-            break;
-          case 500:
-            alert('서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.');
-            break;
-          default:
-            alert('오류가 발생했습니다. 나중에 다시 시도해 주세요.');
-            break;
-        }
+      handleLoginError(error);
     }
-  };
+  }
 
   return (
     <AuthFormContainer title="애프터밀">
@@ -54,9 +55,7 @@ export default function LoginPage() {
           type="email"
           placeholder="이메일"
           register={register}
-          validationRules={{
-            required: validationMessages.REQUIRED_EMAIL,
-          }}
+          validationRules={emailValidationRules}
           margin="mb-4"
           srOnlyClass="sr-only"
         />
@@ -66,16 +65,11 @@ export default function LoginPage() {
           type="password"
           placeholder="비밀번호"
           register={register}
-          validationRules={{
-            required: validationMessages.REQUIRED_PASSWORD,
-          }}
+          validationRules={passwordValidationRules}
           margin={`${errors.email || errors.password ? '' : 'mb-7'}`}
           srOnlyClass="sr-only"
         />
-        {errors.email && <AuthErrorText message={errors.email.message} />}
-        {!errors.email && errors.password && (
-          <AuthErrorText message={errors.password.message} />
-        )}
+        <AuthErrorMessages errors={errors} fields={['email', 'password']} />
         <AuthButton text="로그인" type="submit" />
         <div className="mt-5">
           <Link
