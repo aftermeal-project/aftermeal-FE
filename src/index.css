@@ -6,3 +6,34 @@ body {
   background-color: #f4f4f4;
   font-size: 16px;
 }
+
+.min-h-screen-minus-96-plus-4rem {
+  min-height: calc(100vh - (96px + 4rem));
+}
+.min-h-screen-minus-96 {
+  min-height: calc(100vh - 96px);
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-1px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(1px);
+  }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out infinite;
+}
