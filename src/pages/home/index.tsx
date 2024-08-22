@@ -7,39 +7,39 @@ import { AxiosError } from 'axios';
 
 export default function HomePage() {
   const [activities, setActivities] = useState<Activity[]>([]);
+  const [error, setError] = useState<boolean>(false);
 
-  useEffect(() => {
-    const getActivities = async () => {
-      try {
-        const response = await GetActivitiesAPI();
-        setActivities(response.data);
-      } catch {
-        throw new Error('Failed to get activities data');
+  async function fetchActivities() {
+    try {
+      const response = await GetActivitiesAPI();
+      setActivities(response.data);
+    } catch {
+      setError(true);
+    }
+  }
+
+  function handleParticipationError(error: unknown) {
+    if (error instanceof AxiosError) {
+      const code = error.response?.status;
+
+      if (code === 400 || code === 404) {
+        alert('신청할 수 없는 활동입니다.');
       }
-    };
+    }
+  }
 
-    getActivities();
-  }, []);
-
-  const participateInActivity = async (id: string) => {
+  async function participateInActivity(id: string) {
     try {
       await ParticipationAPI(id);
       alert('참여가 완료 되었습니다.');
     } catch (error: unknown) {
-      if (error instanceof AxiosError)
-        switch (error.response?.status) {
-          case 404:
-            alert('신청할 수 없는 활동입니다.');
-            break;
-          case 500:
-            alert('서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.');
-            break;
-          default:
-            alert('오류가 발생했습니다. 나중에 다시 시도해 주세요.');
-            break;
-        }
+      handleParticipationError(error);
     }
-  };
+  }
+
+  useEffect(() => {
+    fetchActivities();
+  }, []);
 
   return (
     <main className="w-full px-4 py-8">
