@@ -13,9 +13,12 @@ import {
   passwordValidationRules,
 } from '../../../constants/rules/loginValidationRules';
 import { validationMessages } from '../../../constants/messages/validationMessages';
+import { useState } from 'react';
+import AuthLoadingSpinner from '../../../components/auth/loading';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const {
     register,
@@ -28,23 +31,33 @@ export default function LoginPage() {
     if (error instanceof AxiosError) {
       const { response } = error;
 
-      if (response?.status === 404) {
-        setError('email', {
-          type: 'Credentials Error',
-          message: validationMessages.INVALID_CREDENTIALS,
-        });
+      switch (response?.status) {
+        case 400:
+          setError('password', {
+            type: 'Password Error',
+            message: validationMessages.WRONG_PASSWORD,
+          });
+          break;
+        case 404:
+          setError('email', {
+            type: 'Credentials Error',
+            message: validationMessages.INVALID_CREDENTIALS,
+          });
+          break;
       }
     }
   }
 
   async function onValid(data: LoginRequest) {
+    setLoading(true);
     try {
       const response = await LoginAPI(data);
       token.setUser(response);
-      alert('로그인 되었습니다.');
       navigate('/');
     } catch (error: unknown) {
       handleLoginError(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -72,7 +85,7 @@ export default function LoginPage() {
           srOnlyClass="sr-only"
         />
         <AuthErrorMessages errors={errors} fields={['email', 'password']} />
-        <AuthButton text="로그인" type="submit" />
+        <AuthButton text={'로그인'} type="submit" disabled={loading} />
         <div className="mt-5">
           <Link
             to="/signup"
@@ -82,6 +95,7 @@ export default function LoginPage() {
           </Link>
         </div>
       </form>
+      <AuthLoadingSpinner loading={loading} text={'로그인 중'} />
     </AuthFormContainer>
   );
 }
