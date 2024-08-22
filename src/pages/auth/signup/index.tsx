@@ -14,7 +14,7 @@ import {
   passwordValidationRules,
   nameValidationRules,
   generationValidationRules,
-} from '../../../constants/validations/signupValidationRules';
+} from '../../../constants/rules/signupValidationRules';
 
 type UserType = 'STUDENT' | 'TEACHER';
 

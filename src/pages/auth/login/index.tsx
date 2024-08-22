@@ -11,8 +11,8 @@ import AuthErrorMessages from '../../../components/auth/error';
 import {
   emailValidationRules,
   passwordValidationRules,
-} from '../../../constants/validations/loginValidationRules';
-import { validationMessages } from '../../../constants/validations/validationMessages';
+} from '../../../constants/rules/loginValidationRules';
+import { validationMessages } from '../../../constants/messages/validationMessages';
 
 export default function LoginPage() {
   const navigate = useNavigate();
