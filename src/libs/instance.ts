@@ -50,8 +50,9 @@ instance.interceptors.response.use(
   async error => {
     const { config, response } = error;
     const originalRequest = config;
+    const currentPath = window.location.pathname;
 
-    if (!response) {
+    if (!response && currentPath !== '/') {
       alert('네트워크 오류가 발생했습니다. 네트워크 연결 상태를 확인해주세요.');
       return;
     }
