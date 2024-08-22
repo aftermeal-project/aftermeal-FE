@@ -6,10 +6,12 @@ import { ParticipationAPI } from '../../libs/api/participation';
 import { AxiosError } from 'axios';
 import { getActivitiesErrorMessages } from '../../constants/messages/getActivitiesErrorMessages';
 import ErrorScreen from '../../components/@global/error';
+import SkeletonActivityCard from '../../components/home/card/skeleton';
 
 export default function HomePage() {
   const [activities, setActivities] = useState<Activity[]>([]);
   const [error, setError] = useState<string>('');
+  const [loading, setLoading] = useState(true);
 
   function handleParticipationError(error: any) {
     if (error instanceof AxiosError) {
@@ -30,6 +32,7 @@ export default function HomePage() {
     }
 
     if (error instanceof AxiosError) {
+      // interceptor에서 기본적으로 handling 되지만, UI 처리를 위해 중복적으로 handling
       if (response.status === 500) {
         setError(getActivitiesErrorMessages.SERVER_ERROR);
       } else {
@@ -55,6 +58,8 @@ export default function HomePage() {
       setActivities(response.data);
     } catch (error: unknown) {
       handleFetchError(error);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -69,17 +74,21 @@ export default function HomePage() {
   return (
     <main className="w-full px-4 py-8">
       <div className="grid max-w-screen-xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {activities.map(activity => (
-          <ActivityCard
-            key={activity.id}
-            activityId={activity.id}
-            name={activity.name}
-            currentParticipants={activity.currentParticipants}
-            maxParticipants={activity.maxParticipants}
-            onParticipate={() => participateInActivity(String(activity.id))}
-            onCancel={() => participateInActivity(String(activity.id))}
-          />
-        ))}
+        {loading
+          ? Array.from({ length: 8 }).map((_, index) => (
+              <SkeletonActivityCard key={index} />
+            ))
+          : activities.map(activity => (
+              <ActivityCard
+                key={activity.id}
+                activityId={activity.id}
+                name={activity.name}
+                currentParticipants={activity.currentParticipants}
+                maxParticipants={activity.maxParticipants}
+                onParticipate={() => participateInActivity(String(activity.id))}
+                onCancel={() => participateInActivity(String(activity.id))}
+              />
+            ))}
       </div>
     </main>
   );
