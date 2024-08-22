@@ -75,7 +75,8 @@ export default function HomePage() {
             name={activity.name}
             currentParticipants={activity.currentParticipants}
             maxParticipants={activity.maxParticipants}
-            onClick={() => participateInActivity(String(activity.id))}
+            onParticipate={() => participateInActivity(String(activity.id))}
+            onCancel={() => participateInActivity(String(activity.id))}
           />
         ))}
       </div>

@@ -3,6 +3,8 @@ import { Activity } from '../../../types/activities';
 
 interface BaseActivityCardProps extends Omit<Activity, 'id'> {
   activityId: number;
+  onParticipate: (id: number) => void;
+  onCancel: (id: number) => void;
 }
 
 type ActivityCardProps = BaseActivityCardProps &
@@ -13,10 +15,25 @@ export default function ActivityCard({
   name,
   currentParticipants,
   maxParticipants,
+  onParticipate,
+  onCancel,
   ...buttonProps
 }: ActivityCardProps) {
   const percentFull = (currentParticipants / maxParticipants) * 100;
   const isFull = percentFull >= 100;
+  const isParticipated = currentParticipants > 0; // 임시로 지정
+
+  const handleClick = () => {
+    if (isFull) {
+      return;
+    }
+
+    if (isParticipated) {
+      onCancel(activityId);
+    } else {
+      onParticipate(activityId);
+    }
+  };
 
   return (
     <div
@@ -48,25 +65,26 @@ export default function ActivityCard({
         <div className="relative w-full h-2 mb-3 bg-gray-200 rounded-full">
           <div
             className={`absolute left-0 top-0 h-2 rounded-full ${
-              currentParticipants === maxParticipants
-                ? 'bg-red-500'
-                : 'bg-blue-500'
+              isFull ? 'bg-red-500' : 'bg-blue-500'
             }`}
             style={{
-              width: `${(currentParticipants / maxParticipants) * 100 < 100 ? (currentParticipants / maxParticipants) * 100 : 100}%`,
+              width: `${Math.min((currentParticipants / maxParticipants) * 100, 100)}%`,
             }}
           ></div>
         </div>
         <button
-          className={`w-full py-2 text-sm font-medium ${
+          className={`w-full rounded-lg border py-2 text-sm font-medium transition-colors duration-300 focus:outline-none focus:ring-0 active:outline-none active:ring-0 ${
             isFull
               ? 'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400'
-              : 'border-blue-500 bg-white text-blue-700 hover:bg-blue-50'
-          } rounded-lg border transition-colors duration-300 focus:outline-none focus:ring-0 active:outline-none active:ring-0`}
+              : isParticipated
+                ? 'border-red-500 bg-white text-red-700 hover:bg-red-50'
+                : 'border-blue-500 bg-white text-blue-700 hover:bg-blue-50'
+          }`}
           disabled={isFull}
+          onClick={handleClick}
           {...buttonProps}
         >
-          {isFull ? '모집 종료' : '참가하기'}
+          {isFull ? '모집 종료' : isParticipated ? '신청 취소' : '참가하기'}
         </button>
       </div>
     </div>
