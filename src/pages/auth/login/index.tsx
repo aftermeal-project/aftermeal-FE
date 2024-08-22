@@ -8,8 +8,10 @@ import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
 import token from '../../../libs/utils/token';
 import AuthErrorMessages from '../../../components/auth/error';
-import { emailValidationRules } from '../../../constants/validations/loginValidationRules';
-import { passwordValidationRules } from '../../../constants/validations/loginValidationRules';
+import {
+  emailValidationRules,
+  passwordValidationRules,
+} from '../../../constants/validations/loginValidationRules';
 import { validationMessages } from '../../../constants/validations/validationMessages';
 
 export default function LoginPage() {
