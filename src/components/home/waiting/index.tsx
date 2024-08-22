@@ -34,7 +34,7 @@ export default function WaitingScreen() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center max-w-screen-xl mx-auto bg-white min-h-screen-minus-80 py-9">
+    <div className="flex flex-col items-center justify-center max-w-screen-xl mx-auto bg-white min-h-screen-minus-96-plus-4rem py-9">
       <div>
         <div className="flex flex-col text-center gap-y-2">
           <h1 className="text-3xl font-bold">Not Yet!</h1>
