@@ -30,9 +30,11 @@ export default function SignupPage() {
     formState: { errors },
   } = useForm<SignupRequest>();
 
-  function handleSignupError(error: unknown) {
-    if (error instanceof AxiosError)
-      switch (error.response?.status) {
+  function handleSignupError(error: any) {
+    if (error instanceof AxiosError) {
+      const { response } = error;
+
+      switch (response?.status) {
         case 400:
           setError('generationNumber', {
             type: 'Range Error',
@@ -52,6 +54,7 @@ export default function SignupPage() {
           });
           break;
       }
+    }
   }
 
   function handlerUserTypeChange(type: UserType) {
