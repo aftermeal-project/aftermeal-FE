@@ -4,8 +4,8 @@ import { Activity } from '../../types/activities';
 import ActivityCard from '../../components/home/card';
 import { ParticipationAPI } from '../../libs/api/participation';
 import { AxiosError } from 'axios';
-import GetActivitiesErrorScreen from '../../components/home/error';
 import { getActivitiesErrorMessages } from '../../constants/messages/getActivitiesErrorMessages';
+import ErrorScreen from '../../components/@global/error';
 
 export default function HomePage() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -26,6 +26,7 @@ export default function HomePage() {
 
     if (!response) {
       setError(getActivitiesErrorMessages.NETWORK_ERROR);
+      return;
     }
 
     if (error instanceof AxiosError) {
@@ -62,7 +63,7 @@ export default function HomePage() {
   }, []);
 
   if (error) {
-    return <GetActivitiesErrorScreen message={error} />;
+    return <ErrorScreen title={'Oops!'} description={error} />;
   }
 
   return (
