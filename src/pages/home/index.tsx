@@ -29,7 +29,7 @@ export default function HomePage() {
       if (error instanceof AxiosError)
         switch (error.response?.status) {
           case 404:
-            alert('참여할 수 없는 종목?');
+            alert('신청할 수 없는 활동입니다.');
             break;
           case 500:
             alert('서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.');
