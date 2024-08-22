@@ -1,14 +1,20 @@
 import { useState } from 'react';
 import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import AuthButton from '../../../components/auth/button';
-import AuthErrorText from '../../../components/auth/errorText/indext';
 import { SignupAPI } from '../../../libs/api/user';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
-import { validationMessages } from '../../../constants/validationMessages';
 import { SignupRequest } from '../../../types/user';
+import UserTypeSelector from '../../../components/auth/selector';
+import AuthErrorMessages from '../../../components/auth/error';
+import {
+  emailValidationRules,
+  passwordValidationRules,
+  nameValidationRules,
+  generationValidationRules,
+} from '../../../constants/validations/signupValidationRules';
 
 type UserType = 'STUDENT' | 'TEACHER';
 
@@ -20,16 +26,46 @@ export default function SignupPage() {
     register,
     handleSubmit,
     setError,
+    reset,
     formState: { errors },
   } = useForm<SignupRequest>();
 
-  const onValid: SubmitHandler<SignupRequest> = async data => {
+  function handleSignupError(error: unknown) {
+    if (error instanceof AxiosError)
+      switch (error.response?.status) {
+        case 400:
+          setError('generationNumber', {
+            type: 'Range Error',
+            message: '기수 범위 오류', // validationMessages.GENERATION_RANGE_ERROR
+          });
+          break;
+        case 404:
+          setError('generationNumber', {
+            type: 'Not Found Error',
+            message: '기수를 찾을 수 없습니다.', // validationMessages.GENERATION_NOT_FOUND_ERROR
+          });
+          break;
+        case 409:
+          setError('email', {
+            type: 'Duplicate Error',
+            message: '이미 존재하는 이메일입니다.', // validationMessages.DUPLICATE_EMAIL
+          });
+          break;
+      }
+  }
+
+  function handlerUserTypeChange(type: UserType) {
+    reset();
+    setType(type);
+  }
+
+  async function onValid(data: SignupRequest) {
     data.userType = type;
     data.generationNumber = Number(data.generationNumber);
 
     const GSM_EMAIL_FORMAT = '@gsm.hs.kr';
     if (type === 'STUDENT' && !data.email.endsWith(GSM_EMAIL_FORMAT)) {
-      alert(validationMessages.INVALID_STUDENT_EMAIL);
+      alert('유효한 학생 이메일을 입력해 주세요.'); // validationMessages.INVALID_STUDENT_EMAIL
       return;
     }
 
@@ -38,87 +74,24 @@ export default function SignupPage() {
       alert('가입 되었습니다.');
       navigate('/login');
     } catch (error: unknown) {
-      if (error instanceof AxiosError)
-        switch (error.response?.status) {
-          case 400:
-            setError('generationNumber', {
-              type: 'Range Error',
-              message: validationMessages.GENERATION_RANGE_ERROR,
-            });
-            break;
-          case 404:
-            setError('generationNumber', {
-              type: 'Not Found Error',
-              message: validationMessages.GENERATION_NOT_FOUND_ERROR,
-            });
-            break;
-          case 409:
-            setError('email', {
-              type: 'Duplicate Error',
-              message: validationMessages.DUPLICATE_EMAIL,
-            });
-            break;
-          case 500:
-            alert('서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.');
-            break;
-          default:
-            alert('오류가 발생했습니다. 나중에 다시 시도해 주세요.');
-            break;
-        }
+      handleSignupError(error);
     }
-  };
+  }
 
   return (
     <AuthFormContainer title="애프터밀">
       <form id="registrationForm" onSubmit={handleSubmit(onValid)}>
-        <fieldset className="mb-5">
-          <legend className="sr-only">유저 유형 선택</legend>
-          <div className="flex items-center justify-center w-full gap-5">
-            <label className="flex flex-col items-center cursor-pointer">
-              <input
-                type="radio"
-                name="type"
-                value="STUDENT"
-                checked={type === 'STUDENT'}
-                onChange={() => setType('STUDENT')}
-                className="hidden"
-              />
-              <span
-                className={`block border px-5 py-2 ${type === 'STUDENT' ? 'bg-indigo-600 text-white' : 'bg-gray-100'} rounded-md`}
-              >
-                학생
-              </span>
-            </label>
-            <label className="flex flex-col items-center cursor-pointer">
-              <input
-                type="radio"
-                name="type"
-                value="TEACHER"
-                checked={type === 'TEACHER'}
-                onChange={() => setType('TEACHER')}
-                className="hidden"
-              />
-              <span
-                className={`block border px-5 py-2 ${type === 'TEACHER' ? 'bg-indigo-600 text-white' : 'bg-gray-100'} rounded-md`}
-              >
-                선생님
-              </span>
-            </label>
-          </div>
-        </fieldset>
+        <UserTypeSelector
+          selectedType={type}
+          onChangeType={handlerUserTypeChange}
+        />
         <AuthInput<SignupRequest>
           label="이름"
           name="name"
           type="text"
           placeholder="이름"
           register={register}
-          validationRules={{
-            required: validationMessages.REQUIRED_NAME,
-            maxLength: {
-              value: 40,
-              message: validationMessages.MAX_LENGTH_NAME,
-            },
-          }}
+          validationRules={nameValidationRules}
           margin="mb-4"
           error={errors.name}
         />
@@ -128,13 +101,7 @@ export default function SignupPage() {
           type="email"
           placeholder="학교 이메일"
           register={register}
-          validationRules={{
-            required: validationMessages.REQUIRED_EMAIL,
-            pattern: {
-              value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-              message: validationMessages.INVALID_EMAIL,
-            },
-          }}
+          validationRules={emailValidationRules}
           margin="mb-4"
           error={errors.email}
         />
@@ -145,13 +112,7 @@ export default function SignupPage() {
             type="number"
             placeholder="기수"
             register={register}
-            validationRules={{
-              required: validationMessages.REQUIRED_GENERATION,
-              min: {
-                value: 1,
-                message: validationMessages.POSITIVE_GENERATION,
-              },
-            }}
+            validationRules={generationValidationRules}
             margin="mb-4"
             error={errors.generationNumber}
           />
@@ -162,38 +123,18 @@ export default function SignupPage() {
           type="password"
           placeholder="비밀번호"
           register={register}
-          validationRules={{
-            required: validationMessages.REQUIRED_PASSWORD,
-            maxLength: {
-              value: 20,
-              message: validationMessages.MAX_LENGTH_PASSWORD,
-            },
-            minLength: {
-              value: 8,
-              message: validationMessages.MIN_LENGTH_PASSWORD,
-            },
-            pattern: {
-              value:
-                /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
-              message: validationMessages.INVALID_PASSWORD,
-            },
-          }}
+          validationRules={passwordValidationRules}
           margin={`${errors.userType || errors.name || errors.email || errors.password || errors.generationNumber ? '' : 'mb-9'}`}
           error={errors.password}
         />
-        {errors.name && <AuthErrorText message={errors.name.message} />}
-        {!errors.name && errors.email && (
-          <AuthErrorText message={errors.email.message} />
-        )}
-        {!errors.name && !errors.email && errors.generationNumber && (
-          <AuthErrorText message={errors.generationNumber.message} />
-        )}
-        {!errors.name &&
-          !errors.email &&
-          !errors.generationNumber &&
-          errors.password && (
-            <AuthErrorText message={errors.password.message} />
-          )}
+        <AuthErrorMessages
+          errors={errors}
+          fields={
+            type === 'STUDENT'
+              ? ['name', 'email', 'generationNumber', 'password']
+              : ['name', 'email', 'password']
+          }
+        />
         <AuthButton text="등록" type="submit" />
       </form>
     </AuthFormContainer>
