@@ -1,4 +1,4 @@
-import { validationMessages } from './validationMessages';
+import { validationMessages } from '../messages/validationMessages';
 
 export const emailValidationRules = {
   required: validationMessages.REQUIRED_EMAIL,
