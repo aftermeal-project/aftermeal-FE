@@ -24,11 +24,11 @@ export default function LoginPage() {
     formState: { errors },
   } = useForm<LoginRequest>();
 
-  function handleLoginError(error: unknown) {
+  function handleLoginError(error: any) {
     if (error instanceof AxiosError) {
-      const code = error.response?.status;
+      const { response } = error;
 
-      if (code === 404) {
+      if (response?.status === 404) {
         setError('email', {
           type: 'Credentials Error',
           message: validationMessages.INVALID_CREDENTIALS,
