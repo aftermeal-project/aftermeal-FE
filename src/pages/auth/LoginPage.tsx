@@ -4,12 +4,8 @@ import { LoginRequest } from '../../types/auth';
 import { AxiosError } from 'axios';
 import { LoginAPI } from '../../libs/api/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  emailValidationRules,
-  passwordValidationRules,
-} from '../../constants/rules/loginValidationRules';
-import { validationMessages } from '../../constants/messages/validationMessages';
 import Token from '../../libs/utils/token';
+import { loginValidationRules, validationMessages } from '../../constants';
 import {
   AuthFormContainer,
   AuthInput,
@@ -73,7 +69,7 @@ export default function LoginPage() {
           type="email"
           placeholder="이메일"
           register={register}
-          validationRules={emailValidationRules}
+          validationRules={loginValidationRules.emailValidationRules}
           margin="mb-4"
           srOnlyClass="sr-only"
         />
@@ -83,7 +79,7 @@ export default function LoginPage() {
           type="password"
           placeholder="비밀번호"
           register={register}
-          validationRules={passwordValidationRules}
+          validationRules={loginValidationRules.passwordValidationRules}
           margin={`${errors.email || errors.password ? '' : 'mb-7'}`}
           srOnlyClass="sr-only"
         />

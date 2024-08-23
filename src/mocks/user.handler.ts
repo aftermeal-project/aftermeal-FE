@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../constants/url';
+import { BASE_URL } from '../constants';
 
 export const userHandlers = [
   http.post(BASE_URL + '/v1/users', async ({ request }) => {

@@ -4,12 +4,7 @@ import { SignupAPI } from '../../libs/api/user';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
 import { SignupRequest } from '../../types/user';
-import {
-  emailValidationRules,
-  passwordValidationRules,
-  nameValidationRules,
-  generationValidationRules,
-} from '../../constants/rules/signupValidationRules';
+import { signupValidationRules } from '../../constants';
 import {
   AuthFormContainer,
   AuthInput,
@@ -100,7 +95,7 @@ export default function SignupPage() {
           type="text"
           placeholder="이름"
           register={register}
-          validationRules={nameValidationRules}
+          validationRules={signupValidationRules.nameValidationRules}
           margin="mb-4"
           error={errors.name}
         />
@@ -110,7 +105,7 @@ export default function SignupPage() {
           type="email"
           placeholder="학교 이메일"
           register={register}
-          validationRules={emailValidationRules}
+          validationRules={signupValidationRules.emailValidationRules}
           margin="mb-4"
           error={errors.email}
         />
@@ -121,7 +116,7 @@ export default function SignupPage() {
             type="number"
             placeholder="기수"
             register={register}
-            validationRules={generationValidationRules}
+            validationRules={signupValidationRules.generationValidationRules}
             margin="mb-4"
             error={errors.generationNumber}
           />
@@ -132,7 +127,7 @@ export default function SignupPage() {
           type="password"
           placeholder="비밀번호"
           register={register}
-          validationRules={passwordValidationRules}
+          validationRules={signupValidationRules.passwordValidationRules}
           margin={`${errors.userType || errors.name || errors.email || errors.password || errors.generationNumber ? '' : 'mb-9'}`}
           error={errors.password}
         />

@@ -1,7 +1,7 @@
 import axios, { AxiosError } from 'axios';
-import { BASE_URL } from '../constants/url';
 import { RefreshAPI } from './api/auth';
 import Token from './utils/token';
+import { BASE_URL } from '../constants';
 
 const token = new Token();
 
