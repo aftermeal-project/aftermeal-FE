@@ -52,18 +52,18 @@ export default function HomePage() {
     }
   }
 
-  async function fetchActivities() {
-    try {
-      const response = await GetActivitiesAPI();
-      setActivities(response.data);
-    } catch (error: unknown) {
-      handleFetchError(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
   useEffect(() => {
+    async function fetchActivities() {
+      try {
+        const response = await GetActivitiesAPI();
+        setActivities(response.data);
+      } catch (error: unknown) {
+        handleFetchError(error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
     fetchActivities();
   }, []);
 
