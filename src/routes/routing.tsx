@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import Path from './path';
-import HomePage from '../pages/home';
-import LoginPage from '../pages/auth/login';
-import SignupPage from '../pages/auth/signup';
-import NotFoundPage from '../pages/not-found ';
+import HomePage from '../pages/home/HomePage';
+import LoginPage from '../pages/auth/LoginPage';
+import SignupPage from '../pages/auth/SignupPage';
+import NotFoundPage from '../pages/not-found/NotFoundPage';
 
 export default function Routing() {
   return (
