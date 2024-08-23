@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
 import { GetActivitiesAPI } from '../../libs/api/activities';
 import { Activity } from '../../types/activities';
-import ActivityCard from '../../components/home/card';
 import { ParticipationAPI } from '../../libs/api/participation';
 import { AxiosError } from 'axios';
 import { getActivitiesErrorMessages } from '../../constants/messages/getActivitiesErrorMessages';
-import ErrorScreen from '../../components/@global/error';
-import SkeletonActivityCard from '../../components/home/card/skeleton';
-import HomePageLayout from '../../components/home/layout';
+import { ErrorScreen } from '../../components/@global';
+import {
+  HomePageLayout,
+  SkeletonActivityCard,
+  ActivityCard,
+} from '../../components/home';
 
 export default function HomePage() {
   const [activities, setActivities] = useState<Activity[]>([]);
