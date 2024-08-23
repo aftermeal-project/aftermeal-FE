@@ -28,7 +28,7 @@ export default function AuthErrorMessages<T extends FieldValues>({
 }: AuthErrorMessagesProps<T>) {
   return (
     <>
-      {fields.map((field, index) => {
+      {fields?.map((field, index) => {
         const hasError = errors[field] != null;
         const previousFieldsHaveError = fields
           .slice(0, index)

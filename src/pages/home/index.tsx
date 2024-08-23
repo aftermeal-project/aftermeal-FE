@@ -78,7 +78,7 @@ export default function HomePage() {
           ? Array.from({ length: 8 }).map((_, index) => (
               <SkeletonActivityCard key={index} />
             ))
-          : activities.map(activity => (
+          : activities?.map(activity => (
               <ActivityCard
                 key={activity.id}
                 activityId={activity.id}
