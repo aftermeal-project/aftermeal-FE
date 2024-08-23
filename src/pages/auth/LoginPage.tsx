@@ -1,20 +1,22 @@
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { LoginRequest } from '../../../types/auth';
+import { LoginRequest } from '../../types/auth';
 import { AxiosError } from 'axios';
-import { LoginAPI } from '../../../libs/api/auth';
+import { LoginAPI } from '../../libs/api/auth';
 import { Link, useNavigate } from 'react-router-dom';
-import AuthButton from '../../../components/auth/button';
-import AuthFormContainer from '../../../components/auth/container';
-import AuthInput from '../../../components/auth/input';
-import AuthErrorMessages from '../../../components/auth/error';
 import {
   emailValidationRules,
   passwordValidationRules,
-} from '../../../constants/rules/loginValidationRules';
-import { validationMessages } from '../../../constants/messages/validationMessages';
-import { useState } from 'react';
-import AuthLoadingSpinner from '../../../components/auth/loading';
-import Token from '../../../libs/utils/token';
+} from '../../constants/rules/loginValidationRules';
+import { validationMessages } from '../../constants/messages/validationMessages';
+import Token from '../../libs/utils/token';
+import {
+  AuthFormContainer,
+  AuthInput,
+  AuthErrorMessages,
+  AuthButton,
+  AuthLoadingSpinner,
+} from '../../components/auth';
 
 export default function LoginPage() {
   const navigate = useNavigate();

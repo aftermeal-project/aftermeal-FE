@@ -1,21 +1,23 @@
 import { useState } from 'react';
-import AuthFormContainer from '../../../components/auth/container';
-import AuthInput from '../../../components/auth/input';
 import { useForm } from 'react-hook-form';
-import AuthButton from '../../../components/auth/button';
-import { SignupAPI } from '../../../libs/api/user';
+import { SignupAPI } from '../../libs/api/user';
 import { useNavigate } from 'react-router-dom';
 import { AxiosError } from 'axios';
-import { SignupRequest } from '../../../types/user';
-import UserTypeSelector from '../../../components/auth/selector';
-import AuthErrorMessages from '../../../components/auth/error';
+import { SignupRequest } from '../../types/user';
 import {
   emailValidationRules,
   passwordValidationRules,
   nameValidationRules,
   generationValidationRules,
-} from '../../../constants/rules/signupValidationRules';
-import AuthLoadingSpinner from '../../../components/auth/loading';
+} from '../../constants/rules/signupValidationRules';
+import {
+  AuthFormContainer,
+  AuthInput,
+  AuthErrorMessages,
+  AuthButton,
+  AuthLoadingSpinner,
+  AuthUserTypeSelector,
+} from '../../components/auth';
 
 type UserType = 'STUDENT' | 'TEACHER';
 
@@ -88,7 +90,7 @@ export default function SignupPage() {
   return (
     <AuthFormContainer title="애프터밀">
       <form id="registrationForm" onSubmit={handleSubmit(onValid)}>
-        <UserTypeSelector
+        <AuthUserTypeSelector
           selectedType={type}
           onChangeType={handlerUserTypeChange}
         />
