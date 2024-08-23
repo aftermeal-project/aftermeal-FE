@@ -1,4 +1,4 @@
-export const validationMessages = {
+const validationMessages = {
   REQUIRED_NAME: '이름은 필수 입력입니다.',
   MAX_LENGTH_NAME: '이름은 최대 40자 이하여야 합니다.',
   REQUIRED_EMAIL: '이메일은 필수 입력입니다.',
@@ -18,3 +18,5 @@ export const validationMessages = {
     '이메일 또는 비밀번호가 잘못되었습니다. 이메일과 비밀번호를 정확히 입력해 주세요.',
   WRONG_PASSWORD: '비밀번호가 올바르지 않습니다.',
 };
+
+export default validationMessages;

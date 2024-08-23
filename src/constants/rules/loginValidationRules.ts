@@ -1,9 +1,12 @@
-import { validationMessages } from '../messages/validationMessages';
+import validationMessages from '../messages/validationMessages';
 
-export const emailValidationRules = {
-  required: validationMessages.REQUIRED_EMAIL,
+const loginValidationRules = {
+  emailValidationRules: {
+    required: validationMessages.REQUIRED_EMAIL,
+  },
+  passwordValidationRules: {
+    required: validationMessages.REQUIRED_PASSWORD,
+  },
 };
 
-export const passwordValidationRules = {
-  required: validationMessages.REQUIRED_PASSWORD,
-};
+export default loginValidationRules;
