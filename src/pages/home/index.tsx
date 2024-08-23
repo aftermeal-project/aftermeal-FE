@@ -7,6 +7,7 @@ import { AxiosError } from 'axios';
 import { getActivitiesErrorMessages } from '../../constants/messages/getActivitiesErrorMessages';
 import ErrorScreen from '../../components/@global/error';
 import SkeletonActivityCard from '../../components/home/card/skeleton';
+import HomePageLayout from '../../components/home/layout';
 
 export default function HomePage() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -72,24 +73,22 @@ export default function HomePage() {
   }
 
   return (
-    <main className="w-full px-4 py-8">
-      <div className="grid max-w-screen-xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {loading
-          ? Array.from({ length: 8 }).map((_, index) => (
-              <SkeletonActivityCard key={index} />
-            ))
-          : activities?.map(activity => (
-              <ActivityCard
-                key={activity.id}
-                activityId={activity.id}
-                name={activity.name}
-                currentParticipants={activity.currentParticipants}
-                maxParticipants={activity.maxParticipants}
-                onParticipate={() => participateInActivity(String(activity.id))}
-                onCancel={() => participateInActivity(String(activity.id))}
-              />
-            ))}
-      </div>
-    </main>
+    <HomePageLayout>
+      {loading
+        ? Array.from({ length: 8 }).map((_, index) => (
+            <SkeletonActivityCard key={index} />
+          ))
+        : activities?.map(activity => (
+            <ActivityCard
+              key={activity.id}
+              activityId={activity.id}
+              name={activity.name}
+              currentParticipants={activity.currentParticipants}
+              maxParticipants={activity.maxParticipants}
+              onParticipate={() => participateInActivity(String(activity.id))}
+              onCancel={() => participateInActivity(String(activity.id))}
+            />
+          ))}
+    </HomePageLayout>
   );
 }
