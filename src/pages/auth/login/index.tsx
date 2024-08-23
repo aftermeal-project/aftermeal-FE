@@ -6,7 +6,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import AuthButton from '../../../components/auth/button';
 import AuthFormContainer from '../../../components/auth/container';
 import AuthInput from '../../../components/auth/input';
-import token from '../../../libs/utils/token';
 import AuthErrorMessages from '../../../components/auth/error';
 import {
   emailValidationRules,
@@ -15,10 +14,12 @@ import {
 import { validationMessages } from '../../../constants/messages/validationMessages';
 import { useState } from 'react';
 import AuthLoadingSpinner from '../../../components/auth/loading';
+import Token from '../../../libs/utils/token';
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
+  const token = new Token();
 
   const {
     register,

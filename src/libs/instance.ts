@@ -1,7 +1,9 @@
 import axios, { AxiosError } from 'axios';
 import { BASE_URL } from '../constants/url';
-import token from './utils/token';
 import { RefreshAPI } from './api/auth';
+import Token from './utils/token';
+
+const token = new Token();
 
 let authTokenRequest: Promise<any> | null = null;
 

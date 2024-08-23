@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import token from '../../../libs/utils/token';
+import Token from '../../../libs/utils/token';
 
 export default function Header() {
   const navigate = useNavigate();
+  const token = new Token();
 
   function onLogout() {
     token.removeUser();

@@ -1,5 +1,7 @@
 import { instance } from '../instance';
-import token from '../utils/token';
+import Token from '../utils/token';
+
+const token = new Token();
 
 export const ParticipationAPI = async (activityId: string) => {
   const response = await instance({

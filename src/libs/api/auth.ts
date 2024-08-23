@@ -1,6 +1,8 @@
 import { LoginRequest, LoginResponse } from '../../types/auth';
 import { instance } from '../instance';
-import token from '../utils/token';
+import Token from '../utils/token';
+
+const token = new Token();
 
 export const LoginAPI = async (loginRequest: LoginRequest) => {
   const response = await instance<LoginResponse>({
