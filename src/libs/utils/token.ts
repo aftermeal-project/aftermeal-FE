@@ -20,4 +20,4 @@ class Token {
   }
 }
 
-export default new Token();
+export default Token;
