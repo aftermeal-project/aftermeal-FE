@@ -12,7 +12,7 @@ import {
   AuthErrorMessages,
   AuthButton,
   AuthLoadingSpinner,
-} from '../../components/auth';
+} from '../../components/ui/auth';
 
 export default function LoginPage() {
   const navigate = useNavigate();

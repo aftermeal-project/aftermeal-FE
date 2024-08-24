@@ -3,12 +3,12 @@ import { GetActivitiesAPI } from '../../libs/api/activities';
 import { Activity } from '../../types/activities';
 import { ParticipationAPI } from '../../libs/api/participation';
 import { AxiosError } from 'axios';
-import { ErrorScreen } from '../../components/@global';
+import { ErrorScreen } from '../../components/ui/@global';
 import {
   HomePageLayout,
   SkeletonActivityCard,
   ActivityCard,
-} from '../../components/home';
+} from '../../components/ui/home';
 import { getActivitiesErrorMessages } from '../../constants';
 
 export default function HomePage() {

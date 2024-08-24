@@ -12,7 +12,7 @@ import {
   AuthButton,
   AuthLoadingSpinner,
   AuthUserTypeSelector,
-} from '../../components/auth';
+} from '../../components/ui/auth';
 
 type UserType = 'STUDENT' | 'TEACHER';
 
