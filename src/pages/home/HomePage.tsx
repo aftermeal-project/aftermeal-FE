@@ -3,13 +3,13 @@ import { GetActivitiesAPI } from '../../libs/api/activities';
 import { Activity } from '../../types/activities';
 import { ParticipationAPI } from '../../libs/api/participation';
 import { AxiosError } from 'axios';
-import { ErrorScreen } from '../../components/ui/@global';
+import { getActivitiesErrorMessages } from '../../constants';
 import {
-  HomePageLayout,
+  HomePageContainer,
   SkeletonActivityCard,
   ActivityCard,
 } from '../../components/ui/home';
-import { getActivitiesErrorMessages } from '../../constants';
+import ErrorScreen from '../../components/error/ErrorScreen';
 
 export default function HomePage() {
   const [activities, setActivities] = useState<Activity[]>([]);
@@ -75,7 +75,7 @@ export default function HomePage() {
   }
 
   return (
-    <HomePageLayout>
+    <HomePageContainer>
       {loading
         ? Array.from({ length: 8 }).map((_, index) => (
             <SkeletonActivityCard key={index} />
@@ -91,6 +91,6 @@ export default function HomePage() {
               onCancel={() => participateInActivity(String(activity.id))}
             />
           ))}
-    </HomePageLayout>
+    </HomePageContainer>
   );
 }
