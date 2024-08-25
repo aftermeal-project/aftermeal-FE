@@ -1,8 +1,6 @@
 import { Suspense } from 'react';
 import ErrorScreen from '../../components/error/ErrorScreen';
-import {
-  HomePageContainer,
-} from '../../components/ui/home';
+import { HomePageContainer } from '../../components/ui/home';
 import { errorMessages } from '../../constants';
 import { Activity } from '../../types/activities';
 import {
@@ -28,6 +26,6 @@ export default function HomePage() {
           </ActivityListFetcher>
         </Suspense>
       </HomePageContainer>
-    </Fet>
+    </FetchErrorBoundary>
   );
 }
