@@ -1,4 +1,4 @@
-import { SkeletonActivityCard } from '../../../components/ui/home';
+import SkeletonActivityCard from './SkeletonActivityCard';
 
 export default function ActivityListFallback() {
   return (

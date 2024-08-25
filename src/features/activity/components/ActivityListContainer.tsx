@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
-import { ActivityCard } from '../../../components/ui/home';
 import { ParticipationAPI } from '../../../libs/api/participation';
 import { Activity } from '../../../types/activities';
+import ActivityCard from './ActivityCard';
 
 interface ActivityListContainerProps {
   activities: Activity[];
