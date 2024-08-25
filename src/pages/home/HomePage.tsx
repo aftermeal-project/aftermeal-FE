@@ -1,7 +1,6 @@
 import { Suspense } from 'react';
 import ErrorScreen from '../../components/error/ErrorScreen';
 import {
-  FetchErrorBoundary,
   HomePageContainer,
 } from '../../components/ui/home';
 import { errorMessages } from '../../constants';
@@ -11,6 +10,7 @@ import {
   ActivityListFetcher,
   ActivityListContainer,
 } from '../../features/activity';
+import { FetchErrorBoundary } from '../../components/@global';
 
 export default function HomePage() {
   return (
@@ -28,6 +28,6 @@ export default function HomePage() {
           </ActivityListFetcher>
         </Suspense>
       </HomePageContainer>
-    </FetchErrorBoundary>
+    </Fet>
   );
 }
