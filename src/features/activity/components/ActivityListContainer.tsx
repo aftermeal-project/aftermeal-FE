@@ -30,7 +30,7 @@ export default function ActivityListContainer({
   }
 
   return (
-    <section>
+    <>
       {activities.map(activity => (
         <ActivityCard
           key={activity.id}
@@ -42,6 +42,6 @@ export default function ActivityListContainer({
           onCancel={() => participateInActivity(String(activity.id))}
         />
       ))}
-    </section>
+    </>
   );
 }
