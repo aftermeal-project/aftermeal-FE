@@ -25,15 +25,31 @@ class FetchErrorBoundary extends React.Component<
     return { hasError: true, error };
   }
 
+  onRetry = () => {
+    this.setState({ hasError: false, error: null });
+  };
+
   render() {
     if (this.state.hasError && this.state.error) {
       const message = this.state.error.message;
       const messages = Object.values(errorMessages);
 
       if (messages.includes(message)) {
-        return <ErrorScreen title="Oops" description={message} />;
+        return (
+          <ErrorScreen
+            title="Oops!"
+            description={message}
+            onRetry={this.onRetry}
+          />
+        );
       } else {
-        return this.props.fallback;
+        return (
+          <ErrorScreen
+            title="Oops!"
+            description={errorMessages.UNKNOWN_ERROR}
+            onRetry={this.onRetry}
+          />
+        );
       }
     } else if (this.state.hasError) {
       return this.props.fallback;
