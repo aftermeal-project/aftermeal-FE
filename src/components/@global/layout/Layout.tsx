@@ -6,13 +6,14 @@ import Routing from '../../../routes/routing';
 export default function Layout() {
   const location = useLocation();
 
-  const isNotAuthDomain =
+  const isNotNormalDomain =
     location.pathname !== Path.LoginPage &&
-    location.pathname !== Path.SignupPage;
+    location.pathname !== Path.SignupPage &&
+    location.pathname !== Path.AdminPage;
 
   return (
     <>
-      {isNotAuthDomain && <Header />}
+      {isNotNormalDomain && <Header />}
       <Routing />
     </>
   );
