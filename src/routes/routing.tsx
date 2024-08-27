@@ -4,6 +4,7 @@ import HomePage from '../pages/home/HomePage';
 import LoginPage from '../pages/auth/LoginPage';
 import SignupPage from '../pages/auth/SignupPage';
 import NotFoundPage from '../pages/not-found/NotFoundPage';
+import AdminPage from '../pages/admin/AdminPage';
 
 export default function Routing() {
   return (
@@ -11,6 +12,7 @@ export default function Routing() {
       <Route path={Path.HomePage} element={<HomePage />} />
       <Route path={Path.LoginPage} element={<LoginPage />} />
       <Route path={Path.SignupPage} element={<SignupPage />} />
+      <Route path={Path.AdminPage} element={<AdminPage />} />
       <Route path={Path.NotFoundPage} element={<NotFoundPage />} />
     </Routes>
   );
