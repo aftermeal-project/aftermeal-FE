@@ -12,11 +12,12 @@ const validationMessages = {
   INVALID_PASSWORD:
     '비밀번호는 영문 대소문자, 숫자, 특수문자를 포함해야 합니다.',
   GENERATION_RANGE_ERROR: '재학 중인 학생이어야 합니다.',
-  GENERATION_NOT_FOUND_ERROR: '존재하지 않는 기수입니다',
+  GENERATION_NOT_FOUND_ERROR: '존재하지 않는 기수입니다.',
   DUPLICATE_EMAIL: '이미 가입된 이메일입니다.',
   INVALID_CREDENTIALS:
     '이메일 또는 비밀번호가 잘못되었습니다. 이메일과 비밀번호를 정확히 입력해 주세요.',
   WRONG_PASSWORD: '비밀번호가 올바르지 않습니다.',
+  IS_NOT_SCHOOL_EMAIL: '학생은 학교 이메일을 사용해야 합니다.',
 };
 
 export default validationMessages;
