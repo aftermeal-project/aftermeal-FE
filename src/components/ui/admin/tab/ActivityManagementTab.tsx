@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
 import { Activity } from '../../../../pages/admin/AdminPage';
 import ActivityManagementTable from '../table/ActivityManagementTable';
@@ -13,9 +13,7 @@ interface ActivityManagementTabProps {
 export default function ActivityManagementTab({
   activities,
 }: ActivityManagementTabProps) {
-  const [deleteModal] = useRecoilState(
-    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
-  );
+  const deleteModal = useRecoilValue(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
   const [createModal, setCreateModal] = useRecoilState(
     ModalAtomFamily(AtomKeys.CREATE_ACTIVITY),
   );

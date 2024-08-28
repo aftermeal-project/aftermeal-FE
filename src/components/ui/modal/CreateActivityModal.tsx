@@ -1,4 +1,4 @@
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import ModalLayout from '../../@global/layout/ModalLayout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ModalAtomFamily } from '../../../atoms';
@@ -23,9 +23,7 @@ export default function CreateActivityModal() {
     },
   });
 
-  const [_, setModal] = useRecoilState(
-    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY),
-  );
+  const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.CREATE_ACTIVITY));
 
   const onSubmit: SubmitHandler<ActivityFormValues> = data => {
     setModal(false);

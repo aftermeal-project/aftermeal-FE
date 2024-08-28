@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { ActionButtons } from '../button';
 import UpdateTableCell from '../cell/UpdateTableCell';
 import { Activity } from '../../../../pages/admin/AdminPage';
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 
@@ -13,9 +13,7 @@ interface TableBodyProps {
 
 export default function TableBody({ activities }: TableBodyProps) {
   const [activeId, setActiveId] = useState<number | null>(null);
-  const [_, setMoal] = useRecoilState(
-    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
-  );
+  const setMoal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
 
   const { register, handleSubmit, reset } = useForm<Activity>({
     defaultValues: {},

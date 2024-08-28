@@ -1,12 +1,10 @@
-import { useRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../atoms';
 import ModalLayout from '../../@global/layout/ModalLayout';
 import { AtomKeys } from '../../../constants';
 
 export default function ConfirmDeleteModal() {
-  const [_, setModal] = useRecoilState(
-    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY),
-  );
+  const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
 
   function handleModalClose() {
     setModal(false);
