@@ -1,5 +1,4 @@
-import { SetterOrUpdater, useRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../atoms';
+import { SetterOrUpdater } from 'recoil';
 import ModalLayout from '../../@global/layout/ModalLayout';
 
 interface ConfirmDeleteModalProps {
