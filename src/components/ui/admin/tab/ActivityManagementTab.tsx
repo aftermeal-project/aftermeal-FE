@@ -10,9 +10,7 @@ export default function ActivityManagementTab({
 }: ActivityManagementTabProps) {
   function onCreateActivity() {}
 
-  function onUpdateActivitiy(activityId: number) {}
-
-  function onDeleteActivity(activityId: number) {}
+  console.log(activities);
 
   return (
     <div className="h-full overflow-hidden">
@@ -26,11 +24,7 @@ export default function ActivityManagementTab({
         </button>
       </div>
       <div className="overflow-x-auto">
-        <ActivityManagementTable
-          activities={activities}
-          onUpdateActivity={onUpdateActivitiy}
-          onDeleteActivity={onDeleteActivity}
-        />
+        <ActivityManagementTable activities={activities} />
       </div>
     </div>
   );
