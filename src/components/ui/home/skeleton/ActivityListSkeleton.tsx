@@ -1,8 +1,10 @@
+import SkeletonActivityCard from './SkeletonActivityCard';
+
 export default function ActivityListSkeleton() {
   return (
     <>
       {Array.from({ length: 8 }).map(() => (
-        <s key={crypto.randomUUID()} />
+        <SkeletonActivityCard key={crypto.randomUUID()} />
       ))}
     </>
   );
