@@ -3,7 +3,7 @@ import ModalLayout from '../../@global/layout/ModalLayout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ModalAtomFamily } from '../../../atoms';
 import { AtomKeys } from '../../../constants';
-import { AuthInput } from '../auth';
+import { Input } from '../../@global';
 
 interface ActivityFormValues {
   name: string;
@@ -42,7 +42,7 @@ export default function CreateActivityModal() {
       >
         <h2 className="mb-8 text-lg font-bold">활동 추가</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <AuthInput<ActivityFormValues>
+          <Input<ActivityFormValues>
             label="이름"
             name="name"
             type="text"
@@ -51,7 +51,7 @@ export default function CreateActivityModal() {
             margin="mb-4"
             error={errors.name}
           />
-          <AuthInput<ActivityFormValues>
+          <Input<ActivityFormValues>
             label="장소"
             name="location"
             type="text"
@@ -60,7 +60,7 @@ export default function CreateActivityModal() {
             margin="mb-4"
             error={errors.location}
           />
-          <AuthInput<ActivityFormValues>
+          <Input<ActivityFormValues>
             label="최대 참가자 수"
             name="maxParticipants"
             type="number"

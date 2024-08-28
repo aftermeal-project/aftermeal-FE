@@ -3,12 +3,12 @@ import { useNavigate, Link } from 'react-router-dom';
 import { loginValidationRules } from '../../../constants';
 import { LoginRequest } from '../../../types/auth';
 import {
-  AuthInput,
   AuthErrorMessages,
   AuthButton,
   AuthLoadingSpinner,
 } from '../../../components/ui/auth';
 import useLogin from '../api/login';
+import { Input } from '../../../components/@global';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -29,7 +29,7 @@ export default function LoginForm() {
   return (
     <>
       <form id="loginForm" onSubmit={handleSubmit(onValid)}>
-        <AuthInput<LoginRequest>
+        <Input<LoginRequest>
           label="이메일"
           name="email"
           type="email"
@@ -39,7 +39,7 @@ export default function LoginForm() {
           margin="mb-4"
           srOnlyClass="sr-only"
         />
-        <AuthInput<LoginRequest>
+        <Input<LoginRequest>
           label="비밀번호"
           name="password"
           type="password"

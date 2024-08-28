@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import {
   AuthUserTypeSelector,
-  AuthInput,
   AuthErrorMessages,
   AuthButton,
   AuthLoadingSpinner,
@@ -11,6 +10,7 @@ import {
 import { validationMessages, signupValidationRules } from '../../../constants';
 import { SignupRequest } from '../../../types/user';
 import useSignup from '../api/signup';
+import { Input } from '../../../components/@global';
 
 type UserType = 'STUDENT' | 'TEACHER';
 
@@ -55,7 +55,7 @@ export default function SignupForm() {
           selectedType={type}
           onChangeType={handlerUserTypeChange}
         />
-        <AuthInput<SignupRequest>
+        <Input<SignupRequest>
           label="이름"
           name="name"
           type="text"
@@ -65,7 +65,7 @@ export default function SignupForm() {
           margin="mb-4"
           error={errors.name}
         />
-        <AuthInput<SignupRequest>
+        <Input<SignupRequest>
           label="학교 이메일"
           name="email"
           type="email"
@@ -76,7 +76,7 @@ export default function SignupForm() {
           error={errors.email}
         />
         {type === 'STUDENT' && (
-          <AuthInput<SignupRequest>
+          <Input<SignupRequest>
             label="기수"
             name="generationNumber"
             type="number"
@@ -87,7 +87,7 @@ export default function SignupForm() {
             error={errors.generationNumber}
           />
         )}
-        <AuthInput<SignupRequest>
+        <Input<SignupRequest>
           label="비밀번호"
           name="password"
           type="password"

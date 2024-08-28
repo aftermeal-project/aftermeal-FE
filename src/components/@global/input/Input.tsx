@@ -6,7 +6,7 @@ import {
   UseFormRegister,
 } from 'react-hook-form';
 
-interface AuthInputProps<T extends FieldValues>
+interface InputProps<T extends FieldValues>
   extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   name: Path<T>;
@@ -17,7 +17,7 @@ interface AuthInputProps<T extends FieldValues>
   srOnlyClass?: string;
 }
 
-export default function AuthInput<T extends FieldValues>({
+export default function Input<T extends FieldValues>({
   label,
   name,
   register,
@@ -26,7 +26,7 @@ export default function AuthInput<T extends FieldValues>({
   error,
   srOnlyClass = '',
   ...rest
-}: AuthInputProps<T>) {
+}: InputProps<T>) {
   return (
     <div className={`text-left ${margin}`}>
       <label
