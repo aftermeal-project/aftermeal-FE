@@ -1,13 +1,10 @@
-import { SetterOrUpdater } from 'recoil';
+import { useRecoilState } from 'recoil';
+import { ModalAtomFamily } from '../../../atoms';
 import ModalLayout from '../../@global/layout/ModalLayout';
 
-interface ConfirmDeleteModalProps {
-  setModal: SetterOrUpdater<boolean>;
-}
+export default function ConfirmDeleteModal() {
+  const [_, setModal] = useRecoilState(ModalAtomFamily('create_activity'));
 
-export default function ConfirmDeleteModal({
-  setModal,
-}: ConfirmDeleteModalProps) {
   function handleModalClose() {
     setModal(false);
   }
