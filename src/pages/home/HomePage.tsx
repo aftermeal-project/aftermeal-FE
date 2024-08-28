@@ -1,10 +1,12 @@
 import { Suspense } from 'react';
 import ErrorScreen from '../../components/error/ErrorScreen';
-import { HomePageContainer } from '../../components/ui/home';
+import {
+  ActivityListSkeleton,
+  HomePageContainer,
+} from '../../components/ui/home';
 import { errorMessages } from '../../constants';
 import { Activity } from '../../types/activities';
 import {
-  ActivityListFallback,
   ActivityListFetcher,
   ActivityListContainer,
 } from '../../features/activity';
@@ -18,7 +20,7 @@ export default function HomePage() {
       }
     >
       <HomePageContainer>
-        <Suspense fallback={<ActivityListFallback />}>
+        <Suspense fallback={<ActivityListSkeleton />}>
           <ActivityListFetcher>
             {(activities: Activity[]) => (
               <ActivityListContainer activities={activities} />
