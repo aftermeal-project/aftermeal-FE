@@ -3,11 +3,12 @@ import ModalLayout from '../../@global/layout/ModalLayout';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { ModalAtomFamily } from '../../../atoms';
 import { AtomKeys } from '../../../constants';
+import { AuthInput } from '../auth';
 
 interface ActivityFormValues {
   name: string;
-  maxParticipants: number;
   location: string;
+  maxParticipants: number;
 }
 
 export default function CreateActivityModal() {
@@ -18,8 +19,8 @@ export default function CreateActivityModal() {
   } = useForm<ActivityFormValues>({
     defaultValues: {
       name: '',
-      maxParticipants: 0,
       location: '',
+      maxParticipants: 2,
     },
   });
 
@@ -36,61 +37,39 @@ export default function CreateActivityModal() {
   return (
     <ModalLayout setModal={setModal}>
       <div
-        className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg"
+        className="mx-auto w-80 rounded-lg bg-white p-6 shadow-lg"
         onClick={e => e.stopPropagation()}
       >
-        <h2 className="mb-4 text-lg font-bold">활동 추가</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              이름
-            </label>
-            <input
-              type="text"
-              {...register('name', { required: '이름은 필수입니다.' })}
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-            />
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
-            )}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              최대 참가자 수
-            </label>
-            <input
-              type="number"
-              {...register('maxParticipants', {
-                required: '최대 참가자 수는 필수입니다.',
-                min: {
-                  value: 1,
-                  message: '최대 참가자 수는 1 이상이어야 합니다.',
-                },
-              })}
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-            />
-            {errors.maxParticipants && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.maxParticipants.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700">
-              장소
-            </label>
-            <input
-              type="text"
-              {...register('location', { required: '장소는 필수입니다.' })}
-              className="mt-1 w-full rounded-md border border-gray-300 px-3 py-2"
-            />
-            {errors.location && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.location.message}
-              </p>
-            )}
-          </div>
-          <div className="mt-4 flex justify-end space-x-2">
+        <h2 className="mb-8 text-lg font-bold">활동 추가</h2>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <AuthInput<ActivityFormValues>
+            label="이름"
+            name="name"
+            type="text"
+            placeholder="이름"
+            register={register}
+            margin="mb-4"
+            error={errors.name}
+          />
+          <AuthInput<ActivityFormValues>
+            label="장소"
+            name="location"
+            type="text"
+            placeholder="장소"
+            register={register}
+            margin="mb-4"
+            error={errors.location}
+          />
+          <AuthInput<ActivityFormValues>
+            label="최대 참가자 수"
+            name="maxParticipants"
+            type="number"
+            placeholder="최대 참가자 수"
+            register={register}
+            margin="mb-4"
+            error={errors.maxParticipants}
+          />
+          <div className="mt-11 flex w-full justify-between">
             <button
               type="button"
               onClick={handleModalClose}
