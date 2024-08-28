@@ -4,14 +4,14 @@ import {
   ActivityManagementTab,
 } from '../../components/ui/admin';
 
-type Activity = {
+export interface Activity {
   id: number;
   name: string;
   location: string;
   participants: number;
   maxParticipants: number;
   status: 'planned' | 'ongoing' | 'completed';
-};
+}
 
 const activities: Activity[] = [
   {
