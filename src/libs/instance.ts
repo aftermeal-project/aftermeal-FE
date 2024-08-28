@@ -71,7 +71,7 @@ instance.interceptors.response.use(
         return instance(originalRequest);
       } catch (refreshError) {
         token.removeUser();
-        window.location.replace('/login');
+        window.location.href = '/login';
         return Promise.reject(refreshError);
       } finally {
         authTokenRequest = null;
