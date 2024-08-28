@@ -35,7 +35,10 @@ export default function CreateActivityModal() {
 
   return (
     <ModalLayout setModal={setModal}>
-      <div className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg">
+      <div
+        className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg"
+        onClick={e => e.stopPropagation()}
+      >
         <h2 className="mb-4 text-lg font-bold">활동 추가</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>

@@ -12,7 +12,10 @@ export default function ConfirmDeleteModal() {
 
   return (
     <ModalLayout setModal={setModal}>
-      <div className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg">
+      <div
+        className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg"
+        onClick={e => e.stopPropagation()}
+      >
         <h2 className="mb-4 text-lg font-bold">삭제 확인</h2>
         <p>정말 항목을 삭제하시겠습니까?</p>
         <div className="mt-4 flex w-full justify-between">
