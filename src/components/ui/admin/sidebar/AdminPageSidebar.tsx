@@ -12,7 +12,7 @@ export default function AdminPageSidebar({
   selectedTab,
   setSelectedTab,
 }: AdminPageSidebarProps) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(false);
 
   const handleToggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
@@ -21,12 +21,12 @@ export default function AdminPageSidebar({
   return (
     <aside
       className={`h-full bg-gray-900 text-white ${
-        isSidebarOpen ? 'w-64' : 'w-20'
+        isSidebarOpen ? 'w-64' : 'w-14'
       } transition-all duration-300`}
     >
       <div className="flex items-center justify-between p-4">
         <h1 className={`text-xl font-bold ${!isSidebarOpen && 'hidden'}`}>
-          Admin Panel
+          Menu
         </h1>
         <button onClick={handleToggleSidebar} className="text-white">
           {isSidebarOpen ? (
@@ -40,9 +40,9 @@ export default function AdminPageSidebar({
         <ul>
           <li
             className={`flex cursor-pointer items-center px-4 py-2 hover:bg-gray-700 ${
-              selectedTab === 'activities' ? 'bg-gray-700' : ''
+              selectedTab === 'activity' ? 'bg-gray-700' : ''
             }`}
-            onClick={() => setSelectedTab('activities')}
+            onClick={() => setSelectedTab('activity')}
           >
             <FaClipboardList size={20} />
             <span className={`ml-4 ${!isSidebarOpen && 'hidden'}`}>
@@ -52,9 +52,9 @@ export default function AdminPageSidebar({
 
           <li
             className={`flex cursor-pointer items-center px-4 py-2 hover:bg-gray-700 ${
-              selectedTab === 'users' ? 'bg-gray-700' : ''
+              selectedTab === 'activity-schedules' ? 'bg-gray-700' : ''
             }`}
-            onClick={() => setSelectedTab('users')}
+            onClick={() => setSelectedTab('activity-schedules')}
           >
             <FaUsers size={20} />
             <span className={`ml-4 ${!isSidebarOpen && 'hidden'}`}>
@@ -64,9 +64,9 @@ export default function AdminPageSidebar({
 
           <li
             className={`flex cursor-pointer items-center px-4 py-2 hover:bg-gray-700 ${
-              selectedTab === 'participants' ? 'bg-gray-700' : ''
+              selectedTab === 'users' ? 'bg-gray-700' : ''
             }`}
-            onClick={() => setSelectedTab('participants')}
+            onClick={() => setSelectedTab('users')}
           >
             <FaUserCog size={20} />
             <span className={`ml-4 ${!isSidebarOpen && 'hidden'}`}>
