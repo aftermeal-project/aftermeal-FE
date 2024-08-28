@@ -3,12 +3,14 @@ import { useForm } from 'react-hook-form';
 import { ActionButtons } from '../button';
 import UpdateTableCell from '../cell/UpdateTableCell';
 import { Activity } from '../../../../pages/admin/AdminPage';
+import { SetterOrUpdater } from 'recoil';
 
 interface TableBodyProps {
   activities: Activity[];
+  setModal: SetterOrUpdater<boolean>;
 }
 
-export default function TableBody({ activities }: TableBodyProps) {
+export default function TableBody({ activities, setModal }: TableBodyProps) {
   const [activeId, setActiveId] = useState<number | null>(null);
 
   const { register, handleSubmit, reset } = useForm<Activity>({
@@ -34,7 +36,9 @@ export default function TableBody({ activities }: TableBodyProps) {
     reset();
   }
 
-  function onDeleteActivity(activityId: number) {}
+  function onDeleteActivity(activityId: number) {
+    setModal(true);
+  }
 
   return (
     <tbody>
