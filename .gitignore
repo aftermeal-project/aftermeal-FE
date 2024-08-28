@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/src/_legacy
+/src/aftermeal-server
 /.pnp
 .pnp.js
 
@@ -26,3 +26,4 @@ yarn-error.log*
 
 # Local Netlify folder
 .netlify
+
