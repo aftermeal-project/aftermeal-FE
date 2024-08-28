@@ -4,6 +4,7 @@ import { Activity } from '../../../../pages/admin/AdminPage';
 import ActivityManagementTable from '../table/ActivityManagementTable';
 import ConfirmDeleteModal from '../../modal/ConfirmDeleteModal';
 import CreateActivityModal from '../../modal/CreateActivityModal';
+import { AtomKeys } from '../../../../constants';
 
 interface ActivityManagementTabProps {
   activities: Activity[];
@@ -12,9 +13,11 @@ interface ActivityManagementTabProps {
 export default function ActivityManagementTab({
   activities,
 }: ActivityManagementTabProps) {
-  const [deleteModal] = useRecoilState(ModalAtomFamily('confirm_delete'));
+  const [deleteModal] = useRecoilState(
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
+  );
   const [createModal, setCreateModal] = useRecoilState(
-    ModalAtomFamily('create_activity'),
+    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY),
   );
 
   function onCreateActivity() {
