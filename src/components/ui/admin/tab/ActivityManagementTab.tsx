@@ -3,6 +3,7 @@ import { ModalAtomFamily } from '../../../../atoms';
 import { Activity } from '../../../../pages/admin/AdminPage';
 import ActivityManagementTable from '../table/ActivityManagementTable';
 import ConfirmDeleteModal from '../../modal/ConfirmDeleteModal';
+import CreateActivityModal from '../../modal/CreateActivityModal';
 
 interface ActivityManagementTabProps {
   activities: Activity[];
@@ -11,12 +12,19 @@ interface ActivityManagementTabProps {
 export default function ActivityManagementTab({
   activities,
 }: ActivityManagementTabProps) {
-  function onCreateActivity() {}
-  const [modal, setModal] = useRecoilState(ModalAtomFamily('confirm_delete'));
+  const [deleteModal] = useRecoilState(ModalAtomFamily('confirm_delete'));
+  const [createModal, setCreateModal] = useRecoilState(
+    ModalAtomFamily('create_activity'),
+  );
+
+  function onCreateActivity() {
+    setCreateModal(true);
+  }
 
   return (
     <>
-      {modal && <ConfirmDeleteModal setModal={setModal} />}
+      {deleteModal && <ConfirmDeleteModal />}
+      {createModal && <CreateActivityModal />}
       <div className="h-full overflow-hidden">
         <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">활동 관리</h1>
@@ -28,10 +36,7 @@ export default function ActivityManagementTab({
           </button>
         </div>
         <div className="overflow-x-auto">
-          <ActivityManagementTable
-            activities={activities}
-            setModal={setModal}
-          />
+          <ActivityManagementTable activities={activities} />
         </div>
       </div>
     </>
