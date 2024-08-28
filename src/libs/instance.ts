@@ -14,6 +14,11 @@ export const instance = axios.create({
   },
 });
 
+function redirectTo(path: string) {
+  window.history.pushState({}, '', path);
+  window.location.reload(); // 페이지를 새로 고침하여 리디렉션 적용
+}
+
 async function refreshAuthToken() {
   try {
     return await RefreshAPI();
@@ -71,7 +76,7 @@ instance.interceptors.response.use(
         return instance(originalRequest);
       } catch (refreshError) {
         token.removeUser();
-        window.location.href = '/login';
+        redirectTo('/login');
         return Promise.reject(refreshError);
       } finally {
         authTokenRequest = null;
