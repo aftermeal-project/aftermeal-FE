@@ -26,7 +26,7 @@ export default function ModalLayout({ children, setModal }: Props) {
   return (
     <div className="fixed inset-x-0 inset-y-0 z-[10] flex h-screen w-full flex-col items-center">
       <div
-        className="fixed flex h-full w-full items-center justify-center bg-black/[.3]"
+        className="fixed flex h-full w-full items-center justify-center bg-black/[.2]"
         onClick={onClick}
       >
         {children}
