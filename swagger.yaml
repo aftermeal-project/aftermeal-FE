@@ -1,14 +1,7 @@
 openapi: 3.0.3
 info:
   title: Aftermeal API Docs
-  description: 에프터밀 API 엔드포인트(Endpoint)와 객체 정보, 파라미터, 요청 및 응답 예제를 살펴보세요.
   version: 1.0.0
-
-servers:
-  - url: https://api.aftermeal.online/v1
-    description: Production API Server
-  - url: https://dev-api.aftermeal.online/v1
-    description: Dev API Server
 
 tags:
   - name: Users
@@ -32,7 +25,7 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
@@ -72,6 +65,58 @@ paths:
       responses:
         '204':
           description: User deleted successfully
+
+  /participation:
+    post:
+      operationId: 'ParticipationController_applyParticipation'
+      summary: '참가 신청'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipationApplicationRequestDto'
+      responses:
+        '201':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  participationId:
+                    type: integer
+        '400':
+          description: 'Bad Request'
+        '404':
+          description: 'Not Found'
+      tags:
+        - 'Participations'
+      security:
+        - bearer: []
+
+  /participation/{participationId}:
+    delete:
+      operationId: 'ParticipationController_cancelParticipation'
+      summary: '참가 신청 취소'
+      parameters:
+        - name: participationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: 'OK'
+        '400':
+          description: 'Bad Request'
+        '404':
+          description: 'Not Found'
+      tags:
+        - 'Participations'
+      security:
+        - bearer: []
 
   /activities:
     get:
@@ -158,11 +203,11 @@ paths:
         - Activity Schedules
       summary: 활동 일정 상세 조회
       parameters:
-      - name: activityScheduleId
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: activityScheduleId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: Successful response
@@ -179,11 +224,11 @@ paths:
         - Activity Schedules
       summary: 활동 일정 상태 수정
       parameters:
-      - name: activityScheduleId
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: activityScheduleId
+          in: path
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
@@ -228,7 +273,35 @@ paths:
               schema:
                 $ref: '#/components/schemas/LoginResponse'
 
+  /auth/refresh:
+    post:
+      operationId: 'AuthController_refresh'
+      summary: '토큰 갱신'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequestDto'
+      responses:
+        '201':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefreshResponseDto'
+        '400':
+          description: 'Bad Request'
+      tags:
+        - 'Authentication'
+
 components:
+  securitySchemes:
+    bearer:
+      scheme: 'bearer'
+      bearerFormat: 'JWT'
+      type: 'http'
   schemas:
     UserListResponse:
       type: object
@@ -276,7 +349,6 @@ components:
           type: string
         location:
           type: string
-          enum: [AUDITORIUM, GROUND]
         maxParticipants:
           type: integer
 
@@ -289,7 +361,6 @@ components:
           type: integer
         location:
           type: string
-          enum: [AUDITORIUM, GROUND]
 
     ActivityUpdateRequest:
       type: object
@@ -300,7 +371,6 @@ components:
           type: integer
         location:
           type: string
-          enum: [AUDITORIUM, GROUND]
 
     ActivityScheduleListResponse:
       type: object
@@ -389,3 +459,69 @@ components:
               items:
                 type: string
                 enum: [USER, ADMIN]
+
+    TokenRefreshRequestDto:
+      type: 'object'
+      properties:
+        refreshToken:
+          type: 'string'
+      required:
+        - 'refreshToken'
+
+    TokenRefreshResponseDto:
+      type: 'object'
+      properties:
+        accessToken:
+          type: 'string'
+        tokenType:
+          type: 'string'
+        expiredIn:
+          type: 'number'
+        refreshToken:
+          type: 'string'
+      required:
+        - 'accessToken'
+        - 'tokenType'
+        - 'expiredIn'
+        - 'refreshToken'
+
+    ParticipationApplicationRequestDto:
+      type: 'object'
+      properties:
+        activityId:
+          type: 'number'
+          minimum: 1
+      required:
+        - 'activityId'
+
+    ParticipationCancellationRequestDto:
+      type: 'object'
+      properties:
+        activityId:
+          type: 'number'
+          minimum: 1
+      required:
+        - 'activityId'
+
+    UserRegistrationRequestDto:
+      type: 'object'
+      properties:
+        name:
+          type: 'string'
+        email:
+          type: 'string'
+        userType:
+          type: 'string'
+          enum:
+            - 'STUDENT'
+            - 'TEACHER'
+        generationNumber:
+          type: 'number'
+          minimum: 1
+        password:
+          type: 'string'
+      required:
+        - 'name'
+        - 'email'
+        - 'userType'
+        - 'password'
