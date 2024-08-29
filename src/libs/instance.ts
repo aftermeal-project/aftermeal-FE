@@ -13,8 +13,10 @@ export const instance = axios.create({
 });
 
 async function refreshAuthToken() {
+  const refreshToken = token.getLocalRefreshToken();
+
   try {
-    return await RefreshAPI();
+    return await RefreshAPI(refreshToken);
   } catch (error) {
     throw new Error('Failed to refresh auth token');
   }
