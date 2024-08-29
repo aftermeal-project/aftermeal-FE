@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface ActivityScheduleResponseParticipantsInner
+ * @interface TokenRefreshRequestDto
  */
-export interface ActivityScheduleResponseParticipantsInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof ActivityScheduleResponseParticipantsInner
-     */
-    'id'?: number;
+export interface TokenRefreshRequestDto {
     /**
      * 
      * @type {string}
-     * @memberof ActivityScheduleResponseParticipantsInner
+     * @memberof TokenRefreshRequestDto
      */
-    'displayName'?: string;
+    'refreshToken': string;
 }
 

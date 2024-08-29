@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface ActivityScheduleResponseParticipantsInner
+ * @interface ParticipationApplicationRequestDto
  */
-export interface ActivityScheduleResponseParticipantsInner {
+export interface ParticipationApplicationRequestDto {
     /**
      * 
      * @type {number}
-     * @memberof ActivityScheduleResponseParticipantsInner
+     * @memberof ParticipationApplicationRequestDto
      */
-    'id'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityScheduleResponseParticipantsInner
-     */
-    'displayName'?: string;
+    'activityId': number;
 }
 

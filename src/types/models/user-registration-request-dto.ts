@@ -17,46 +17,46 @@
 /**
  * 
  * @export
- * @interface UserUpdateRequest
+ * @interface UserRegistrationRequestDto
  */
-export interface UserUpdateRequest {
+export interface UserRegistrationRequestDto {
     /**
      * 
      * @type {string}
-     * @memberof UserUpdateRequest
+     * @memberof UserRegistrationRequestDto
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
-     * @memberof UserUpdateRequest
+     * @memberof UserRegistrationRequestDto
      */
-    'type'?: UserUpdateRequestType;
+    'email': string;
     /**
      * 
      * @type {string}
-     * @memberof UserUpdateRequest
+     * @memberof UserRegistrationRequestDto
      */
-    'status'?: UserUpdateRequestStatus;
+    'userType': UserRegistrationRequestDtoUserType;
     /**
      * 
      * @type {number}
-     * @memberof UserUpdateRequest
+     * @memberof UserRegistrationRequestDto
      */
     'generationNumber'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof UserRegistrationRequestDto
+     */
+    'password': string;
 }
 
-export const UserUpdateRequestType = {
+export const UserRegistrationRequestDtoUserType = {
     Student: 'STUDENT',
     Teacher: 'TEACHER'
 } as const;
 
-export type UserUpdateRequestType = typeof UserUpdateRequestType[keyof typeof UserUpdateRequestType];
-export const UserUpdateRequestStatus = {
-    Activate: 'ACTIVATE',
-    Deactivate: 'DEACTIVATE'
-} as const;
-
-export type UserUpdateRequestStatus = typeof UserUpdateRequestStatus[keyof typeof UserUpdateRequestStatus];
+export type UserRegistrationRequestDtoUserType = typeof UserRegistrationRequestDtoUserType[keyof typeof UserRegistrationRequestDtoUserType];
 
 

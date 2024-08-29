@@ -17,20 +17,32 @@
 /**
  * 
  * @export
- * @interface ActivityScheduleResponseParticipantsInner
+ * @interface TokenRefreshResponseDto
  */
-export interface ActivityScheduleResponseParticipantsInner {
-    /**
-     * 
-     * @type {number}
-     * @memberof ActivityScheduleResponseParticipantsInner
-     */
-    'id'?: number;
+export interface TokenRefreshResponseDto {
     /**
      * 
      * @type {string}
-     * @memberof ActivityScheduleResponseParticipantsInner
+     * @memberof TokenRefreshResponseDto
      */
-    'displayName'?: string;
+    'accessToken': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TokenRefreshResponseDto
+     */
+    'tokenType': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TokenRefreshResponseDto
+     */
+    'expiredIn': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TokenRefreshResponseDto
+     */
+    'refreshToken': string;
 }
 

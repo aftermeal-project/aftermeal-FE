@@ -17,20 +17,14 @@
 /**
  * 
  * @export
- * @interface ActivityScheduleResponseParticipantsInner
+ * @interface ParticipationControllerApplyParticipation201Response
  */
-export interface ActivityScheduleResponseParticipantsInner {
+export interface ParticipationControllerApplyParticipation201Response {
     /**
      * 
      * @type {number}
-     * @memberof ActivityScheduleResponseParticipantsInner
+     * @memberof ParticipationControllerApplyParticipation201Response
      */
-    'id'?: number;
-    /**
-     * 
-     * @type {string}
-     * @memberof ActivityScheduleResponseParticipantsInner
-     */
-    'displayName'?: string;
+    'participationId'?: number;
 }
 
