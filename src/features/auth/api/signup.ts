@@ -4,16 +4,16 @@ import { errorMessages, validationMessages } from '../../../constants';
 import { UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
 import { SignupAPI } from '../../../libs/api/user';
-import { SignupRequest } from '../../../types/user';
+import { UserRegistrationRequestDto } from '../../../types';
 
 interface useSignupProps {
-  setError: UseFormSetError<SignupRequest>;
+  setError: UseFormSetError<UserRegistrationRequestDto>;
   navigate: NavigateFunction;
 }
 
 interface HandleSignupErrorProps {
   error: any;
-  setError: UseFormSetError<SignupRequest>;
+  setError: UseFormSetError<UserRegistrationRequestDto>;
 }
 
 function handleSignupError({ error, setError }: HandleSignupErrorProps) {
@@ -22,7 +22,7 @@ function handleSignupError({ error, setError }: HandleSignupErrorProps) {
 
     const errorMapping: Record<
       number,
-      { field: keyof SignupRequest; message: string }
+      { field: keyof UserRegistrationRequestDto; message: string }
     > = {
       400: {
         field: 'generationNumber',
@@ -61,7 +61,7 @@ function handleSignupError({ error, setError }: HandleSignupErrorProps) {
 
 export default function useSignup({ setError, navigate }: useSignupProps) {
   const mutation = useMutation({
-    mutationFn: (data: SignupRequest) => SignupAPI(data),
+    mutationFn: (data: UserRegistrationRequestDto) => SignupAPI(data),
     onSuccess: data => {
       navigate('/login');
     },

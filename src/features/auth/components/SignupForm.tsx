@@ -8,9 +8,9 @@ import {
   AuthLoadingSpinner,
 } from '../../../components/ui/auth';
 import { validationMessages, signupValidationRules } from '../../../constants';
-import { SignupRequest } from '../../../types/user';
 import useSignup from '../api/signup';
 import { Input } from '../../../components/@global';
+import { UserRegistrationRequestDto } from '../../../types';
 
 type UserType = 'STUDENT' | 'TEACHER';
 
@@ -24,7 +24,7 @@ export default function SignupForm() {
     setError,
     reset,
     formState: { errors },
-  } = useForm<SignupRequest>();
+  } = useForm<UserRegistrationRequestDto>();
 
   const { signup, isLoading } = useSignup({ setError, navigate });
 
@@ -33,7 +33,7 @@ export default function SignupForm() {
     setType(type);
   }
 
-  async function onValid(data: SignupRequest) {
+  async function onValid(data: UserRegistrationRequestDto) {
     data.userType = type;
     data.generationNumber = Number(data.generationNumber);
 
@@ -55,7 +55,7 @@ export default function SignupForm() {
           selectedType={type}
           onChangeType={handlerUserTypeChange}
         />
-        <Input<SignupRequest>
+        <Input<UserRegistrationRequestDto>
           label="이름"
           name="name"
           type="text"
@@ -65,7 +65,7 @@ export default function SignupForm() {
           margin="mb-4"
           error={errors.name}
         />
-        <Input<SignupRequest>
+        <Input<UserRegistrationRequestDto>
           label="학교 이메일"
           name="email"
           type="email"
@@ -76,7 +76,7 @@ export default function SignupForm() {
           error={errors.email}
         />
         {type === 'STUDENT' && (
-          <Input<SignupRequest>
+          <Input<UserRegistrationRequestDto>
             label="기수"
             name="generationNumber"
             type="number"
@@ -87,7 +87,7 @@ export default function SignupForm() {
             error={errors.generationNumber}
           />
         )}
-        <Input<SignupRequest>
+        <Input<UserRegistrationRequestDto>
           label="비밀번호"
           name="password"
           type="password"

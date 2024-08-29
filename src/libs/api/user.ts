@@ -1,15 +1,17 @@
-import { SignupRequest } from '../../types/user';
+import { UserRegistrationRequestDto } from '../../types';
 import { instance } from '../instance';
 
-export const SignupAPI = async (signupRequest: SignupRequest) => {
-  if (signupRequest.userType === 'TEACHER') {
-    delete signupRequest.generationNumber;
+export const SignupAPI = async (
+  userRegistationRequest: UserRegistrationRequestDto,
+) => {
+  if (userRegistationRequest.userType === 'TEACHER') {
+    delete userRegistationRequest.generationNumber;
   }
 
   const response = await instance({
     method: 'POST',
-    url: '/v1/users',
-    data: signupRequest,
+    url: '/users',
+    data: userRegistationRequest,
   });
 
   return response;
