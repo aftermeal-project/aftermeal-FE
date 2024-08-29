@@ -29,7 +29,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserListResponse'
+                  $ref: '#/components/schemas/UserListResponseDto'
 
   /users/{userId}:
     put:
@@ -47,7 +47,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserUpdateRequest'
+              $ref: '#/components/schemas/UserUpdateRequestDto'
       responses:
         '200':
           description: User updated successfully
@@ -131,7 +131,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityListResponse'
+                  $ref: '#/components/schemas/ActivityListResponseDto'
 
     post:
       tags:
@@ -142,7 +142,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActivityCreatationRequest'
+              $ref: '#/components/schemas/ActivityCreatationRequestDto'
       responses:
         '201':
           description: Activity created successfully
@@ -163,7 +163,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActivityUpdateRequest'
+              $ref: '#/components/schemas/ActivityUpdateRequestDto'
       responses:
         '200':
           description: Activity updated successfully
@@ -195,7 +195,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityScheduleListResponse'
+                  $ref: '#/components/schemas/ActivityScheduleListResponseDto'
 
   /activity-schedules/{activityScheduleId}:
     get:
@@ -216,7 +216,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityScheduleResponse'
+                  $ref: '#/components/schemas/ActivityScheduleResponseDto'
 
   /activity-schedules/{activityScheduleId}/status:
     patch:
@@ -234,7 +234,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActivityScheduleStatusUpdate'
+              $ref: '#/components/schemas/ActivityScheduleStatusUpdateDto'
       responses:
         '200':
           description: Activity updated successfully
@@ -264,14 +264,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: '#/components/schemas/LoginRequestDto'
       responses:
         '200':
           description: Login successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: '#/components/schemas/LoginResponseDto'
 
   /auth/refresh:
     post:
@@ -303,7 +303,7 @@ components:
       bearerFormat: 'JWT'
       type: 'http'
   schemas:
-    UserListResponse:
+    UserListResponseDto:
       type: object
       properties:
         id:
@@ -326,7 +326,7 @@ components:
         generationNumber:
           type: integer
 
-    UserUpdateRequest:
+    UserUpdateRequestDto:
       type: object
       properties:
         name:
@@ -340,7 +340,7 @@ components:
         generationNumber:
           type: integer
 
-    ActivityListResponse:
+    ActivityListResponseDto:
       type: object
       properties:
         id:
@@ -352,7 +352,7 @@ components:
         maxParticipants:
           type: integer
 
-    ActivityCreatationRequest:
+    ActivityCreatationRequestDto:
       type: object
       properties:
         name:
@@ -362,7 +362,7 @@ components:
         location:
           type: string
 
-    ActivityUpdateRequest:
+    ActivityUpdateRequestDto:
       type: object
       properties:
         name:
@@ -372,7 +372,7 @@ components:
         location:
           type: string
 
-    ActivityScheduleListResponse:
+    ActivityScheduleListResponseDto:
       type: object
       properties:
         activityScheduleId:
@@ -393,7 +393,7 @@ components:
           type: string
           format: date
 
-    ActivityScheduleResponse:
+    ActivityScheduleResponseDto:
       type: object
       properties:
         activityScheduleId:
@@ -421,14 +421,14 @@ components:
               displayName:
                 type: string
 
-    ActivityScheduleStatusUpdate:
+    ActivityScheduleStatusUpdateDto:
       type: object
       properties:
         status:
           type: string
           enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
 
-    LoginRequest:
+    LoginRequestDto:
       type: object
       properties:
         email:
@@ -436,7 +436,7 @@ components:
         password:
           type: string
 
-    LoginResponse:
+    LoginResponseDto:
       type: object
       properties:
         accessToken:
