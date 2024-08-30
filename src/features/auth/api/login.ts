@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { LoginAPI } from '../../../libs/api/auth';
 import Token from '../../../libs/utils/token';
-import { LoginRequest } from '../../../types/auth';
 import { AxiosError } from 'axios';
 import { errorMessages, validationMessages } from '../../../constants';
 import { FieldError, UseFormSetError } from 'react-hook-form';
@@ -11,13 +10,13 @@ import { LoginRequestDto, LoginResponseDto } from '../../../types';
 const token = new Token();
 
 interface useLoginProps {
-  setError: UseFormSetError<LoginRequest>;
+  setError: UseFormSetError<LoginRequestDto>;
   navigate: NavigateFunction;
 }
 
 interface handleLoginErrorProps {
   error: any;
-  setError: UseFormSetError<LoginRequest>;
+  setError: UseFormSetError<LoginRequestDto>;
 }
 
 function handleLoginError({ error, setError }: handleLoginErrorProps) {
