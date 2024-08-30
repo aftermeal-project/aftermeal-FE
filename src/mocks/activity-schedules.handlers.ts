@@ -40,8 +40,6 @@ export const activitySchedulesHandlers = [
         createRandomActivitySchedules(),
       );
 
-      console.log('asdass');
-
       return HttpResponse.json(data);
     },
   ),
