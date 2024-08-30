@@ -1,5 +1,5 @@
 import { UseFormRegister } from 'react-hook-form';
-import { ActivityListResponseDto } from '../../../../types';
+import { ActivityListResponseDto } from '../../../types';
 
 interface UpdateTableCellProps {
   value: string | number;

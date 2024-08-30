@@ -2,8 +2,8 @@ import { Suspense } from 'react';
 import {
   ActivityListFetcher,
   ActivityListContainer,
+  ActivityListSkeleton,
 } from '../../../../features/activities';
-import { ActivityListSkeleton } from '../skeleton';
 
 export default function ActivityManagementTab() {
   return (
