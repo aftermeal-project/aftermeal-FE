@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
-import { ActivityScheduleListResponseDto } from '../../../../types';
+import { ActivityScheduleListResponseDto } from '../../../types';
 
 interface BaseActivityScheduleCardProps
   extends ActivityScheduleListResponseDto {

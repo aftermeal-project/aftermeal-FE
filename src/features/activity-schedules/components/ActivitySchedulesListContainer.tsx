@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { ParticipationAPI } from '../../../libs/api/participation';
-import { ActivityScheduleCard } from '../../../components/ui/home';
 import { ActivityScheduleListResponseDto } from '../../../types';
+import ActivityScheduleCard from './ActivityScheduleCard';
 
 interface ActivitySchedulesListContainerProps {
   activitySchedules: ActivityScheduleListResponseDto[];
