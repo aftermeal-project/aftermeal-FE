@@ -17,6 +17,28 @@ tags:
 
 paths:
   /users:
+    post:
+      tags:
+        - Users
+      operationId: 'UserController_register'
+      summary: '사용자 등록'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationRequestDto'
+      responses:
+        '201':
+          description: 'OK'
+        '400':
+          description: 'Bad Request'
+        '404':
+          description: 'Not Found'
+        '409':
+          description: 'Conflict'
+
     get:
       tags:
         - Users
@@ -118,6 +140,21 @@ paths:
       security:
         - bearer: []
 
+  /participations/{participationId}/exclude:
+    post:
+      tags:
+        - Participations
+      summary: 참가자 제외
+      parameters:
+        - name: participationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Participation request excluded successfully
+
   /activities:
     get:
       tags:
@@ -214,9 +251,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ActivityScheduleResponseDto'
+                $ref: '#/components/schemas/ActivityScheduleResponseDto'
 
   /activity-schedules/{activityScheduleId}/status:
     patch:
@@ -238,21 +273,6 @@ paths:
       responses:
         '200':
           description: Activity updated successfully
-
-  /participations/{participationId}/exclude:
-    post:
-      tags:
-        - Participations
-      summary: 참가자 제외
-      parameters:
-        - name: participationId
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Participation request excluded successfully
 
   /auth/login:
     post:
@@ -303,6 +323,29 @@ components:
       bearerFormat: 'JWT'
       type: 'http'
   schemas:
+    UserRegistrationRequestDto:
+      type: 'object'
+      properties:
+        name:
+          type: 'string'
+        email:
+          type: 'string'
+        userType:
+          type: 'string'
+          enum:
+            - 'STUDENT'
+            - 'TEACHER'
+        generationNumber:
+          type: 'number'
+          minimum: 1
+        password:
+          type: 'string'
+      required:
+        - name
+        - email
+        - userType
+        - password
+
     UserListResponseDto:
       type: object
       properties:
@@ -325,6 +368,14 @@ components:
           enum: [ACTIVATE, DEACTIVATE]
         generationNumber:
           type: integer
+      required:
+        - id
+        - name
+        - email
+        - roles
+        - type
+        - status
+        - generationNumber
 
     UserUpdateRequestDto:
       type: object
@@ -339,6 +390,11 @@ components:
           enum: [ACTIVATE, DEACTIVATE]
         generationNumber:
           type: integer
+      required:
+        - name
+        - type
+        - status
+        - generationNumber
 
     ActivityListResponseDto:
       type: object
@@ -351,6 +407,11 @@ components:
           type: string
         maxParticipants:
           type: integer
+      required:
+        - id
+        - name
+        - location
+        - maxParticipants
 
     ActivityCreatationRequestDto:
       type: object
@@ -361,6 +422,10 @@ components:
           type: integer
         location:
           type: string
+      required:
+        - name
+        - maxParticipants
+        - location
 
     ActivityUpdateRequestDto:
       type: object
@@ -371,6 +436,10 @@ components:
           type: integer
         location:
           type: string
+      required:
+        - name
+        - maxParticipants
+        - location
 
     ActivityScheduleListResponseDto:
       type: object
@@ -392,6 +461,14 @@ components:
         scheduledDate:
           type: string
           format: date
+      required:
+        - activityScheduleId
+        - name
+        - maxParticipants
+        - currentParticipants
+        - status
+        - type
+        - scheduledDate
 
     ActivityScheduleResponseDto:
       type: object
@@ -420,6 +497,14 @@ components:
                 type: integer
               displayName:
                 type: string
+      required:
+        - activityScheduleId
+        - name
+        - maxParticipants
+        - status
+        - type
+        - scheduledDate
+        - participants
 
     ActivityScheduleStatusUpdateDto:
       type: object
@@ -427,6 +512,8 @@ components:
         status:
           type: string
           enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
+      required:
+        - status
 
     LoginRequestDto:
       type: object
@@ -435,6 +522,9 @@ components:
           type: string
         password:
           type: string
+      required:
+        - email
+        - password
 
     LoginResponseDto:
       type: object
@@ -459,6 +549,12 @@ components:
               items:
                 type: string
                 enum: [USER, ADMIN]
+      required:
+        - accessToken
+        - tokenType
+        - expiredIn
+        - refreshToken
+        - user
 
     TokenRefreshRequestDto:
       type: 'object'
@@ -466,7 +562,7 @@ components:
         refreshToken:
           type: 'string'
       required:
-        - 'refreshToken'
+        - refreshToken
 
     TokenRefreshResponseDto:
       type: 'object'
@@ -480,10 +576,10 @@ components:
         refreshToken:
           type: 'string'
       required:
-        - 'accessToken'
-        - 'tokenType'
-        - 'expiredIn'
-        - 'refreshToken'
+        - accessToken
+        - tokenType
+        - expiredIn
+        - refreshToken
 
     ParticipationApplicationRequestDto:
       type: 'object'
@@ -492,36 +588,13 @@ components:
           type: 'number'
           minimum: 1
       required:
-        - 'activityId'
+        - activityId
 
     ParticipationCancellationRequestDto:
       type: 'object'
       properties:
-        activityId:
+        participationId:
           type: 'number'
           minimum: 1
       required:
-        - 'activityId'
-
-    UserRegistrationRequestDto:
-      type: 'object'
-      properties:
-        name:
-          type: 'string'
-        email:
-          type: 'string'
-        userType:
-          type: 'string'
-          enum:
-            - 'STUDENT'
-            - 'TEACHER'
-        generationNumber:
-          type: 'number'
-          minimum: 1
-        password:
-          type: 'string'
-      required:
-        - 'name'
-        - 'email'
-        - 'userType'
-        - 'password'
+        - activityId
