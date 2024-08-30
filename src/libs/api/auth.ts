@@ -1,11 +1,15 @@
-import { LoginRequest, LoginResponse } from '../../types/auth';
-import { TokenRefreshRequestDto, TokenRefreshResponseDto } from '../../types';
+import {
+  LoginRequestDto,
+  LoginResponseDto,
+  TokenRefreshRequestDto,
+  TokenRefreshResponseDto,
+} from '../../types';
 import { instance } from '../instance';
 
-export const LoginAPI = async (loginRequest: LoginRequest) => {
-  const response = await instance<LoginResponse>({
+export const LoginAPI = async (loginRequest: LoginRequestDto) => {
+  const response = await instance<LoginResponseDto>({
     method: 'POST',
-    url: '/v1/auth/login',
+    url: '/auth/login',
     data: loginRequest,
   });
 
