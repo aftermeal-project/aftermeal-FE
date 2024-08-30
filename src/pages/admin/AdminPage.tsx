@@ -1,36 +1,17 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import {
+  ActivityListSkeleton,
+  AdminPageContainer,
   AdminPageSidebar,
-  ActivityManagementTab,
 } from '../../components/ui/admin';
-import { ActivityListResponseDto, Tab } from '../../types';
-
-const activities: ActivityListResponseDto[] = [
-  {
-    id: 1,
-    name: '축구',
-    location: '운동장',
-    maxParticipants: 18,
-  },
-  {
-    id: 2,
-    name: '배드민턴',
-    location: '강당',
-    maxParticipants: 10,
-  },
-  {
-    id: 3,
-    name: '보드게임',
-    location: '상담실',
-    maxParticipants: 5,
-  },
-  {
-    id: 4,
-    name: '당구',
-    location: '당구장',
-    maxParticipants: 4,
-  },
-];
+import { Tab } from '../../types';
+import { FetchErrorBoundary } from '../../components/@global';
+import ErrorScreen from '../../components/error/ErrorScreen';
+import { errorMessages } from '../../constants';
+import {
+  ActivityListFetcher,
+  ActivityListContainer,
+} from '../../features/activities';
 
 export default function AdminPage() {
   const [selectedTab, setSelectedTab] = useState<Tab>('activities');
@@ -41,13 +22,28 @@ export default function AdminPage() {
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
-      <main className="flex-1 p-6 overflow-hidden bg-gray-100">
-        {selectedTab === 'activities' && (
-          <ActivityManagementTab activities={activities} />
-        )}
-        {selectedTab === 'activity-schedules' && <></>}
-        {selectedTab === 'users' && <></>}
-      </main>
+      <AdminPageContainer>
+        <FetchErrorBoundary
+          fallback={
+            <ErrorScreen
+              title="Oops!"
+              description={errorMessages.DEFAULT_ERROR}
+            />
+          }
+        >
+          {selectedTab === 'activities' && (
+            <Suspense fallback={<ActivityListSkeleton />}>
+              <ActivityListFetcher>
+                {activities => (
+                  <ActivityListContainer activities={activities} />
+                )}
+              </ActivityListFetcher>
+            </Suspense>
+          )}
+          {selectedTab === 'activity-schedules' && <></>}
+          {selectedTab === 'users' && <></>}
+        </FetchErrorBoundary>
+      </AdminPageContainer>
     </div>
   );
 }
