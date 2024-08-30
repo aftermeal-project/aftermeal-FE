@@ -1,7 +1,7 @@
 import { FaUsers, FaClipboardList, FaUserCog } from 'react-icons/fa';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
-import { Tab } from '../../../../pages/admin/AdminPage';
+import { Tab } from '../../../../types';
 
 interface AdminPageSidebarProps {
   selectedTab: Tab;
@@ -40,9 +40,9 @@ export default function AdminPageSidebar({
         <ul>
           <li
             className={`flex cursor-pointer items-center px-4 py-2 hover:bg-gray-700 ${
-              selectedTab === 'activity' ? 'bg-gray-700' : ''
+              selectedTab === 'activities' ? 'bg-gray-700' : ''
             }`}
-            onClick={() => setSelectedTab('activity')}
+            onClick={() => setSelectedTab('activities')}
           >
             <FaClipboardList size={20} />
             <span className={`ml-4 ${!isSidebarOpen && 'hidden'}`}>

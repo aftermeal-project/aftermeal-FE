@@ -1,9 +1,9 @@
-import { Activity } from '../../../../pages/admin/AdminPage';
 import TableHeader from './TableHeader';
 import TableBody from './TableBody';
+import { ActivityListResponseDto } from '../../../../types';
 
 interface ActivityManagementTableProps {
-  activities: Activity[];
+  activities: ActivityListResponseDto[];
 }
 
 export default function ActivityManagementTable({

@@ -2,20 +2,20 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ActionButtons } from '../button';
 import UpdateTableCell from '../cell/UpdateTableCell';
-import { Activity } from '../../../../pages/admin/AdminPage';
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
+import { ActivityListResponseDto } from '../../../../types';
 
 interface TableBodyProps {
-  activities: Activity[];
+  activities: ActivityListResponseDto[];
 }
 
 export default function TableBody({ activities }: TableBodyProps) {
   const [activeId, setActiveId] = useState<number | null>(null);
   const setMoal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
 
-  const { register, handleSubmit, reset } = useForm<Activity>({
+  const { register, handleSubmit, reset } = useForm<ActivityListResponseDto>({
     defaultValues: {},
   });
 
@@ -27,7 +27,7 @@ export default function TableBody({ activities }: TableBodyProps) {
     }
   };
 
-  function onValid(data: Activity) {
+  function onValid(data: ActivityListResponseDto) {
     if (activeId !== null) {
       setActiveId(null);
     }
@@ -46,7 +46,7 @@ export default function TableBody({ activities }: TableBodyProps) {
     <tbody>
       {activities.map(activity => (
         <tr key={activity.id}>
-          <td className="border border-gray-200 px-2 py-2">{activity.id}</td>
+          <td className="px-2 py-2 border border-gray-200">{activity.id}</td>
           <UpdateTableCell
             value={activity.name}
             name="name"
