@@ -4,7 +4,7 @@ import { instance } from '../instance';
 export const SignupAPI = async (
   userRegistationRequest: UserRegistrationRequestDto,
 ) => {
-  if (userRegistationRequest.userType === 'TEACHER') {
+  if (userRegistationRequest.type === 'TEACHER') {
     delete userRegistationRequest.generationNumber;
   }
 

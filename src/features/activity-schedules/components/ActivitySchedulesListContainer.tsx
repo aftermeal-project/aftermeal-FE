@@ -33,20 +33,18 @@ export default function ActivitySchedulesListContainer({
     <>
       {activitySchedules.map(schedule => (
         <ActivityScheduleCard
-          key={schedule.activityScheduleId}
-          activityScheduleId={schedule.activityScheduleId}
-          name={schedule.name}
+          key={schedule.id}
+          id={schedule.id}
+          title={schedule.title}
           maxParticipants={schedule.maxParticipants}
           currentParticipants={schedule.currentParticipants}
           status={schedule.status}
           type={schedule.type}
           scheduledDate={schedule.scheduledDate}
-          onParticipate={() =>
-            participateInActivity(String(schedule.activityScheduleId))
-          }
-          onCancel={() =>
-            participateInActivity(String(schedule.activityScheduleId))
-          }
+          applicationStartDate={schedule.applicationStartDate}
+          applicationEndDate={schedule.applicationEndDate}
+          onParticipate={() => participateInActivity(String(schedule.id))}
+          onCancel={() => participateInActivity(String(schedule.id))}
         />
       ))}
     </>

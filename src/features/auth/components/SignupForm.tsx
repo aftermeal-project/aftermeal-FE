@@ -34,7 +34,7 @@ export default function SignupForm() {
   }
 
   async function onValid(data: UserRegistrationRequestDto) {
-    data.userType = type;
+    data.type = type;
     data.generationNumber = Number(data.generationNumber);
 
     const GSM_EMAIL_FORMAT = new RegExp('s[0-9]{5}@gsm\\.hs\\.kr');
@@ -94,7 +94,7 @@ export default function SignupForm() {
           placeholder="비밀번호"
           register={register}
           validationRules={signupValidationRules.passwordValidationRules}
-          margin={`${errors.userType || errors.name || errors.email || errors.password || errors.generationNumber ? '' : 'mb-9'}`}
+          margin={`${errors.type || errors.name || errors.email || errors.password || errors.generationNumber ? '' : 'mb-9'}`}
           error={errors.password}
         />
         <AuthErrorMessages

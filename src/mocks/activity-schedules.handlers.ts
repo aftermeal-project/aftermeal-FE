@@ -21,13 +21,15 @@ function getRandomStatus() {
 
 function createRandomActivitySchedules(): ActivityScheduleListResponseDto {
   return {
-    activityScheduleId: faker.number.int({ min: 1, max: 1000000 }),
-    name: faker.person.fullName(),
+    id: faker.number.int({ min: 1, max: 1000000 }),
+    title: faker.person.fullName(),
     currentParticipants: faker.number.int({ min: 0, max: 1 }),
     maxParticipants: faker.number.int({ min: 2, max: 20 }),
     status: getRandomStatus(),
     type: getRandomtype(),
-    scheduledDate: String(faker.date.future()),
+    scheduledDate: String(faker.date.soon()),
+    applicationStartDate: String(faker.date.soon()),
+    applicationEndDate: String(faker.date.soon()),
   };
 }
 

@@ -8,25 +8,27 @@ interface BaseActivityScheduleCardProps
 }
 type ActivityScheduleCardProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
-  'type'
+  'id' | 'type'
 > &
   BaseActivityScheduleCardProps;
 
 export default function ActivityScheduleCard({
-  activityScheduleId,
-  name,
+  id,
+  title,
   maxParticipants,
   currentParticipants,
   status,
   type,
   scheduledDate,
+  applicationStartDate,
+  applicationEndDate,
   onParticipate,
   onCancel,
   ...buttonProps
 }: ActivityScheduleCardProps) {
   const percentFull = (currentParticipants / maxParticipants) * 100;
   const isFull = percentFull >= 100;
-  const isParticipated = currentParticipants > 0; // 임시로 지정
+  const isParticipated = currentParticipants > 0;
 
   const handleClick = () => {
     if (isFull) {
@@ -34,9 +36,9 @@ export default function ActivityScheduleCard({
     }
 
     if (isParticipated) {
-      onCancel(activityScheduleId);
+      onCancel(id);
     } else {
-      onParticipate(activityScheduleId);
+      onParticipate(id);
     }
   };
 
@@ -47,7 +49,7 @@ export default function ActivityScheduleCard({
       } `}
     >
       <div className="p-4">
-        <h3 className="mb-5 text-lg font-semibold text-gray-900">{name}</h3>
+        <h3 className="mb-5 text-lg font-semibold text-gray-900">{title}</h3>
         <div className="flex items-center justify-between mb-2 text-xs text-gray-600">
           <span>
             참여 현황: {currentParticipants} / {maxParticipants}
