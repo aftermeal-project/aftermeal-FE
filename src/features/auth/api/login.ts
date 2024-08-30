@@ -6,6 +6,7 @@ import { AxiosError } from 'axios';
 import { errorMessages, validationMessages } from '../../../constants';
 import { FieldError, UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
+import { LoginRequestDto, LoginResponseDto } from '../../../types';
 
 const token = new Token();
 
@@ -48,16 +49,19 @@ function handleLoginError({ error, setError }: handleLoginErrorProps) {
   }
 }
 
+function handleOnSuccess(data: LoginResponseDto, navigate: NavigateFunction) {
+  let onlyToken = JSON.parse(JSON.stringify(data));
+  delete onlyToken.user;
+
+  token.setUser(onlyToken);
+  navigate('/');
+}
+
 export default function useLogin({ setError, navigate }: useLoginProps) {
   const mutation = useMutation({
-    mutationFn: (data: LoginRequest) => LoginAPI(data),
-    onSuccess: data => {
-      token.setUser(data);
-      navigate('/');
-    },
-    onError: (error: any) => {
-      handleLoginError({ error, setError });
-    },
+    mutationFn: (data: LoginRequestDto) => LoginAPI(data),
+    onSuccess: (data: LoginResponseDto) => handleOnSuccess(data, navigate),
+    onError: (error: any) => handleLoginError({ error, setError }),
   });
 
   return {
