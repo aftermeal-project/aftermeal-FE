@@ -1,4 +1,4 @@
-import { LoginResponse } from '../../types/auth';
+import { LoginResponseDto } from '../../types';
 
 class Token {
   getLocalRefreshToken() {
@@ -12,8 +12,8 @@ class Token {
   getUser() {
     return JSON.parse(localStorage.getItem('token') || '{}');
   }
-  setUser(user: LoginResponse) {
-    localStorage.setItem('token', JSON.stringify(user.data));
+  setUser(user: Omit<LoginResponseDto, 'user'>) {
+    localStorage.setItem('token', JSON.stringify(user));
   }
   removeUser() {
     localStorage.removeItem('token');
