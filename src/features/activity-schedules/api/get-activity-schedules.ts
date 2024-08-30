@@ -1,13 +1,13 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { GetActivitiesAPI } from '../../../libs/api/activities';
 import { AxiosError } from 'axios';
 import { errorMessages } from '../../../constants';
+import { GetActivitySchedulesAPI } from '../../../libs/api/activities-schedules';
 
-async function getActivities() {
-  return await GetActivitiesAPI();
+async function getActivitySchedules() {
+  return await GetActivitySchedulesAPI();
 }
 
-function handleGetActivitiesError(error: any) {
+function handleGetActivitiySchedulesError(error: any) {
   if (error instanceof AxiosError) {
     const { response } = error;
 
@@ -23,12 +23,15 @@ function handleGetActivitiesError(error: any) {
   }
 }
 
-export default function useGetActivitiesAPI() {
+export default function useGetActivitySchedulesAPI() {
   const { data, error } = useSuspenseQuery({
-    queryKey: ['activities'],
-    queryFn: getActivities,
+    queryKey: ['activity-schedules'],
+    queryFn: getActivitySchedules,
     retry: false,
   });
 
-  return { activities: data.data, error: handleGetActivitiesError(error) };
+  return {
+    activitySchedules: data,
+    error: handleGetActivitiySchedulesError(error),
+  };
 }

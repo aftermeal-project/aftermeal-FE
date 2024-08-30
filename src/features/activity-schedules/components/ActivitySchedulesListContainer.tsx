@@ -1,15 +1,15 @@
 import { AxiosError } from 'axios';
 import { ParticipationAPI } from '../../../libs/api/participation';
-import { Activity } from '../../../types/activities';
-import { ActivityCard } from '../../../components/ui/home';
+import { ActivityScheduleCard } from '../../../components/ui/home';
+import { ActivityScheduleListResponseDto } from '../../../types';
 
-interface ActivityListContainerProps {
-  activities: Activity[];
+interface ActivitySchedulesListContainerProps {
+  activitySchedules: ActivityScheduleListResponseDto[];
 }
 
-export default function ActivityListContainer({
-  activities,
-}: ActivityListContainerProps) {
+export default function ActivitySchedulesListContainer({
+  activitySchedules,
+}: ActivitySchedulesListContainerProps) {
   function handleParticipationError(error: any) {
     if (error instanceof AxiosError) {
       const { response } = error;
@@ -31,15 +31,19 @@ export default function ActivityListContainer({
 
   return (
     <>
-      {activities.map(activity => (
-        <ActivityCard
-          key={activity.id}
-          activityId={activity.id}
+      {activitySchedules.map(activity => (
+        <ActivityScheduleCard
+          key={activity.activityScheduleId}
+          activityId={activity.activityScheduleId}
           name={activity.name}
           currentParticipants={activity.currentParticipants}
           maxParticipants={activity.maxParticipants}
-          onParticipate={() => participateInActivity(String(activity.id))}
-          onCancel={() => participateInActivity(String(activity.id))}
+          onParticipate={() =>
+            participateInActivity(String(activity.activityScheduleId))
+          }
+          onCancel={() =>
+            participateInActivity(String(activity.activityScheduleId))
+          }
         />
       ))}
     </>
