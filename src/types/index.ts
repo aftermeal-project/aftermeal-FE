@@ -13,9 +13,8 @@ export * from './authentications/login-response-dto-user';
 export * from './authentications/token-refresh-request-dto';
 export * from './authentications/token-refresh-response-dto';
 
-export * from './participations/participation-application-request-dto';
-export * from './participations/participation-cancellation-request-dto';
-export * from './participations/participation-excluations-request-dto';
+export * from './participations/participation-request-dto';
+export * from './participations/participation-application-response-dto';
 
 export * from './users/user-list-response-dto';
 export * from './users/user-registration-request-dto';
