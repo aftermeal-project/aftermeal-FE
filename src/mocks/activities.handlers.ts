@@ -9,7 +9,7 @@ import { faker } from '@faker-js/faker';
 
 function createRandomActivity(): ActivityListResponseDto {
   return {
-    id: faker.number.int({ min: 1, max: 10 }),
+    id: faker.number.int({ min: 1, max: 1000000 }),
     name: faker.person.fullName(),
     maxParticipants: faker.number.int({ min: 2, max: 20 }),
     location: faker.location.city(),
