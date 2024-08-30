@@ -11,11 +11,11 @@ interface ActivitySchedulesListFetcherProps {
 export default function ActivitySchedulesListFetcher({
   children,
 }: ActivitySchedulesListFetcherProps) {
-  const { activitySchedules, error } = useGetActivitySchedulesAPI();
+  const { data, error } = useGetActivitySchedulesAPI();
 
   if (error) {
     throw new Error(error);
   }
 
-  return <>{children(activitySchedules)}</>;
+  return <>{children(data)}</>;
 }

@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import ErrorScreen from '../../components/error/ErrorScreen';
 import {
-  ActivityListSkeleton,
+  ActivitySchedulesListSkeleton,
   HomePageContainer,
 } from '../../components/ui/home';
 import { errorMessages } from '../../constants';
@@ -19,7 +19,7 @@ export default function HomePage() {
       }
     >
       <HomePageContainer>
-        <Suspense fallback={<ActivityListSkeleton />}>
+        <Suspense fallback={<ActivitySchedulesListSkeleton />}>
           <ActivitySchedulesListFetcher>
             {activitySchedules => (
               <ActivitySchedulesListContainer

@@ -1,24 +1,29 @@
 import { ButtonHTMLAttributes } from 'react';
-import { Activity } from '../../../../types/activities';
+import { ActivityScheduleListResponseDto } from '../../../../types';
 
-interface BaseActivityCardProps extends Omit<Activity, 'id'> {
-  activityId: number;
+interface BaseActivityScheduleCardProps
+  extends ActivityScheduleListResponseDto {
   onParticipate: (id: number) => void;
   onCancel: (id: number) => void;
 }
-
-type ActivityCardProps = BaseActivityCardProps &
-  ButtonHTMLAttributes<HTMLButtonElement>;
+type ActivityScheduleCardProps = Omit<
+  ButtonHTMLAttributes<HTMLButtonElement>,
+  'type'
+> &
+  BaseActivityScheduleCardProps;
 
 export default function ActivityScheduleCard({
-  activityId,
+  activityScheduleId,
   name,
-  currentParticipants,
   maxParticipants,
+  currentParticipants,
+  status,
+  type,
+  scheduledDate,
   onParticipate,
   onCancel,
   ...buttonProps
-}: ActivityCardProps) {
+}: ActivityScheduleCardProps) {
   const percentFull = (currentParticipants / maxParticipants) * 100;
   const isFull = percentFull >= 100;
   const isParticipated = currentParticipants > 0; // 임시로 지정
@@ -29,9 +34,9 @@ export default function ActivityScheduleCard({
     }
 
     if (isParticipated) {
-      onCancel(activityId);
+      onCancel(activityScheduleId);
     } else {
-      onParticipate(activityId);
+      onParticipate(activityScheduleId);
     }
   };
 

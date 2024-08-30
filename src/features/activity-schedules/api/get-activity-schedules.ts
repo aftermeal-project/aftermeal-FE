@@ -31,7 +31,7 @@ export default function useGetActivitySchedulesAPI() {
   });
 
   return {
-    activitySchedules: data,
+    data,
     error: handleGetActivitiySchedulesError(error),
   };
 }
