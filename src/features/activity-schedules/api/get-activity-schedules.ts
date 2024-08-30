@@ -23,7 +23,7 @@ function handleGetActivitiySchedulesError(error: any) {
   }
 }
 
-export default function useGetActivitySchedulesAPI() {
+export default function useGetActivitySchedules() {
   const { data, error } = useSuspenseQuery({
     queryKey: ['activity-schedules'],
     queryFn: getActivitySchedules,

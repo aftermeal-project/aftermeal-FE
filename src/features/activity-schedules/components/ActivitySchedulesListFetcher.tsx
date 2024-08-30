@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { ActivityScheduleListResponseDto } from '../../../types';
-import useGetActivitySchedulesAPI from '../api/get-activity-schedules';
+import useGetActivitySchedules from '../api/get-activity-schedules';
 
 interface ActivitySchedulesListFetcherProps {
   children: (
@@ -11,7 +11,7 @@ interface ActivitySchedulesListFetcherProps {
 export default function ActivitySchedulesListFetcher({
   children,
 }: ActivitySchedulesListFetcherProps) {
-  const { data, error } = useGetActivitySchedulesAPI();
+  const { data, error } = useGetActivitySchedules();
 
   if (error) {
     throw new Error(error);
