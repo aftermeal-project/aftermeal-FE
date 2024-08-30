@@ -21,7 +21,7 @@ function getRandomStatus() {
 
 function createRandomActivitySchedules(): ActivityScheduleListResponseDto {
   return {
-    activityScheduleId: faker.number.int({ min: 1, max: 10 }),
+    activityScheduleId: faker.number.int({ min: 1, max: 1000000 }),
     name: faker.person.fullName(),
     currentParticipants: faker.number.int({ min: 0, max: 1 }),
     maxParticipants: faker.number.int({ min: 2, max: 20 }),
@@ -33,13 +33,16 @@ function createRandomActivitySchedules(): ActivityScheduleListResponseDto {
 
 export const activitySchedulesHandlers = [
   // 활동 일정 리스트 조회
-  http.get(BASE_URL + '/activity-schedules', async () => {
-    const activityScheduleList = Array.from({ length: 5 }, () =>
-      createRandomActivitySchedules(),
-    );
+  http.get<{}, {}, ActivityScheduleListResponseDto[]>(
+    BASE_URL + '/activity-schedules',
+    async () => {
+      const data = Array.from({ length: 5 }, () =>
+        createRandomActivitySchedules(),
+      );
 
-    return HttpResponse.json({
-      data: activityScheduleList,
-    });
-  }),
+      console.log('asdass');
+
+      return HttpResponse.json(data);
+    },
+  ),
 ];
