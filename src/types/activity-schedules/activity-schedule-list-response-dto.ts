@@ -25,43 +25,43 @@ export interface ActivityScheduleListResponseDto {
      * @type {number}
      * @memberof ActivityScheduleListResponseDto
      */
-    'activityScheduleId'?: number;
+    'activityScheduleId': number;
     /**
      * 
      * @type {string}
      * @memberof ActivityScheduleListResponseDto
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {number}
      * @memberof ActivityScheduleListResponseDto
      */
-    'maxParticipants'?: number;
+    'maxParticipants': number;
     /**
      * 
      * @type {number}
      * @memberof ActivityScheduleListResponseDto
      */
-    'currentParticipants'?: number;
+    'currentParticipants': number;
     /**
      * 
      * @type {string}
      * @memberof ActivityScheduleListResponseDto
      */
-    'status'?: ActivityScheduleListResponseDtoStatus;
+    'status': ActivityScheduleListResponseDtoStatus;
     /**
      * 
      * @type {string}
      * @memberof ActivityScheduleListResponseDto
      */
-    'type'?: ActivityScheduleListResponseDtoType;
+    'type': ActivityScheduleListResponseDtoType;
     /**
      * 
      * @type {string}
      * @memberof ActivityScheduleListResponseDto
      */
-    'scheduledDate'?: string;
+    'scheduledDate': string;
 }
 
 export const ActivityScheduleListResponseDtoStatus = {

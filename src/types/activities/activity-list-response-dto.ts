@@ -25,24 +25,24 @@ export interface ActivityListResponseDto {
      * @type {number}
      * @memberof ActivityListResponseDto
      */
-    'id'?: number;
+    'id': number;
     /**
      * 
      * @type {string}
      * @memberof ActivityListResponseDto
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof ActivityListResponseDto
      */
-    'location'?: string;
+    'location': string;
     /**
      * 
      * @type {number}
      * @memberof ActivityListResponseDto
      */
-    'maxParticipants'?: number;
+    'maxParticipants': number;
 }
 

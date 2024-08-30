@@ -15,8 +15,10 @@ export * from './authentications/token-refresh-response-dto';
 
 export * from './participations/participation-application-request-dto';
 export * from './participations/participation-cancellation-request-dto';
-export * from './participations/participation-controller-apply-participation201-response';
+export * from './participations/participation-excluations-request-dto';
 
 export * from './users/user-list-response-dto';
 export * from './users/user-registration-request-dto';
 export * from './users/user-update-request-dto';
+
+export * from './admin/tab';

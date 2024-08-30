@@ -25,12 +25,12 @@ export interface LoginRequestDto {
      * @type {string}
      * @memberof LoginRequestDto
      */
-    'email'?: string;
+    'email': string;
     /**
      * 
      * @type {string}
      * @memberof LoginRequestDto
      */
-    'password'?: string;
+    'password': string;
 }
 

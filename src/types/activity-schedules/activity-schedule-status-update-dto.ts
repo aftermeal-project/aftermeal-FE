@@ -25,7 +25,7 @@ export interface ActivityScheduleStatusUpdateDto {
      * @type {string}
      * @memberof ActivityScheduleStatusUpdateDto
      */
-    'status'?: ActivityScheduleStatusUpdateDtoStatus;
+    'status': ActivityScheduleStatusUpdateDtoStatus;
 }
 
 export const ActivityScheduleStatusUpdateDtoStatus = {

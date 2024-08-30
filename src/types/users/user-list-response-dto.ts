@@ -25,43 +25,43 @@ export interface UserListResponseDto {
      * @type {number}
      * @memberof UserListResponseDto
      */
-    'id'?: number;
+    'id': number;
     /**
      * 
      * @type {string}
      * @memberof UserListResponseDto
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof UserListResponseDto
      */
-    'email'?: string;
+    'email': string;
     /**
      * 
      * @type {Array<string>}
      * @memberof UserListResponseDto
      */
-    'roles'?: Array<UserListResponseDtoRoles>;
+    'roles': Array<UserListResponseDtoRoles>;
     /**
      * 
      * @type {string}
      * @memberof UserListResponseDto
      */
-    'type'?: UserListResponseDtoType;
+    'type': UserListResponseDtoType;
     /**
      * 
      * @type {string}
      * @memberof UserListResponseDto
      */
-    'status'?: UserListResponseDtoStatus;
+    'status': UserListResponseDtoStatus;
     /**
      * 
      * @type {number}
      * @memberof UserListResponseDto
      */
-    'generationNumber'?: number;
+    'generationNumber': number;
 }
 
 export const UserListResponseDtoRoles = {

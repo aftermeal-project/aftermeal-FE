@@ -25,25 +25,25 @@ export interface UserUpdateRequestDto {
      * @type {string}
      * @memberof UserUpdateRequestDto
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {string}
      * @memberof UserUpdateRequestDto
      */
-    'type'?: UserUpdateRequestDtoType;
+    'type': UserUpdateRequestDtoType;
     /**
      * 
      * @type {string}
      * @memberof UserUpdateRequestDto
      */
-    'status'?: UserUpdateRequestDtoStatus;
+    'status': UserUpdateRequestDtoStatus;
     /**
      * 
      * @type {number}
      * @memberof UserUpdateRequestDto
      */
-    'generationNumber'?: number;
+    'generationNumber': number;
 }
 
 export const UserUpdateRequestDtoType = {

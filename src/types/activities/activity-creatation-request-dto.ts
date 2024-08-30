@@ -25,18 +25,18 @@ export interface ActivityCreatationRequestDto {
      * @type {string}
      * @memberof ActivityCreatationRequestDto
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {number}
      * @memberof ActivityCreatationRequestDto
      */
-    'maxParticipants'?: number;
+    'maxParticipants': number;
     /**
      * 
      * @type {string}
      * @memberof ActivityCreatationRequestDto
      */
-    'location'?: string;
+    'location': string;
 }
 

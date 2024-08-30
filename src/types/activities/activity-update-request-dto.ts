@@ -25,18 +25,18 @@ export interface ActivityUpdateRequestDto {
      * @type {string}
      * @memberof ActivityUpdateRequestDto
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {number}
      * @memberof ActivityUpdateRequestDto
      */
-    'maxParticipants'?: number;
+    'maxParticipants': number;
     /**
      * 
      * @type {string}
      * @memberof ActivityUpdateRequestDto
      */
-    'location'?: string;
+    'location': string;
 }
 

@@ -28,30 +28,30 @@ export interface LoginResponseDto {
      * @type {string}
      * @memberof LoginResponseDto
      */
-    'accessToken'?: string;
+    'accessToken': string;
     /**
      * 
      * @type {string}
      * @memberof LoginResponseDto
      */
-    'tokenType'?: string;
+    'tokenType': string;
     /**
      * 
      * @type {number}
      * @memberof LoginResponseDto
      */
-    'expiredIn'?: number;
+    'expiredIn': number;
     /**
      * 
      * @type {string}
      * @memberof LoginResponseDto
      */
-    'refreshToken'?: string;
+    'refreshToken': string;
     /**
      * 
      * @type {LoginResponseDtoUser}
      * @memberof LoginResponseDto
      */
-    'user'?: LoginResponseDtoUser;
+    'user': LoginResponseDtoUser;
 }
 

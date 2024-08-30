@@ -28,43 +28,43 @@ export interface ActivityScheduleResponseDto {
      * @type {number}
      * @memberof ActivityScheduleResponseDto
      */
-    'activityScheduleId'?: number;
+    'activityScheduleId': number;
     /**
      * 
      * @type {string}
      * @memberof ActivityScheduleResponseDto
      */
-    'name'?: string;
+    'name': string;
     /**
      * 
      * @type {number}
      * @memberof ActivityScheduleResponseDto
      */
-    'maxParticipants'?: number;
+    'maxParticipants': number;
     /**
      * 
      * @type {string}
      * @memberof ActivityScheduleResponseDto
      */
-    'status'?: ActivityScheduleResponseDtoStatus;
+    'status': ActivityScheduleResponseDtoStatus;
     /**
      * 
      * @type {string}
      * @memberof ActivityScheduleResponseDto
      */
-    'type'?: ActivityScheduleResponseDtoType;
+    'type': ActivityScheduleResponseDtoType;
     /**
      * 
      * @type {string}
      * @memberof ActivityScheduleResponseDto
      */
-    'scheduledDate'?: string;
+    'scheduledDate': string;
     /**
      * 
      * @type {Array<ActivityScheduleResponseDtoParticipantsInner>}
      * @memberof ActivityScheduleResponseDto
      */
-    'participants'?: Array<ActivityScheduleResponseDtoParticipantsInner>;
+    'participants': Array<ActivityScheduleResponseDtoParticipantsInner>;
 }
 
 export const ActivityScheduleResponseDtoStatus = {
