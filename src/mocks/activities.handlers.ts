@@ -22,10 +22,7 @@ export const activitiesHandlers = [
     const activityList = Array.from({ length: 5 }, () =>
       createRandomActivity(),
     );
-
-    return HttpResponse.json({
-      data: activityList,
-    });
+    return HttpResponse.json(activityList);
   }),
 
   // 활동 생성
