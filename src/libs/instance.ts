@@ -5,8 +5,6 @@ import { BASE_URL } from '../constants';
 
 const token = new Token();
 
-let authTokenRequest: Promise<any> | null = null;
-
 export const instance = axios.create({
   baseURL: BASE_URL,
   headers: {
@@ -14,14 +12,11 @@ export const instance = axios.create({
   },
 });
 
-function redirectTo(path: string) {
-  window.history.pushState({}, '', path);
-  window.location.reload(); // 페이지를 새로 고침하여 리디렉션 적용
-}
-
 async function refreshAuthToken() {
+  const refreshToken = token.getLocalRefreshToken();
+
   try {
-    return await RefreshAPI();
+    return await RefreshAPI(refreshToken);
   } catch (error) {
     throw new Error('Failed to refresh auth token');
   }
@@ -51,6 +46,13 @@ instance.interceptors.request.use(
   },
   error => Promise.reject(error),
 );
+
+let authTokenRequest: Promise<any> | null = null;
+
+function redirectTo(path: string) {
+  window.history.pushState({}, '', path);
+  window.location.reload();
+}
 
 instance.interceptors.response.use(
   response => response,

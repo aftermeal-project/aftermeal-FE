@@ -1,7 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import { loginValidationRules } from '../../../constants';
-import { LoginRequest } from '../../../types/auth';
 import {
   AuthErrorMessages,
   AuthButton,
@@ -9,6 +8,7 @@ import {
 } from '../../../components/ui/auth';
 import useLogin from '../api/login';
 import { Input } from '../../../components/@global';
+import { LoginRequestDto } from '../../../types';
 
 export default function LoginForm() {
   const navigate = useNavigate();
@@ -18,18 +18,18 @@ export default function LoginForm() {
     handleSubmit,
     setError,
     formState: { errors },
-  } = useForm<LoginRequest>();
+  } = useForm<LoginRequestDto>();
 
   const { login, isLoading } = useLogin({ setError, navigate });
 
-  function onValid(data: LoginRequest) {
+  function onValid(data: LoginRequestDto) {
     login(data);
   }
 
   return (
     <>
       <form id="loginForm" onSubmit={handleSubmit(onValid)}>
-        <Input<LoginRequest>
+        <Input<LoginRequestDto>
           label="이메일"
           name="email"
           type="email"
@@ -39,7 +39,7 @@ export default function LoginForm() {
           margin="mb-4"
           srOnlyClass="sr-only"
         />
-        <Input<LoginRequest>
+        <Input<LoginRequestDto>
           label="비밀번호"
           name="password"
           type="password"

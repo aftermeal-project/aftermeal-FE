@@ -1,13 +1,13 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
-import { Activity } from '../../../../pages/admin/AdminPage';
 import ActivityManagementTable from '../table/ActivityManagementTable';
 import ConfirmDeleteModal from '../../modal/ConfirmDeleteModal';
 import CreateActivityModal from '../../modal/CreateActivityModal';
 import { AtomKeys } from '../../../../constants';
+import { ActivityListResponseDto } from '../../../../types';
 
 interface ActivityManagementTabProps {
-  activities: Activity[];
+  activities: ActivityListResponseDto[];
 }
 
 export default function ActivityManagementTab({
@@ -27,7 +27,7 @@ export default function ActivityManagementTab({
       {deleteModal && <ConfirmDeleteModal />}
       {createModal && <CreateActivityModal />}
       <div className="h-full overflow-hidden">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">활동 관리</h1>
           <button
             className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white"

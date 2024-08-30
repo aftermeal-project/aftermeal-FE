@@ -1,14 +1,7 @@
 openapi: 3.0.3
 info:
   title: Aftermeal API Docs
-  description: 에프터밀 API 엔드포인트(Endpoint)와 객체 정보, 파라미터, 요청 및 응답 예제를 살펴보세요.
   version: 1.0.0
-
-servers:
-  - url: https://api.aftermeal.online/v1
-    description: Production API Server
-  - url: https://dev-api.aftermeal.online/v1
-    description: Dev API Server
 
 tags:
   - name: Users
@@ -24,6 +17,28 @@ tags:
 
 paths:
   /users:
+    post:
+      tags:
+        - Users
+      operationId: 'UserController_register'
+      summary: '사용자 등록'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationRequestDto'
+      responses:
+        '201':
+          description: 'OK'
+        '400':
+          description: 'Bad Request'
+        '404':
+          description: 'Not Found'
+        '409':
+          description: 'Conflict'
+
     get:
       tags:
         - Users
@@ -32,11 +47,11 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json:    
+            application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserListResponse'
+                  $ref: '#/components/schemas/UserListResponseDto'
 
   /users/{userId}:
     put:
@@ -54,7 +69,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UserUpdateRequest'
+              $ref: '#/components/schemas/UserUpdateRequestDto'
       responses:
         '200':
           description: User updated successfully
@@ -73,6 +88,73 @@ paths:
         '204':
           description: User deleted successfully
 
+  /participations:
+    post:
+      operationId: 'ParticipationController_applyParticipation'
+      summary: '참가 신청'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipationApplicationRequestDto'
+      responses:
+        '201':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  participationId:
+                    type: integer
+        '400':
+          description: 'Bad Request'
+        '404':
+          description: 'Not Found'
+      tags:
+        - 'Participations'
+      security:
+        - bearer: []
+
+  /participations/{participationId}:
+    delete:
+      operationId: 'ParticipationController_cancelParticipation'
+      summary: '참가 신청 취소'
+      parameters:
+        - name: participationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '201':
+          description: 'OK'
+        '400':
+          description: 'Bad Request'
+        '404':
+          description: 'Not Found'
+      tags:
+        - 'Participations'
+      security:
+        - bearer: []
+
+  /participations/{participationId}/exclude:
+    post:
+      tags:
+        - Participations
+      summary: 참가자 제외
+      parameters:
+        - name: participationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Participation request excluded successfully
+
   /activities:
     get:
       tags:
@@ -86,7 +168,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityListResponse'
+                  $ref: '#/components/schemas/ActivityListResponseDto'
 
     post:
       tags:
@@ -97,7 +179,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActivityCreatationRequest'
+              $ref: '#/components/schemas/ActivityCreatationRequestDto'
       responses:
         '201':
           description: Activity created successfully
@@ -118,7 +200,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActivityUpdateRequest'
+              $ref: '#/components/schemas/ActivityUpdateRequestDto'
       responses:
         '200':
           description: Activity updated successfully
@@ -150,7 +232,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityScheduleListResponse'
+                  $ref: '#/components/schemas/ActivityScheduleListResponseDto'
 
   /activity-schedules/{activityScheduleId}:
     get:
@@ -158,20 +240,18 @@ paths:
         - Activity Schedules
       summary: 활동 일정 상세 조회
       parameters:
-      - name: activityScheduleId
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: activityScheduleId
+          in: path
+          required: true
+          schema:
+            type: integer
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/ActivityScheduleResponse'
+                $ref: '#/components/schemas/ActivityScheduleResponseDto'
 
   /activity-schedules/{activityScheduleId}/status:
     patch:
@@ -179,35 +259,20 @@ paths:
         - Activity Schedules
       summary: 활동 일정 상태 수정
       parameters:
-      - name: activityScheduleId
-        in: path
-        required: true
-        schema:
-          type: integer
+        - name: activityScheduleId
+          in: path
+          required: true
+          schema:
+            type: integer
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ActivityScheduleStatusUpdate'
+              $ref: '#/components/schemas/ActivityScheduleStatusUpdateDto'
       responses:
         '200':
           description: Activity updated successfully
-
-  /participations/{participationId}/exclude:
-    post:
-      tags:
-        - Participations
-      summary: 참가자 제외
-      parameters:
-        - name: participationId
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        '200':
-          description: Participation request excluded successfully
 
   /auth/login:
     post:
@@ -219,18 +284,69 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LoginRequest'
+              $ref: '#/components/schemas/LoginRequestDto'
       responses:
         '200':
           description: Login successful
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/LoginResponse'
+                $ref: '#/components/schemas/LoginResponseDto'
+
+  /auth/refresh:
+    post:
+      operationId: 'AuthController_refresh'
+      summary: '토큰 갱신'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequestDto'
+      responses:
+        '201':
+          description: 'OK'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefreshResponseDto'
+        '400':
+          description: 'Bad Request'
+      tags:
+        - 'Authentication'
 
 components:
+  securitySchemes:
+    bearer:
+      scheme: 'bearer'
+      bearerFormat: 'JWT'
+      type: 'http'
   schemas:
-    UserListResponse:
+    UserRegistrationRequestDto:
+      type: 'object'
+      properties:
+        name:
+          type: 'string'
+        email:
+          type: 'string'
+        userType:
+          type: 'string'
+          enum:
+            - 'STUDENT'
+            - 'TEACHER'
+        generationNumber:
+          type: 'number'
+          minimum: 1
+        password:
+          type: 'string'
+      required:
+        - name
+        - email
+        - userType
+        - password
+
+    UserListResponseDto:
       type: object
       properties:
         id:
@@ -252,8 +368,16 @@ components:
           enum: [ACTIVATE, DEACTIVATE]
         generationNumber:
           type: integer
+      required:
+        - id
+        - name
+        - email
+        - roles
+        - type
+        - status
+        - generationNumber
 
-    UserUpdateRequest:
+    UserUpdateRequestDto:
       type: object
       properties:
         name:
@@ -266,8 +390,13 @@ components:
           enum: [ACTIVATE, DEACTIVATE]
         generationNumber:
           type: integer
+      required:
+        - name
+        - type
+        - status
+        - generationNumber
 
-    ActivityListResponse:
+    ActivityListResponseDto:
       type: object
       properties:
         id:
@@ -276,11 +405,15 @@ components:
           type: string
         location:
           type: string
-          enum: [AUDITORIUM, GROUND]
         maxParticipants:
           type: integer
+      required:
+        - id
+        - name
+        - location
+        - maxParticipants
 
-    ActivityCreatationRequest:
+    ActivityCreatationRequestDto:
       type: object
       properties:
         name:
@@ -289,9 +422,12 @@ components:
           type: integer
         location:
           type: string
-          enum: [AUDITORIUM, GROUND]
+      required:
+        - name
+        - maxParticipants
+        - location
 
-    ActivityUpdateRequest:
+    ActivityUpdateRequestDto:
       type: object
       properties:
         name:
@@ -300,9 +436,12 @@ components:
           type: integer
         location:
           type: string
-          enum: [AUDITORIUM, GROUND]
+      required:
+        - name
+        - maxParticipants
+        - location
 
-    ActivityScheduleListResponse:
+    ActivityScheduleListResponseDto:
       type: object
       properties:
         activityScheduleId:
@@ -322,8 +461,16 @@ components:
         scheduledDate:
           type: string
           format: date
+      required:
+        - activityScheduleId
+        - name
+        - maxParticipants
+        - currentParticipants
+        - status
+        - type
+        - scheduledDate
 
-    ActivityScheduleResponse:
+    ActivityScheduleResponseDto:
       type: object
       properties:
         activityScheduleId:
@@ -350,23 +497,36 @@ components:
                 type: integer
               displayName:
                 type: string
+      required:
+        - activityScheduleId
+        - name
+        - maxParticipants
+        - status
+        - type
+        - scheduledDate
+        - participants
 
-    ActivityScheduleStatusUpdate:
+    ActivityScheduleStatusUpdateDto:
       type: object
       properties:
         status:
           type: string
           enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
+      required:
+        - status
 
-    LoginRequest:
+    LoginRequestDto:
       type: object
       properties:
         email:
           type: string
         password:
           type: string
+      required:
+        - email
+        - password
 
-    LoginResponse:
+    LoginResponseDto:
       type: object
       properties:
         accessToken:
@@ -389,3 +549,52 @@ components:
               items:
                 type: string
                 enum: [USER, ADMIN]
+      required:
+        - accessToken
+        - tokenType
+        - expiredIn
+        - refreshToken
+        - user
+
+    TokenRefreshRequestDto:
+      type: 'object'
+      properties:
+        refreshToken:
+          type: 'string'
+      required:
+        - refreshToken
+
+    TokenRefreshResponseDto:
+      type: 'object'
+      properties:
+        accessToken:
+          type: 'string'
+        tokenType:
+          type: 'string'
+        expiredIn:
+          type: 'number'
+        refreshToken:
+          type: 'string'
+      required:
+        - accessToken
+        - tokenType
+        - expiredIn
+        - refreshToken
+
+    ParticipationApplicationRequestDto:
+      type: 'object'
+      properties:
+        activityId:
+          type: 'number'
+          minimum: 1
+      required:
+        - activityId
+
+    ParticipationCancellationRequestDto:
+      type: 'object'
+      properties:
+        participationId:
+          type: 'number'
+          minimum: 1
+      required:
+        - activityId

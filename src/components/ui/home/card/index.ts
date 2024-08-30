@@ -1,1 +1,1 @@
-export { default as ActivityCard } from './ActivityCard';
+export { default as ActivityScheduleCard } from './ActivityScheduleCard';
