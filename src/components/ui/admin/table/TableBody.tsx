@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { ActionButtons } from '../button';
-import UpdateTableCell from '../cell/UpdateTableCell';
+import UpdateTableCell from './UpdateTableCell';
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
@@ -46,7 +46,7 @@ export default function TableBody({ activities }: TableBodyProps) {
     <tbody>
       {activities.map(activity => (
         <tr key={activity.id}>
-          <td className="px-2 py-2 border border-gray-200">{activity.id}</td>
+          <td className="border border-gray-200 px-2 py-2">{activity.id}</td>
           <UpdateTableCell
             value={activity.name}
             name="name"

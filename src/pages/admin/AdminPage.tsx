@@ -1,17 +1,13 @@
-import { Suspense, useState } from 'react';
-import {
-  ActivityListSkeleton,
-  AdminPageContainer,
-  AdminPageSidebar,
-} from '../../components/ui/admin';
-import { Tab } from '../../types';
+import { useState } from 'react';
 import { FetchErrorBoundary } from '../../components/@global';
 import ErrorScreen from '../../components/error/ErrorScreen';
-import { errorMessages } from '../../constants';
 import {
-  ActivityListFetcher,
-  ActivityListContainer,
-} from '../../features/activities';
+  AdminPageSidebar,
+  AdminPageContainer,
+  ActivityManagementTab,
+} from '../../components/ui/admin';
+import { errorMessages } from '../../constants';
+import { Tab } from '../../types';
 
 export default function AdminPage() {
   const [selectedTab, setSelectedTab] = useState<Tab>('activities');
@@ -31,15 +27,7 @@ export default function AdminPage() {
             />
           }
         >
-          {selectedTab === 'activities' && (
-            <Suspense fallback={<ActivityListSkeleton />}>
-              <ActivityListFetcher>
-                {activities => (
-                  <ActivityListContainer activities={activities} />
-                )}
-              </ActivityListFetcher>
-            </Suspense>
-          )}
+          {selectedTab === 'activities' && <ActivityManagementTab />}
           {selectedTab === 'activity-schedules' && <></>}
           {selectedTab === 'users' && <></>}
         </FetchErrorBoundary>

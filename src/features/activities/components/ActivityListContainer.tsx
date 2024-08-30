@@ -4,7 +4,7 @@ import ConfirmDeleteModal from '../../../components/ui/modal/ConfirmDeleteModal'
 import CreateActivityModal from '../../../components/ui/modal/CreateActivityModal';
 import { AtomKeys } from '../../../constants';
 import { ActivityListResponseDto } from '../../../types';
-import { ActivityManagementTab } from '../../../components/ui/admin/tab';
+import { ActivityListTable } from '../../../components/ui/admin';
 
 interface ActivityListContainerProps {
   activities: ActivityListResponseDto[];
@@ -37,7 +37,7 @@ export default function ActivityListContainer({
           </button>
         </div>
         <div className="overflow-x-auto">
-          <ActivityManagementTab activities={activities} />
+          <ActivityListTable activities={activities} />
         </div>
       </div>
     </>

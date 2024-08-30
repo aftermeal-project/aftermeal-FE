@@ -1,17 +1,16 @@
-import { ActivityListResponseDto } from '../../../../types';
-import { TableHeader, TableBody } from '../table';
+import { Suspense } from 'react';
+import {
+  ActivityListFetcher,
+  ActivityListContainer,
+} from '../../../../features/activities';
+import { ActivityListSkeleton } from '../skeleton';
 
-interface ActivityManagementTabProps {
-  activities: ActivityListResponseDto[];
-}
-
-export default function ActivityManagementTab({
-  activities,
-}: ActivityManagementTabProps) {
+export default function ActivityManagementTab() {
   return (
-    <table className="w-full min-w-[950px] table-auto border-collapse border border-gray-200 shadow-md">
-      <TableHeader />
-      <TableBody activities={activities} />
-    </table>
+    <Suspense fallback={<ActivityListSkeleton />}>
+      <ActivityListFetcher>
+        {activities => <ActivityListContainer activities={activities} />}
+      </ActivityListFetcher>
+    </Suspense>
   );
 }
