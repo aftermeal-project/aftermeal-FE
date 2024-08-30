@@ -8,7 +8,7 @@ import { instance } from '../instance';
 const url = '/activities';
 
 export const GetActivitiesAPI = async () => {
-  const response = await instance<ActivityListResponseDto>({
+  const response = await instance<ActivityListResponseDto[]>({
     method: 'GET',
     url: url,
   });
