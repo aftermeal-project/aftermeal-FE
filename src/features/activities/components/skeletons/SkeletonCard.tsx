@@ -1,7 +1,7 @@
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
-export default function SkeletonActivityScheduleCard() {
+export default function SkeletonCard() {
   return (
     <div className="overflow-hidden bg-white border rounded-lg shadow-md">
       <div className="p-4">

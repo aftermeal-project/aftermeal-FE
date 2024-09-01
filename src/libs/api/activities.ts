@@ -1,5 +1,5 @@
 import {
-  ActivityCreatationRequestDto,
+  ActivityCreationRequestDto,
   ActivityListResponseDto,
   ActivityUpdateRequestDto,
 } from '../../types';
@@ -17,7 +17,7 @@ export const GetActivitiesAPI = async () => {
 };
 
 export const CreateActivityAPI = async (
-  createActivityData: ActivityCreatationRequestDto,
+  createActivityData: ActivityCreationRequestDto,
 ) => {
   const response = await instance({
     method: 'POST',

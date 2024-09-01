@@ -1,31 +1,28 @@
 import { ButtonHTMLAttributes } from 'react';
-import { ActivityScheduleListResponseDto } from '../../../types';
+import { ActivityListResponseDto } from '../../../types';
 
-interface BaseActivityScheduleCardProps
-  extends ActivityScheduleListResponseDto {
+interface BaseActivityCardProps extends ActivityListResponseDto {
   onParticipate: (id: number) => void;
   onCancel: (id: number) => void;
 }
-type ActivityScheduleCardProps = Omit<
+type ActivityCardProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'id' | 'type'
 > &
-  BaseActivityScheduleCardProps;
+  BaseActivityCardProps;
 
-export default function ActivityScheduleCard({
+export default function ActivityCard({
   id,
-  title,
+  name,
   maxParticipants,
   currentParticipants,
   status,
   type,
   scheduledDate,
-  applicationStartDate,
-  applicationEndDate,
   onParticipate,
   onCancel,
   ...buttonProps
-}: ActivityScheduleCardProps) {
+}: ActivityCardProps) {
   const percentFull = (currentParticipants / maxParticipants) * 100;
   const isFull = percentFull >= 100;
   const isParticipated = currentParticipants > 0;
@@ -49,7 +46,7 @@ export default function ActivityScheduleCard({
       } `}
     >
       <div className="p-4">
-        <h3 className="mb-5 text-lg font-semibold text-gray-900">{title}</h3>
+        <h3 className="mb-5 text-lg font-semibold text-gray-900">{name}</h3>
         <div className="flex items-center justify-between mb-2 text-xs text-gray-600">
           <span>
             참여 현황: {currentParticipants} / {maxParticipants}

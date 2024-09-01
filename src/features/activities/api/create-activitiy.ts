@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  ActivityCreatationRequestDto,
+  ActivityCreationRequestDto,
   ActivityListResponseDto,
 } from '../../../types';
 import { CreateActivityAPI } from '../../../libs/api/activities';
 import { errorMessages } from '../../../constants';
 
-async function createActivity(data: ActivityCreatationRequestDto) {
+async function createActivity(data: ActivityCreationRequestDto) {
   return await CreateActivityAPI(data);
 }
 
@@ -19,7 +19,7 @@ export default function useCreateActivity() {
 
   const mutation = useMutation({
     mutationFn: createActivity,
-    onMutate: async (newActivity: ActivityCreatationRequestDto) => {
+    onMutate: async (newActivity: ActivityCreationRequestDto) => {
       await queryClient.cancelQueries({ queryKey: ['activities'] });
 
       const previousActivities = queryClient.getQueryData<

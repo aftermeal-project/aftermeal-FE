@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { ModalAtomFamily } from '../../../atoms';
 import { AtomKeys } from '../../../constants';
 import { Input } from '../../../components/@global';
-import { ActivityCreatationRequestDto } from '../../../types';
+import { ActivityCreationRequestDto } from '../../../types';
 import useCreateActivity from '../api/create-activitiy';
 
 export default function CreateActivityModal() {
@@ -12,9 +12,9 @@ export default function CreateActivityModal() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ActivityCreatationRequestDto>({
+  } = useForm<ActivityCreationRequestDto>({
     defaultValues: {
-      name: '',
+      title: '',
       location: '',
       maxParticipants: 2,
     },
@@ -24,7 +24,7 @@ export default function CreateActivityModal() {
 
   const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.CREATE_ACTIVITY));
 
-  function onSubmit(data: ActivityCreatationRequestDto) {
+  function onSubmit(data: ActivityCreationRequestDto) {
     // check validation
 
     createActivity.mutate(data, {
@@ -44,16 +44,16 @@ export default function CreateActivityModal() {
       >
         <h2 className="mb-8 text-lg font-bold">활동 추가</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Input<ActivityCreatationRequestDto>
+          <Input<ActivityCreationRequestDto>
             label="이름"
-            name="name"
+            name="title"
             type="text"
             placeholder="이름"
             register={register}
             margin="mb-4"
-            error={errors.name}
+            error={errors.title}
           />
-          <Input<ActivityCreatationRequestDto>
+          <Input<ActivityCreationRequestDto>
             label="장소"
             name="location"
             type="text"
@@ -62,7 +62,7 @@ export default function CreateActivityModal() {
             margin="mb-4"
             error={errors.location}
           />
-          <Input<ActivityCreatationRequestDto>
+          <Input<ActivityCreationRequestDto>
             label="최대 참가자 수"
             name="maxParticipants"
             type="number"

@@ -1,9 +1,9 @@
 import Skeleton from 'react-loading-skeleton';
 
-export default function ActivityListSkeleton() {
+export default function SkeletonTable() {
   return (
     <div className="h-full overflow-hidden">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">활동 관리</h1>
         <button className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white">
           활동 추가
@@ -14,19 +14,19 @@ export default function ActivityListSkeleton() {
           <tbody>
             {Array.from({ length: 5 }).map((_, index) => (
               <tr key={index}>
-                <td className="border border-gray-200 px-2 py-2">
+                <td className="px-2 py-2 border border-gray-200">
                   <Skeleton width={60} height={29} />
                 </td>
-                <td className="border border-gray-200 px-2 py-2">
+                <td className="px-2 py-2 border border-gray-200">
                   <Skeleton width={120} height={29} />
                 </td>
-                <td className="border border-gray-200 px-2 py-2">
+                <td className="px-2 py-2 border border-gray-200">
                   <Skeleton width={100} height={29} />
                 </td>
-                <td className="border border-gray-200 px-2 py-2">
+                <td className="px-2 py-2 border border-gray-200">
                   <Skeleton width={150} height={29} />
                 </td>
-                <td className="border border-gray-200 px-2 py-2">
+                <td className="px-2 py-2 border border-gray-200">
                   <Skeleton width={200} height={29} />
                 </td>
               </tr>

@@ -48,22 +48,22 @@ export default function TableBody({ activities }: TableBodyProps) {
         <tr key={activity.id}>
           <td className="px-2 py-2 border border-gray-200">{activity.id}</td>
           <UpdateTableCell
-            value={activity.name}
-            name="name"
+            value={activity.title}
+            title="title"
             type="text"
             isEditing={activeId === activity.id}
             register={register}
           />
           <UpdateTableCell
             value={activity.maxParticipants}
-            name="maxParticipants"
+            title="maxParticipants"
             type="number"
             isEditing={activeId === activity.id}
             register={register}
           />
           <UpdateTableCell
             value={activity.location}
-            name="location"
+            title="location"
             type="select"
             isEditing={activeId === activity.id}
             register={register}

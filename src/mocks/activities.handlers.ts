@@ -1,37 +1,65 @@
 import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '../constants';
 import {
-  ActivityCreatationRequestDto,
+  ActivityCreationRequestDto,
   ActivityListResponseDto,
+  ActivityListResponseDtoStatus,
+  ActivityListResponseDtoType,
   ActivityUpdateRequestDto,
 } from '../types';
 import { faker } from '@faker-js/faker';
 
+function getRandomtype() {
+  const statuses = Object.values(ActivityListResponseDtoType);
+  const randomIndex = faker.number.int({ min: 0, max: statuses.length - 1 });
+  return statuses[randomIndex];
+}
+
+function getRandomStatus() {
+  const statuses = Object.values(ActivityListResponseDtoStatus);
+  const randomIndex = faker.number.int({ min: 0, max: statuses.length - 1 });
+  return statuses[randomIndex];
+}
+
 function createRandomActivity(): ActivityListResponseDto {
   return {
     id: faker.number.int({ min: 1, max: 1000000 }),
-    name: faker.person.fullName(),
+    title: faker.person.fullName(),
     maxParticipants: faker.number.int({ min: 2, max: 20 }),
+    currentParticipants: faker.number.int({ min: 0, max: 1 }),
     location: faker.location.city(),
+    status: getRandomStatus(),
+    type: getRandomtype(),
+    scheduledDate: String(faker.date.soon()),
+    applicationStartDate: String(faker.date.soon()),
+    applicationEndDate: String(faker.date.soon()),
   };
 }
 
 export const activitiesHandlers = [
-  // 활동 리스트 조회
-  http.get(BASE_URL + '/activities', async () => {
-    const activityList = Array.from({ length: 5 }, () =>
-      createRandomActivity(),
-    );
-    return HttpResponse.json(activityList);
-  }),
+  /**
+   * 활동 목록 조회 API
+   */
 
-  // 활동 생성
-  http.post<{}, ActivityCreatationRequestDto>(
+  http.get<{}, {}, ActivityListResponseDto[]>(
+    BASE_URL + '/activities',
+    async () => {
+      const data = Array.from({ length: 5 }, () => createRandomActivity());
+
+      return HttpResponse.json(data);
+    },
+  ),
+
+  /**
+   * 활동 생성 API
+   */
+
+  http.post<{}, ActivityCreationRequestDto>(
     BASE_URL + '/activities',
     async ({ request }) => {
       const data = await request.json();
 
-      if (!data.name || data.maxParticipants <= 0 || !data.location) {
+      if (!data.title || data.maxParticipants <= 0 || !data.location) {
         return HttpResponse.json(
           { message: 'Invalid request data' },
           { status: 400 },
@@ -44,7 +72,9 @@ export const activitiesHandlers = [
     },
   ),
 
-  // 활동 수정
+  /**
+   * 활동 수정 API
+   */
   http.put<{ activityId: string }, ActivityUpdateRequestDto>(
     BASE_URL + '/activities',
     async ({ request }) => {
@@ -63,7 +93,9 @@ export const activitiesHandlers = [
     },
   ),
 
-  // 활동 삭제
+  /**
+   * 활동 삭제 API
+   */
   http.delete<{ activityId: string }>(
     BASE_URL + '/activities',
     async ({ params }) => {

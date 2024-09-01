@@ -3,7 +3,7 @@ import { ActivityListResponseDto } from '../../../types';
 
 interface UpdateTableCellProps {
   value: string | number;
-  name: keyof ActivityListResponseDto;
+  title: keyof ActivityListResponseDto;
   type: 'text' | 'number' | 'select';
   isEditing: boolean;
   register: UseFormRegister<ActivityListResponseDto>;
@@ -11,7 +11,7 @@ interface UpdateTableCellProps {
 
 export default function UpdateTableCell({
   value,
-  name,
+  title,
   type,
   isEditing,
   register,
@@ -21,9 +21,9 @@ export default function UpdateTableCell({
       {isEditing ? (
         type === 'select' ? (
           <select
-            {...register(name)}
+            {...register(title)}
             defaultValue="운동장"
-            className="w-full cursor-pointer rounded-md border border-gray-300 px-2 py-1"
+            className="w-full px-2 py-1 border border-gray-300 rounded-md cursor-pointer"
           >
             <option value="강당">강당</option>
             <option value="상담실">상담실</option>
@@ -33,9 +33,9 @@ export default function UpdateTableCell({
         ) : (
           <input
             type={type}
-            {...register(name)}
+            {...register(title)}
             defaultValue={value}
-            className="w-full rounded-md border border-gray-300 px-2 py-1"
+            className="w-full px-2 py-1 border border-gray-300 rounded-md"
           />
         )
       ) : (

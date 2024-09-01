@@ -1,10 +1,7 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { ModalAtomFamily } from '../../../atoms';
-import ConfirmDeleteModal from './ConfirmDeleteModal';
-import CreateActivityModal from './CreateActivityModal';
-import { AtomKeys } from '../../../constants';
+import { AxiosError } from 'axios';
+import { ParticipationAPI } from '../../../libs/api/participation';
 import { ActivityListResponseDto } from '../../../types';
-import ActivityListTable from './ActivityListTable';
+import ActivityCard from './ActivityCard';
 
 interface ActivityListContainerProps {
   activities: ActivityListResponseDto[];
@@ -13,33 +10,44 @@ interface ActivityListContainerProps {
 export default function ActivityListContainer({
   activities,
 }: ActivityListContainerProps) {
-  const deleteModal = useRecoilValue(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
-  const [createModal, setCreateModal] = useRecoilState(
-    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY),
-  );
+  function handleParticipationError(error: any) {
+    if (error instanceof AxiosError) {
+      const { response } = error;
 
-  function onCreateActivity() {
-    setCreateModal(true);
+      if (response?.status === 400 || response?.status === 404) {
+        alert('신청할 수 없는 활동입니다.');
+      }
+    }
+  }
+
+  async function participateInActivity(id: string) {
+    try {
+      await ParticipationAPI(id);
+      alert('참여가 완료 되었습니다.');
+    } catch (error: unknown) {
+      handleParticipationError(error);
+    }
   }
 
   return (
     <>
-      {deleteModal && <ConfirmDeleteModal />}
-      {createModal && <CreateActivityModal />}
-      <div className="h-full overflow-hidden">
-        <div className="mb-4 flex items-center justify-between">
-          <h1 className="text-2xl font-bold">활동 관리</h1>
-          <button
-            className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white"
-            onClick={onCreateActivity}
-          >
-            활동 추가
-          </button>
-        </div>
-        <div className="overflow-x-auto">
-          <ActivityListTable activities={activities} />
-        </div>
-      </div>
+      {activities.map(activity => (
+        <ActivityCard
+          key={activity.id}
+          id={activity.id}
+          title={activity.title}
+          maxParticipants={activity.maxParticipants}
+          currentParticipants={activity.currentParticipants}
+          location={activity.location}
+          status={activity.status}
+          type={activity.type}
+          scheduledDate={activity.scheduledDate}
+          applicationStartDate={activity.applicationStartDate}
+          applicationEndDate={activity.applicationEndDate}
+          onParticipate={() => participateInActivity(String(activity.id))}
+          onCancel={() => participateInActivity(String(activity.id))}
+        />
+      ))}
     </>
   );
 }
