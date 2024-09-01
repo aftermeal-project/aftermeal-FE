@@ -7,11 +7,11 @@ export * from './activity-schedules/activity-schedule-response-dto';
 export * from './activity-schedules/activity-schedule-response-dto-participants-inner';
 export * from './activity-schedules/activity-schedule-status-update-dto';
 
-export * from './authentications/login-request-dto';
-export * from './authentications/login-response-dto';
-export * from './authentications/login-response-dto-user';
-export * from './authentications/token-refresh-request-dto';
-export * from './authentications/token-refresh-response-dto';
+export * from './auth/login-request-dto';
+export * from './auth/login-response-dto';
+export * from './auth/login-response-dto-user';
+export * from './auth/token-refresh-request-dto';
+export * from './auth/token-refresh-response-dto';
 
 export * from './participations/participation-request-dto';
 export * from './participations/participation-application-response-dto';
