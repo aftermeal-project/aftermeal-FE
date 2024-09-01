@@ -1,7 +1,7 @@
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { ModalAtomFamily } from '../../../atoms';
-import ConfirmDeleteModal from '../../../components/ui/modal/ConfirmDeleteModal';
-import CreateActivityModal from '../../../components/ui/modal/CreateActivityModal';
+import ConfirmDeleteModal from './ConfirmDeleteModal';
+import CreateActivityModal from './CreateActivityModal';
 import { AtomKeys } from '../../../constants';
 import { ActivityListResponseDto } from '../../../types';
 import ActivityListTable from './ActivityListTable';
@@ -27,7 +27,7 @@ export default function ActivityListContainer({
       {deleteModal && <ConfirmDeleteModal />}
       {createModal && <CreateActivityModal />}
       <div className="h-full overflow-hidden">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">활동 관리</h1>
           <button
             className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white"

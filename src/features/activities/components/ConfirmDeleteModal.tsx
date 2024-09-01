@@ -1,6 +1,6 @@
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../atoms';
-import ModalLayout from '../../@global/layout/ModalLayout';
+import ModalLayout from '../../../components/@global/layout/ModalLayout';
 import { AtomKeys } from '../../../constants';
 
 export default function ConfirmDeleteModal() {

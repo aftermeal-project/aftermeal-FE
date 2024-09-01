@@ -5,3 +5,5 @@ export { default as ActivityListSkeleton } from './ActivityListSkeleton';
 export { default as TableHeader } from './TableHeader';
 export { default as TableBody } from './TableBody';
 export { default as UpdateTableCell } from './UpdateTableCell';
+export { default as CreateActivityModal } from './CreateActivityModal';
+export { default as ConfirmDeleteModal } from './ConfirmDeleteModal';
