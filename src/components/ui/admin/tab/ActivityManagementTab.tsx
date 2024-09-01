@@ -7,7 +7,7 @@ import {
 
 export default function ActivityManagementTab() {
   return (
-    <Suspense fallback={<ActivityListSkeleton />}>
+    <Suspense fallback={<ActivityListSkeleton type="Table" />}>
       <ActivityListFetcher>
         {activities => <ActivityListContainer activities={activities} />}
       </ActivityListFetcher>
