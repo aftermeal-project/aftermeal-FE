@@ -3,7 +3,7 @@ import { AxiosError } from 'axios';
 import { errorMessages, validationMessages } from '../../../constants';
 import { UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
-import { SignupAPI } from '../../../libs/api/user';
+import { SignupAPI } from '../../../libs/api/users';
 import { UserRegistrationRequestDto } from '../../../types';
 
 interface useSignupProps {
