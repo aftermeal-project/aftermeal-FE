@@ -31,7 +31,19 @@ export interface ActivityListResponseDto {
      * @type {string}
      * @memberof ActivityListResponseDto
      */
-    'name': string;
+    'title': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActivityListResponseDto
+     */
+    'maxParticipants': number;
+    /**
+     * 
+     * @type {number}
+     * @memberof ActivityListResponseDto
+     */
+    'currentParticipants': number;
     /**
      * 
      * @type {string}
@@ -40,9 +52,49 @@ export interface ActivityListResponseDto {
     'location': string;
     /**
      * 
-     * @type {number}
+     * @type {string}
      * @memberof ActivityListResponseDto
      */
-    'maxParticipants': number;
+    'status': ActivityListResponseDtoStatus;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityListResponseDto
+     */
+    'type': ActivityListResponseDtoType;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityListResponseDto
+     */
+    'scheduledDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityListResponseDto
+     */
+    'applicationStartDate': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof ActivityListResponseDto
+     */
+    'applicationEndDate': string;
 }
+
+export const ActivityListResponseDtoStatus = {
+    Scheduled: 'SCHEDULED',
+    InProgress: 'IN_PROGRESS',
+    Canceled: 'CANCELED',
+    Completed: 'COMPLETED'
+} as const;
+
+export type ActivityListResponseDtoStatus = typeof ActivityListResponseDtoStatus[keyof typeof ActivityListResponseDtoStatus];
+export const ActivityListResponseDtoType = {
+    Lunch: 'LUNCH',
+    Dinner: 'DINNER'
+} as const;
+
+export type ActivityListResponseDtoType = typeof ActivityListResponseDtoType[keyof typeof ActivityListResponseDtoType];
+
 
