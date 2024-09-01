@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /aftermeal-server
+/aftermeal-admin-server
 /.pnp
 .pnp.js
 
