@@ -17,9 +17,6 @@ export * from './auth/login-response-dto-user';
 export * from './auth/token-refresh-request-dto';
 export * from './auth/token-refresh-response-dto';
 
-export * from './participations/participation-request-dto';
-export * from './participations/participation-application-response-dto';
-
 export * from './users/user-list-response-dto';
 export * from './users/user-registration-request-dto';
 export * from './users/user-update-request-dto';
