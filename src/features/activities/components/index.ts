@@ -10,6 +10,10 @@ export { default as UpdateTableCell } from './table/BodyCell';
 export { default as BodyCell } from './table/BodyCell';
 export { default as HeaderCell } from './table/HeaderCell';
 
+export { default as LocationSelectInput } from './select/LocationSelectInput';
+export { default as SelectField } from './select/SelectField';
+export { default as SelectInput } from './select/SelectInput';
+
 export { default as CreateActivityModal } from './modal/CreateActivityModal';
 export { default as ConfirmDeleteModal } from './modal/ConfirmDeleteModal';
 
