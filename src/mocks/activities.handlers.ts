@@ -3,38 +3,9 @@ import { BASE_URL } from '../constants';
 import {
   ActivityCreationRequestDto,
   ActivityResponseDto,
-  ActivityResponseDtoStatus,
-  ActivityResponseDtoType,
   ActivityUpdateRequestDto,
 } from '../types';
-import { faker } from '@faker-js/faker';
-
-function getRandomtype() {
-  const statuses = Object.values(ActivityResponseDtoType);
-  const randomIndex = faker.number.int({ min: 0, max: statuses.length - 1 });
-  return statuses[randomIndex];
-}
-
-function getRandomStatus() {
-  const statuses = Object.values(ActivityResponseDtoStatus);
-  const randomIndex = faker.number.int({ min: 0, max: statuses.length - 1 });
-  return statuses[randomIndex];
-}
-
-function createRandomActivity(): ActivityResponseDto {
-  return {
-    id: faker.number.int({ min: 1, max: 1000000 }),
-    title: faker.person.fullName(),
-    maxParticipants: faker.number.int({ min: 2, max: 20 }),
-    currentParticipants: faker.number.int({ min: 0, max: 1 }),
-    location: faker.location.city(),
-    status: getRandomStatus(),
-    type: getRandomtype(),
-    scheduledDate: String(faker.date.soon()),
-    applicationStartDate: String(faker.date.soon()),
-    applicationEndDate: String(faker.date.soon()),
-  };
-}
+import { createRandomActivity } from './utils/activities.utils';
 
 export const activitiesHandlers = [
   /**
