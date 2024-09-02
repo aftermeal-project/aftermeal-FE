@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ActionButtons } from '../../../../components/ui/admin/button';
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import { ActivityResponseDto } from '../../../../types';
-import BodyCell from './BodyCell';
+import BodyCell from '../cell/BodyCell';
 import { statusOptions, typeOptions } from '../constants/options';
+import { ActionButtons } from '../../../../components/ui/admin/button';
+import useUpdateActivty from '../../api/update-activity';
 
 interface TableBodyProps {
   activities: ActivityResponseDto[];
@@ -14,23 +15,23 @@ interface TableBodyProps {
 
 export default function TableBody({ activities }: TableBodyProps) {
   const [activeId, setActiveId] = useState<number | null>(null);
-  const setMoal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
+  const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
 
-  const { register, handleSubmit, reset } = useForm<ActivityResponseDto>({
-    defaultValues: {},
-  });
+  const { register, handleSubmit, reset } = useForm<ActivityResponseDto>();
+  const { updateActivity } = useUpdateActivty();
 
-  const onUpdateActivity = (id: number) => {
+  function prepareActivityUpdate(id: number) {
     setActiveId(prevId => (prevId === id ? null : id));
     const activity = activities.find(activity => activity.id === id);
 
     if (activity) {
       reset(activity);
     }
-  };
+  }
 
   function onValid(data: ActivityResponseDto) {
-    console.log(data);
+    updateActivity.mutate(data);
+
     if (activeId !== null) {
       setActiveId(null);
     }
@@ -41,8 +42,8 @@ export default function TableBody({ activities }: TableBodyProps) {
     reset();
   }
 
-  function onDeleteActivity(activityId: number) {
-    setMoal(true);
+  function onDelete(activityId: number) {
+    setModal(true);
   }
 
   return (
@@ -50,70 +51,68 @@ export default function TableBody({ activities }: TableBodyProps) {
       {activities.map(activity => (
         <tr key={activity.id}>
           <BodyCell
-            value={activity.title}
             title="title"
             type="text"
+            value={activity.title}
             isEditing={activeId === activity.id}
             register={register}
           />
           <BodyCell
-            value={activity.location}
             title="location"
             type="select"
+            value={activity.location}
             isEditing={activeId === activity.id}
             register={register}
           />
           <BodyCell
-            value={
-              activity.currentParticipants + '/' + activity.maxParticipants
-            }
             title="maxParticipants"
-            type="number"
+            type="string"
+            value={`${activity.currentParticipants}/${activity.maxParticipants}`}
             isEditing={activeId === activity.id}
             register={register}
           />
           <BodyCell
-            value={activity.status}
             title="status"
             type="select"
+            value={activity.status}
             isEditing={activeId === activity.id}
             register={register}
             options={statusOptions}
           />
           <BodyCell
-            value={activity.type}
             title="type"
             type="select"
+            value={activity.type}
             isEditing={activeId === activity.id}
             register={register}
             options={typeOptions}
           />
           <BodyCell
-            value={activity.scheduledDate}
             title="scheduledDate"
             type="date"
+            value={activity.scheduledDate}
             isEditing={activeId === activity.id}
             register={register}
           />
           <BodyCell
-            value={activity.applicationStartDate}
             title="applicationStartDate"
             type="time"
+            value={activity.applicationStartDate}
             isEditing={activeId === activity.id}
             register={register}
           />
           <BodyCell
-            value={activity.applicationEndDate}
             title="applicationEndDate"
             type="time"
+            value={activity.applicationEndDate}
             isEditing={activeId === activity.id}
             register={register}
           />
           <ActionButtons
             isEditing={activeId === activity.id}
-            onUpdate={() => onUpdateActivity(activity.id)}
-            onDelete={() => onDeleteActivity(activity.id)}
-            onSave={handleSubmit(onValid)}
+            prepareActivityUpdate={() => prepareActivityUpdate(activity.id)}
+            onDelete={() => onDelete(activity.id)}
+            onUpdate={handleSubmit(onValid)}
             onCancel={handleCancel}
           />
         </tr>

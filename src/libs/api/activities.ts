@@ -1,8 +1,4 @@
-import {
-  ActivityCreationRequestDto,
-  ActivityResponseDto,
-  ActivityUpdateRequestDto,
-} from '../../types';
+import { ActivityCreationRequestDto, ActivityResponseDto } from '../../types';
 import { instance } from '../instance';
 
 const url = '/activities';
@@ -28,24 +24,21 @@ export const CreateActivityAPI = async (
   return response.data;
 };
 
-export const EditActivityAPI = async (
-  activityUpdateData: ActivityUpdateRequestDto,
+export const UpdateActivityAPI = async (
+  activityUpdateData: ActivityResponseDto,
 ) => {
-  const response = await instance({
-    method: 'PUT',
-    url: url,
-    data: activityUpdateData,
-  });
+  const { id, ...rest } = activityUpdateData;
 
-  return response.data;
+  await instance({
+    method: 'PUT',
+    url: url + `/${id}`,
+    data: rest,
+  });
 };
 
 export const DeleteActivityAPI = async (activityId: string) => {
-  const response = await instance({
+  await instance({
     method: 'DELETE',
-    url: url,
-    params: activityId,
+    url: url + `/${activityId}`,
   });
-
-  return response.data;
 };

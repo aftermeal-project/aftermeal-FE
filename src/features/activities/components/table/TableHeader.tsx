@@ -8,7 +8,7 @@ import {
   FaClock,
   FaUser,
 } from 'react-icons/fa';
-import HeaderCell from './HeaderCell';
+import HeaderCell from '../cell/HeaderCell';
 
 export default function TableHeader() {
   return (
@@ -20,8 +20,8 @@ export default function TableHeader() {
         <HeaderCell icon={FaCheckCircle} text="진행 상태" />
         <HeaderCell icon={FaCalendar} text="세션 유형" />
         <HeaderCell icon={FaCalendarDay} text="일정 날짜" />
-        <HeaderCell icon={FaClock} text="시작 시간" />
-        <HeaderCell icon={FaClock} text="종료 시간" />
+        <HeaderCell icon={FaClock} text="신청시작 시간" />
+        <HeaderCell icon={FaClock} text="신청종료 시간" />
         <HeaderCell icon={FaCog} text="관리" />
       </tr>
     </thead>
