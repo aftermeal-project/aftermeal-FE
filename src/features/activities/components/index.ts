@@ -6,9 +6,9 @@ export { default as ActivitiyListTableContainer } from './ActivityListTableConta
 export { default as ActivityListTable } from './table/ActivityListTable';
 export { default as TableHeader } from './table/TableHeader';
 export { default as TableBody } from './table/TableBody';
-export { default as UpdateTableCell } from './table/BodyCell';
-export { default as BodyCell } from './table/BodyCell';
-export { default as HeaderCell } from './table/HeaderCell';
+
+export { default as BodyCell } from './cell/BodyCell';
+export { default as HeaderCell } from './cell/HeaderCell';
 
 export { default as LocationSelectInput } from './select/LocationSelectInput';
 export { default as SelectField } from './select/SelectField';
