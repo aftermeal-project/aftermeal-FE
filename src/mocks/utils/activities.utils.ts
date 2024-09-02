@@ -14,7 +14,7 @@ function formatDate(type: string, date: Date) {
   }
 
   if (type === 'time') {
-    format = moment(date).format('hh시 mm분');
+    format = moment(date).format('hh:mm');
   }
 
   return format;
