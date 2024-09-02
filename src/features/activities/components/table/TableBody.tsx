@@ -6,6 +6,7 @@ import { ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import { ActivityResponseDto } from '../../../../types';
 import BodyCell from './BodyCell';
+import { statusOptions, typeOptions } from '../constants/options';
 
 interface TableBodyProps {
   activities: ActivityResponseDto[];
@@ -22,12 +23,14 @@ export default function TableBody({ activities }: TableBodyProps) {
   const onUpdateActivity = (id: number) => {
     setActiveId(prevId => (prevId === id ? null : id));
     const activity = activities.find(activity => activity.id === id);
+
     if (activity) {
       reset(activity);
     }
   };
 
   function onValid(data: ActivityResponseDto) {
+    console.log(data);
     if (activeId !== null) {
       setActiveId(null);
     }
@@ -56,7 +59,7 @@ export default function TableBody({ activities }: TableBodyProps) {
           <BodyCell
             value={activity.location}
             title="location"
-            type="text"
+            type="select"
             isEditing={activeId === activity.id}
             register={register}
           />
@@ -75,6 +78,7 @@ export default function TableBody({ activities }: TableBodyProps) {
             type="select"
             isEditing={activeId === activity.id}
             register={register}
+            options={statusOptions}
           />
           <BodyCell
             value={activity.type}
@@ -82,6 +86,7 @@ export default function TableBody({ activities }: TableBodyProps) {
             type="select"
             isEditing={activeId === activity.id}
             register={register}
+            options={typeOptions}
           />
           <BodyCell
             value={activity.scheduledDate}
