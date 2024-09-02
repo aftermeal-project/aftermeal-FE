@@ -13,7 +13,7 @@ type ActivityCardProps = Omit<
 
 export default function ActivityCard({
   id,
-  name,
+  title,
   maxParticipants,
   currentParticipants,
   status,
@@ -48,7 +48,7 @@ export default function ActivityCard({
       } `}
     >
       <div className="p-4">
-        <h3 className="mb-5 text-lg font-semibold text-gray-900">{name}</h3>
+        <h3 className="mb-5 text-lg font-semibold text-gray-900">{title}</h3>
         <div className="mb-2 flex items-center justify-between text-xs text-gray-600">
           <span>
             참여 현황: {currentParticipants} / {maxParticipants}
