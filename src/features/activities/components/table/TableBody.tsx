@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { ActionButtons } from '../../../components/ui/admin/button';
+import { ActionButtons } from '../../../../components/ui/admin/button';
 import { useSetRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../atoms';
-import { AtomKeys } from '../../../constants';
-import { ActivityResponseDto } from '../../../types';
+import { ModalAtomFamily } from '../../../../atoms';
+import { AtomKeys } from '../../../../constants';
+import { ActivityResponseDto } from '../../../../types';
 import UpdateTableCell from './UpdateTableCell';
 
 interface TableBodyProps {

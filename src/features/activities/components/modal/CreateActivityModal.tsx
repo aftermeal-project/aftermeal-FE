@@ -1,11 +1,11 @@
-import { useSetRecoilState } from 'recoil';
-import ModalLayout from '../../../components/@global/layout/ModalLayout';
 import { useForm } from 'react-hook-form';
-import { ModalAtomFamily } from '../../../atoms';
-import { AtomKeys } from '../../../constants';
-import { Input } from '../../../components/@global';
-import { ActivityCreationRequestDto } from '../../../types';
-import useCreateActivity from '../api/create-activitiy';
+import { useSetRecoilState } from 'recoil';
+import { ModalAtomFamily } from '../../../../atoms';
+import { Input } from '../../../../components/@global';
+import ModalLayout from '../../../../components/@global/layout/ModalLayout';
+import { AtomKeys } from '../../../../constants';
+import { ActivityCreationRequestDto } from '../../../../types';
+import useCreateActivity from '../../api/create-activitiy';
 
 export default function CreateActivityModal() {
   const {
@@ -39,7 +39,7 @@ export default function CreateActivityModal() {
   return (
     <ModalLayout setModal={setModal}>
       <div
-        className="p-6 mx-auto bg-white rounded-lg shadow-lg w-80"
+        className="mx-auto w-80 rounded-lg bg-white p-6 shadow-lg"
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-8 text-lg font-bold">활동 추가</h2>
@@ -71,17 +71,17 @@ export default function CreateActivityModal() {
             margin="mb-4"
             error={errors.maxParticipants}
           />
-          <div className="flex justify-between w-full mt-11">
+          <div className="mt-11 flex w-full justify-between">
             <button
               type="button"
               onClick={handleModalClose}
-              className="px-4 py-2 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400"
+              className="rounded-md bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400"
             >
               취소
             </button>
             <button
               type="submit"
-              className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
+              className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
             >
               추가
             </button>
