@@ -1,17 +1,23 @@
+import React from 'react';
+import { Path, UseFormRegister } from 'react-hook-form';
+import { ActivityResponseDto } from '../../../../types';
 import { errorMessages } from '../../../../constants';
-import SelectInput from './SelectInput';
 import useGetActivityLocation from '../../../activity-locations/api/get-activity-locations';
+import SelectInput from './SelectInput';
 
 interface LocationSelectInputProps {
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  className?: string;
+  title: Path<ActivityResponseDto>;
+  value?: string; // value prop 추가
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void; // onChange prop 추가
+  register: UseFormRegister<ActivityResponseDto>;
 }
 
 export default function LocationSelectInput({
+  title,
   value,
   onChange,
-  className,
+  register,
+  ...rest
 }: LocationSelectInputProps) {
   const { data, error } = useGetActivityLocation();
 
@@ -19,17 +25,20 @@ export default function LocationSelectInput({
     alert(errorMessages.UNKNOWN_ERROR);
   }
 
-  const options = data?.map(location => ({
-    value: location.id.toString(),
-    label: location.name,
-  }));
+  const options =
+    data?.map(location => ({
+      value: location.id.toString(),
+      label: location.name,
+    })) || [];
 
   return (
     <SelectInput
+      title={title}
       value={value}
       onChange={onChange}
-      options={options || []}
-      className={className}
+      register={register}
+      options={options}
+      {...rest}
     />
   );
 }

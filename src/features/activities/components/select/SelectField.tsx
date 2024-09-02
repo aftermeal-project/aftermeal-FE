@@ -1,34 +1,28 @@
-import React from 'react';
+import React, { InputHTMLAttributes } from 'react';
 import SelectInput from './SelectInput';
 import LocationSelectInput from './LocationSelectInput';
+import { Path, UseFormRegister } from 'react-hook-form';
+import { ActivityResponseDto } from '../../../../types';
 
-interface SelectFieldProps {
-  value: string;
-  title: string;
-  onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  options?: { value: string; label: string }[];
-  className?: string;
+interface SelectFieldProps extends InputHTMLAttributes<HTMLSelectElement> {
+  title: Path<ActivityResponseDto>;
+  options: { value: string; label: string }[];
+  register: UseFormRegister<ActivityResponseDto>;
 }
 
 export default function SelectField({
-  value,
   title,
-  onChange,
-  options = [],
-  className,
+  options,
+  register,
+  ...rest
 }: SelectFieldProps) {
   return title === 'location' ? (
-    <LocationSelectInput
-      value={value}
-      onChange={onChange}
-      className={className}
-    />
+    <LocationSelectInput title={title} register={register} />
   ) : (
     <SelectInput
-      value={value}
-      onChange={onChange}
-      options={options}
-      className={className}
+      title={title}
+      options={options} // 명시적으로 전달
+      register={register}
     />
   );
 }
