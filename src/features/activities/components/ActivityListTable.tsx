@@ -1,9 +1,9 @@
-import { ActivityListResponseDto } from '../../../types';
+import { ActivityResponseDto } from '../../../types';
 import TableBody from './TableBody';
 import TableHeader from './TableHeader';
 
 interface ActivityListTableProps {
-  activities: ActivityListResponseDto[];
+  activities: ActivityResponseDto[];
 }
 
 export default function ActivityListTable({

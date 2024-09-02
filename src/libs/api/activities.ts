@@ -1,6 +1,6 @@
 import {
   ActivityCreationRequestDto,
-  ActivityListResponseDto,
+  ActivityResponseDto,
   ActivityUpdateRequestDto,
 } from '../../types';
 import { instance } from '../instance';
@@ -8,7 +8,7 @@ import { instance } from '../instance';
 const url = '/activities';
 
 export const GetActivitiesAPI = async () => {
-  const response = await instance<ActivityListResponseDto[]>({
+  const response = await instance<ActivityResponseDto[]>({
     method: 'GET',
     url: url,
   });

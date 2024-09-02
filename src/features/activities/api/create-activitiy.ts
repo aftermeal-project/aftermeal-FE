@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   ActivityCreationRequestDto,
-  ActivityListResponseDto,
+  ActivityResponseDto,
 } from '../../../types';
 import { CreateActivityAPI } from '../../../libs/api/activities';
 import { errorMessages } from '../../../constants';
@@ -23,13 +23,13 @@ export default function useCreateActivity() {
       await queryClient.cancelQueries({ queryKey: ['activities'] });
 
       const previousActivities = queryClient.getQueryData<
-        ActivityListResponseDto[]
+        ActivityResponseDto[]
       >(['activities']);
 
-      queryClient.setQueryData(
-        ['activities'],
-        (old: ActivityListResponseDto[]) => [...old, newActivity],
-      );
+      queryClient.setQueryData(['activities'], (old: ActivityResponseDto[]) => [
+        ...old,
+        newActivity,
+      ]);
 
       return { previousActivities };
     },

@@ -1,10 +1,10 @@
 import { AxiosError } from 'axios';
 import { ParticipationAPI } from '../../../libs/api/participation';
-import { ActivityListResponseDto } from '../../../types';
+import { ActivityResponseDto } from '../../../types';
 import ActivityCard from './ActivityCard';
 
 interface ActivityListContainerProps {
-  activities: ActivityListResponseDto[];
+  activities: ActivityResponseDto[];
 }
 
 export default function ActivityListContainer({

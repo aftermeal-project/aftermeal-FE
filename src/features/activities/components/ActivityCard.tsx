@@ -1,7 +1,7 @@
 import { ButtonHTMLAttributes } from 'react';
-import { ActivityListResponseDto } from '../../../types';
+import { ActivityResponseDto } from '../../../types';
 
-interface BaseActivityCardProps extends ActivityListResponseDto {
+interface BaseActivityCardProps extends ActivityResponseDto {
   onParticipate: (id: number) => void;
   onCancel: (id: number) => void;
 }
@@ -19,6 +19,8 @@ export default function ActivityCard({
   status,
   type,
   scheduledDate,
+  applicationStartDate,
+  applicationEndDate,
   onParticipate,
   onCancel,
   ...buttonProps
@@ -47,7 +49,7 @@ export default function ActivityCard({
     >
       <div className="p-4">
         <h3 className="mb-5 text-lg font-semibold text-gray-900">{name}</h3>
-        <div className="flex items-center justify-between mb-2 text-xs text-gray-600">
+        <div className="mb-2 flex items-center justify-between text-xs text-gray-600">
           <span>
             참여 현황: {currentParticipants} / {maxParticipants}
           </span>
@@ -66,7 +68,7 @@ export default function ActivityCard({
             ></path>
           </svg>
         </div>
-        <div className="relative w-full h-2 mb-3 bg-gray-200 rounded-full">
+        <div className="relative mb-3 h-2 w-full rounded-full bg-gray-200">
           <div
             className={`absolute left-0 top-0 h-2 rounded-full ${
               isFull ? 'bg-red-500' : 'bg-blue-500'

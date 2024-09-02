@@ -3,11 +3,11 @@ import { ModalAtomFamily } from '../../../atoms';
 import ConfirmDeleteModal from './ConfirmDeleteModal';
 import CreateActivityModal from './CreateActivityModal';
 import { AtomKeys } from '../../../constants';
-import { ActivityListResponseDto } from '../../../types';
+import { ActivityResponseDto } from '../../../types';
 import ActivityListTable from './ActivityListTable';
 
 interface ActivitiyListTableContainerProps {
-  activities: ActivityListResponseDto[];
+  activities: ActivityResponseDto[];
 }
 
 export default function ActivitiyListTableContainer({
@@ -27,7 +27,7 @@ export default function ActivitiyListTableContainer({
       {deleteModal && <ConfirmDeleteModal />}
       {createModal && <CreateActivityModal />}
       <div className="h-full overflow-hidden">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">활동 관리</h1>
           <button
             className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white"

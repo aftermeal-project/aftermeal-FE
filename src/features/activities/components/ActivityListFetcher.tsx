@@ -1,9 +1,9 @@
 import { ReactElement } from 'react';
-import { ActivityListResponseDto } from '../../../types';
+import { ActivityResponseDto } from '../../../types';
 import useGetActivities from '../api/get-activity';
 
 interface ActivityListFetcherProps {
-  children: (activities: ActivityListResponseDto[]) => ReactElement;
+  children: (activities: ActivityResponseDto[]) => ReactElement;
 }
 
 export default function ActivityListFetcher({

@@ -1,15 +1,15 @@
 import { Suspense } from 'react';
 import {
   ActivityListFetcher,
-  ActivityListContainer,
   ActivityListSkeleton,
+  ActivitiyListTableContainer,
 } from '../../../../features/activities';
 
 export default function ActivityManagementTab() {
   return (
     <Suspense fallback={<ActivityListSkeleton type="Table" />}>
       <ActivityListFetcher>
-        {activities => <ActivityListContainer activities={activities} />}
+        {activities => <ActivitiyListTableContainer activities={activities} />}
       </ActivityListFetcher>
     </Suspense>
   );

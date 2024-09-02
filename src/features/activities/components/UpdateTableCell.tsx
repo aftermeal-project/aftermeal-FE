@@ -1,12 +1,12 @@
 import { UseFormRegister } from 'react-hook-form';
-import { ActivityListResponseDto } from '../../../types';
+import { ActivityResponseDto } from '../../../types';
 
 interface UpdateTableCellProps {
   value: string | number;
-  title: keyof ActivityListResponseDto;
+  title: keyof ActivityResponseDto;
   type: 'text' | 'number' | 'select';
   isEditing: boolean;
-  register: UseFormRegister<ActivityListResponseDto>;
+  register: UseFormRegister<ActivityResponseDto>;
 }
 
 export default function UpdateTableCell({
@@ -23,7 +23,7 @@ export default function UpdateTableCell({
           <select
             {...register(title)}
             defaultValue="운동장"
-            className="w-full px-2 py-1 border border-gray-300 rounded-md cursor-pointer"
+            className="w-full cursor-pointer rounded-md border border-gray-300 px-2 py-1"
           >
             <option value="강당">강당</option>
             <option value="상담실">상담실</option>
@@ -35,7 +35,7 @@ export default function UpdateTableCell({
             type={type}
             {...register(title)}
             defaultValue={value}
-            className="w-full px-2 py-1 border border-gray-300 rounded-md"
+            className="w-full rounded-md border border-gray-300 px-2 py-1"
           />
         )
       ) : (

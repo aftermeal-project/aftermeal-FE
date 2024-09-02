@@ -1,9 +1,9 @@
 export * from './activities/activity-creation-request-dto';
 export * from './activities/activity-join-request-dto';
-export * from './activities/activity-list-response-dto';
+export * from './activities/activity-response-dto';
 export * from './activities/activity-detail-response-dto-participants-inner';
 export * from './activities/activity-detail-response-dto';
-export * from './activities/activity-list-response-dto';
+export * from './activities/activity-response-dto';
 export * from './activities/activity-update-request-dto';
 
 export * from './activity-locations/activity-location-creation-request-dto';

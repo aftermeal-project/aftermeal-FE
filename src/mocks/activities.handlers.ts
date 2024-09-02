@@ -2,26 +2,26 @@ import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '../constants';
 import {
   ActivityCreationRequestDto,
-  ActivityListResponseDto,
-  ActivityListResponseDtoStatus,
-  ActivityListResponseDtoType,
+  ActivityResponseDto,
+  ActivityResponseDtoStatus,
+  ActivityResponseDtoType,
   ActivityUpdateRequestDto,
 } from '../types';
 import { faker } from '@faker-js/faker';
 
 function getRandomtype() {
-  const statuses = Object.values(ActivityListResponseDtoType);
+  const statuses = Object.values(ActivityResponseDtoType);
   const randomIndex = faker.number.int({ min: 0, max: statuses.length - 1 });
   return statuses[randomIndex];
 }
 
 function getRandomStatus() {
-  const statuses = Object.values(ActivityListResponseDtoStatus);
+  const statuses = Object.values(ActivityResponseDtoStatus);
   const randomIndex = faker.number.int({ min: 0, max: statuses.length - 1 });
   return statuses[randomIndex];
 }
 
-function createRandomActivity(): ActivityListResponseDto {
+function createRandomActivity(): ActivityResponseDto {
   return {
     id: faker.number.int({ min: 1, max: 1000000 }),
     title: faker.person.fullName(),
@@ -41,7 +41,7 @@ export const activitiesHandlers = [
    * 활동 목록 조회 API
    */
 
-  http.get<{}, {}, ActivityListResponseDto[]>(
+  http.get<{}, {}, ActivityResponseDto[]>(
     BASE_URL + '/activities',
     async () => {
       const data = Array.from({ length: 5 }, () => createRandomActivity());
@@ -80,7 +80,7 @@ export const activitiesHandlers = [
     async ({ request }) => {
       const data = await request.json();
 
-      if (!data.name || data.maxParticipants <= 0 || !data.location) {
+      if (!data.title || Number(data.maxParticipants) <= 0 || !data.location) {
         return HttpResponse.json(
           { message: 'Invalid request data' },
           { status: 400 },

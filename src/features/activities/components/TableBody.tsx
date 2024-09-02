@@ -4,18 +4,18 @@ import { ActionButtons } from '../../../components/ui/admin/button';
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../atoms';
 import { AtomKeys } from '../../../constants';
-import { ActivityListResponseDto } from '../../../types';
+import { ActivityResponseDto } from '../../../types';
 import UpdateTableCell from './UpdateTableCell';
 
 interface TableBodyProps {
-  activities: ActivityListResponseDto[];
+  activities: ActivityResponseDto[];
 }
 
 export default function TableBody({ activities }: TableBodyProps) {
   const [activeId, setActiveId] = useState<number | null>(null);
   const setMoal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
 
-  const { register, handleSubmit, reset } = useForm<ActivityListResponseDto>({
+  const { register, handleSubmit, reset } = useForm<ActivityResponseDto>({
     defaultValues: {},
   });
 
@@ -27,7 +27,7 @@ export default function TableBody({ activities }: TableBodyProps) {
     }
   };
 
-  function onValid(data: ActivityListResponseDto) {
+  function onValid(data: ActivityResponseDto) {
     if (activeId !== null) {
       setActiveId(null);
     }
@@ -46,7 +46,7 @@ export default function TableBody({ activities }: TableBodyProps) {
     <tbody>
       {activities.map(activity => (
         <tr key={activity.id}>
-          <td className="px-2 py-2 border border-gray-200">{activity.id}</td>
+          <td className="border border-gray-200 px-2 py-2">{activity.id}</td>
           <UpdateTableCell
             value={activity.title}
             title="title"

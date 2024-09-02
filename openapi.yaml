@@ -57,7 +57,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityListResponseDto'
+                  $ref: '#/components/schemas/ActivityResponseDto'
 
   /activities/{activityId}:
     get:
@@ -76,7 +76,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ActivityResponseDto'
+                $ref: '#/components/schemas/ActivityDetailResponseDto'
 
   /activities/{activityId}/joins:
     post:
@@ -192,19 +192,19 @@ components:
         - type
         - password
 
-    ActivityListResponseDto:
+    ActivityResponseDto:
       type: object
       properties:
         id:
           type: integer
         title:
           type: string
+        location:
+          type: string
         maxParticipants:
           type: integer
         currentParticipants:
           type: integer
-        location:
-          type: string
         status:
           type: string
           enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
@@ -223,39 +223,26 @@ components:
       required:
         - id
         - title
+        - location
         - maxParticipants
         - currentParticipants
-        - location
         - status
         - type
         - scheduledDate
         - applicationStartDate
         - applicationEndDate
 
-    ActivityResponseDto:
+    ActivityDetailResponseDto:
       type: object
       properties:
         id:
           type: integer
         title:
           type: string
+        location:
+          type: string
         maxParticipants:
           type: integer
-        status:
-          type: string
-          enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
-        type:
-          type: string
-          enum: [LUNCH, DINNER]
-        scheduledDate:
-          type: string
-          format: date
-        applicationStartDate:
-          type: string
-          format: date-time
-        applicationEndDate:
-          type: string
-          format: date-time
         participants:
           type: array
           items:
@@ -265,16 +252,32 @@ components:
                 type: integer
               displayName:
                 type: string
+        status:
+          type: string
+          enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
+        type:
+          type: string
+          enum: [LUNCH, DINNER]
+        scheduledDate:
+          type: string
+          format: date
+        applicationStartDate:
+          type: string
+          format: date-time
+        applicationEndDate:
+          type: string
+          format: date-time
       required:
         - id
         - title
+        - location
         - maxParticipants
+        - participants
         - status
         - type
         - scheduledDate
         - applicationStartDate
         - applicationEndDate
-        - participants
 
     ActivityJoinRequestDto:
       type: object
