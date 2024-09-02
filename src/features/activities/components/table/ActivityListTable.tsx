@@ -10,7 +10,7 @@ export default function ActivityListTable({
   activities,
 }: ActivityListTableProps) {
   return (
-    <table className="w-full min-w-[950px] table-auto border-collapse border border-gray-200 shadow-md">
+    <table className="w-full min-w-[1550px] table-auto border-collapse border border-gray-200 shadow-md">
       <TableHeader />
       <TableBody activities={activities} />
     </table>

@@ -6,7 +6,9 @@ export { default as ActivitiyListTableContainer } from './ActivityListTableConta
 export { default as ActivityListTable } from './table/ActivityListTable';
 export { default as TableHeader } from './table/TableHeader';
 export { default as TableBody } from './table/TableBody';
-export { default as UpdateTableCell } from './table/UpdateTableCell';
+export { default as UpdateTableCell } from './table/BodyCell';
+export { default as BodyCell } from './table/BodyCell';
+export { default as HeaderCell } from './table/HeaderCell';
 
 export { default as CreateActivityModal } from './modal/CreateActivityModal';
 export { default as ConfirmDeleteModal } from './modal/ConfirmDeleteModal';

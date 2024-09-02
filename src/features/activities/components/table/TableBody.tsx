@@ -5,7 +5,7 @@ import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import { ActivityResponseDto } from '../../../../types';
-import UpdateTableCell from './UpdateTableCell';
+import BodyCell from './BodyCell';
 
 interface TableBodyProps {
   activities: ActivityResponseDto[];
@@ -46,25 +46,61 @@ export default function TableBody({ activities }: TableBodyProps) {
     <tbody>
       {activities.map(activity => (
         <tr key={activity.id}>
-          <td className="border border-gray-200 px-2 py-2">{activity.id}</td>
-          <UpdateTableCell
+          <BodyCell
             value={activity.title}
             title="title"
             type="text"
             isEditing={activeId === activity.id}
             register={register}
           />
-          <UpdateTableCell
-            value={activity.maxParticipants}
+          <BodyCell
+            value={activity.location}
+            title="location"
+            type="text"
+            isEditing={activeId === activity.id}
+            register={register}
+          />
+          <BodyCell
+            value={
+              activity.currentParticipants + '/' + activity.maxParticipants
+            }
             title="maxParticipants"
             type="number"
             isEditing={activeId === activity.id}
             register={register}
           />
-          <UpdateTableCell
-            value={activity.location}
-            title="location"
+          <BodyCell
+            value={activity.status}
+            title="status"
             type="select"
+            isEditing={activeId === activity.id}
+            register={register}
+          />
+          <BodyCell
+            value={activity.type}
+            title="type"
+            type="select"
+            isEditing={activeId === activity.id}
+            register={register}
+          />
+          <BodyCell
+            value={activity.scheduledDate}
+            title="scheduledDate"
+            type="date"
+            isEditing={activeId === activity.id}
+            register={register}
+          />
+          <BodyCell
+            value={activity.applicationStartDate}
+            title="applicationStartDate"
+            type="time"
+            isEditing={activeId === activity.id}
+            register={register}
+          />
+          <BodyCell
+            value={activity.applicationEndDate}
+            title="applicationEndDate"
+            type="time"
             isEditing={activeId === activity.id}
             register={register}
           />
