@@ -28,6 +28,7 @@ export default function useGetActivities() {
     queryKey: ['activities'],
     queryFn: getActivities,
     retry: false,
+    refetchOnMount: true,
   });
 
   return {
