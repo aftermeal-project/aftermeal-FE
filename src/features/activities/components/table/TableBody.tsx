@@ -9,56 +9,75 @@ import { statusOptions, typeOptions } from '../constants/options';
 import { ActionButtons } from '../../../../components/ui/admin/button';
 import useUpdateActivty from '../../api/update-activity';
 import { formatTime } from '../../../../utils';
+import moment from 'moment';
 
 interface TableBodyProps {
   activities: ActivityResponseDto[];
 }
 
 export default function TableBody({ activities }: TableBodyProps) {
+  const { updateActivity } = useUpdateActivty();
   const [activeId, setActiveId] = useState<number | null>(null);
   const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
+  const { register, handleSubmit, reset, setValue } =
+    useForm<ActivityResponseDto>();
 
-  const { register, handleSubmit, reset } = useForm<ActivityResponseDto>();
-  const { updateActivity } = useUpdateActivty();
-
-  function prepareActivityUpdate(id: number) {
+  const activeSelectedCell = (id: number) => {
     setActiveId(prevId => (prevId === id ? null : id));
     const activity = activities.find(activity => activity.id === id);
 
     if (activity) {
       reset(activity);
     }
-  }
+  };
 
-  function onValid(data: ActivityResponseDto) {
+  const onDelete = () => {
+    setModal(true);
+  };
+
+  const onValid = (data: ActivityResponseDto) => {
     if (activeId !== null) {
       setActiveId(null);
     }
 
-    /**
-     * 수정 api 요청을 위해 formatted data를 원본 형식으로 복구
-     */
     data.applicationStartDate = formatTime({
       type: 'restore',
-      date: data.applicationStartDate,
+      time: data.applicationStartDate,
     });
 
     data.applicationEndDate = formatTime({
       type: 'restore',
-      date: data.applicationEndDate,
+      time: data.applicationEndDate,
     });
 
+    if (moment(data.applicationStartDate).isAfter(data.applicationEndDate)) {
+      alert('신청 시작 시간은 신청 종료 시간보다 빨라야 합니다.');
+      return;
+    }
+
+    if (
+      data.type === 'LUNCH' &&
+      moment(data.applicationStartDate).format('A') === 'PM'
+    ) {
+      alert('점심 시간은 오후일 수 없습니다.');
+      return;
+    }
+
+    if (
+      data.type === 'DINNER' &&
+      moment(data.applicationStartDate).format('A') === 'AM'
+    ) {
+      alert('저녁 시간은 오전일 수 없습니다.');
+      return;
+    }
+
+    if (data.maxParticipants < data.currentParticipants) {
+      alert('최대 참가자는 현재 참가자 수보다 적을 수 없습니다.');
+      return;
+    }
+
     updateActivity.mutate(data);
-  }
-
-  function handleCancel() {
-    setActiveId(null);
-    reset();
-  }
-
-  function onDelete(activityId: number) {
-    setModal(true);
-  }
+  };
 
   return (
     <tbody>
@@ -118,9 +137,10 @@ export default function TableBody({ activities }: TableBodyProps) {
           <BodyCell
             title="applicationStartDate"
             type="time"
-            value={activity.applicationStartDate}
             isEditing={activeId === activity.id}
+            value={activity.applicationStartDate}
             register={register}
+            setValue={setValue}
           />
           <BodyCell
             title="applicationEndDate"
@@ -128,13 +148,15 @@ export default function TableBody({ activities }: TableBodyProps) {
             value={activity.applicationEndDate}
             isEditing={activeId === activity.id}
             register={register}
+            setValue={setValue}
           />
           <ActionButtons
             isEditing={activeId === activity.id}
-            prepareActivityUpdate={() => prepareActivityUpdate(activity.id)}
-            onDelete={() => onDelete(activity.id)}
+            onDelete={onDelete}
             onUpdate={handleSubmit(onValid)}
-            onCancel={handleCancel}
+            activeCell={() => activeSelectedCell(activity.id)}
+            setActiveId={setActiveId}
+            reset={reset}
           />
         </tr>
       ))}

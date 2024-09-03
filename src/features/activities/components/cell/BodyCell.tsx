@@ -1,7 +1,8 @@
 import React, { InputHTMLAttributes } from 'react';
-import { Path, UseFormRegister } from 'react-hook-form';
+import { Path, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { ActivityResponseDto } from '../../../../types';
 import SelectField from '../select/SelectField';
+import { formatTime } from '../../../../utils';
 
 interface BodyCellProps extends InputHTMLAttributes<HTMLInputElement> {
   title: Path<ActivityResponseDto>;
@@ -9,6 +10,7 @@ interface BodyCellProps extends InputHTMLAttributes<HTMLInputElement> {
   value: string | number;
   register: UseFormRegister<ActivityResponseDto>;
   options?: { value: string; label: string }[];
+  setValue?: UseFormSetValue<ActivityResponseDto>;
 }
 
 export default function BodyCell({
@@ -17,21 +19,30 @@ export default function BodyCell({
   value,
   register,
   options,
+  setValue,
   ...rest
 }: BodyCellProps) {
   const { type } = rest;
 
+  if (setValue && isEditing) {
+    setValue(title, formatTime({ type: 'format', time: value as string }));
+  }
+
   if (!isEditing) {
+    const time = formatTime({ type: 'readable', time: value as string });
+
     return (
-      <td className="border border-gray-200 px-2 py-1 align-top">
-        <span className="block w-full px-2 py-1 text-gray-800">{value}</span>
+      <td className="border border-gray-200 px-2">
+        <span className="block w-full px-2 py-1 text-gray-800">
+          {type === 'time' ? time : value}
+        </span>
       </td>
     );
   }
 
   if (type === 'select') {
     return (
-      <td className="border border-gray-200 px-2 py-1 align-top">
+      <td className="border border-gray-200 px-2">
         <SelectField
           title={title}
           value={value}
@@ -43,14 +54,12 @@ export default function BodyCell({
   }
 
   return (
-    <td className="border border-gray-200 px-2 py-1 align-top">
+    <td className="border border-gray-200 px-2">
       <input
         type={type}
         className="box-border w-full rounded-md border border-gray-300 px-2 py-1"
         placeholder={value as string}
-        {...register(title, {
-          required: `${title}은 필수 입력입니다.`,
-        })}
+        {...register(title, { required: true })}
         {...rest}
       />
     </td>
