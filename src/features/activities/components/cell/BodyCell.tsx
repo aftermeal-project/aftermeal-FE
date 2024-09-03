@@ -6,7 +6,7 @@ import SelectField from '../select/SelectField';
 interface BodyCellProps extends InputHTMLAttributes<HTMLInputElement> {
   title: Path<ActivityResponseDto>;
   isEditing: boolean;
-  value: string;
+  value: string | number;
   register: UseFormRegister<ActivityResponseDto>;
   options?: { value: string; label: string }[];
 }
@@ -19,6 +19,8 @@ export default function BodyCell({
   options,
   ...rest
 }: BodyCellProps) {
+  const { type } = rest;
+
   if (!isEditing) {
     return (
       <td className="border border-gray-200 px-2 py-1 align-top">
@@ -27,7 +29,7 @@ export default function BodyCell({
     );
   }
 
-  if (rest.type === 'select') {
+  if (type === 'select') {
     return (
       <td className="border border-gray-200 px-2 py-1 align-top">
         <SelectField
@@ -43,10 +45,12 @@ export default function BodyCell({
   return (
     <td className="border border-gray-200 px-2 py-1 align-top">
       <input
-        type={rest.type}
+        type={type}
         className="box-border w-full rounded-md border border-gray-300 px-2 py-1"
-        placeholder={value}
-        {...register(title)}
+        placeholder={value as string}
+        {...register(title, {
+          required: `${title}은 필수 입력입니다.`,
+        })}
         {...rest}
       />
     </td>

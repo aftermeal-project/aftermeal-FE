@@ -8,6 +8,7 @@ import BodyCell from '../cell/BodyCell';
 import { statusOptions, typeOptions } from '../constants/options';
 import { ActionButtons } from '../../../../components/ui/admin/button';
 import useUpdateActivty from '../../api/update-activity';
+import { formatTime } from '../../../../utils';
 
 interface TableBodyProps {
   activities: ActivityResponseDto[];
@@ -30,11 +31,24 @@ export default function TableBody({ activities }: TableBodyProps) {
   }
 
   function onValid(data: ActivityResponseDto) {
-    updateActivity.mutate(data);
-
     if (activeId !== null) {
       setActiveId(null);
     }
+
+    /**
+     * 수정 api 요청을 위해 formatted data를 원본 형식으로 복구
+     */
+    data.applicationStartDate = formatTime({
+      type: 'restore',
+      date: data.applicationStartDate,
+    });
+
+    data.applicationEndDate = formatTime({
+      type: 'restore',
+      date: data.applicationEndDate,
+    });
+
+    updateActivity.mutate(data);
   }
 
   function handleCancel() {
@@ -49,7 +63,7 @@ export default function TableBody({ activities }: TableBodyProps) {
   return (
     <tbody>
       {activities.map(activity => (
-        <tr key={activity.id}>
+        <tr key={activity.id} className="font-bold">
           <BodyCell
             title="title"
             type="text"
@@ -65,9 +79,16 @@ export default function TableBody({ activities }: TableBodyProps) {
             register={register}
           />
           <BodyCell
+            title="currentParticipants"
+            type="number"
+            value={activity.currentParticipants}
+            isEditing={false}
+            register={register}
+          />
+          <BodyCell
             title="maxParticipants"
-            type="string"
-            value={`${activity.currentParticipants}/${activity.maxParticipants}`}
+            type="number"
+            value={activity.maxParticipants}
             isEditing={activeId === activity.id}
             register={register}
           />
