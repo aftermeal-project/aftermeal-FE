@@ -4,21 +4,7 @@ import {
   ActivityResponseDtoStatus,
   ActivityResponseDto,
 } from '../../types';
-import moment from 'moment';
-
-function formatDate(type: string, date: Date) {
-  let format = '';
-
-  if (type === 'date') {
-    format = moment(date).format('YYYY-MM-DD');
-  }
-
-  if (type === 'time') {
-    format = moment(date).format('hh:mm');
-  }
-
-  return format;
-}
+import { formatDate } from '../../utils';
 
 function getRandomtype() {
   const statuses = Object.values(ActivityResponseDtoType);
@@ -41,8 +27,11 @@ export function createRandomActivity(): ActivityResponseDto {
     location: faker.location.city(),
     status: getRandomStatus(),
     type: getRandomtype(),
-    scheduledDate: formatDate('date', faker.date.soon()),
-    applicationStartDate: formatDate('time', faker.date.soon()),
-    applicationEndDate: formatDate('time', faker.date.soon()),
+    scheduledDate: formatDate({
+      format: 'YYYY-MM-DD',
+      date: String(faker.date.soon()),
+    }),
+    applicationStartDate: String(faker.date.soon()),
+    applicationEndDate: String(faker.date.soon()),
   };
 }
