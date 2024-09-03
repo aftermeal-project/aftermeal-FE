@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@tanstack/react-query": "^5.52.1",
+    "@types/moment": "^2.13.0",
     "axios": "^1.7.4",
     "moment": "^2.30.1",
     "react": "^18.3.1",
