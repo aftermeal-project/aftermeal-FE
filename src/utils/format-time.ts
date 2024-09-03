@@ -2,40 +2,42 @@ import moment from 'moment';
 
 interface TimeData {
   type: 'restore' | 'readable' | 'format';
-  date: string;
+  time: string;
 }
 
-function restoreToOriginalFormat(date: string) {
-  const time = moment(date, 'HH:mm');
+function restoreToOriginalFormat(time: string): string {
+  const hhmmTime = moment(time, 'HH:mm', true);
 
   const originalFormat = moment().set({
-    hour: time.hour(),
-    minute: time.minute(),
+    hour: hhmmTime.hour(),
+    minute: hhmmTime.minute(),
     second: 0,
     millisecond: 0,
   });
 
-  return String(originalFormat);
+  return originalFormat.toISOString();
 }
 
-function formatDateToReadableFormat(date: string) {
-  const momentDate = moment(date);
-  const hour = momentDate.format('A');
+function formatDateToReadableFormat(time: string): string {
+  const date = new Date(time);
+  const isoDate = moment(date).toISOString();
+  const hour = moment(isoDate).format('A');
 
-  return `${hour === 'PM' ? '오후' : '오전'} ${momentDate.format('hh[시] mm[분]')}`;
+  return `${hour === 'PM' ? '오후' : '오전'} ${moment(isoDate).format('hh[시] mm[분]')}`;
 }
 
-function formatDateToHHmm(date: string) {
-  const momentDate = moment(date);
-  return momentDate.format('hh:mm');
+function formatDateToHHmm(time: string): string {
+  const date = new Date(time);
+  const isoDate = moment(date).format();
+  return moment(isoDate).format('HH:mm');
 }
 
-export default function formatTime({ type, date }: TimeData): string {
+export default function formatTime({ type, time }: TimeData): string {
   if (type === 'restore') {
-    return restoreToOriginalFormat(date);
+    return restoreToOriginalFormat(time);
   } else if (type === 'readable') {
-    return formatDateToReadableFormat(date);
+    return formatDateToReadableFormat(time);
   } else {
-    return formatDateToHHmm(date);
+    return formatDateToHHmm(time);
   }
 }
