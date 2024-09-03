@@ -19,10 +19,6 @@ export default function SelectField({
   return title === 'location' ? (
     <LocationSelectInput title={title} register={register} />
   ) : (
-    <SelectInput
-      title={title}
-      options={options} // 명시적으로 전달
-      register={register}
-    />
+    <SelectInput title={title} options={options} register={register} />
   );
 }

@@ -7,8 +7,8 @@ import SelectInput from './SelectInput';
 
 interface LocationSelectInputProps {
   title: Path<ActivityResponseDto>;
-  value?: string; // value prop 추가
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void; // onChange prop 추가
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   register: UseFormRegister<ActivityResponseDto>;
 }
 

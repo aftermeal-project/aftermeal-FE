@@ -5,8 +5,8 @@ import { ActivityResponseDto } from '../../../../types';
 interface SelectInputProps {
   title: Path<ActivityResponseDto>;
   options: { value: string; label: string }[];
-  value?: string; // value prop 추가
-  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void; // onChange prop 추가
+  value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   register: UseFormRegister<ActivityResponseDto>;
 }
 
@@ -21,9 +21,9 @@ export default function SelectInput({
   return (
     <select
       className="box-border w-full cursor-pointer rounded-md border border-gray-300 px-2 py-1"
-      {...register(title)} // register를 통한 폼 관리
-      value={value} // 제어된 컴포넌트로 설정
-      onChange={onChange} // onChange 핸들러 추가
+      {...register(title)}
+      value={value}
+      onChange={onChange}
       {...rest}
     >
       {options.map(option => (
