@@ -3,13 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import {
   AuthUserTypeSelector,
-  AuthErrorMessages,
   AuthButton,
   AuthLoadingSpinner,
 } from '../../../components/ui/auth';
 import { validationMessages, signupValidationRules } from '../../../constants';
 import useSignup from '../api/signup';
-import { Input } from '../../../components/@global';
+import { FormErrorMessages, Input } from '../../../components/@global';
 import { UserRegistrationRequestDto } from '../../../types';
 
 type UserType = 'STUDENT' | 'TEACHER';
@@ -97,7 +96,7 @@ export default function SignupForm() {
           margin={`${errors.type || errors.name || errors.email || errors.password || errors.generationNumber ? '' : 'mb-9'}`}
           error={errors.password}
         />
-        <AuthErrorMessages
+        <FormErrorMessages
           errors={errors}
           fields={
             type === 'STUDENT'

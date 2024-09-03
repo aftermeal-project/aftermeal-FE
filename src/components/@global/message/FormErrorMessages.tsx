@@ -1,11 +1,11 @@
 import { FieldErrors, FieldValues } from 'react-hook-form';
 
-interface AuthErrorMessageProps {
+interface FormErrorMessageProps {
   message?: string;
   margin?: string;
 }
 
-function AuthErrorMessage({ message, margin = 'my-5' }: AuthErrorMessageProps) {
+function FormErrorMessage({ message, margin = 'my-5' }: FormErrorMessageProps) {
   if (!message) return null;
 
   return (
@@ -17,15 +17,15 @@ function AuthErrorMessage({ message, margin = 'my-5' }: AuthErrorMessageProps) {
   );
 }
 
-interface AuthErrorMessagesProps<T extends FieldValues> {
+interface FormErrorMessagesProps<T extends FieldValues> {
   errors: FieldErrors<T>;
   fields: Array<keyof T>;
 }
 
-export default function AuthErrorMessages<T extends FieldValues>({
+export default function FormErrorMessages<T extends FieldValues>({
   errors,
   fields,
-}: AuthErrorMessagesProps<T>) {
+}: FormErrorMessagesProps<T>) {
   return (
     <>
       {fields?.map((field, index) => {
@@ -37,7 +37,7 @@ export default function AuthErrorMessages<T extends FieldValues>({
         return (
           !previousFieldsHaveError &&
           hasError && (
-            <AuthErrorMessage
+            <FormErrorMessage
               key={String(field)}
               message={String(errors[field]?.message)}
             />

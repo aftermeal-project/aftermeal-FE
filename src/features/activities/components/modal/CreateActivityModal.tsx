@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
-import { Input } from '../../../../components/@global';
+import { FormErrorMessages, Input } from '../../../../components/@global';
 import ModalLayout from '../../../../components/@global/layout/ModalLayout';
 import {
   AtomKeys,
@@ -12,7 +12,6 @@ import { ActivityCreationRequestDto } from '../../../../types';
 import useCreateActivity from '../../api/create-activitiy';
 import SelectField from '../select/SelectField';
 import { typeOptions } from '../constants/options';
-import { AuthErrorMessages } from '../../../../components/ui/auth';
 
 export default function CreateActivityModal() {
   const {
@@ -112,7 +111,7 @@ export default function CreateActivityModal() {
             margin="mb-4"
             error={errors.scheduledDate}
           />
-          <AuthErrorMessages
+          <FormErrorMessages
             errors={errors}
             fields={[
               'title',

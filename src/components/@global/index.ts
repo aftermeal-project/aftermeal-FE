@@ -2,3 +2,4 @@ export * from './boundary';
 export * from './header';
 export * from './layout';
 export * from './input';
+export * from './message';
