@@ -22,7 +22,7 @@ export const AdminGetActivitiesAPI = async () => {
 export const CreateActivityAPI = async (
   createActivityData: ActivityCreationRequestDto,
 ) => {
-  const response = await instance({
+  await instance({
     method: 'POST',
     headers: {
       Authorization: accessToken,
@@ -30,8 +30,6 @@ export const CreateActivityAPI = async (
     url: url,
     data: createActivityData,
   });
-
-  return response.data;
 };
 
 export const UpdateActivityAPI = async (

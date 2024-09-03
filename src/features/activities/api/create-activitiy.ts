@@ -1,15 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import {
-  ActivityCreationRequestDto,
-  ActivityResponseDto,
-} from '../../../types';
+import { ActivityCreationRequestDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { CreateActivityAPI } from '../../../libs/api/admin.activities';
 
-async function createActivity(data: ActivityCreationRequestDto) {
-  return await CreateActivityAPI(data);
+async function createActivity(data: ActivityCreationRequestDto): Promise<void> {
+  await CreateActivityAPI(data);
 }
-
 function handleCreateActivityError() {
   alert(errorMessages.UNKNOWN_ERROR);
 }
@@ -17,22 +13,8 @@ function handleCreateActivityError() {
 export default function useCreateActivity() {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
+  const mutation = useMutation<void, Error, ActivityCreationRequestDto>({
     mutationFn: createActivity,
-    onMutate: async (newActivity: ActivityCreationRequestDto) => {
-      await queryClient.cancelQueries({ queryKey: ['activities'] });
-
-      const previousActivities = queryClient.getQueryData<
-        ActivityResponseDto[]
-      >(['activities']);
-
-      queryClient.setQueryData(['activities'], (old: ActivityResponseDto[]) => [
-        ...old,
-        newActivity,
-      ]);
-
-      return { previousActivities };
-    },
     onError: (_error, _variables, context: any) => {
       queryClient.setQueryData(['activities'], context.previousActivities);
       handleCreateActivityError();

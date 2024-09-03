@@ -3,19 +3,27 @@ import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
 import { Input } from '../../../../components/@global';
 import ModalLayout from '../../../../components/@global/layout/ModalLayout';
-import { AtomKeys } from '../../../../constants';
+import {
+  AtomKeys,
+  createActivityValidationRules,
+  errorMessages,
+} from '../../../../constants';
 import { ActivityCreationRequestDto } from '../../../../types';
 import useCreateActivity from '../../api/create-activitiy';
+import SelectField from '../select/SelectField';
+import { typeOptions } from '../constants/options';
+import { AuthErrorMessages } from '../../../../components/ui/auth';
 
 export default function CreateActivityModal() {
   const {
     register,
     handleSubmit,
+    reset,
+    setValue,
     formState: { errors },
   } = useForm<ActivityCreationRequestDto>({
     defaultValues: {
       title: '',
-      location: '',
       maxParticipants: 2,
     },
   });
@@ -24,16 +32,21 @@ export default function CreateActivityModal() {
 
   const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.CREATE_ACTIVITY));
 
-  function onSubmit(data: ActivityCreationRequestDto) {
-    // check validation
-
+  function onValid(data: ActivityCreationRequestDto) {
     createActivity.mutate(data, {
-      onSuccess: () => setModal(false),
+      onError: () => {
+        alert(errorMessages.UNKNOWN_ERROR);
+      },
+      onSettled: () => {
+        setModal(false);
+        reset();
+      },
     });
   }
 
   function handleModalClose() {
     setModal(false);
+    reset();
   }
 
   return (
@@ -43,33 +56,71 @@ export default function CreateActivityModal() {
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-8 text-lg font-bold">활동 추가</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onValid)}>
           <Input<ActivityCreationRequestDto>
-            label="이름"
+            label="활동명"
             name="title"
             type="text"
-            placeholder="이름"
+            placeholder="활동명"
             register={register}
+            validationRules={createActivityValidationRules.titleValidationRules}
             margin="mb-4"
             error={errors.title}
           />
+          <div className="mb-4">
+            <label htmlFor="location" className="mb-2 inline-block text-base">
+              장소
+            </label>
+            <SelectField<ActivityCreationRequestDto>
+              title="location"
+              options={[]}
+              register={register}
+              setValue={setValue}
+            />
+          </div>
           <Input<ActivityCreationRequestDto>
-            label="장소"
-            name="location"
-            type="text"
-            placeholder="장소"
-            register={register}
-            margin="mb-4"
-            error={errors.location}
-          />
-          <Input<ActivityCreationRequestDto>
-            label="최대 참가자 수"
+            label="최대 참가자"
             name="maxParticipants"
             type="number"
-            placeholder="최대 참가자 수"
+            placeholder="최대 참가자"
             register={register}
+            validationRules={
+              createActivityValidationRules.maxParticipantsValidationRules
+            }
             margin="mb-4"
             error={errors.maxParticipants}
+          />
+          <div className="mb-4">
+            <label htmlFor="location" className="mb-2 inline-block text-base">
+              세션 유형
+            </label>
+            <SelectField<ActivityCreationRequestDto>
+              title="type"
+              options={typeOptions}
+              register={register}
+            />
+          </div>
+          <Input<ActivityCreationRequestDto>
+            label="일정"
+            name="scheduledDate"
+            type="date"
+            placeholder="일정"
+            register={register}
+            validationRules={
+              createActivityValidationRules.scheduledDateValidationRules
+            }
+            margin="mb-4"
+            error={errors.scheduledDate}
+          />
+          <AuthErrorMessages
+            errors={errors}
+            fields={[
+              'title',
+              'location',
+              'maxParticipants',
+              'type',
+              'scheduledDate',
+            ]}
           />
           <div className="mt-11 flex w-full justify-between">
             <button
