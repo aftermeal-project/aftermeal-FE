@@ -38,23 +38,24 @@ export const adminActivitiesHandlers = [
   /**
    * 활동 수정 API
    */
-  http.put<{ activityId: string }, ActivityResponseDto, {}>(
-    url + '/:activityId',
-    async ({ request, params }) => {
-      const data = await request.json();
+  http.put<
+    { activityId: string },
+    Omit<ActivityResponseDto, 'currentParticipants'>,
+    {}
+  >(url + '/:activityId', async ({ request, params }) => {
+    const data = await request.json();
 
-      if (!data.title || Number(data.maxParticipants) <= 0 || !data.location) {
-        return HttpResponse.json(
-          { message: 'Invalid request data' },
-          { status: 400 },
-        );
-      }
+    if (!data.title || Number(data.maxParticipants) <= 0 || !data.location) {
+      return HttpResponse.json(
+        { message: 'Invalid request data' },
+        { status: 400 },
+      );
+    }
 
-      return HttpResponse.json(null, {
-        status: 201,
-      });
-    },
-  ),
+    return HttpResponse.json(null, {
+      status: 201,
+    });
+  }),
 
   /**
    * 활동 삭제 API

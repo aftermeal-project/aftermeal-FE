@@ -37,7 +37,7 @@ export const CreateActivityAPI = async (
 export const UpdateActivityAPI = async (
   activityUpdateData: ActivityResponseDto,
 ) => {
-  const { id, ...rest } = activityUpdateData;
+  const { id, currentParticipants, ...rest } = activityUpdateData;
 
   await instance({
     method: 'PUT',
