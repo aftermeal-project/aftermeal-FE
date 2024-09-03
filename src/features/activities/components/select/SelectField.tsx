@@ -1,21 +1,21 @@
 import React, { InputHTMLAttributes } from 'react';
 import SelectInput from './SelectInput';
 import LocationSelectInput from './LocationSelectInput';
-import { Path, UseFormRegister } from 'react-hook-form';
-import { ActivityResponseDto } from '../../../../types';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-interface SelectFieldProps extends InputHTMLAttributes<HTMLSelectElement> {
-  title: Path<ActivityResponseDto>;
+interface SelectFieldProps<T extends FieldValues>
+  extends InputHTMLAttributes<HTMLSelectElement> {
+  title: Path<T>;
   options: { value: string; label: string }[];
-  register: UseFormRegister<ActivityResponseDto>;
+  register: UseFormRegister<T>;
 }
 
-export default function SelectField({
+export default function SelectField<T extends FieldValues>({
   title,
   options,
   register,
   ...rest
-}: SelectFieldProps) {
+}: SelectFieldProps<T>) {
   return title === 'location' ? (
     <LocationSelectInput title={title} register={register} />
   ) : (

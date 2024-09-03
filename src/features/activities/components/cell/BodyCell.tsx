@@ -43,7 +43,7 @@ export default function BodyCell({
   if (type === 'select') {
     return (
       <td className="border border-gray-200 px-2">
-        <SelectField
+        <SelectField<ActivityResponseDto>
           title={title}
           value={value}
           register={register}

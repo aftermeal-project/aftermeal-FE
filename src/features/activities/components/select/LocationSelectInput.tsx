@@ -1,24 +1,23 @@
 import React from 'react';
-import { Path, UseFormRegister } from 'react-hook-form';
-import { ActivityResponseDto } from '../../../../types';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 import { errorMessages } from '../../../../constants';
 import useGetActivityLocation from '../../../activity-locations/api/get-activity-locations';
 import SelectInput from './SelectInput';
 
-interface LocationSelectInputProps {
-  title: Path<ActivityResponseDto>;
+interface LocationSelectInputProps<T extends FieldValues> {
+  title: Path<T>;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  register: UseFormRegister<ActivityResponseDto>;
+  register: UseFormRegister<T>;
 }
 
-export default function LocationSelectInput({
+export default function LocationSelectInput<T extends FieldValues>({
   title,
   value,
   onChange,
   register,
   ...rest
-}: LocationSelectInputProps) {
+}: LocationSelectInputProps<T>) {
   const { data, error } = useGetActivityLocation();
 
   if (error) {
@@ -32,7 +31,7 @@ export default function LocationSelectInput({
     })) || [];
 
   return (
-    <SelectInput
+    <SelectInput<T>
       title={title}
       value={value}
       onChange={onChange}

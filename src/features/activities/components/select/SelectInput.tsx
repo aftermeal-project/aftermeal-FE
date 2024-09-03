@@ -1,23 +1,22 @@
 import React from 'react';
-import { Path, UseFormRegister } from 'react-hook-form';
-import { ActivityResponseDto } from '../../../../types';
+import { FieldValues, Path, UseFormRegister } from 'react-hook-form';
 
-interface SelectInputProps {
-  title: Path<ActivityResponseDto>;
+interface SelectInputProps<T extends FieldValues> {
+  title: Path<T>;
   options: { value: string; label: string }[];
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-  register: UseFormRegister<ActivityResponseDto>;
+  register: UseFormRegister<T>;
 }
 
-export default function SelectInput({
+export default function SelectInput<T extends FieldValues>({
   title,
   options,
   value,
   onChange,
   register,
   ...rest
-}: SelectInputProps) {
+}: SelectInputProps<T>) {
   return (
     <select
       className="box-border w-full cursor-pointer rounded-md border border-gray-300 px-2 py-1"
