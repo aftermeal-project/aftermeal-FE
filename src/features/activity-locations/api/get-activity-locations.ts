@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { errorMessages } from '../../../constants';
-import { GetActivityLocationAPI } from '../../../libs/api/activity-locations';
+import { GetActivityLocationAPI } from '../../../libs/api/admin.activity-locations';
 
 async function getActivityLocations() {
   return await GetActivityLocationAPI();

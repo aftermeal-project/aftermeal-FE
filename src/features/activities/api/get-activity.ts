@@ -2,12 +2,31 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { errorMessages } from '../../../constants';
 import { GetActivitiesAPI } from '../../../libs/api/activities';
+import { UserListResponseDtoRoles } from '../../../types';
+import { AdminGetActivitiesAPI } from '../../../libs/api/admin.activities';
+import Token from '../../../libs/utils/token';
 
-async function getActivities() {
-  return await GetActivitiesAPI();
+async function getActivities({
+  queryKey,
+}: {
+  queryKey: [key: 'activities', roles?: UserListResponseDtoRoles];
+}) {
+  const [, roles] = queryKey;
+
+  if (roles === 'USER') {
+    return GetActivitiesAPI();
+  }
+
+  if (roles === 'ADMIN') {
+    return AdminGetActivitiesAPI();
+  }
+
+  throw new Error(errorMessages.UNKNOWN_ERROR);
 }
 
 function handleGetActivitiesError(error: any) {
+  if (!error) return null;
+
   if (error instanceof AxiosError) {
     const { response } = error;
 
@@ -15,17 +34,23 @@ function handleGetActivitiesError(error: any) {
       return errorMessages.ERR_NETWORK;
     }
 
-    if (response.status === 500) {
-      return errorMessages.SERVER_ERROR;
-    } else {
-      return errorMessages.DEFAULT_ERROR;
+    switch (response.status) {
+      case 500:
+        return errorMessages.SERVER_ERROR;
+      default:
+        return errorMessages.DEFAULT_ERROR;
     }
   }
+
+  return errorMessages.UNKNOWN_ERROR;
 }
 
-export default function useGetActivities() {
+export default function useGetActivities(roles?: UserListResponseDtoRoles) {
+  const token = new Token();
+  const isLoggedIn = token.getLocalAccessToken() !== null;
+
   const { data, error } = useSuspenseQuery({
-    queryKey: ['activities'],
+    queryKey: isLoggedIn ? ['activities', roles] : ['activities'],
     queryFn: getActivities,
     retry: false,
     refetchOnMount: true,

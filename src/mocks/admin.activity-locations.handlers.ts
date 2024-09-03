@@ -3,7 +3,7 @@ import { BASE_URL } from '../constants';
 import { ActivityLocationListResponseDto } from '../types';
 import { createRandomActivityLocation } from './utils/activity-locations.utils';
 
-export const activityLocationsHandlers = [
+export const adminActivityLocationsHandlers = [
   http.get<{}, {}, ActivityLocationListResponseDto[]>(
     BASE_URL + '/admin/activity-locations',
     async () => {

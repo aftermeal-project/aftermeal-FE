@@ -3,8 +3,8 @@ import {
   ActivityCreationRequestDto,
   ActivityResponseDto,
 } from '../../../types';
-import { CreateActivityAPI } from '../../../libs/api/activities';
 import { errorMessages } from '../../../constants';
+import { CreateActivityAPI } from '../../../libs/api/admin.activities';
 
 async function createActivity(data: ActivityCreationRequestDto) {
   return await CreateActivityAPI(data);
