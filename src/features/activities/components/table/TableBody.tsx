@@ -36,10 +36,6 @@ export default function TableBody({ activities }: TableBodyProps) {
   };
 
   const onValid = (data: ActivityResponseDto) => {
-    if (activeId !== null) {
-      setActiveId(null);
-    }
-
     data.applicationStartDate = formatTime({
       type: 'restore',
       time: data.applicationStartDate,
@@ -50,35 +46,38 @@ export default function TableBody({ activities }: TableBodyProps) {
       time: data.applicationEndDate,
     });
 
-    if (moment(data.applicationStartDate).isAfter(data.applicationEndDate)) {
-      alert('신청 시작 시간은 신청 종료 시간보다 빨라야 합니다.');
-      return;
-    }
+    const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
+      data.applicationEndDate,
+    );
 
-    if (
+    const isLunchPM =
       data.type === 'LUNCH' &&
-      moment(data.applicationStartDate).format('A') === 'PM'
-    ) {
-      alert('점심 시간은 오후일 수 없습니다.');
-      return;
-    }
-
-    if (
+      moment(data.applicationStartDate).format('A') === 'PM';
+    const isDinnerAM =
       data.type === 'DINNER' &&
-      moment(data.applicationStartDate).format('A') === 'AM'
-    ) {
-      alert('저녁 시간은 오전일 수 없습니다.');
-      return;
+      moment(data.applicationStartDate).format('A') === 'AM';
+    const isMaxParticipantsLess =
+      data.maxParticipants < data.currentParticipants;
+
+    let errorMessage = '';
+
+    if (isStartAfterEnd) {
+      errorMessage = '신청 시작 시간은 신청 종료 시간보다 빨라야 합니다.';
+    } else if (isLunchPM) {
+      errorMessage = '점심 시간은 오후일 수 없습니다.';
+    } else if (isDinnerAM) {
+      errorMessage = '저녁 시간은 오전일 수 없습니다.';
+    } else if (isMaxParticipantsLess) {
+      errorMessage = '최대 참가자는 현재 참가자 수보다 적을 수 없습니다.';
     }
 
-    if (data.maxParticipants < data.currentParticipants) {
-      alert('최대 참가자는 현재 참가자 수보다 적을 수 없습니다.');
-      return;
+    if (errorMessage) {
+      alert(errorMessage);
+    } else {
+      updateActivity.mutate(data);
+      setActiveId(null);
     }
-
-    updateActivity.mutate(data);
   };
-
   return (
     <tbody>
       {activities.map(activity => (
