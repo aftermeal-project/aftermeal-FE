@@ -46,10 +46,10 @@ export default function TableBody({ activities }: TableBodyProps) {
       time: data.applicationEndDate,
     });
 
+    const isTitleInValid = data.title.length > 20 || data.title.length < 2;
     const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
       data.applicationEndDate,
     );
-
     const isLunchPM =
       data.type === 'LUNCH' &&
       moment(data.applicationStartDate).format('A') === 'PM';
@@ -69,6 +69,8 @@ export default function TableBody({ activities }: TableBodyProps) {
       errorMessage = '저녁 시간은 오전일 수 없습니다.';
     } else if (isMaxParticipantsLess) {
       errorMessage = '최대 참가자는 현재 참가자 수보다 적을 수 없습니다.';
+    } else if (isTitleInValid) {
+      errorMessage = '활동명은 최소 2자, 최대 20자여야 합니다.';
     }
 
     if (errorMessage) {
