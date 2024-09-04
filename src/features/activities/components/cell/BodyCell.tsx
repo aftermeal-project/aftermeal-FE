@@ -57,7 +57,7 @@ export default function BodyCell({
     <td className="border border-gray-200 px-2">
       <input
         type={type}
-        className="box-border w-full rounded-md border border-gray-300 px-2 py-1"
+        className={`box-border w-full rounded-md border border-gray-300 px-2 py-1 ${title === 'maxParticipants' && 'w-24'}`}
         placeholder={value as string}
         {...register(title, { required: true })}
         {...rest}

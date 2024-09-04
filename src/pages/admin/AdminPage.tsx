@@ -13,7 +13,7 @@ export default function AdminPage() {
   const [selectedTab, setSelectedTab] = useState<Tab>('activities');
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-100">
       <AdminPageSidebar
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}

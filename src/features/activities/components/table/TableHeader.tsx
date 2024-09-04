@@ -13,7 +13,7 @@ import HeaderCell from '../cell/HeaderCell';
 export default function TableHeader() {
   return (
     <thead>
-      <tr className="w-fit bg-gray-100">
+      <tr className="w-fit bg-gray-100 text-sm">
         <HeaderCell icon={FaSocks} text="활동명" />
         <HeaderCell icon={FaMapMarkerAlt} text="장소" />
         <HeaderCell icon={FaUsers} text="참여 현황" />
