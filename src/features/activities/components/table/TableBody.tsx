@@ -1,38 +1,82 @@
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { useSetRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../../atoms';
-import { AtomKeys } from '../../../../constants';
-import { ActivityResponseDto } from '../../../../types';
+import { useForm, UseFormSetValue } from 'react-hook-form';
+import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { ActiveIdAtom, ModalAtomFamily } from '../../../../atoms';
+import { AtomKeys, validationMessages } from '../../../../constants';
+import { ActivityResponseDto, Option } from '../../../../types';
 import BodyCell from '../cell/BodyCell';
 import { statusOptions, typeOptions } from '../constants/options';
 import { ActionButtons } from '../../../../components/ui/admin/button';
-import useUpdateActivty from '../../api/update-activity';
+import useUpdateActivity from '../../api/update-activity';
 import { formatTime } from '../../../../utils';
 import moment from 'moment';
+
+function checkActivityValidation(data: ActivityResponseDto): string | null {
+  const isTitleInValid = data.title.length > 20 || data.title.length < 2;
+  const isLocationInValid = data.location === 'none';
+  const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
+    data.applicationEndDate,
+  );
+  const isLunchPM =
+    data.type === 'LUNCH' &&
+    moment(data.applicationStartDate).format('A') === 'PM';
+  const isDinnerAM =
+    data.type === 'DINNER' &&
+    moment(data.applicationStartDate).format('A') === 'AM';
+  const isMaxParticipantsLess = data.maxParticipants < data.currentParticipants;
+
+  if (isStartAfterEnd) return validationMessages.START_BEFORE_END;
+  if (isLunchPM) return validationMessages.LUNCH_PM_ERROR;
+  if (isDinnerAM) return validationMessages.DINNER_AM_ERROR;
+  if (isMaxParticipantsLess)
+    return validationMessages.MAX_PARTICIPANTS_LESS_THAN_CURRENT;
+  if (isTitleInValid) return validationMessages.TITLE_LENGTH_ERROR;
+  if (isLocationInValid) return validationMessages.INVALID_LOCATION;
+
+  return null;
+}
 
 interface TableBodyProps {
   activities: ActivityResponseDto[];
 }
 
 export default function TableBody({ activities }: TableBodyProps) {
-  const { updateActivity } = useUpdateActivty();
-  const [activeId, setActiveId] = useState<number | null>(null);
-  const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
   const { register, handleSubmit, reset, setValue } =
     useForm<ActivityResponseDto>();
 
-  const activeSelectedCell = (id: number) => {
-    setActiveId(prevId => (prevId === id ? null : id));
-    const activity = activities.find(activity => activity.id === id);
+  const { updateActivity } = useUpdateActivity();
 
-    if (activity) {
-      reset(activity);
+  const [activeId, setActiveId] = useRecoilState(ActiveIdAtom);
+  const resetActiveId = useResetRecoilState(ActiveIdAtom);
+  const setDeleteActivityModal = useSetRecoilState(
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
+  );
+
+  const cells: {
+    title: keyof ActivityResponseDto;
+    type: string;
+    options?: Option[];
+    isEditing?: boolean;
+    setValue?: UseFormSetValue<ActivityResponseDto>;
+  }[] = [
+    { title: 'title', type: 'text' },
+    { title: 'location', type: 'select' },
+    { title: 'currentParticipants', type: 'number', isEditing: false },
+    { title: 'maxParticipants', type: 'number' },
+    { title: 'status', type: 'select', options: statusOptions },
+    { title: 'type', type: 'select', options: typeOptions },
+    { title: 'scheduledDate', type: 'date' },
+    { title: 'applicationStartDate', type: 'time', setValue },
+    { title: 'applicationEndDate', type: 'time', setValue },
+  ];
+
+  const selectActivity = (activityId: number) => {
+    setActiveId(activityId);
+    const selectedActivity = activities.find(
+      activity => activity.id === activityId,
+    );
+    if (selectedActivity) {
+      reset(selectedActivity);
     }
-  };
-
-  const onDelete = () => {
-    setModal(true);
   };
 
   const onValid = (data: ActivityResponseDto) => {
@@ -40,127 +84,48 @@ export default function TableBody({ activities }: TableBodyProps) {
       type: 'restore',
       time: data.applicationStartDate,
     });
-
     data.applicationEndDate = formatTime({
       type: 'restore',
       time: data.applicationEndDate,
     });
 
-    const isTitleInValid = data.title.length > 20 || data.title.length < 2;
-    const isLocationInValid = data.location === 'none';
-    const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
-      data.applicationEndDate,
-    );
-    const isLunchPM =
-      data.type === 'LUNCH' &&
-      moment(data.applicationStartDate).format('A') === 'PM';
-    const isDinnerAM =
-      data.type === 'DINNER' &&
-      moment(data.applicationStartDate).format('A') === 'AM';
-    const isMaxParticipantsLess =
-      data.maxParticipants < data.currentParticipants;
+    const validationError = checkActivityValidation(data);
 
-    let errorMessage = '';
-
-    if (isStartAfterEnd) {
-      errorMessage = '신청 시작 시간은 신청 종료 시간보다 빨라야 합니다.';
-    } else if (isLunchPM) {
-      errorMessage = '점심 시간은 오후일 수 없습니다.';
-    } else if (isDinnerAM) {
-      errorMessage = '저녁 시간은 오전일 수 없습니다.';
-    } else if (isMaxParticipantsLess) {
-      errorMessage = '최대 참가자는 현재 참가자 수보다 적을 수 없습니다.';
-    } else if (isTitleInValid) {
-      errorMessage = '활동명은 최소 2자, 최대 20자여야 합니다.';
-    } else if (isLocationInValid) {
-      errorMessage = '올바른 장소를 선택해주세요.';
-    }
-
-    if (errorMessage) {
-      alert(errorMessage);
+    if (validationError) {
+      alert(validationError);
     } else {
       updateActivity.mutate(data);
-      setActiveId(null);
+      resetActiveId();
     }
   };
+
+  const onDelete = (activityId: number) => {
+    setActiveId(activityId);
+    setDeleteActivityModal(true);
+  };
+
   return (
     <tbody>
       {activities.map(activity => (
         <tr key={activity.id} className="text-sm font-bold">
-          <BodyCell
-            title="title"
-            type="text"
-            value={activity.title}
-            isEditing={activeId === activity.id}
-            register={register}
-          />
-          <BodyCell
-            title="location"
-            type="select"
-            value={activity.location}
-            isEditing={activeId === activity.id}
-            register={register}
-          />
-          <BodyCell
-            title="currentParticipants"
-            type="number"
-            value={activity.currentParticipants}
-            isEditing={false}
-            register={register}
-          />
-          <BodyCell
-            title="maxParticipants"
-            type="number"
-            value={activity.maxParticipants}
-            isEditing={activeId === activity.id}
-            register={register}
-          />
-          <BodyCell
-            title="status"
-            type="select"
-            value={activity.status}
-            isEditing={activeId === activity.id}
-            register={register}
-            options={statusOptions}
-          />
-          <BodyCell
-            title="type"
-            type="select"
-            value={activity.type}
-            isEditing={activeId === activity.id}
-            register={register}
-            options={typeOptions}
-          />
-          <BodyCell
-            title="scheduledDate"
-            type="date"
-            value={activity.scheduledDate}
-            isEditing={activeId === activity.id}
-            register={register}
-          />
-          <BodyCell
-            title="applicationStartDate"
-            type="time"
-            isEditing={activeId === activity.id}
-            value={activity.applicationStartDate}
-            register={register}
-            setValue={setValue}
-          />
-          <BodyCell
-            title="applicationEndDate"
-            type="time"
-            value={activity.applicationEndDate}
-            isEditing={activeId === activity.id}
-            register={register}
-            setValue={setValue}
-          />
+          {cells.map(cell => (
+            <BodyCell
+              key={cell.title}
+              title={cell.title}
+              type={cell.type}
+              value={activity[cell.title]}
+              isEditing={cell.isEditing !== false && activeId === activity.id}
+              register={register}
+              options={cell.options}
+              setValue={cell.setValue}
+            />
+          ))}
           <ActionButtons
             isEditing={activeId === activity.id}
-            onDelete={onDelete}
+            startUpdating={() => selectActivity(activity.id)}
             onUpdate={handleSubmit(onValid)}
-            activeCell={() => activeSelectedCell(activity.id)}
-            setActiveId={setActiveId}
-            reset={reset}
+            onDelete={() => onDelete(activity.id)}
+            onCancel={() => reset()}
           />
         </tr>
       ))}
