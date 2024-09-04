@@ -6,7 +6,7 @@ import { UpdateActivityAPI } from '../../../libs/api/admin.activities';
 async function updateActivity(data: ActivityResponseDto): Promise<void> {
   await UpdateActivityAPI(data);
 }
-function handleCreateActivityError(_error: Error) {
+function handleUpdateActivityError(_error: Error) {
   alert(errorMessages.UNKNOWN_ERROR);
 }
 
@@ -37,7 +37,7 @@ export default function useUpdateActivty() {
         ['activities', context.newActivity.id],
         context.previousActivity,
       );
-      handleCreateActivityError(_error);
+      handleUpdateActivityError(_error);
     },
     onSettled: (_data, _error, variables, _context) => {
       queryClient.invalidateQueries({
