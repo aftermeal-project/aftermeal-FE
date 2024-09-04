@@ -55,12 +55,16 @@ export default function TableBody({ activities }: TableBodyProps) {
     title: keyof ActivityResponseDto;
     type: string;
     options?: Option[];
-    isEditing?: boolean;
+    isUpdating?: boolean;
     setValue?: UseFormSetValue<ActivityResponseDto>;
   }[] = [
     { title: 'title', type: 'text' },
     { title: 'location', type: 'select' },
-    { title: 'currentParticipants', type: 'number', isEditing: false },
+    {
+      title: 'currentParticipants',
+      type: 'number',
+      isUpdating: false,
+    },
     { title: 'maxParticipants', type: 'number' },
     { title: 'status', type: 'select', options: statusOptions },
     { title: 'type', type: 'select', options: typeOptions },
@@ -114,14 +118,14 @@ export default function TableBody({ activities }: TableBodyProps) {
               title={cell.title}
               type={cell.type}
               value={activity[cell.title]}
-              isEditing={cell.isEditing !== false && activeId === activity.id}
+              isUpdating={cell.isUpdating !== false && activeId === activity.id}
               register={register}
               options={cell.options}
               setValue={cell.setValue}
             />
           ))}
           <ActionButtons
-            isEditing={activeId === activity.id}
+            isUpdating={activeId === activity.id}
             startUpdating={() => selectActivity(activity.id)}
             onUpdate={handleSubmit(onValid)}
             onDelete={() => onDelete(activity.id)}
