@@ -24,7 +24,7 @@ function handleGetActivitiesError(error: any) {
 }
 
 export default function useGetActivityLocation() {
-  const { data, error } = useQuery({
+  const { data, error, isLoading } = useQuery({
     queryKey: ['activity-locations'],
     queryFn: getActivityLocations,
     retry: false,
@@ -33,5 +33,6 @@ export default function useGetActivityLocation() {
   return {
     data,
     error: handleGetActivitiesError(error),
+    loading: isLoading,
   };
 }
