@@ -63,7 +63,7 @@ export const adminActivitiesHandlers = [
   http.delete<{ activityId: string }>(
     url + '/:activityId',
     async ({ params }) => {
-      if (params.activityId !== '0') {
+      if (params.activityId === '0') {
         return HttpResponse.json(
           { message: 'Invalid request data' },
           { status: 400 },
