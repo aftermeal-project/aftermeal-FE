@@ -29,7 +29,9 @@ export default function CreateActivityModal() {
 
   const { createActivity } = useCreateActivity();
 
-  const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.CREATE_ACTIVITY));
+  const createActivityModalOpen = useSetRecoilState(
+    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY),
+  );
 
   function onValid(data: ActivityCreationRequestDto) {
     createActivity.mutate(data, {
@@ -37,19 +39,19 @@ export default function CreateActivityModal() {
         alert(errorMessages.UNKNOWN_ERROR);
       },
       onSettled: () => {
-        setModal(false);
+        createActivityModalOpen(false);
         reset();
       },
     });
   }
 
   function handleModalClose() {
-    setModal(false);
+    createActivityModalOpen(false);
     reset();
   }
 
   return (
-    <ModalLayout setModal={setModal}>
+    <ModalLayout setModal={createActivityModalOpen}>
       <div
         className="mx-auto w-80 rounded-lg bg-white p-6 shadow-lg"
         onClick={e => e.stopPropagation()}
