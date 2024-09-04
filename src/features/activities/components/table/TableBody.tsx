@@ -9,8 +9,9 @@ import { ActionButtons } from '../../../../components/ui/admin/button';
 import useUpdateActivity from '../../api/update-activity';
 import { formatTime } from '../../../../utils';
 import moment from 'moment';
+import { useState } from 'react';
 
-function checkActivityValidation(data: ActivityResponseDto): string | null {
+function validateActivity(data: ActivityResponseDto): string | null {
   const isTitleInValid = data.title.length > 20 || data.title.length < 2;
   const isLocationInValid = data.location === 'none';
   const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
@@ -45,9 +46,12 @@ export default function TableBody({ activities }: TableBodyProps) {
 
   const { updateActivity } = useUpdateActivity();
 
+  const [mode, setMode] = useState<'edit' | 'delete'>('edit');
+
   const [activeId, setActiveId] = useRecoilState(ActiveIdAtom);
   const resetActiveId = useResetRecoilState(ActiveIdAtom);
-  const setDeleteActivityModal = useSetRecoilState(
+
+  const deleteModalOpen = useSetRecoilState(
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
   );
 
@@ -73,7 +77,8 @@ export default function TableBody({ activities }: TableBodyProps) {
     { title: 'applicationEndDate', type: 'time', setValue },
   ];
 
-  const selectActivity = (activityId: number) => {
+  const handleEdit = (activityId: number) => {
+    setMode('edit');
     setActiveId(activityId);
     const selectedActivity = activities.find(
       activity => activity.id === activityId,
@@ -83,7 +88,13 @@ export default function TableBody({ activities }: TableBodyProps) {
     }
   };
 
-  const onValid = (data: ActivityResponseDto) => {
+  const handleDelete = (activityId: number) => {
+    setMode('delete');
+    setActiveId(activityId);
+    deleteModalOpen(true);
+  };
+
+  const handleSubmitTable = (data: ActivityResponseDto) => {
     data.applicationStartDate = formatTime({
       type: 'restore',
       time: data.applicationStartDate,
@@ -93,7 +104,7 @@ export default function TableBody({ activities }: TableBodyProps) {
       time: data.applicationEndDate,
     });
 
-    const validationError = checkActivityValidation(data);
+    const validationError = validateActivity(data);
 
     if (validationError) {
       alert(validationError);
@@ -103,9 +114,9 @@ export default function TableBody({ activities }: TableBodyProps) {
     }
   };
 
-  const onDelete = (activityId: number) => {
-    setActiveId(activityId);
-    setDeleteActivityModal(true);
+  const handleCancel = () => {
+    resetActiveId();
+    reset();
   };
 
   return (
@@ -118,18 +129,22 @@ export default function TableBody({ activities }: TableBodyProps) {
               title={cell.title}
               type={cell.type}
               value={activity[cell.title]}
-              isUpdating={cell.isUpdating !== false && activeId === activity.id}
+              isEditing={
+                cell.isUpdating !== false &&
+                mode === 'edit' &&
+                activeId === activity.id
+              }
               register={register}
               options={cell.options}
               setValue={cell.setValue}
             />
           ))}
           <ActionButtons
-            isUpdating={activeId === activity.id}
-            startUpdating={() => selectActivity(activity.id)}
-            onUpdate={handleSubmit(onValid)}
-            onDelete={() => onDelete(activity.id)}
-            onCancel={() => reset()}
+            isEditing={mode === 'edit' && activeId === activity.id}
+            startEditing={() => handleEdit(activity.id)}
+            onUpdate={handleSubmit(handleSubmitTable)}
+            onDelete={() => handleDelete(activity.id)}
+            onCancel={handleCancel}
           />
         </tr>
       ))}

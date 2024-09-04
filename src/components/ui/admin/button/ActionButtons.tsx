@@ -1,16 +1,16 @@
 import { FaEdit, FaTrashAlt, FaSave, FaTimes } from 'react-icons/fa';
 
 interface ActionButtonsProps {
-  isUpdating: boolean;
-  startUpdating: () => void;
+  isEditing: boolean;
+  startEditing: () => void;
   onUpdate: () => void;
   onDelete: () => void;
   onCancel: () => void;
 }
 
 export default function ActionButtons({
-  isUpdating,
-  startUpdating,
+  isEditing,
+  startEditing,
   onUpdate,
   onDelete,
   onCancel,
@@ -18,7 +18,7 @@ export default function ActionButtons({
   return (
     <td className="border border-gray-200 px-4 py-2 text-center">
       <div className="flex items-center gap-x-2">
-        {isUpdating ? (
+        {isEditing ? (
           <>
             <button
               type="button"
@@ -41,7 +41,7 @@ export default function ActionButtons({
           <>
             <button
               type="button"
-              onClick={startUpdating}
+              onClick={startEditing}
               className="flex items-center gap-x-2 rounded-md bg-yellow-500 px-3 py-1 text-sm font-semibold text-white shadow hover:bg-yellow-600"
             >
               <FaEdit className="text-white" />
