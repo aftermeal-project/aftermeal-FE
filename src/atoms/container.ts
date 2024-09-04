@@ -13,3 +13,8 @@ export const UserAtom = atom<UserAtomType>({
     roles: 'USER',
   },
 });
+
+export const ActiveIdAtom = atom({
+  key: 'activeId',
+  default: 0,
+});
