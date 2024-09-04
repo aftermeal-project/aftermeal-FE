@@ -26,23 +26,28 @@ export default function LocationSelectInput<T extends FieldValues>({
   setValue,
   ...rest
 }: LocationSelectInputProps<T>) {
-  const { data, error } = useGetActivityLocation();
+  const { data, error, loading } = useGetActivityLocation();
+
+  const defaultOptions = [{ value: 'none', label: 'Loading ...' }];
+
+  const options = loading
+    ? defaultOptions
+    : [
+        ...(data?.map(location => ({
+          value: location.name.toString(),
+          label: location.name,
+        })) || []),
+      ];
 
   useEffect(() => {
-    if (data && data.length > 0 && setValue) {
-      setValue(title, data[0].name as PathValue<T, Path<T>>);
+    if (setValue && data && data.length > 0) {
+      setValue(title, 'none' as PathValue<T, Path<T>>);
     }
   }, [data, setValue, title]);
 
   if (error) {
     return <p>{errorMessages.UNKNOWN_ERROR}</p>;
   }
-
-  const options =
-    data?.map(location => ({
-      value: location.name.toString(),
-      label: location.name,
-    })) || [];
 
   return (
     <SelectInput<T>
