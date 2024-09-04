@@ -51,14 +51,14 @@ export default function BodyCell({
   /**
    * 'select' 타입일 때  SelectField 렌더링
    */
-  if (type === 'select' && options) {
+  if (type === 'select') {
     return (
       <td className="border border-gray-200 px-2">
         <SelectField<ActivityResponseDto>
           title={title}
           value={value}
           register={register}
-          options={options}
+          options={options as { value: string; label: string }[]}
         />
       </td>
     );
