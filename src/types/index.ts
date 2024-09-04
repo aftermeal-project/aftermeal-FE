@@ -22,3 +22,4 @@ export * from './users/user-registration-request-dto';
 export * from './users/user-update-request-dto';
 
 export * from './ui/tab';
+export * from './ui/option';
