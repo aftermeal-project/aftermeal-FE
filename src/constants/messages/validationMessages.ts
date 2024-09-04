@@ -27,6 +27,13 @@ const validationMessages = {
   MAX_PARTICIPANTS_MAX: '최대 참가자는 최대 20명이어야 합니다.',
   REQUIRED_SCHEDULED_DATE: '일정은 필수 항목입니다.',
   SCHEDULED_DATE_NOT_PAST: '날짜는 과거가 될 수 없습니다.',
+  START_BEFORE_END: '신청 시작 시간은 신청 종료 시간보다 빨라야 합니다.',
+  LUNCH_PM_ERROR: '점심 시간은 오후일 수 없습니다.',
+  DINNER_AM_ERROR: '저녁 시간은 오전일 수 없습니다.',
+  MAX_PARTICIPANTS_LESS_THAN_CURRENT:
+    '최대 참가자는 현재 참가자 수보다 적을 수 없습니다.',
+  TITLE_LENGTH_ERROR: '활동명은 최소 2자, 최대 20자여야 합니다.',
+  INVALID_LOCATION: '올바른 장소를 선택해주세요.',
 };
 
 export default validationMessages;
