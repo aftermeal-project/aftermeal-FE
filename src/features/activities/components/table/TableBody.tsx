@@ -47,6 +47,7 @@ export default function TableBody({ activities }: TableBodyProps) {
     });
 
     const isTitleInValid = data.title.length > 20 || data.title.length < 2;
+    const isLocationInValid = data.location === 'none';
     const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
       data.applicationEndDate,
     );
@@ -71,6 +72,8 @@ export default function TableBody({ activities }: TableBodyProps) {
       errorMessage = '최대 참가자는 현재 참가자 수보다 적을 수 없습니다.';
     } else if (isTitleInValid) {
       errorMessage = '활동명은 최소 2자, 최대 20자여야 합니다.';
+    } else if (isLocationInValid) {
+      errorMessage = '올바른 장소를 선택해주세요.';
     }
 
     if (errorMessage) {
@@ -83,7 +86,7 @@ export default function TableBody({ activities }: TableBodyProps) {
   return (
     <tbody>
       {activities.map(activity => (
-        <tr key={activity.id} className="font-bold">
+        <tr key={activity.id} className="text-sm font-bold">
           <BodyCell
             title="title"
             type="text"
