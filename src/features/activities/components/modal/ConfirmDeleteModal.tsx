@@ -1,17 +1,36 @@
-import { useSetRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../../atoms';
+import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
+import { ActiveIdAtom, ModalAtomFamily } from '../../../../atoms';
 import ModalLayout from '../../../../components/@global/layout/ModalLayout';
-import { AtomKeys } from '../../../../constants';
+import { AtomKeys, errorMessages } from '../../../../constants';
+import useDeleteActivity from '../../api/delete-activity';
 
 export default function ConfirmDeleteModal() {
-  const setModal = useSetRecoilState(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
+  const activeId = useRecoilValue(ActiveIdAtom);
+  const resetActivityId = useResetRecoilState(ActiveIdAtom);
+  const deleteModalOpen = useSetRecoilState(
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
+  );
 
-  function handleModalClose() {
-    setModal(false);
+  const { deleteActivity, error } = useDeleteActivity();
+
+  if (error) {
+    deleteModalOpen(false);
+    alert(errorMessages.UNKNOWN_ERROR);
   }
 
+  function handleModalClose() {
+    deleteModalOpen(false);
+    resetActivityId();
+  }
+
+  const onDelete = () => {
+    deleteActivity.mutate(activeId.toString());
+    deleteModalOpen(false);
+    resetActivityId();
+  };
+
   return (
-    <ModalLayout setModal={setModal}>
+    <ModalLayout setModal={deleteModalOpen}>
       <div
         className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg"
         onClick={e => e.stopPropagation()}
@@ -26,7 +45,7 @@ export default function ConfirmDeleteModal() {
             취소
           </button>
           <button
-            onClick={handleModalClose}
+            onClick={onDelete}
             className="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
           >
             삭제

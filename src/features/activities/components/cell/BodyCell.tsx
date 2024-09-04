@@ -6,7 +6,7 @@ import { formatTime } from '../../../../utils';
 
 interface BodyCellProps extends InputHTMLAttributes<HTMLInputElement> {
   title: Path<ActivityResponseDto>;
-  isUpdating: boolean;
+  isEditing: boolean;
   value: string | number;
   register: UseFormRegister<ActivityResponseDto>;
   options?: Option[];
@@ -15,7 +15,7 @@ interface BodyCellProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function BodyCell({
   title,
-  isUpdating,
+  isEditing,
   value,
   register,
   options,
@@ -26,14 +26,14 @@ export default function BodyCell({
   /**
    * Cell이 update mode 일 때 time 포맷팅
    */
-  if (setValue && isUpdating && type === 'time') {
+  if (setValue && isEditing && type === 'time') {
     setValue(title, formatTime({ type: 'format', time: value as string }));
   }
 
   /**
    * read-only cell 렌더링
    */
-  if (!isUpdating) {
+  if (!isEditing) {
     const displayValue =
       type === 'time'
         ? formatTime({ type: 'readable', time: value as string })
