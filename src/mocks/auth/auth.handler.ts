@@ -1,10 +1,10 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../constants';
+import { BASE_URL } from '../../constants';
 import {
   LoginRequestDto,
   LoginResponseDto,
   LoginResponseDtoUser,
-} from '../types';
+} from '../../types';
 import { faker } from '@faker-js/faker';
 
 function createRandomUser(): LoginResponseDtoUser {

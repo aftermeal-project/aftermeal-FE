@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../constants';
-import { ActivityLocationListResponseDto } from '../types';
-import { createRandomActivityLocation } from './utils/activity-locations.utils';
+import { BASE_URL } from '../../constants';
+import { ActivityLocationListResponseDto } from '../../types';
+import { createRandomActivityLocation } from '../utils/activity-locations.utils';
 
 export const adminActivityLocationsHandlers = [
   http.get<{}, {}, ActivityLocationListResponseDto[]>(

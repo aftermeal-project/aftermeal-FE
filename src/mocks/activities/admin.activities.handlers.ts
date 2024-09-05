@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../constants';
-import { ActivityCreationRequestDto, ActivityResponseDto } from '../types';
-import { createRandomActivity } from './utils/activities.utils';
+import { BASE_URL } from '../../constants';
+import { ActivityCreationRequestDto, ActivityResponseDto } from '../../types';
+import { createRandomActivity } from '../utils/activities.utils';
 
 const url = BASE_URL + '/admin/activities';
 
