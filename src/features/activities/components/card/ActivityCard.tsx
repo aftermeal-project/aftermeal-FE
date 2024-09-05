@@ -1,5 +1,5 @@
 import { ButtonHTMLAttributes } from 'react';
-import { ActivityResponseDto } from '../../../types';
+import { ActivityResponseDto } from '../../../../types';
 
 interface BaseActivityCardProps extends ActivityResponseDto {
   onParticipate: (id: number) => void;

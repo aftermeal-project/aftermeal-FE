@@ -1,10 +1,12 @@
 import { useRecoilValue, useRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../atoms';
-import { AtomKeys } from '../../../constants';
-import { ActivityResponseDto } from '../../../types';
-import ConfirmDeleteModal from './modal/ConfirmDeleteModal';
-import CreateActivityModal from './modal/CreateActivityModal';
-import ActivityListTable from './table/ActivityListTable';
+import { ModalAtomFamily } from '../../../../atoms';
+import { AtomKeys } from '../../../../constants';
+import { ActivityResponseDto } from '../../../../types';
+import {
+  CreateActivityModal,
+  ConfirmDeleteModal,
+  ActivityListTable,
+} from '../../components';
 
 interface ActivitiyListTableContainerProps {
   activities: ActivityResponseDto[];

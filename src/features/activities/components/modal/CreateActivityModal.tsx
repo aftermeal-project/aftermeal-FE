@@ -10,7 +10,7 @@ import {
 } from '../../../../constants';
 import { ActivityCreationRequestDto } from '../../../../types';
 import useCreateActivity from '../../api/create-activitiy';
-import SelectField from '../select/SelectField';
+import { SelectField } from '../select';
 import { typeOptions } from '../constants/options';
 
 export default function CreateActivityModal() {

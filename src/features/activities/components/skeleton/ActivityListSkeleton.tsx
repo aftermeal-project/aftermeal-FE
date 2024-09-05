@@ -1,4 +1,4 @@
-import { SkeletonList, SkeletonTable } from '../';
+import { SkeletonList, SkeletonTable } from '../skeleton';
 
 type SkeletonType = 'List' | 'Table';
 

@@ -1,7 +1,7 @@
 import React, { InputHTMLAttributes } from 'react';
 import { Path, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import { ActivityResponseDto, Option } from '../../../../types';
-import SelectField from '../select/SelectField';
+import { SelectField } from '../select';
 import { formatTime } from '../../../../utils';
 
 interface BodyCellProps extends InputHTMLAttributes<HTMLInputElement> {

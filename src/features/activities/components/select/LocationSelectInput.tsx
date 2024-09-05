@@ -8,7 +8,7 @@ import {
 } from 'react-hook-form';
 import { errorMessages } from '../../../../constants';
 import useGetActivityLocation from '../../../activity-locations/api/get-activity-locations';
-import SelectInput from './SelectInput';
+import { SelectInput } from '../select';
 
 interface LocationSelectInputProps<T extends FieldValues> {
   title: Path<T>;

@@ -1,4 +1,4 @@
-import SkeletonCard from './SkeletonCard';
+import { SkeletonCard } from '../skeleton';
 
 export default function SkeletonList() {
   return (

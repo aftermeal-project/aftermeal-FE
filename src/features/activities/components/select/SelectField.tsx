@@ -1,6 +1,5 @@
-import React, { InputHTMLAttributes } from 'react';
-import SelectInput from './SelectInput';
-import LocationSelectInput from './LocationSelectInput';
+import { InputHTMLAttributes } from 'react';
+import { LocationSelectInput, SelectInput } from '../select';
 import {
   FieldValues,
   Path,
