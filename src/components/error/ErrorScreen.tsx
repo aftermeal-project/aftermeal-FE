@@ -1,5 +1,6 @@
 import { useQueryErrorResetBoundary } from '@tanstack/react-query';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
+import Path from '../../routes/path';
 
 type TitleType = 'Oops!' | '404';
 
@@ -14,6 +15,7 @@ export default function ErrorScreen({
   description,
   onRetry,
 }: ErrorScreenProps) {
+  const location = useLocation();
   const { reset } = useQueryErrorResetBoundary();
 
   const handleClickRetry = () => {
@@ -23,8 +25,12 @@ export default function ErrorScreen({
     }
   };
 
+  const isNotAdminDomain = location.pathname !== Path.AdminPage;
+
   return (
-    <main className="flex items-center justify-center bg-gray-100 min-h-screen-minus-96">
+    <main
+      className={`min-h-screen-minus-96 flex items-center justify-center ${isNotAdminDomain ? 'bg-gray-100' : 'bg-white'}`}
+    >
       <div className="text-center">
         <h1 className="text-6xl font-bold text-gray-700 mb-7">{title}</h1>
         <p className="text-xl text-gray-600">{description}</p>
