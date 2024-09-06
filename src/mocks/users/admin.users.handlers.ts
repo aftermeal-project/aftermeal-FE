@@ -13,4 +13,20 @@ export const adminUsersHandlers = [
     const data = Array.from({ length: 10 }, () => createRandomUser());
     return HttpResponse.json(data);
   }),
+
+  /**
+   * 유저 삭제 API
+   */
+  http.delete<{ userId: string }>(url + '/:userId', async ({ params }) => {
+    if (params.userId === '0') {
+      return HttpResponse.json(
+        { message: 'Invalid request data' },
+        { status: 400 },
+      );
+    }
+
+    return HttpResponse.json(null, {
+      status: 201,
+    });
+  }),
 ];
