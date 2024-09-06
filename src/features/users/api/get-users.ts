@@ -2,7 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { errorMessages } from '../../../constants';
 import { UserListResponseDtoRoles } from '../../../types';
-import { GetUsersAPI } from '../../../libs/api/admin.user';
+import { GetUsersAPI } from '../../../libs/api/admin.users';
 
 function getUsers() {
   const response = GetUsersAPI();
