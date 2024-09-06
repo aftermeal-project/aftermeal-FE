@@ -1,1 +1,1 @@
-export { default as AdminPageContainer } from './AdminPageContainer';
+export { default as TabsContainer } from './TabsContainer';

@@ -10,12 +10,24 @@ export default function SkeletonTable() {
         </button>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full min-w-[950px] table-auto border-collapse border border-gray-200 shadow-md">
+        <table className="w-full min-w-[1600px] table-auto border-collapse border border-gray-200 shadow-md">
           <tbody>
             {Array.from({ length: 5 }).map((_, index) => (
               <tr key={index}>
                 <td className="px-2 py-2 border border-gray-200">
                   <Skeleton width={60} height={29} />
+                </td>
+                <td className="px-2 py-2 border border-gray-200">
+                  <Skeleton width={120} height={29} />
+                </td>
+                <td className="px-2 py-2 border border-gray-200">
+                  <Skeleton width={120} height={29} />
+                </td>
+                <td className="px-2 py-2 border border-gray-200">
+                  <Skeleton width={120} height={29} />
+                </td>
+                <td className="px-2 py-2 border border-gray-200">
+                  <Skeleton width={120} height={29} />
                 </td>
                 <td className="px-2 py-2 border border-gray-200">
                   <Skeleton width={120} height={29} />
@@ -28,6 +40,9 @@ export default function SkeletonTable() {
                 </td>
                 <td className="px-2 py-2 border border-gray-200">
                   <Skeleton width={200} height={29} />
+                </td>
+                <td className="px-2 py-2 border border-gray-200">
+                  <Skeleton width={120} height={29} />
                 </td>
               </tr>
             ))}

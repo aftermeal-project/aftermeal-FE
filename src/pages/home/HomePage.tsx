@@ -4,7 +4,7 @@ import { HomePageContainer } from '../../components/ui/home';
 import { errorMessages } from '../../constants';
 import { FetchErrorBoundary } from '../../components/@global';
 import {
-  ActivityListContainer,
+  ActivityList,
   ActivityListFetcher,
   ActivityListSkeleton,
 } from '../../features/activities';
@@ -19,7 +19,7 @@ export default function HomePage() {
       <HomePageContainer>
         <Suspense fallback={<ActivityListSkeleton type="List" />}>
           <ActivityListFetcher>
-            {activities => <ActivityListContainer activities={activities} />}
+            {activities => <ActivityList activities={activities} />}
           </ActivityListFetcher>
         </Suspense>
       </HomePageContainer>

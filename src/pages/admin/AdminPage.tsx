@@ -3,9 +3,9 @@ import { FetchErrorBoundary } from '../../components/@global';
 import ErrorScreen from '../../components/error/ErrorScreen';
 import {
   AdminPageSidebar,
-  AdminPageContainer,
   ActivityManagementTab,
   UserManagementTab,
+  TabsContainer,
 } from '../../components/ui/admin';
 import { errorMessages } from '../../constants';
 import { Tab } from '../../types';
@@ -19,7 +19,7 @@ export default function AdminPage() {
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
-      <AdminPageContainer>
+      <TabsContainer>
         <FetchErrorBoundary
           fallback={
             <ErrorScreen
@@ -32,7 +32,7 @@ export default function AdminPage() {
           {selectedTab === 'activity-schedules' && <UserManagementTab />}
           {selectedTab === 'users' && <></>}
         </FetchErrorBoundary>
-      </AdminPageContainer>
+      </TabsContainer>
     </div>
   );
 }

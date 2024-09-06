@@ -1,5 +1,5 @@
 import { ActivityResponseDto } from '../../../../types';
-import { TableHeader, TableBody } from '../table';
+import { TableHeader, TableBody } from '.';
 
 interface ActivityListTableProps {
   activities: ActivityResponseDto[];
