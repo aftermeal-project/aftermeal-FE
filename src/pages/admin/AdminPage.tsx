@@ -5,6 +5,7 @@ import {
   AdminPageSidebar,
   AdminPageContainer,
   ActivityManagementTab,
+  UserManagementTab,
 } from '../../components/ui/admin';
 import { errorMessages } from '../../constants';
 import { Tab } from '../../types';
@@ -28,7 +29,7 @@ export default function AdminPage() {
           }
         >
           {selectedTab === 'activities' && <ActivityManagementTab />}
-          {selectedTab === 'activity-schedules' && <></>}
+          {selectedTab === 'activity-schedules' && <UserManagementTab />}
           {selectedTab === 'users' && <></>}
         </FetchErrorBoundary>
       </AdminPageContainer>
