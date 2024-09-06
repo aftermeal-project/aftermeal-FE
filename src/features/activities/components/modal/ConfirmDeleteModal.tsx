@@ -1,52 +1,64 @@
-import { useRecoilValue, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { ActiveIdAtom, ModalAtomFamily } from '../../../../atoms';
+import { useSetRecoilState } from 'recoil';
+import { ModalAtomFamily } from '../../../../atoms';
 import ModalLayout from '../../../../components/@global/layout/ModalLayout';
-import { AtomKeys, errorMessages } from '../../../../constants';
-import useDeleteActivity from '../../api/delete-activity';
+import { errorMessages } from '../../../../constants';
+import { UseMutationResult } from '@tanstack/react-query';
 
-export default function ConfirmDeleteModal() {
-  const activeId = useRecoilValue(ActiveIdAtom);
-  const resetActivityId = useResetRecoilState(ActiveIdAtom);
-  const deleteModalOpen = useSetRecoilState(
-    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
-  );
+type MutationRequest<T> = UseMutationResult<void, Error, T>;
 
-  const { deleteActivity, error } = useDeleteActivity();
+interface ConfirmDeleteModalProps<T> {
+  message: string;
+  modalKey: string;
+  request: MutationRequest<T>;
+  params: T;
+  onSettled?: () => void;
+}
+
+export default function ConfirmDeleteModal<T>({
+  message,
+  modalKey,
+  request,
+  params,
+  onSettled,
+}: ConfirmDeleteModalProps<T>) {
+  const modalOpen = useSetRecoilState(ModalAtomFamily(modalKey));
+
+  const { mutate, error } = request;
 
   if (error) {
-    deleteModalOpen(false);
+    modalOpen(false);
     alert(errorMessages.UNKNOWN_ERROR);
   }
 
   function handleModalClose() {
-    deleteModalOpen(false);
-    resetActivityId();
+    modalOpen(false);
+    onSettled && onSettled();
   }
 
   const onDelete = () => {
-    deleteActivity.mutate(activeId.toString());
-    deleteModalOpen(false);
-    resetActivityId();
+    mutate(params);
+    onSettled && onSettled();
+    modalOpen(false);
   };
 
   return (
-    <ModalLayout setModal={deleteModalOpen}>
+    <ModalLayout setModal={modalOpen}>
       <div
-        className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg"
+        className="max-w-sm p-6 mx-auto bg-white rounded-lg shadow-lg"
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-4 text-lg font-bold">삭제 확인</h2>
-        <p>정말 항목을 삭제하시겠습니까?</p>
-        <div className="mt-4 flex w-full justify-between">
+        <p>{message}</p>
+        <div className="flex justify-between w-full mt-4">
           <button
             onClick={handleModalClose}
-            className="rounded-md bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400"
+            className="px-4 py-2 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400"
           >
             취소
           </button>
           <button
             onClick={onDelete}
-            className="rounded-md bg-red-500 px-4 py-2 text-white hover:bg-red-600"
+            className="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600"
           >
             삭제
           </button>
