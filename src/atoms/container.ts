@@ -14,12 +14,7 @@ export const UserAtom = atom<UserAtomType>({
   },
 });
 
-export const ActiveIdAtom = atom({
+export const ActiveIdAtomFamily = atomFamily({
   key: 'activeId',
-  default: 0,
-});
-
-export const ActiveUserIdAtom = atom({
-  key: 'activeUserId',
   default: 0,
 });

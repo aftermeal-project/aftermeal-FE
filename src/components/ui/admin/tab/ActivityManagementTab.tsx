@@ -7,20 +7,24 @@ import {
   ActivityListTable,
 } from '../../../../features/activities';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
-import { ActiveIdAtom, ModalAtomFamily } from '../../../../atoms';
+import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import useDeleteActivity from '../../../../features/activities/api/delete-activity';
 
 export default function ActivityManagementTab() {
-  const resetActivityId = useResetRecoilState(ActiveIdAtom);
+  const resetActivityId = useResetRecoilState(
+    ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
+  );
   const { deleteActivity } = useDeleteActivity();
-  const activeId = useRecoilValue(ActiveIdAtom);
+  const activeId = useRecoilValue(
+    ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
+  );
 
   const deleteModalOpen = useRecoilValue(
-    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
   );
   const [createModalOpen, setCreateModalOpen] = useRecoilState(
-    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY),
+    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_MODAL),
   );
 
   function onCreateActivity() {
@@ -29,16 +33,16 @@ export default function ActivityManagementTab() {
 
   return (
     <section>
+      {createModalOpen && <CreateActivityModal />}
       {deleteModalOpen && (
         <ConfirmDeleteModal
           message="삭제 확인"
-          modalKey={AtomKeys.DELETE_ACTIVITY}
+          modalKey={AtomKeys.DELETE_ACTIVITY_MODAL}
           request={deleteActivity}
           params={String(activeId)}
           onSettled={resetActivityId}
         />
       )}
-      {createModalOpen && <CreateActivityModal />}
       <div className="h-full overflow-hidden">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">활동 관리</h1>

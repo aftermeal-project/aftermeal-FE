@@ -1,6 +1,6 @@
 import { useForm, UseFormSetValue } from 'react-hook-form';
 import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
-import { ActiveIdAtom, ModalAtomFamily } from '../../../../atoms';
+import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys, validationMessages } from '../../../../constants';
 import { ActivityResponseDto, Option } from '../../../../types';
 import BodyCell from '../cell/BodyCell';
@@ -48,11 +48,15 @@ export default function TableBody({ activities }: TableBodyProps) {
 
   const [mode, setMode] = useState<'edit' | 'delete'>('edit');
 
-  const [activeId, setActiveId] = useRecoilState(ActiveIdAtom);
-  const resetActiveId = useResetRecoilState(ActiveIdAtom);
+  const [activeId, setActiveId] = useRecoilState(
+    ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
+  );
+  const resetActiveId = useResetRecoilState(
+    ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
+  );
 
   const deleteModalOpen = useSetRecoilState(
-    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
   );
 
   const cells: {

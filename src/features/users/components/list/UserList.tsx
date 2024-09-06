@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { UserListResponseDto } from '../../../../types';
 import User from '../item/User';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { ActiveUserIdAtom, ModalAtomFamily } from '../../../../atoms';
+import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import { ConfirmDeleteModal } from '../../../activities';
 import useDeleteUser from '../../api/delete-user';
@@ -13,10 +13,14 @@ interface UserListContainerProps {
 
 export default function UserList({ users }: UserListContainerProps) {
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [activeUserId, setActiveUserId] = useRecoilState(ActiveUserIdAtom);
-  const resetActiveUserId = useResetRecoilState(ActiveUserIdAtom);
+  const [activeUserId, setActiveUserId] = useRecoilState(
+    ActiveIdAtomFamily(AtomKeys.ACTIVE_USER_ID),
+  );
+  const resetActiveUserId = useResetRecoilState(
+    ActiveIdAtomFamily(AtomKeys.ACTIVE_USER_ID),
+  );
   const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
-    ModalAtomFamily(AtomKeys.DELETE_USER),
+    ModalAtomFamily(AtomKeys.ACTIVE_USER_ID),
   );
 
   const { deleteUser } = useDeleteUser();
@@ -41,7 +45,7 @@ export default function UserList({ users }: UserListContainerProps) {
       {deleteModalOpen && (
         <ConfirmDeleteModal
           message="정말 해당 유저를 삭제하시겠습니까?"
-          modalKey={AtomKeys.DELETE_USER}
+          modalKey={AtomKeys.ACTIVE_USER_ID}
           request={deleteUser}
           params={String(activeUserId)}
           onSettled={resetActiveUserId}
