@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { UserListResponseDto } from '../../../../types';
 import User from '../item/User';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { ActiveUserIdAtom, ModalAtomFamily } from '../../../../atoms';
+import { AtomKeys } from '../../../../constants';
+import { ConfirmDeleteModal } from '../../../activities';
+import useDeleteUser from '../../api/delete-user';
 
 interface UserListContainerProps {
   users: UserListResponseDto[];
@@ -8,6 +13,13 @@ interface UserListContainerProps {
 
 export default function UserList({ users }: UserListContainerProps) {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [activeUserId, setActiveUserId] = useRecoilState(ActiveUserIdAtom);
+  const resetActiveUserId = useResetRecoilState(ActiveUserIdAtom);
+  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
+    ModalAtomFamily(AtomKeys.DELETE_USER),
+  );
+
+  const { deleteUser } = useDeleteUser();
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -19,8 +31,22 @@ export default function UserList({ users }: UserListContainerProps) {
       user.email.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
+  const onUserDelete = (userId: number) => {
+    setActiveUserId(userId);
+    setDeleteModalOpen(true);
+  };
+
   return (
     <section>
+      {deleteModalOpen && (
+        <ConfirmDeleteModal
+          message="정말 해당 유저를 삭제하시겠습니까?"
+          modalKey={AtomKeys.DELETE_USER}
+          request={deleteUser}
+          params={String(activeUserId)}
+          onSettled={resetActiveUserId}
+        />
+      )}
       <div className="mb-4">
         <input
           type="text"
@@ -36,7 +62,11 @@ export default function UserList({ users }: UserListContainerProps) {
             {filteredUsers.length > 0 ? (
               <>
                 {filteredUsers.map(user => (
-                  <User key={user.id} user={user} />
+                  <User
+                    key={user.id}
+                    user={user}
+                    onDelete={() => onUserDelete(user.id)}
+                  />
                 ))}
               </>
             ) : (

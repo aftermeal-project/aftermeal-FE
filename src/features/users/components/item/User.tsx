@@ -4,9 +4,10 @@ import { UserListResponseDto } from '../../../../types';
 
 interface UserProps {
   user: UserListResponseDto;
+  onDelete: () => void;
 }
 
-export default function User({ user }: UserProps) {
+export default function User({ user, onDelete }: UserProps) {
   return (
     <li
       key={user.id}
@@ -46,7 +47,10 @@ export default function User({ user }: UserProps) {
             <button className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-blue-100">
               수정
             </button>
-            <button className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-red-100">
+            <button
+              onClick={onDelete}
+              className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-red-100"
+            >
               삭제
             </button>
           </div>
