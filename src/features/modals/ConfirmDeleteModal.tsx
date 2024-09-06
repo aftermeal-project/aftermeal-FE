@@ -1,8 +1,8 @@
-import { useSetRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../../atoms';
-import ModalLayout from '../../../../components/@global/layout/ModalLayout';
-import { errorMessages } from '../../../../constants';
 import { UseMutationResult } from '@tanstack/react-query';
+import { useSetRecoilState } from 'recoil';
+import { ModalAtomFamily } from '../../atoms';
+import ModalLayout from '../../components/@global/layout/ModalLayout';
+import { errorMessages } from '../../constants';
 
 type MutationRequest<T> = UseMutationResult<void, Error, T>;
 
