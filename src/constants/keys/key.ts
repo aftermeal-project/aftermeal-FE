@@ -1,6 +1,7 @@
 const enum AtomKeys {
   CREATE_ACTIVITY = 'CREATE_ACTIVITY',
   DELETE_ACTIVITY = 'DELETE_ACTIVITY',
+  DELETE_USER = 'DELETE_USER',
 }
 
 export default AtomKeys;
