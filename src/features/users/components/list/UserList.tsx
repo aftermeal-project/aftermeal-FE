@@ -2,39 +2,11 @@ import { useState } from 'react';
 import { UserListResponseDto } from '../../../../types';
 import User from '../item/User';
 
-export default function UserList() {
-  const initialUsers: UserListResponseDto[] = [
-    {
-      id: 1,
-      name: 'John Doe',
-      email: 'john@example.com',
-      roles: ['USER'],
-      type: 'STUDENT',
-      status: 'ACTIVATE',
-      generationNumber: 1,
-    },
-    {
-      id: 2,
-      name: 'Jane Smith',
-      email: 'jane@example.com',
-      roles: ['ADMIN'],
-      type: 'TEACHER',
-      status: 'DEACTIVATE',
-      generationNumber: 2,
-    },
-    {
-      id: 3,
-      name: 'Alice Johnson',
-      email: 'alice@example.com',
-      roles: ['USER'],
-      type: 'STUDENT',
-      status: 'ACTIVATE',
-      generationNumber: 3,
-    },
-    // 추가 사용자 데이터
-  ];
+interface UserListContainerProps {
+  users: UserListResponseDto[];
+}
 
-  const [users, setUsers] = useState<UserListResponseDto[]>(initialUsers);
+export default function UserList({ users }: UserListContainerProps) {
   const [searchTerm, setSearchTerm] = useState<string>('');
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +30,7 @@ export default function UserList() {
           className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
         />
       </div>
-      <div className="w-full px-6 py-3 bg-white border border-gray-200 rounded-lg shadow">
+      <div className="max-h-[calc(100vh-150px)] w-full overflow-y-auto rounded-lg border border-gray-200 bg-white px-6 py-3 shadow">
         <div className="flow-root">
           <ul className="divide-y divide-gray-200">
             {filteredUsers.length > 0 ? (
