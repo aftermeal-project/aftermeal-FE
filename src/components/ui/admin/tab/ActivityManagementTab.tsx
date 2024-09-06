@@ -6,24 +6,39 @@ import {
   CreateActivityModal,
   ActivityListTable,
 } from '../../../../features/activities';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../../atoms';
+import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
+import { ActiveIdAtom, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
+import useDeleteActivity from '../../../../features/activities/api/delete-activity';
 
 export default function ActivityManagementTab() {
-  const deleteModal = useRecoilValue(ModalAtomFamily(AtomKeys.DELETE_ACTIVITY));
-  const [createModal, setCreateModal] = useRecoilState(
+  const resetActivityId = useResetRecoilState(ActiveIdAtom);
+  const { deleteActivity } = useDeleteActivity();
+  const activeId = useRecoilValue(ActiveIdAtom);
+
+  const deleteModalOpen = useRecoilValue(
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY),
+  );
+  const [createModalOpen, setCreateModalOpen] = useRecoilState(
     ModalAtomFamily(AtomKeys.CREATE_ACTIVITY),
   );
 
   function onCreateActivity() {
-    setCreateModal(true);
+    setCreateModalOpen(true);
   }
 
   return (
     <section>
-      {deleteModal && <ConfirmDeleteModal />}
-      {createModal && <CreateActivityModal />}
+      {deleteModalOpen && (
+        <ConfirmDeleteModal
+          message="삭제 확인"
+          modalKey={AtomKeys.DELETE_ACTIVITY}
+          request={deleteActivity}
+          params={String(activeId)}
+          onSettled={resetActivityId}
+        />
+      )}
+      {createModalOpen && <CreateActivityModal />}
       <div className="h-full overflow-hidden">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">활동 관리</h1>
