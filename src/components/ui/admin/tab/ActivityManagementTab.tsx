@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import {
   ActivityListFetcher,
   ActivityListSkeleton,
-  ConfirmDeleteModal,
   CreateActivityModal,
   ActivityListTable,
 } from '../../../../features/activities';
@@ -10,6 +9,7 @@ import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import useDeleteActivity from '../../../../features/activities/api/delete-activity';
+import { ConfirmDeleteModal } from '../../../../features/modals';
 
 export default function ActivityManagementTab() {
   const resetActivityId = useResetRecoilState(

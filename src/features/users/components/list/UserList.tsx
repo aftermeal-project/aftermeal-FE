@@ -4,7 +4,7 @@ import User from '../item/User';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
-import { ConfirmDeleteModal } from '../../../activities';
+import { ConfirmDeleteModal } from '../../../modals';
 import useDeleteUser from '../../api/delete-user';
 
 interface UserListContainerProps {
