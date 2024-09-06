@@ -18,3 +18,8 @@ export const ActiveIdAtom = atom({
   key: 'activeId',
   default: 0,
 });
+
+export const ActiveUserIdAtom = atom({
+  key: 'activeUserId',
+  default: 0,
+});
