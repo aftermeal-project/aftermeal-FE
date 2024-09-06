@@ -36,7 +36,7 @@ export default function ActivityManagementTab() {
       {createModalOpen && <CreateActivityModal />}
       {deleteModalOpen && (
         <ConfirmDeleteModal
-          message="삭제 확인"
+          message="정말 해당 활동을 삭제하시겠습니까?"
           modalKey={AtomKeys.DELETE_ACTIVITY_MODAL}
           request={deleteActivity}
           params={String(activeId)}
