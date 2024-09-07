@@ -10,10 +10,7 @@ interface UserProps {
 
 export default function User({ user, onUpdate, onDelete }: UserProps) {
   return (
-    <li
-      key={user.id}
-      className="flex items-center py-3 border-b border-gray-200"
-    >
+    <li className="flex items-center py-3 border-b border-gray-200">
       <div className="flex-1 min-w-0 pr-4">
         <p
           className={`text-md mb-2 font-bold ${user.type === 'STUDENT' ? 'text-blue-700' : 'text-green-700'}`}
