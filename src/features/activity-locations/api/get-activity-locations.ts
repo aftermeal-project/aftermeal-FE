@@ -28,6 +28,7 @@ export default function useGetActivityLocation() {
     queryKey: ['activity-locations'],
     queryFn: getActivityLocations,
     retry: false,
+    refetchOnMount: true,
   });
 
   return {
