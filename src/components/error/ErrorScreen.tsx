@@ -2,7 +2,7 @@ import { useQueryErrorResetBoundary } from '@tanstack/react-query';
 import { Link, useLocation } from 'react-router-dom';
 import Path from '../../routes/path';
 
-type TitleType = 'Oops!' | '404';
+type TitleType = 'Oops!' | '404' | '권한 오류';
 
 interface ErrorScreenProps {
   title: TitleType;
@@ -29,7 +29,7 @@ export default function ErrorScreen({
 
   return (
     <main
-      className={`min-h-screen-minus-96 flex items-center justify-center ${isNotAdminDomain ? 'bg-gray-100' : 'bg-white'}`}
+      className={`flex items-center justify-center ${isNotAdminDomain ? 'min-h-screen-minus-96 bg-gray-100' : 'min-h-screen bg-white'}`}
     >
       <div className="text-center">
         <h1 className="text-6xl font-bold text-gray-700 mb-7">{title}</h1>
