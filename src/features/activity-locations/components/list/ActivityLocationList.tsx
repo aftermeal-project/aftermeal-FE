@@ -6,6 +6,7 @@ import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import useDeleteActivityLocation from '../../api/delete-activity-location';
 import { ConfirmDeleteModal } from '../../../modals';
+import useUpdateActivityLocation from '../../api/update-activity-location';
 
 interface ActivityLocationListProps {
   locations: ActivityLocationListResponseDto[];
@@ -15,15 +16,15 @@ export default function ActivityLocationList({
   locations,
 }: ActivityLocationListProps) {
   const { deleteActivityLocation } = useDeleteActivityLocation();
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const { updateActivityLocation } = useUpdateActivityLocation();
 
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const [activeLocationId, setActiveLocationId] = useRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_LOCATION_ID),
   );
   const resetActiveLocationId = useResetRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_LOCATION_ID),
   );
-
   const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_LOCATION_MODAL),
   );
@@ -36,11 +37,11 @@ export default function ActivityLocationList({
     location.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const handleUpdate = (locationId: number) => {
-    alert(`${locationId}번 장소 수정`);
+  const handleUpdate = (updatedData: ActivityLocationListResponseDto) => {
+    updateActivityLocation.mutate(updatedData);
   };
 
-  const handleDeleteLocation = (locationId: number) => {
+  const handleDelete = (locationId: number) => {
     setActiveLocationId(locationId);
     setDeleteModalOpen(true);
   };
@@ -56,7 +57,6 @@ export default function ActivityLocationList({
           onSettled={resetActiveLocationId}
         />
       )}
-      {/* 컴포넌트화 예정 */}
       <div className="mb-4">
         <input
           type="text"
@@ -69,16 +69,14 @@ export default function ActivityLocationList({
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {filteredLocations.length > 0 ? (
-          <>
-            {filteredLocations.map(location => (
-              <ActivityLocationCard
-                key={location.id}
-                location={location}
-                onUpdate={() => handleUpdate(location.id)}
-                onDelete={() => handleDeleteLocation(location.id)}
-              />
-            ))}
-          </>
+          filteredLocations.map(location => (
+            <ActivityLocationCard
+              key={location.id}
+              location={location}
+              onUpdate={() => handleUpdate(location)}
+              onDelete={() => handleDelete(location.id)}
+            />
+          ))
         ) : (
           <h1 className="py-3 font-bold text-md">검색 결과가 없습니다!</h1>
         )}
