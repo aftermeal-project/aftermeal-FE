@@ -1,1 +1,1 @@
-export type Tab = 'activities' | 'activity-schedules' | 'users';
+export type Tab = 'activities' | 'users' | 'locations';

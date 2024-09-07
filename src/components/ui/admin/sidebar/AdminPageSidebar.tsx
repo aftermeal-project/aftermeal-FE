@@ -52,9 +52,9 @@ export default function AdminPageSidebar({
 
           <li
             className={`flex cursor-pointer items-center px-4 py-2 hover:bg-gray-700 ${
-              selectedTab === 'activity-schedules' ? 'bg-gray-700' : ''
+              selectedTab === 'users' ? 'bg-gray-700' : ''
             }`}
-            onClick={() => setSelectedTab('activity-schedules')}
+            onClick={() => setSelectedTab('users')}
           >
             <FaUsers size={20} />
             <span className={`ml-4 ${!isSidebarOpen && 'hidden'}`}>
@@ -64,13 +64,13 @@ export default function AdminPageSidebar({
 
           <li
             className={`flex cursor-pointer items-center px-4 py-2 hover:bg-gray-700 ${
-              selectedTab === 'users' ? 'bg-gray-700' : ''
+              selectedTab === 'locations' ? 'bg-gray-700' : ''
             }`}
-            onClick={() => setSelectedTab('users')}
+            onClick={() => setSelectedTab('locations')}
           >
             <FaUserCog size={20} />
             <span className={`ml-4 ${!isSidebarOpen && 'hidden'}`}>
-              참가자 관리
+              장소 관리
             </span>
           </li>
         </ul>

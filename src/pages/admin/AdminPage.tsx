@@ -5,6 +5,7 @@ import {
   AdminPageSidebar,
   ActivityManagementTab,
   UserManagementTab,
+  ActivityLocationManagementTab,
   TabsContainer,
 } from '../../components/ui/admin';
 import { errorMessages } from '../../constants';
@@ -29,8 +30,8 @@ export default function AdminPage() {
           }
         >
           {selectedTab === 'activities' && <ActivityManagementTab />}
-          {selectedTab === 'activity-schedules' && <UserManagementTab />}
-          {selectedTab === 'users' && <></>}
+          {selectedTab === 'users' && <UserManagementTab />}
+          {selectedTab === 'locations' && <ActivityLocationManagementTab />}
         </FetchErrorBoundary>
       </TabsContainer>
     </div>
