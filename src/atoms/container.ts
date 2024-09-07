@@ -1,5 +1,5 @@
 import { atom, atomFamily } from 'recoil';
-import { UserAtomType } from './atom.type';
+import { UserAtomType } from '../types';
 
 export const ModalAtomFamily = atomFamily({
   key: 'modal',

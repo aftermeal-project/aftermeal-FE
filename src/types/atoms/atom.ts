@@ -1,4 +1,4 @@
-import { UserListResponseDtoRoles } from '../types';
+import { UserListResponseDtoRoles } from '..';
 
 export interface UserAtomType {
   name: string;
