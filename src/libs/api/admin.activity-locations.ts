@@ -18,3 +18,16 @@ export const GetActivityLocationAPI = async () => {
 
   return response.data;
 };
+
+export const UpdateActivityLocationAPI = async (
+  locationUpdateData: ActivityLocationListResponseDto,
+) => {
+  await instance({
+    method: 'PUT',
+    headers: {
+      Authorization: accessToken,
+    },
+    url: url + `/${locationUpdateData.id}`,
+    data: locationUpdateData.name,
+  });
+};
