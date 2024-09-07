@@ -1,6 +1,10 @@
 import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '../../constants';
-import { ActivityLocationListResponseDto } from '../../types';
+import {
+  ActivityLocationCreationRequestDto,
+  ActivityLocationListResponseDto,
+  ActivityLocationUpdateRequestDto,
+} from '../../types';
 import { createRandomActivityLocation } from '../utils/activity-locations.utils';
 
 const url = BASE_URL + '/admin/activity-locations';
@@ -18,14 +22,55 @@ export const adminActivityLocationsHandlers = [
   }),
 
   /**
+   * 활동 장소 생성 API
+   */
+
+  http.post<{}, ActivityLocationCreationRequestDto>(
+    url,
+    async ({ request }) => {
+      const data = await request.json();
+
+      if (!data) {
+        return HttpResponse.json(
+          { message: 'Invalid request data' },
+          { status: 400 },
+        );
+      }
+
+      return HttpResponse.json(null, {
+        status: 201,
+      });
+    },
+  ),
+
+  /**
    * 활동 장소 수정 API
    */
-  http.put<{ locationId: string }, ActivityLocationListResponseDto, {}>(
+  http.put<{ locationId: string }, ActivityLocationUpdateRequestDto, {}>(
     url + '/:locationId',
     async ({ request }) => {
       const data = await request.json();
 
       if (!data) {
+        return HttpResponse.json(
+          { message: 'Invalid request data' },
+          { status: 400 },
+        );
+      }
+
+      return HttpResponse.json(null, {
+        status: 201,
+      });
+    },
+  ),
+
+  /**
+   * 활동 장소 삭제 API
+   */
+  http.delete<{ locationId: string }>(
+    url + '/:locationId',
+    async ({ params }) => {
+      if (params.locationId === '0') {
         return HttpResponse.json(
           { message: 'Invalid request data' },
           { status: 400 },

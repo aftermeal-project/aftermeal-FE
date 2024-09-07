@@ -1,4 +1,7 @@
-import { ActivityLocationListResponseDto } from '../../types';
+import {
+  ActivityLocationCreationRequestDto,
+  ActivityLocationListResponseDto,
+} from '../../types';
 import { instance } from '../instance';
 import Token from '../utils/token';
 
@@ -19,6 +22,19 @@ export const GetActivityLocationAPI = async () => {
   return response.data;
 };
 
+export const CreateActivityLocationAPI = async (
+  createActivityLocationData: ActivityLocationCreationRequestDto,
+) => {
+  await instance({
+    method: 'POST',
+    headers: {
+      Authorization: accessToken,
+    },
+    url: url,
+    data: createActivityLocationData,
+  });
+};
+
 export const UpdateActivityLocationAPI = async (
   locationUpdateData: ActivityLocationListResponseDto,
 ) => {
@@ -29,5 +45,15 @@ export const UpdateActivityLocationAPI = async (
     },
     url: url + `/${locationUpdateData.id}`,
     data: locationUpdateData.name,
+  });
+};
+
+export const DeleteActivityLocationAPI = async (locationId: string) => {
+  await instance({
+    method: 'DELETE',
+    headers: {
+      Authorization: accessToken,
+    },
+    url: url + `/${locationId}`,
   });
 };
