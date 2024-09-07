@@ -12,7 +12,7 @@ import { SelectInput } from '../select';
 
 interface LocationSelectInputProps<T extends FieldValues> {
   title: Path<T>;
-  value?: string;
+  value?: string | number | readonly string[] | undefined; // value 타입 확장
   onChange?: (e: React.ChangeEvent<HTMLSelectElement>) => void;
   register: UseFormRegister<T>;
   setValue?: UseFormSetValue<T>;
