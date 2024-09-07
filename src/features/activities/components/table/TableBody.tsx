@@ -41,12 +41,11 @@ interface TableBodyProps {
 }
 
 export default function TableBody({ activities }: TableBodyProps) {
+  const { updateActivity } = useUpdateActivity();
+  const [manageMode, setManageMode] = useState<'update' | 'delete'>('update');
+
   const { register, handleSubmit, reset, setValue } =
     useForm<ActivityResponseDto>();
-
-  const { updateActivity } = useUpdateActivity();
-
-  const [mode, setMode] = useState<'edit' | 'delete'>('edit');
 
   const [activeId, setActiveId] = useRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
@@ -82,7 +81,7 @@ export default function TableBody({ activities }: TableBodyProps) {
   ];
 
   const handleEdit = (activityId: number) => {
-    setMode('edit');
+    setManageMode('update');
     setActiveId(activityId);
     const selectedActivity = activities.find(
       activity => activity.id === activityId,
@@ -93,7 +92,7 @@ export default function TableBody({ activities }: TableBodyProps) {
   };
 
   const handleDelete = (activityId: number) => {
-    setMode('delete');
+    setManageMode('delete');
     setActiveId(activityId);
     deleteModalOpen(true);
   };
@@ -133,9 +132,9 @@ export default function TableBody({ activities }: TableBodyProps) {
               title={cell.title}
               type={cell.type}
               value={activity[cell.title]}
-              isEditing={
+              isUpdating={
                 cell.isUpdating !== false &&
-                mode === 'edit' &&
+                manageMode === 'update' &&
                 activeId === activity.id
               }
               register={register}
@@ -144,9 +143,9 @@ export default function TableBody({ activities }: TableBodyProps) {
             />
           ))}
           <ActionButtons
-            isEditing={mode === 'edit' && activeId === activity.id}
-            startEditing={() => handleEdit(activity.id)}
-            onUpdate={handleSubmit(handleSubmitTable)}
+            isUpdating={manageMode === 'update' && activeId === activity.id}
+            onSave={handleSubmit(handleSubmitTable)}
+            onUpdate={() => handleEdit(activity.id)}
             onDelete={() => handleDelete(activity.id)}
             onCancel={handleCancel}
           />

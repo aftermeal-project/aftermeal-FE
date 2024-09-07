@@ -6,7 +6,7 @@ import { formatTime } from '../../../../utils';
 
 interface BodyCellProps extends InputHTMLAttributes<HTMLInputElement> {
   title: Path<ActivityResponseDto>;
-  isEditing: boolean;
+  isUpdating: boolean;
   value: string | number;
   register: UseFormRegister<ActivityResponseDto>;
   options?: Option[];
@@ -15,7 +15,7 @@ interface BodyCellProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export default function BodyCell({
   title,
-  isEditing,
+  isUpdating,
   value,
   register,
   options,
@@ -24,23 +24,23 @@ export default function BodyCell({
   ...rest
 }: BodyCellProps) {
   /**
-   * Cell이 update mode 일 때 time 포맷팅
+   * Cell이 update 중일 때 time 포맷팅
    */
-  if (setValue && isEditing && type === 'time') {
+  if (setValue && isUpdating && type === 'time') {
     setValue(title, formatTime({ type: 'format', time: value as string }));
   }
 
   /**
    * read-only cell 렌더링
    */
-  if (!isEditing) {
+  if (!isUpdating) {
     const displayValue =
       type === 'time'
         ? formatTime({ type: 'readable', time: value as string })
         : value;
 
     return (
-      <td className="border border-gray-200 px-2">
+      <td className="px-2 border border-gray-200">
         <span className="block w-full px-2 py-1 text-gray-800">
           {displayValue}
         </span>
@@ -53,7 +53,7 @@ export default function BodyCell({
    */
   if (type === 'select') {
     return (
-      <td className="border border-gray-200 px-2">
+      <td className="px-2 border border-gray-200">
         <SelectField<ActivityResponseDto>
           title={title}
           value={value}
@@ -65,10 +65,10 @@ export default function BodyCell({
   }
 
   /**
-   * 기타 타입일 때 input field 렌더링
+   *  type이 select가 아니며, isUpading일 때 input field 렌더링
    */
   return (
-    <td className="border border-gray-200 px-2">
+    <td className="px-2 border border-gray-200">
       <input
         type={type}
         className={`box-border w-full rounded-md border border-gray-300 px-2 py-1 ${
