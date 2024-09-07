@@ -5,7 +5,7 @@ export default function ActivityLocationListSkeleton() {
   return (
     <section>
       <Skeleton width="full" height={42} className="mb-4" />
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {Array(6)
           .fill(0)
           .map(() => (
