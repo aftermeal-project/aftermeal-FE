@@ -1,6 +1,11 @@
 import { ActivityLocationListResponseDto } from '../../../../types';
 import { useState } from 'react';
 import { ActivityLocationCard } from '../card';
+import { useRecoilState, useResetRecoilState } from 'recoil';
+import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
+import { AtomKeys } from '../../../../constants';
+import useDeleteActivityLocation from '../../api/delete-activity-location';
+import { ConfirmDeleteModal } from '../../../modals';
 
 interface ActivityLocationListProps {
   locations: ActivityLocationListResponseDto[];
@@ -9,21 +14,48 @@ interface ActivityLocationListProps {
 export default function ActivityLocationList({
   locations,
 }: ActivityLocationListProps) {
+  const { deleteActivityLocation } = useDeleteActivityLocation();
   const [searchTerm, setSearchTerm] = useState<string>('');
+
+  const [activeLocationId, setActiveLocationId] = useRecoilState(
+    ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_LOCATION_ID),
+  );
+  const resetActiveLocationId = useResetRecoilState(
+    ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_LOCATION_ID),
+  );
+
+  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_LOCATION_MODAL),
+  );
+
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
+
+  const filteredLocations = locations.filter(location =>
+    location.name.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
   const handleUpdate = (locationId: number) => {
     alert(`${locationId}번 장소 수정`);
   };
 
-  const handleDelete = (locationId: number) => {
-    alert(`${locationId}번 장소 삭제`);
+  const handleDeleteLocation = (locationId: number) => {
+    setActiveLocationId(locationId);
+    setDeleteModalOpen(true);
   };
 
   return (
     <section>
+      {deleteModalOpen && (
+        <ConfirmDeleteModal
+          message="정말 해당 장소를 삭제하시겠습니까?"
+          modalKey={AtomKeys.DELETE_ACTIVITY_LOCATION_MODAL}
+          request={deleteActivityLocation}
+          params={String(activeLocationId)}
+          onSettled={resetActiveLocationId}
+        />
+      )}
       {/* 컴포넌트화 예정 */}
       <div className="mb-4">
         <input
@@ -36,14 +68,20 @@ export default function ActivityLocationList({
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {locations.map(location => (
-          <ActivityLocationCard
-            key={location.id}
-            location={location}
-            onUpdate={() => handleUpdate(location.id)}
-            onDelete={() => handleDelete(location.id)}
-          />
-        ))}
+        {filteredLocations.length > 0 ? (
+          <>
+            {filteredLocations.map(location => (
+              <ActivityLocationCard
+                key={location.id}
+                location={location}
+                onUpdate={() => handleUpdate(location.id)}
+                onDelete={() => handleDeleteLocation(location.id)}
+              />
+            ))}
+          </>
+        ) : (
+          <h1 className="py-3 font-bold text-md">검색 결과가 없습니다!</h1>
+        )}
       </div>
     </section>
   );
