@@ -7,6 +7,7 @@ import { AtomKeys } from '../../../../constants';
 import useDeleteActivityLocation from '../../api/delete-activity-location';
 import { ConfirmDeleteModal } from '../../../modals';
 import useUpdateActivityLocation from '../../api/update-activity-location';
+import { SearchBar } from '../../../../components';
 
 interface ActivityLocationListProps {
   locations: ActivityLocationListResponseDto[];
@@ -57,16 +58,11 @@ export default function ActivityLocationList({
           onSettled={resetActiveLocationId}
         />
       )}
-      <div className="mb-4">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="검색..."
-          className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-        />
-      </div>
-
+      <SearchBar
+        searchValue={searchTerm}
+        onSearchChange={handleSearchChange}
+        placeholder="장소 검색 ..."
+      />
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {filteredLocations.length > 0 ? (
           filteredLocations.map(location => (

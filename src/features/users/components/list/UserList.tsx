@@ -8,6 +8,7 @@ import { ConfirmDeleteModal } from '../../../modals';
 import useDeleteUser from '../../api/delete-user';
 import UpdateUserModal from '../modal/UpdateUserModal';
 import { useForm } from 'react-hook-form';
+import { SearchBar } from '../../../../components';
 
 interface UserListContainerProps {
   users: UserListResponseDto[];
@@ -76,16 +77,11 @@ export default function UserList({ users }: UserListContainerProps) {
           onSettled={resetActiveUserId}
         />
       )}
-      {/* 컴포넌트화 예정 */}
-      <div className="mb-4">
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={handleSearchChange}
-          placeholder="검색..."
-          className="w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-        />
-      </div>
+      <SearchBar
+        searchValue={searchTerm}
+        onSearchChange={handleSearchChange}
+        placeholder="유저 검색 ..."
+      />
       <div className="max-h-[calc(100vh-150px)] w-full overflow-y-auto rounded-lg border border-gray-200 bg-white px-6 py-3 shadow">
         <div className="flow-root">
           <ul className="divide-y divide-gray-200">
