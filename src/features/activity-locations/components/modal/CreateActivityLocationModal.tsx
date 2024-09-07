@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
-import { FormErrorMessages, Input } from '../../../../components';
+import { Button, FormErrorMessages, Input } from '../../../../components';
 import ModalLayout from '../../../../components/layout/ModalLayout';
 import {
   AtomKeys,
@@ -62,19 +62,16 @@ export default function CreateActivityLocationModal() {
           />
           <FormErrorMessages errors={errors} fields={['name']} />
           <div className="flex justify-between w-full mt-11">
-            <button
+            <Button
               type="button"
               onClick={handleModalClose}
-              className="px-4 py-2 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400"
+              variant="secondary"
             >
               취소
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-            >
+            </Button>
+            <Button type="submit" onClick={handleModalClose}>
               추가
-            </button>
+            </Button>
           </div>
         </form>
       </div>
