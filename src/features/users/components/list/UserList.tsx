@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { UserListResponseDto, UserUpdateRequestDto } from '../../../../types';
-import User from '../item/User';
+import { User, UpdateUserModal } from '../';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import { ConfirmDeleteModal } from '../../../modals';
 import useDeleteUser from '../../api/delete-user';
-import UpdateUserModal from '../modal/UpdateUserModal';
 import { useForm } from 'react-hook-form';
 import { SearchBar } from '../../../../components';
 
