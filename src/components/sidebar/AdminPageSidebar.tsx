@@ -6,7 +6,7 @@ import {
 } from 'react-icons/fa';
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai';
 import { useState } from 'react';
-import { Tab } from '../../../../types';
+import { Tab } from '../../types';
 import { useNavigate } from 'react-router-dom';
 
 interface AdminPageSidebarProps {
@@ -86,7 +86,7 @@ export default function AdminPageSidebar({
           </li>
 
           <li
-            className="flex items-center px-4 py-2 mt-8 cursor-pointer hover:bg-gray-700"
+            className="mt-8 flex cursor-pointer items-center px-4 py-2 hover:bg-gray-700"
             onClick={handleExit}
           >
             <FaBackward size={20} />

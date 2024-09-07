@@ -5,13 +5,13 @@ import {
   AuthUserTypeSelector,
   AuthButton,
   AuthLoadingSpinner,
-} from '../../../../components/ui/auth';
+} from '../../../../components';
 import {
   validationMessages,
   signupValidationRules,
 } from '../../../../constants';
 import useSignup from '../../api/signup';
-import { FormErrorMessages, Input } from '../../../../components/@global';
+import { FormErrorMessages, Input } from '../../../../components';
 import { UserRegistrationRequestDto } from '../../../../types';
 
 type UserType = 'STUDENT' | 'TEACHER';

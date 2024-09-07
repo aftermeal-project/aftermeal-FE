@@ -1,8 +1,10 @@
 import { Suspense } from 'react';
-import ErrorScreen from '../../components/error/ErrorScreen';
-import { HomePageContainer } from '../../components/ui/home';
 import { errorMessages } from '../../constants';
-import { FetchErrorBoundary } from '../../components/@global';
+import {
+  HomePageContainer,
+  ErrorScreen,
+  FetchErrorBoundary,
+} from '../../components';
 import {
   ActivityList,
   ActivityListFetcher,

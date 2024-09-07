@@ -1,8 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
-import { FormErrorMessages, Input } from '../../../../components/@global';
-import ModalLayout from '../../../../components/@global/layout/ModalLayout';
+import { FormErrorMessages, Input, ModalLayout } from '../../../../components';
 import {
   AtomKeys,
   createActivityValidationRules,
@@ -53,7 +52,7 @@ export default function CreateActivityModal() {
   return (
     <ModalLayout setModal={createActivityModalOpen}>
       <div
-        className="mx-auto w-80 rounded-lg bg-white p-6 shadow-lg"
+        className="p-6 mx-auto bg-white rounded-lg shadow-lg w-80"
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-8 text-lg font-bold">활동 추가</h2>
@@ -69,7 +68,7 @@ export default function CreateActivityModal() {
             error={errors.title}
           />
           <div className="mb-4">
-            <label htmlFor="location" className="mb-2 inline-block text-base">
+            <label htmlFor="location" className="inline-block mb-2 text-base">
               장소
             </label>
             <SelectField<ActivityCreationRequestDto>
@@ -92,7 +91,7 @@ export default function CreateActivityModal() {
             error={errors.maxParticipants}
           />
           <div className="mb-4">
-            <label htmlFor="location" className="mb-2 inline-block text-base">
+            <label htmlFor="location" className="inline-block mb-2 text-base">
               세션 유형
             </label>
             <SelectField<ActivityCreationRequestDto>
@@ -123,17 +122,17 @@ export default function CreateActivityModal() {
               'scheduledDate',
             ]}
           />
-          <div className="mt-11 flex w-full justify-between">
+          <div className="flex justify-between w-full mt-11">
             <button
               type="button"
               onClick={handleModalClose}
-              className="rounded-md bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400"
+              className="px-4 py-2 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400"
             >
               취소
             </button>
             <button
               type="submit"
-              className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
             >
               추가
             </button>

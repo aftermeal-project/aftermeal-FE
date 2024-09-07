@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import { FetchErrorBoundary } from '../../components/@global';
-import ErrorScreen from '../../components/error/ErrorScreen';
 import {
   AdminPageSidebar,
   ActivityManagementTab,
   UserManagementTab,
   ActivityLocationManagementTab,
   TabsContainer,
-} from '../../components/ui/admin';
+  ErrorScreen,
+  FetchErrorBoundary,
+} from '../../components';
 import { errorMessages } from '../../constants';
 import { Tab } from '../../types';
 import { useRecoilValue } from 'recoil';
@@ -20,7 +20,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (user.roles.includes('ADMIN')) {
-      setRoleError(true);
+      setRoleError(false);
     }
   }, [user]);
 

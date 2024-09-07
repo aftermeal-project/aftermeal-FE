@@ -1,9 +1,9 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import { loginValidationRules } from '../../../../constants';
-import { AuthButton, AuthLoadingSpinner } from '../../../../components/ui/auth';
+import { AuthButton, AuthLoadingSpinner } from '../../../../components/';
 import useLogin from '../../api/login';
-import { FormErrorMessages, Input } from '../../../../components/@global';
+import { FormErrorMessages, Input } from '../../../../components';
 import { LoginRequestDto } from '../../../../types';
 
 export default function LoginForm() {

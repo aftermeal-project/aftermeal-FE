@@ -1,4 +1,4 @@
-import { Layout } from './components/@global';
+import { Layout } from './components';
 
 function App() {
   return <Layout />;

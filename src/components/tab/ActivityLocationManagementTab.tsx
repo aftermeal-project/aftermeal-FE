@@ -5,10 +5,10 @@ import {
   ActivityLocationListFetcher,
   ActivityLocationListSkeleton,
   CreateActivityLocationModal,
-} from '../../../../features/activity-locations';
+} from '../../features/activity-locations';
 import { useRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../../atoms';
-import { AtomKeys } from '../../../../constants';
+import { ModalAtomFamily } from '../../atoms';
+import { AtomKeys } from '../../constants';
 
 export default function ActivityLocationManagementTab() {
   const [createLocationModalOpen, setCreateLocationModalOpen] = useRecoilState(
@@ -22,7 +22,7 @@ export default function ActivityLocationManagementTab() {
   return (
     <div>
       {createLocationModalOpen && <CreateActivityLocationModal />}
-      <div className="flex items-center justify-between mb-4">
+      <div className="mb-4 flex items-center justify-between">
         <h1 className="text-2xl font-bold">장소 관리</h1>
         <button
           onClick={handleCreateLocation}

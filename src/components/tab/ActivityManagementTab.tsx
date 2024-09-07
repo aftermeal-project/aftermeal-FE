@@ -4,12 +4,12 @@ import {
   ActivityListSkeleton,
   CreateActivityModal,
   ActivityListTable,
-} from '../../../../features/activities';
+} from '../../features/activities';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
-import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
-import { AtomKeys } from '../../../../constants';
-import useDeleteActivity from '../../../../features/activities/api/delete-activity';
-import { ConfirmDeleteModal } from '../../../../features/modals';
+import { ActiveIdAtomFamily, ModalAtomFamily } from '../../atoms';
+import { AtomKeys } from '../../constants';
+import useDeleteActivity from '../../features/activities/api/delete-activity';
+import { ConfirmDeleteModal } from '../../features/modals';
 
 export default function ActivityManagementTab() {
   const resetActivityId = useResetRecoilState(
@@ -44,7 +44,7 @@ export default function ActivityManagementTab() {
         />
       )}
       <div className="h-full overflow-hidden">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">활동 관리</h1>
           <button
             className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white"

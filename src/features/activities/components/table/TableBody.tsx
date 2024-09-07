@@ -5,7 +5,7 @@ import { AtomKeys, validationMessages } from '../../../../constants';
 import { ActivityResponseDto, Option } from '../../../../types';
 import BodyCell from '../cell/BodyCell';
 import { statusOptions, typeOptions } from '../../constants/options';
-import { ActionButtons } from '../../../../components/ui/admin/button';
+import { ActionButtons } from '../../../../components';
 import useUpdateActivity from '../../api/update-activity';
 import { formatTime } from '../../../../utils';
 import moment from 'moment';

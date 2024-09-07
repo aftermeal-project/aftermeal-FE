@@ -4,7 +4,7 @@ import {
   UserListSkeleton,
   UserListFetcher,
   UserList,
-} from '../../../../features/users';
+} from '../../features/users';
 
 export default function UserManagementTab() {
   return (
