@@ -39,7 +39,6 @@ export const UpdateActivityLocationAPI = async (
   locationId: string,
   name: string,
 ) => {
-  console.log(locationId, name);
   await instance({
     method: 'PATCH',
     headers: {
