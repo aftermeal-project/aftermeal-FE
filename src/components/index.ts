@@ -1,4 +1,3 @@
-export * from './boundary';
 export * from './button';
 export * from './container';
 export * from './error';

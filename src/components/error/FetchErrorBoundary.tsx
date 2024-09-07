@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import ErrorScreen from '../error/ErrorScreen';
+import ErrorScreen from './ErrorScreen';
 import { errorMessages } from '../../constants';
 
 interface FetchErrorBoundaryProps {
