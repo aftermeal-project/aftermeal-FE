@@ -1,7 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { errorMessages } from '../../../constants';
-import { UserListResponseDtoRoles } from '../../../types';
 import { GetUsersAPI } from '../../../libs/api/admin.users';
 
 function getUsers() {
@@ -30,7 +29,7 @@ function handleGetUserssError(error: any) {
   return errorMessages.UNKNOWN_ERROR;
 }
 
-export default function useGetUsers(roles?: UserListResponseDtoRoles) {
+export default function useGetUsers() {
   const { data, error } = useSuspenseQuery({
     queryKey: ['users'],
     queryFn: getUsers,

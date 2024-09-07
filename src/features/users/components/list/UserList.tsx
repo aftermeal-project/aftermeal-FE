@@ -1,29 +1,38 @@
 import { useState } from 'react';
-import { UserListResponseDto } from '../../../../types';
+import { UserListResponseDto, UserUpdateRequestDto } from '../../../../types';
 import User from '../item/User';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import { ConfirmDeleteModal } from '../../../modals';
 import useDeleteUser from '../../api/delete-user';
+import UpdateUserModal from '../modal/UpdateUserModal';
+import { useForm } from 'react-hook-form';
 
 interface UserListContainerProps {
   users: UserListResponseDto[];
 }
 
 export default function UserList({ users }: UserListContainerProps) {
+  const formMethods = useForm<UserUpdateRequestDto>();
+  const { reset } = formMethods;
+
+  const { deleteUser } = useDeleteUser();
   const [searchTerm, setSearchTerm] = useState<string>('');
+
   const [activeUserId, setActiveUserId] = useRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_USER_ID),
   );
   const resetActiveUserId = useResetRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_USER_ID),
   );
-  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
-    ModalAtomFamily(AtomKeys.ACTIVE_USER_ID),
-  );
 
-  const { deleteUser } = useDeleteUser();
+  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
+    ModalAtomFamily(AtomKeys.DELETE_USER_MODAL),
+  );
+  const [updateModalOpen, setUpdateModalOpen] = useRecoilState(
+    ModalAtomFamily(AtomKeys.UPDATE_USER_MODAL),
+  );
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -35,22 +44,39 @@ export default function UserList({ users }: UserListContainerProps) {
       user.email.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const onUserDelete = (userId: number) => {
-    setActiveUserId(userId);
-    setDeleteModalOpen(true);
+  const settingUpdateUserModalFormValue = (userId: number) => {
+    const selectedUser = users.find(user => user.id === userId);
+    reset(selectedUser);
+  };
+
+  const handleUpdateUser = (userId: number) => {
+    if (!deleteModalOpen) {
+      settingUpdateUserModalFormValue(userId);
+      setActiveUserId(userId);
+      setUpdateModalOpen(true);
+    }
+  };
+
+  const handleDeleteUser = (userId: number) => {
+    if (!updateModalOpen) {
+      setActiveUserId(userId);
+      setDeleteModalOpen(true);
+    }
   };
 
   return (
     <section>
+      {updateModalOpen && <UpdateUserModal useForm={formMethods} />}
       {deleteModalOpen && (
         <ConfirmDeleteModal
           message="정말 해당 유저를 삭제하시겠습니까?"
-          modalKey={AtomKeys.ACTIVE_USER_ID}
+          modalKey={AtomKeys.DELETE_USER_MODAL}
           request={deleteUser}
           params={String(activeUserId)}
           onSettled={resetActiveUserId}
         />
       )}
+      {/* 컴포넌트화 예정 */}
       <div className="mb-4">
         <input
           type="text"
@@ -69,7 +95,8 @@ export default function UserList({ users }: UserListContainerProps) {
                   <User
                     key={user.id}
                     user={user}
-                    onDelete={() => onUserDelete(user.id)}
+                    onUpdate={() => handleUpdateUser(user.id)}
+                    onDelete={() => handleDeleteUser(user.id)}
                   />
                 ))}
               </>
