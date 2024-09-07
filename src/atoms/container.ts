@@ -10,7 +10,7 @@ export const UserAtom = atom<UserAtomType>({
   key: 'user',
   default: {
     name: '',
-    roles: 'USER',
+    roles: ['USER'],
   },
 });
 
