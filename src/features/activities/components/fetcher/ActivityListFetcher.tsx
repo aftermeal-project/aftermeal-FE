@@ -12,9 +12,8 @@ export default function ActivityListFetcher({
   children,
 }: ActivityListFetcherProps) {
   const user = useRecoilValue(UserAtom);
-  const roles = user?.roles || undefined;
 
-  const { data, error } = useGetActivities(roles);
+  const { data, error } = useGetActivities(user.roles);
 
   if (error) {
     throw new Error(error);

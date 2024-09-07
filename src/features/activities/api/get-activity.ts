@@ -9,19 +9,15 @@ import Token from '../../../libs/utils/token';
 async function getActivities({
   queryKey,
 }: {
-  queryKey: [key: 'activities', roles?: UserListResponseDtoRoles];
+  queryKey: [key: 'activities', roles?: UserListResponseDtoRoles[]];
 }) {
   const [, roles] = queryKey;
 
-  if (roles === 'USER') {
+  if (roles?.includes('ADMIN')) {
+    return AdminGetActivitiesAPI();
+  } else {
     return GetActivitiesAPI();
   }
-
-  if (roles === 'ADMIN') {
-    return AdminGetActivitiesAPI();
-  }
-
-  throw new Error(errorMessages.UNKNOWN_ERROR);
 }
 
 function handleGetActivitiesError(error: any) {
@@ -45,7 +41,7 @@ function handleGetActivitiesError(error: any) {
   return errorMessages.UNKNOWN_ERROR;
 }
 
-export default function useGetActivities(roles?: UserListResponseDtoRoles) {
+export default function useGetActivities(roles?: UserListResponseDtoRoles[]) {
   const token = new Token();
   const isLoggedIn = token.getLocalAccessToken() !== null;
 
