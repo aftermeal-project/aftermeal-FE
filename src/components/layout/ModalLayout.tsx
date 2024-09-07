@@ -19,7 +19,7 @@ export default function ModalLayout({ children, setModal }: Props) {
     };
   }, []);
 
-  const onClick = () => {
+  const handleOutsideTheModal = () => {
     setModal(false);
   };
 
@@ -27,7 +27,7 @@ export default function ModalLayout({ children, setModal }: Props) {
     <div className="fixed inset-x-0 inset-y-0 z-[10] flex h-screen w-full flex-col items-center">
       <div
         className="fixed flex h-full w-full items-center justify-center bg-black/[.2]"
-        onClick={onClick}
+        onClick={handleOutsideTheModal}
       >
         {children}
       </div>

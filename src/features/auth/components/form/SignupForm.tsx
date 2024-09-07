@@ -30,12 +30,12 @@ export default function SignupForm() {
 
   const { signup, isLoading } = useSignup({ setError, navigate });
 
-  function handlerUserTypeChange(type: UserType) {
+  const handlerUserTypeChange = (type: UserType) => {
     reset();
     setType(type);
-  }
+  };
 
-  async function onValid(data: UserRegistrationRequestDto) {
+  const onValid = async (data: UserRegistrationRequestDto) => {
     data.type = type;
     data.generationNumber = Number(data.generationNumber);
 
@@ -49,7 +49,7 @@ export default function SignupForm() {
     }
 
     signup(data);
-  }
+  };
   return (
     <>
       <form id="registrationForm" onSubmit={handleSubmit(onValid)}>

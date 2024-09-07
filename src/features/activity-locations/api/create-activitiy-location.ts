@@ -11,6 +11,7 @@ async function createActivityLocation(
 ): Promise<void> {
   await CreateActivityLocationAPI(data);
 }
+
 function handleCreateActivityLocationError() {
   alert(errorMessages.UNKNOWN_ERROR);
 }

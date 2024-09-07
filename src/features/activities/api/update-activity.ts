@@ -6,6 +6,7 @@ import { UpdateActivityAPI } from '../../../libs/api/admin.activities';
 async function updateActivity(data: ActivityResponseDto): Promise<void> {
   await UpdateActivityAPI(data);
 }
+
 function handleUpdateActivityError(_error: Error) {
   alert(errorMessages.UNKNOWN_ERROR);
 }

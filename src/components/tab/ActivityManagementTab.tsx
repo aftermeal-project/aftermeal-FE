@@ -27,7 +27,7 @@ export default function ActivityManagementTab() {
     ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_MODAL),
   );
 
-  function onCreateActivity() {
+  function handleCreateActivity() {
     setCreateModalOpen(true);
   }
 
@@ -44,11 +44,11 @@ export default function ActivityManagementTab() {
         />
       )}
       <div className="h-full overflow-hidden">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">활동 관리</h1>
           <button
             className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white"
-            onClick={onCreateActivity}
+            onClick={handleCreateActivity}
           >
             활동 추가
           </button>

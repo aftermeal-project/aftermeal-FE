@@ -10,7 +10,7 @@ interface ActivityListContainerProps {
 export default function ActivityListContainer({
   activities,
 }: ActivityListContainerProps) {
-  function handleParticipationError(error: any) {
+  const handleParticipationError = (error: any) => {
     if (error instanceof AxiosError) {
       const { response } = error;
 
@@ -18,16 +18,16 @@ export default function ActivityListContainer({
         alert('신청할 수 없는 활동입니다.');
       }
     }
-  }
+  };
 
-  async function participateInActivity(id: string) {
+  const handleParticipateInActivity = async (id: string) => {
     try {
       await ParticipationAPI(id);
       alert('참여가 완료 되었습니다.');
     } catch (error: unknown) {
       handleParticipationError(error);
     }
-  }
+  };
 
   return (
     <>
@@ -44,8 +44,8 @@ export default function ActivityListContainer({
           scheduledDate={activity.scheduledDate}
           applicationStartDate={activity.applicationStartDate}
           applicationEndDate={activity.applicationEndDate}
-          onParticipate={() => participateInActivity(String(activity.id))}
-          onCancel={() => participateInActivity(String(activity.id))}
+          onParticipate={() => handleParticipateInActivity(String(activity.id))}
+          onCancel={() => handleParticipateInActivity(String(activity.id))}
         />
       ))}
     </>

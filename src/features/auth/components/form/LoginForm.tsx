@@ -18,9 +18,9 @@ export default function LoginForm() {
 
   const { login, isLoading } = useLogin({ setError, navigate });
 
-  function onValid(data: LoginRequestDto) {
+  const onValid = (data: LoginRequestDto) => {
     login(data);
-  }
+  };
 
   return (
     <>

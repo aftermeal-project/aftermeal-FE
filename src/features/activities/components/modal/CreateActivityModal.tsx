@@ -32,7 +32,7 @@ export default function CreateActivityModal() {
     ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_MODAL),
   );
 
-  function onValid(data: ActivityCreationRequestDto) {
+  const onValid = (data: ActivityCreationRequestDto) => {
     createActivity.mutate(data, {
       onError: () => {
         alert(errorMessages.UNKNOWN_ERROR);
@@ -42,12 +42,12 @@ export default function CreateActivityModal() {
         reset();
       },
     });
-  }
+  };
 
-  function handleModalClose() {
+  const handleModalClose = () => {
     createActivityModalOpen(false);
     reset();
-  }
+  };
 
   return (
     <ModalLayout setModal={createActivityModalOpen}>

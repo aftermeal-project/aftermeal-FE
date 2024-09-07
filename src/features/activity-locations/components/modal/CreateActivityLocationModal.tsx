@@ -25,7 +25,7 @@ export default function CreateActivityLocationModal() {
     ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_LOCATION_MODAL),
   );
 
-  function onValid(data: ActivityLocationCreationRequestDto) {
+  const onValid = (data: ActivityLocationCreationRequestDto) => {
     createActivityLocation.mutate(data, {
       onError: () => {
         alert(errorMessages.UNKNOWN_ERROR);
@@ -35,17 +35,17 @@ export default function CreateActivityLocationModal() {
         reset();
       },
     });
-  }
+  };
 
-  function handleModalClose() {
+  const handleModalClose = () => {
     createActivityLocationModalOpen(false);
     reset();
-  }
+  };
 
   return (
     <ModalLayout setModal={createActivityLocationModalOpen}>
       <div
-        className="mx-auto w-80 rounded-lg bg-white p-6 shadow-lg"
+        className="p-6 mx-auto bg-white rounded-lg shadow-lg w-80"
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-8 text-lg font-bold">장소 추가</h2>
@@ -61,17 +61,17 @@ export default function CreateActivityLocationModal() {
             error={errors.name}
           />
           <FormErrorMessages errors={errors} fields={['name']} />
-          <div className="mt-11 flex w-full justify-between">
+          <div className="flex justify-between w-full mt-11">
             <button
               type="button"
               onClick={handleModalClose}
-              className="rounded-md bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-400"
+              className="px-4 py-2 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400"
             >
               취소
             </button>
             <button
               type="submit"
-              className="rounded-md bg-blue-500 px-4 py-2 text-white hover:bg-blue-600"
+              className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
             >
               추가
             </button>

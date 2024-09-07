@@ -9,6 +9,7 @@ import { CreateActivityAPI } from '../../../libs/api/admin.activities';
 async function createActivity(data: ActivityCreationRequestDto): Promise<void> {
   await CreateActivityAPI(data);
 }
+
 function handleCreateActivityError() {
   alert(errorMessages.UNKNOWN_ERROR);
 }
