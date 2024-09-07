@@ -36,15 +36,19 @@ export const CreateActivityLocationAPI = async (
 };
 
 export const UpdateActivityLocationAPI = async (
-  locationUpdateData: ActivityLocationListResponseDto,
+  locationId: string,
+  name: string,
 ) => {
+  console.log(locationId, name);
   await instance({
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       Authorization: accessToken,
     },
-    url: url + `/${locationUpdateData.id}`,
-    data: locationUpdateData.name,
+    url: url + `/${locationId}`,
+    data: {
+      name: name,
+    },
   });
 };
 

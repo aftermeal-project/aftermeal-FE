@@ -3,7 +3,6 @@ import { BASE_URL } from '../../constants';
 import {
   ActivityLocationCreationRequestDto,
   ActivityLocationListResponseDto,
-  ActivityLocationUpdateRequestDto,
 } from '../../types';
 import { createRandomActivityLocation } from '../utils/activity-locations.utils';
 
@@ -24,7 +23,6 @@ export const adminActivityLocationsHandlers = [
   /**
    * 활동 장소 생성 API
    */
-
   http.post<{}, ActivityLocationCreationRequestDto>(
     url,
     async ({ request }) => {
@@ -46,9 +44,9 @@ export const adminActivityLocationsHandlers = [
   /**
    * 활동 장소 수정 API
    */
-  http.put<{ locationId: string }, ActivityLocationUpdateRequestDto, {}>(
+  http.patch<{ locationId: string }, string, {}>(
     url + '/:locationId',
-    async ({ request }) => {
+    async ({ request, params }) => {
       const data = await request.json();
 
       if (!data) {

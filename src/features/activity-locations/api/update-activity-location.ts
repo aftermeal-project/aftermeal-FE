@@ -3,20 +3,21 @@ import { ActivityLocationListResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { UpdateActivityLocationAPI } from '../../../libs/api/admin.activity-locations';
 
-async function UpdateActivityLocation(
+async function updateActivityLocation(
   data: ActivityLocationListResponseDto,
 ): Promise<void> {
-  await UpdateActivityLocationAPI(data);
+  await UpdateActivityLocationAPI(String(data.id), data.name);
 }
+
 function handleUpdateActivityLocationError(_error: Error) {
   alert(errorMessages.UNKNOWN_ERROR);
 }
 
-export default function useUpdateActivty() {
+export default function useUpdateActivityLocation() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<void, Error, ActivityLocationListResponseDto>({
-    mutationFn: UpdateActivityLocation,
+    mutationFn: updateActivityLocation,
     onMutate: async (
       updateActivityLocation: ActivityLocationListResponseDto,
     ) => {
@@ -29,13 +30,15 @@ export default function useUpdateActivty() {
       >(['activity-locations', updateActivityLocation.id]);
 
       queryClient.setQueryData(
-        ['activities', updateActivityLocation.id],
+        ['activity-locations', updateActivityLocation.id],
         updateActivityLocation,
       );
 
       return { previousActivityLocation, updateActivityLocation };
     },
     onError: (_error, _variables, context: any) => {
+      console.log(_error);
+
       queryClient.setQueryData(
         ['activity-locations', context.updateActivityLocation.id],
         context.previousActivityLocation,
@@ -44,7 +47,7 @@ export default function useUpdateActivty() {
     },
     onSettled: (_data, _error, variables, _context) => {
       queryClient.invalidateQueries({
-        queryKey: ['activity-locations', variables.id],
+        queryKey: ['activity-locations'],
       });
     },
   });
