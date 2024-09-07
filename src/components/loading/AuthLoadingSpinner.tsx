@@ -1,14 +1,11 @@
 import { useEffect, useState } from 'react';
 
-interface AuthLoadingSpinnerProps {
+interface LoadingSpinnerProps {
   loading: boolean;
   text: string;
 }
 
-export default function AuthLoadingSpinner({
-  loading,
-  text,
-}: AuthLoadingSpinnerProps) {
+export default function LoadingSpinner({ loading, text }: LoadingSpinnerProps) {
   const [loadingText, setLoadingText] = useState<string>(text);
 
   useEffect(() => {

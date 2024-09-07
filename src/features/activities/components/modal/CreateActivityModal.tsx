@@ -1,7 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
 import { ModalAtomFamily } from '../../../../atoms';
-import { FormErrorMessages, Input, ModalLayout } from '../../../../components';
+import {
+  Button,
+  FormErrorMessages,
+  Input,
+  ModalLayout,
+} from '../../../../components';
 import {
   AtomKeys,
   createActivityValidationRules,
@@ -123,19 +128,14 @@ export default function CreateActivityModal() {
             ]}
           />
           <div className="flex justify-between w-full mt-11">
-            <button
+            <Button
               type="button"
               onClick={handleModalClose}
-              className="px-4 py-2 text-gray-700 bg-gray-300 rounded-md hover:bg-gray-400"
+              variant="secondary"
             >
               취소
-            </button>
-            <button
-              type="submit"
-              className="px-4 py-2 text-white bg-blue-500 rounded-md hover:bg-blue-600"
-            >
-              추가
-            </button>
+            </Button>
+            <Button type="submit">추가</Button>
           </div>
         </form>
       </div>

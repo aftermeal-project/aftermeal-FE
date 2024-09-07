@@ -10,6 +10,7 @@ import { ActiveIdAtomFamily, ModalAtomFamily } from '../../atoms';
 import { AtomKeys } from '../../constants';
 import useDeleteActivity from '../../features/activities/api/delete-activity';
 import { ConfirmDeleteModal } from '../../features/modals';
+import { Button } from '../button';
 
 export default function ActivityManagementTab() {
   const resetActivityId = useResetRecoilState(
@@ -46,12 +47,14 @@ export default function ActivityManagementTab() {
       <div className="h-full overflow-hidden">
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">활동 관리</h1>
-          <button
-            className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white"
+          <Button
+            type="button"
             onClick={handleCreateActivity}
+            variant="primary"
+            size="medium"
           >
             활동 추가
-          </button>
+          </Button>
         </div>
         <div className="overflow-x-auto">
           <Suspense fallback={<ActivityListSkeleton type="Table" />}>

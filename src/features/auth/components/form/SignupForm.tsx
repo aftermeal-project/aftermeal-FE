@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import {
   AuthUserTypeSelector,
-  AuthButton,
   AuthLoadingSpinner,
+  Button,
 } from '../../../../components';
 import {
   validationMessages,
@@ -107,7 +107,15 @@ export default function SignupForm() {
               : ['name', 'email', 'password']
           }
         />
-        <AuthButton text="등록" type="submit" />
+        <Button
+          type="submit"
+          className="py-3"
+          variant="primary"
+          fullWidth
+          disabled={isLoading}
+        >
+          등록
+        </Button>
       </form>
       <AuthLoadingSpinner loading={isLoading} text={'가입 중'} />
     </>

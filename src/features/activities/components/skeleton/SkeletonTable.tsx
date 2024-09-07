@@ -1,3 +1,4 @@
+import { Button } from '@headlessui/react';
 import Skeleton from 'react-loading-skeleton';
 
 export default function SkeletonTable() {
@@ -5,9 +6,7 @@ export default function SkeletonTable() {
     <div className="h-full overflow-hidden">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl font-bold">활동 관리</h1>
-        <button className="rounded-md bg-green-500 px-3 py-[0.4rem] text-white">
-          활동 추가
-        </button>
+        <Button>활동 추가</Button>
       </div>
       <div className="overflow-x-auto">
         <table className="w-full min-w-[1600px] table-auto border-collapse border border-gray-200 shadow-md">

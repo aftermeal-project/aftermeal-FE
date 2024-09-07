@@ -1,4 +1,5 @@
 import { FaEdit, FaTrashAlt, FaSave, FaTimes } from 'react-icons/fa';
+import Button from './Button';
 
 interface ActionButtonsProps {
   isUpdating: boolean;
@@ -20,41 +21,36 @@ export default function ActionButtons({
       <div className="flex items-center gap-x-2">
         {isUpdating ? (
           <>
-            <button
-              type="button"
-              onClick={onSave}
-              className="flex items-center px-3 py-1 text-sm font-semibold text-white bg-green-500 rounded-md shadow gap-x-2 hover:bg-green-600"
-            >
-              <FaSave className="text-white" />
+            <Button type="button" icon={<FaSave />} onClick={onSave}>
               저장
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              icon={<FaTimes />}
               onClick={onCancel}
-              className="flex items-center px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded-md shadow gap-x-2 hover:bg-red-600"
+              variant="danger"
             >
-              <FaTimes className="text-white" />
               취소
-            </button>
+            </Button>
           </>
         ) : (
           <>
-            <button
+            <Button
               type="button"
+              icon={<FaEdit />}
               onClick={onUpdate}
-              className="flex items-center px-3 py-1 text-sm font-semibold text-white bg-yellow-500 rounded-md shadow gap-x-2 hover:bg-yellow-600"
+              variant="yellow"
             >
-              <FaEdit className="text-white" />
               수정
-            </button>
-            <button
+            </Button>
+            <Button
               type="button"
+              icon={<FaTrashAlt />}
               onClick={onDelete}
-              className="flex items-center px-3 py-1 text-sm font-semibold text-white bg-red-500 rounded-md shadow gap-x-2 hover:bg-red-600"
+              variant="danger"
             >
-              <FaTrashAlt className="text-white" />
               삭제
-            </button>
+            </Button>
           </>
         )}
       </div>

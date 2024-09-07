@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ActivityLocationListResponseDto } from '../../../../types';
+import { Button } from '../../../../components';
 
 interface ActivityLocationCardProps {
   location: ActivityLocationListResponseDto;
@@ -23,46 +24,52 @@ export default function ActivityLocationCard({
   return (
     <div className="p-4 transition-shadow border border-gray-200 rounded-lg shadow-md hover:shadow-lg">
       {isEditing ? (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <input
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
-          <div className="flex gap-2">
-            <button
-              onClick={handleSave}
-              className="flex-1 rounded-md bg-blue-500 px-3 py-[6px] text-white transition-colors hover:bg-blue-600"
-            >
-              저장
-            </button>
-            <button
+          <div className="flex justify-between gap-x-8">
+            <Button
+              type="button"
               onClick={() => setIsEditing(false)}
-              className="flex-1 rounded-md bg-gray-500 px-3 py-[6px] text-white transition-colors hover:bg-gray-600"
+              size="small"
+              variant="secondary"
+              fullWidth
             >
               취소
-            </button>
+            </Button>
+            <Button type="button" onClick={handleSave} size="small" fullWidth>
+              저장
+            </Button>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-3">
           <h3 className="text-lg font-semibold text-gray-700">
             {location.name}
           </h3>
-          <div className="flex gap-2">
-            <button
+          <div className="flex justify-between gap-x-8">
+            <Button
+              type="button"
               onClick={() => setIsEditing(true)}
-              className="flex-1 rounded-md bg-green-500 px-3 py-[6px] text-white transition-colors hover:bg-green-600"
+              variant="yellow"
+              size="small"
+              fullWidth
             >
               수정
-            </button>
-            <button
+            </Button>
+            <Button
+              type="button"
               onClick={() => onDelete(location.id)}
-              className="flex-1 rounded-md bg-red-500 px-3 py-[6px] text-white transition-colors hover:bg-red-600"
+              variant="danger"
+              size="small"
+              fullWidth
             >
               삭제
-            </button>
+            </Button>
           </div>
         </div>
       )}

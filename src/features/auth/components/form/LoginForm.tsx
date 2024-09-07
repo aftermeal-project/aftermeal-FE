@@ -1,9 +1,13 @@
 import { useForm } from 'react-hook-form';
 import { useNavigate, Link } from 'react-router-dom';
 import { loginValidationRules } from '../../../../constants';
-import { AuthButton, AuthLoadingSpinner } from '../../../../components/';
 import useLogin from '../../api/login';
-import { FormErrorMessages, Input } from '../../../../components';
+import {
+  FormErrorMessages,
+  Input,
+  AuthLoadingSpinner,
+  Button,
+} from '../../../../components';
 import { LoginRequestDto } from '../../../../types';
 
 export default function LoginForm() {
@@ -46,7 +50,15 @@ export default function LoginForm() {
           srOnlyClass="sr-only"
         />
         <FormErrorMessages errors={errors} fields={['email', 'password']} />
-        <AuthButton text={'로그인'} type="submit" disabled={isLoading} />
+        <Button
+          type="submit"
+          className="py-3"
+          variant="primary"
+          fullWidth
+          disabled={isLoading}
+        >
+          로그인
+        </Button>
         <div className="mt-5">
           <Link
             to="/signup"
