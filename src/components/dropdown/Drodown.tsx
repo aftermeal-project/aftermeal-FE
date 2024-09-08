@@ -1,15 +1,12 @@
 import { Menu, MenuButton, MenuItems } from '@headlessui/react';
 import { FaEllipsisV } from 'react-icons/fa';
 
-interface UserItemDropDownProps {
+interface DropDownProps {
   onUpdate: () => void;
   onDelete: () => void;
 }
 
-export default function UserItemDropDown({
-  onUpdate,
-  onDelete,
-}: UserItemDropDownProps) {
+export default function Dropdown({ onUpdate, onDelete }: DropDownProps) {
   return (
     <Menu as="div" className="relative">
       <MenuButton className="inline-flex items-center p-2 text-gray-500 hover:text-gray-700">
