@@ -40,9 +40,9 @@ export default function useUpdateActivty() {
       );
       handleUpdateActivityError(_error);
     },
-    onSettled: (_data, _error, variables, _context) => {
+    onSettled: (_data, _error, _variables, _context) => {
       queryClient.invalidateQueries({
-        queryKey: ['activities', variables.id],
+        queryKey: ['activities'],
       });
     },
   });
