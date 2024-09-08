@@ -1,5 +1,10 @@
+import { useRecoilValue } from 'recoil';
 import { ActivityResponseDto } from '../../../../types';
-import { TableHeader, TableBody } from '.';
+import TableBody from './TableBody';
+import TableHeader from './TableHeader';
+import { ModalAtomFamily } from '../../../../atoms';
+import { AtomKeys } from '../../../../constants';
+import { UpdateActivityModal } from '../modal';
 
 interface ActivityListTableProps {
   activities: ActivityResponseDto[];
@@ -8,10 +13,17 @@ interface ActivityListTableProps {
 export default function ActivityListTable({
   activities,
 }: ActivityListTableProps) {
+  const updateActivityModalOpen = useRecoilValue(
+    ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
+  );
+
   return (
-    <table className="w-full min-w-[1600px] table-auto border-collapse border border-gray-200 shadow-md">
-      <TableHeader />
-      <TableBody activities={activities} />
-    </table>
+    <>
+      {updateActivityModalOpen && <UpdateActivityModal />}
+      <table className="w-full min-w-[1400px] overflow-hidden rounded-md bg-white shadow-md">
+        <TableHeader />
+        <TableBody activities={activities} />
+      </table>
+    </>
   );
 }

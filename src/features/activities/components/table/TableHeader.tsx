@@ -1,29 +1,26 @@
 import {
-  FaUsers,
   FaMapMarkerAlt,
-  FaCog,
-  FaCalendar,
-  FaCalendarDay,
-  FaCheckCircle,
+  FaUserFriends,
+  FaChartBar,
+  FaCalendarAlt,
   FaClock,
-  FaSocks,
+  FaTags,
 } from 'react-icons/fa';
-import HeaderCell from '../cell/HeaderCell';
+import { HeaderCell } from '../';
 
 export default function TableHeader() {
   return (
     <thead>
-      <tr className="w-fit bg-gray-100 text-sm">
-        <HeaderCell icon={FaSocks} text="활동명" />
-        <HeaderCell icon={FaMapMarkerAlt} text="장소" />
-        <HeaderCell icon={FaUsers} text="참여 현황" />
-        <HeaderCell icon={FaUsers} text="최대 참가자" />
-        <HeaderCell icon={FaCheckCircle} text="진행 상태" />
-        <HeaderCell icon={FaCalendar} text="세션 유형" />
-        <HeaderCell icon={FaCalendarDay} text="일정" />
-        <HeaderCell icon={FaClock} text="신청 시작" />
-        <HeaderCell icon={FaClock} text="신청 마감" />
-        <HeaderCell icon={FaCog} text="관리" />
+      <tr className="border-b border-gray-200">
+        <HeaderCell text="일정일" icon={FaTags} />
+        <HeaderCell text="활동명" icon={FaMapMarkerAlt} />
+        <HeaderCell text="장소" icon={FaUserFriends} />
+        <HeaderCell text="활동 유형" icon={FaChartBar} />
+        <HeaderCell text="진행 상태" icon={FaTags} />
+        <HeaderCell text="신청 시작" icon={FaCalendarAlt} />
+        <HeaderCell text="신청 마감" icon={FaClock} />
+        <HeaderCell text="참여 현황" icon={FaClock} />
+        <HeaderCell text="관리" />
       </tr>
     </thead>
   );

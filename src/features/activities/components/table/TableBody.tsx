@@ -3,9 +3,9 @@ import { useRecoilState, useResetRecoilState, useSetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys, validationMessages } from '../../../../constants';
 import { ActivityResponseDto, Option } from '../../../../types';
-import BodyCell from '../cell/BodyCell';
+import BodyCell from './BodyCell';
 import { statusOptions, typeOptions } from '../../constants/options';
-import { ActionButtons } from '../../../../components';
+import { ActionButtons, Dropdown } from '../../../../components';
 import useUpdateActivity from '../../api/update-activity';
 import { formatTime } from '../../../../utils';
 import moment from 'moment';
@@ -58,36 +58,18 @@ export default function TableBody({ activities }: TableBodyProps) {
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
   );
 
-  const cells: {
-    title: keyof ActivityResponseDto;
-    type: string;
-    options?: Option[];
-    isUpdating?: boolean;
-    setValue?: UseFormSetValue<ActivityResponseDto>;
-  }[] = [
-    { title: 'title', type: 'text' },
-    { title: 'location', type: 'select' },
-    {
-      title: 'currentParticipants',
-      type: 'number',
-      isUpdating: false,
-    },
-    { title: 'maxParticipants', type: 'number' },
-    { title: 'status', type: 'select', options: statusOptions },
-    { title: 'type', type: 'select', options: typeOptions },
-    { title: 'scheduledDate', type: 'date' },
-    { title: 'applicationStartDate', type: 'time', setValue },
-    { title: 'applicationEndDate', type: 'time', setValue },
-  ];
+  const activityModalOpen = useSetRecoilState(
+    ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
+  );
 
-  const handleEdit = (activityId: number) => {
-    setManageMode('update');
+  const handleUpdate = (activityId: number) => {
     setActiveId(activityId);
     const selectedActivity = activities.find(
       activity => activity.id === activityId,
     );
     if (selectedActivity) {
       reset(selectedActivity);
+      activityModalOpen(true);
     }
   };
 
@@ -117,38 +99,65 @@ export default function TableBody({ activities }: TableBodyProps) {
     }
   };
 
-  const handleCancel = () => {
-    resetActiveId();
-    reset();
+  const calculatePercentage = (part: number, whole: number): string => {
+    return '(' + ((part / whole) * 100).toFixed(2) + '%)';
   };
 
   return (
     <tbody>
       {activities.map(activity => (
-        <tr key={activity.id} className="text-sm font-bold">
-          {cells.map(cell => (
+        <tr
+          key={activity.id}
+          className="border-b border-gray-200 hover:bg-gray-100"
+        >
+          <td className="px-4 py-2">
+            <BodyCell title="scheduledDate" value={activity.scheduledDate} />
+          </td>
+          <td className="px-4 py-2">
+            <BodyCell title="title" value={activity.title} />
+          </td>
+          <td className="px-4 py-2">
+            <BodyCell title="location" value={activity.location} />
+          </td>
+          <td className="px-4 py-2">
+            <BodyCell title="type" value={activity.type} />
+          </td>
+          <td className="px-4 py-2">
+            <BodyCell title="status" value={activity.status} />
+          </td>
+          <td className="px-4 py-2">
             <BodyCell
-              key={cell.title}
-              title={cell.title}
-              type={cell.type}
-              value={activity[cell.title]}
-              isUpdating={
-                cell.isUpdating !== false &&
-                manageMode === 'update' &&
-                activeId === activity.id
-              }
-              register={register}
-              options={cell.options}
-              setValue={cell.setValue}
+              title="applicationStartDate"
+              value={activity.applicationStartDate}
             />
-          ))}
-          <ActionButtons
-            isUpdating={manageMode === 'update' && activeId === activity.id}
-            onSave={handleSubmit(handleSubmitTable)}
-            onUpdate={() => handleEdit(activity.id)}
-            onDelete={() => handleDelete(activity.id)}
-            onCancel={handleCancel}
-          />
+          </td>
+          <td className="px-4 py-2">
+            <BodyCell
+              title="applicationEndDate"
+              value={activity.applicationEndDate}
+            />
+          </td>
+          <td className="px-4 py-2">
+            <BodyCell
+              title="maxParticipants"
+              value={
+                activity.currentParticipants +
+                '/' +
+                activity.maxParticipants +
+                '명 ' +
+                calculatePercentage(
+                  activity.currentParticipants,
+                  activity.maxParticipants,
+                )
+              }
+            />
+          </td>
+          <td className="px-4 py-2">
+            <Dropdown
+              onUpdate={() => handleUpdate(activity.id)}
+              onDelete={() => handleDelete(activity.id)}
+            />
+          </td>
         </tr>
       ))}
     </tbody>
