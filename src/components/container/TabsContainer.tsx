@@ -6,7 +6,7 @@ interface TabsContainerProps {
 
 export default function TabsContainer({ children }: TabsContainerProps) {
   return (
-    <main className="flex-1 p-6 ml-12 overflow-hidden bg-white">
+    <main className="flex-1 p-6 overflow-hidden bg-white ml-14">
       {children}
     </main>
   );
