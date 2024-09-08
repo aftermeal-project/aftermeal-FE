@@ -33,7 +33,7 @@ export default function AdminPageSidebar({
     <aside
       className={`h-full bg-gray-900 text-white ${
         isSidebarOpen ? 'w-64' : 'w-14'
-      } transition-all duration-300`}
+      } fixed z-[10] transition-all duration-300`}
     >
       <div className="flex items-center justify-between p-4">
         <h1 className={`text-xl font-bold ${!isSidebarOpen && 'hidden'}`}>
@@ -86,7 +86,7 @@ export default function AdminPageSidebar({
           </li>
 
           <li
-            className="mt-8 flex cursor-pointer items-center px-4 py-2 hover:bg-gray-700"
+            className="flex items-center px-4 py-2 mt-8 cursor-pointer hover:bg-gray-700"
             onClick={handleExit}
           >
             <FaBackward size={20} />
