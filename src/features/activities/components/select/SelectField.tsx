@@ -36,15 +36,11 @@ export default function SelectField<T extends FieldValues>({
     trigger?.(title);
   };
 
+  const commonProps = { title, register, onChange: handleChange, ...rest };
+
   return title === 'location' ? (
-    <LocationSelectInput<T> title={title} register={register} {...rest} />
+    <LocationSelectInput<T> {...commonProps} />
   ) : (
-    <SelectInput<T>
-      title={title}
-      options={options}
-      register={register}
-      onChange={handleChange}
-      {...rest}
-    />
+    <SelectInput<T> options={options} {...commonProps} />
   );
 }
