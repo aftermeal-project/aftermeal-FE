@@ -1,5 +1,5 @@
 import { UserListResponseDto } from '../../../../types';
-import { UserItemDropDown } from '../dropdown';
+import { Dropdown } from '../../../../components';
 
 interface UserProps {
   user: UserListResponseDto;
@@ -35,7 +35,7 @@ export default function User({ user, onUpdate, onDelete }: UserProps) {
           {user.status === 'ACTIVATE' ? '활성화' : '비활성화'}
         </span>
       </div>
-      <UserItemDropDown onUpdate={onUpdate} onDelete={onDelete} />
+      <Dropdown onUpdate={onUpdate} onDelete={onDelete} />
     </li>
   );
 }
