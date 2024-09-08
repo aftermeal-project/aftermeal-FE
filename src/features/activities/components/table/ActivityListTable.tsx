@@ -5,6 +5,7 @@ import TableHeader from './TableHeader';
 import { ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import { UpdateActivityModal } from '../modal';
+import { useForm } from 'react-hook-form';
 
 interface ActivityListTableProps {
   activities: ActivityResponseDto[];
@@ -13,16 +14,17 @@ interface ActivityListTableProps {
 export default function ActivityListTable({
   activities,
 }: ActivityListTableProps) {
+  const formMethods = useForm<ActivityResponseDto>();
   const updateActivityModalOpen = useRecoilValue(
     ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
   );
 
   return (
     <>
-      {updateActivityModalOpen && <UpdateActivityModal />}
+      {updateActivityModalOpen && <UpdateActivityModal useForm={formMethods} />}
       <table className="w-full min-w-[1400px] overflow-hidden rounded-md bg-white shadow-md">
         <TableHeader />
-        <TableBody activities={activities} />
+        <TableBody useForm={formMethods} activities={activities} />
       </table>
     </>
   );
