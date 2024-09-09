@@ -1,3 +1,3 @@
 export * from './fetcher';
-export * from './page';
+export * from './details';
 export * from './skeleton';
