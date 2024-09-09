@@ -37,6 +37,12 @@ export interface ActivityDetailResponseDto {
   title: string;
   /**
    *
+   * @type {string}
+   * @memberof ActivityResponseDto
+   */
+  location: string;
+  /**
+   *
    * @type {number}
    * @memberof ActivityDetailResponseDto
    */
