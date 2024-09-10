@@ -5,6 +5,7 @@ import {
   ActivityDetailResponseDto,
 } from '../../types';
 import { getRandomElementFromArray } from './global.utils';
+import moment from 'moment';
 
 const sports = ['축구', '농구', '배드민턴', '배구', '골프', '탁구'];
 
@@ -39,6 +40,10 @@ function getStartAndEndTimes(type: ActivityResponseDtoType) {
   };
 }
 
+function formatDate(date: string) {
+  return moment(date).format('YYYY-MM-DD');
+}
+
 export function createRandomActivityDetails(): ActivityDetailResponseDto {
   const type = getRandomElementFromArray(
     Object.values(ActivityResponseDtoType),
@@ -46,7 +51,6 @@ export function createRandomActivityDetails(): ActivityDetailResponseDto {
   const { startTime, endTime } = getStartAndEndTimes(type);
   const now = new Date();
 
-  // Set the time for applicationStartDate and applicationEndDate
   const startDate = new Date(now);
   const endDate = new Date(now);
 
@@ -63,7 +67,7 @@ export function createRandomActivityDetails(): ActivityDetailResponseDto {
     maxParticipants: faker.number.int({ min: 2, max: 20 }),
     status: getRandomElementFromArray(Object.values(ActivityResponseDtoStatus)),
     type: type,
-    scheduledDate: String(now),
+    scheduledDate: formatDate(moment(faker.date.soon()).toISOString()),
     applicationStartDate: String(startDate),
     applicationEndDate: String(endDate),
     participants: Array.from({ length: 5 }, () => getParticipants()),
