@@ -6,6 +6,7 @@ import { ActivityResponseDto } from '../../../../types';
 import BodyCell from './BodyCell';
 import { Dropdown } from '../../../../components';
 import { useUpdateActivityModal } from '../../../../hooks/useUpdateActivityModal';
+import { useNavigate } from 'react-router-dom';
 
 interface TableBodyProps {
   useForm: UseFormReturn<ActivityResponseDto>;
@@ -13,6 +14,7 @@ interface TableBodyProps {
 }
 
 export default function TableBody({ useForm, activities }: TableBodyProps) {
+  const navigate = useNavigate();
   const { activityUpdate } = useUpdateActivityModal(useForm);
 
   const setActiveId = useSetRecoilState(
@@ -32,12 +34,17 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
     deleteModalOpen(true);
   };
 
+  const handleActivityClick = (activityId: number) => {
+    navigate('/activity/' + String(activityId));
+  };
+
   return (
     <tbody>
       {activities.map(activity => (
         <tr
           key={activity.id}
-          className="border-b border-gray-200 hover:bg-gray-100"
+          onClick={() => handleActivityClick(activity.id)}
+          className="border-b border-gray-200 cursor-pointer hover:bg-gray-100"
         >
           <td className="px-4 py-2">
             <BodyCell title="scheduledDate" value={activity.scheduledDate} />
