@@ -19,7 +19,7 @@ export default function AdminPage() {
   const user = useRecoilValue(UserAtom);
 
   useEffect(() => {
-    if (user.roles.includes('ADMIN')) {
+    if (!user.roles.includes('ADMIN')) {
       setRoleError(true);
     }
   }, [user]);
