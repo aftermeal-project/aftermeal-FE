@@ -1,10 +1,8 @@
 import { ButtonHTMLAttributes } from 'react';
 import { ActivityResponseDto } from '../../../../types';
+import { useNavigate } from 'react-router-dom';
 
-interface BaseActivityCardProps extends ActivityResponseDto {
-  onParticipate: (id: number) => void;
-  onCancel: (id: number) => void;
-}
+interface BaseActivityCardProps extends ActivityResponseDto {}
 type ActivityCardProps = Omit<
   ButtonHTMLAttributes<HTMLButtonElement>,
   'id' | 'type'
@@ -21,34 +19,29 @@ export default function ActivityCard({
   scheduledDate,
   applicationStartDate,
   applicationEndDate,
-  onParticipate,
-  onCancel,
   ...buttonProps
 }: ActivityCardProps) {
+  const navigate = useNavigate();
   const percentFull = (currentParticipants / maxParticipants) * 100;
   const isFull = percentFull >= 100;
-  const isParticipated = currentParticipants > 0;
 
   const handleJoin = () => {
     if (isFull) {
       return;
     }
 
-    if (isParticipated) {
-      onCancel(id);
-    } else {
-      onParticipate(id);
-    }
+    navigate('/activity/' + id);
   };
 
   return (
     <div
-      className={`overflow-hidden rounded-lg border bg-white shadow-md transition-shadow duration-300 ${
+      onClick={handleJoin}
+      className={`cursor-pointer overflow-hidden rounded-lg border bg-white shadow-md transition-shadow duration-300 ${
         isFull ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-white'
-      } `}
+      } hover:border-gray-400 hover:shadow-lg`}
     >
       <div className="p-4">
-        <h3 className="mb-5 text-lg font-semibold text-gray-900">{title}</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-7">{title}</h3>
         <div className="flex items-center justify-between mb-2 text-xs text-gray-600">
           <span>
             참여 현황: {currentParticipants} / {maxParticipants}
@@ -68,7 +61,7 @@ export default function ActivityCard({
             ></path>
           </svg>
         </div>
-        <div className="relative w-full h-2 mb-3 bg-gray-200 rounded-full">
+        <div className="relative w-full h-2 mb-2 bg-gray-200 rounded-full">
           <div
             className={`absolute left-0 top-0 h-2 rounded-full ${
               isFull ? 'bg-red-500' : 'bg-blue-500'
@@ -78,20 +71,6 @@ export default function ActivityCard({
             }}
           ></div>
         </div>
-        <button
-          className={`w-full rounded-lg border py-2 text-sm font-medium transition-colors duration-300 focus:outline-none focus:ring-0 active:outline-none active:ring-0 ${
-            isFull
-              ? 'cursor-not-allowed border-gray-200 bg-gray-100 text-gray-400'
-              : isParticipated
-                ? 'border-red-500 bg-white text-red-700 hover:bg-red-50'
-                : 'border-blue-500 bg-white text-blue-700 hover:bg-blue-50'
-          }`}
-          disabled={isFull}
-          onClick={handleJoin}
-          {...buttonProps}
-        >
-          {isFull ? '모집 종료' : isParticipated ? '신청 취소' : '참가하기'}
-        </button>
       </div>
     </div>
   );
