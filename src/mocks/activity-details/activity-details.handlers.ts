@@ -1,4 +1,4 @@
-import { delay, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '../../constants';
 import { ActivityDetailResponseDto } from '../../types';
 import { createRandomActivityDetails } from '../utils/activity-details.utils';
@@ -14,7 +14,6 @@ export const activityDetailsHandler = [
     async () => {
       const data = createRandomActivityDetails();
 
-      await delay(2000);
       return HttpResponse.json(data);
     },
   ),
