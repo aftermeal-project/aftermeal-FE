@@ -1,4 +1,7 @@
-import { ActivityDetailResponseDto } from '../../../../types';
+import {
+  ActivityDetailResponseDto,
+  ActivityResponseDto,
+} from '../../../../types';
 import {
   FaUsers,
   FaMapMarkerAlt,
@@ -14,6 +17,15 @@ import { formatTime } from '../../../../utils';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useRef, useState, useEffect } from 'react';
+import { useRecoilValue, useRecoilState } from 'recoil';
+import { ModalAtomFamily } from '../../../../atoms';
+import { AtomKeys } from '../../../../constants';
+import useDeleteActivity from '../../../activities/api/delete-activity';
+import { ConfirmDeleteModal } from '../../../modals';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { useUpdateActivityModal } from '../../../../hooks/useUpdateActivityModal';
+import { UpdateActivityModal } from '../../../activities';
 
 interface ActivityDetailProps {
   activity: ActivityDetailResponseDto;
@@ -36,38 +48,68 @@ function isApplicationAllowed(
   return isStatusValid && hasSpaceAvailable && isWithinApplicationPeriod;
 }
 
+function getStatusLabel(status: string) {
+  const statusOption = statusOptions.find(option => option.value === status);
+  return statusOption ? statusOption.label : status;
+}
+
+function getTypeLabel(type: string) {
+  const typeOption = typeOptions.find(option => option.value === type);
+  return typeOption ? typeOption.label : type;
+}
+
+function getFormattedTitle(date: string, type: string, title: string) {
+  const formattedDate = moment(date).format('YYYY년 MM월 DD일 dddd');
+  const typeLabel = getTypeLabel(type);
+  return `${formattedDate} ${typeLabel} ${title}`;
+}
+
+function getFormattedApplicationPeriod(startTime: string, endTime: string) {
+  return (
+    formatTime({ type: 'readable', time: startTime }) +
+    ' ~ ' +
+    formatTime({ type: 'readable', time: endTime })
+  );
+}
+
 export default function ActivityDetail({
   activity,
   isAdmin,
 }: ActivityDetailProps) {
+  const navigate = useNavigate();
+  const params = useParams();
+
+  const formMethods = useForm<ActivityResponseDto>();
+
+  const { activityUpdate } = useUpdateActivityModal(formMethods);
+
   const bottomRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
-  const getStatusLabel = (status: string) => {
-    const statusOption = statusOptions.find(option => option.value === status);
-    return statusOption ? statusOption.label : status;
+  const { deleteActivity } = useDeleteActivity();
+
+  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
+  );
+  const updateModalOpen = useRecoilValue(
+    ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
+  );
+
+  const handleDeleteActivity = () => {
+    setDeleteModalOpen(true);
   };
 
-  const getTypeLabel = (type: string) => {
-    const typeOption = typeOptions.find(option => option.value === type);
-    return typeOption ? typeOption.label : type;
+  const handleOnSetteld = () => {
+    navigate('/');
   };
 
-  const getFormattedTitle = (date: string, type: string, title: string) => {
-    const formattedDate = moment(date).format('YYYY년 MM월 DD일 dddd');
-    const typeLabel = getTypeLabel(type);
-    return `${formattedDate} ${typeLabel} ${title}`;
-  };
-
-  const getFormattedApplicationPeriod = (
-    startTime: string,
-    endTime: string,
-  ) => {
-    return (
-      formatTime({ type: 'readable', time: startTime }) +
-      ' ~ ' +
-      formatTime({ type: 'readable', time: endTime })
-    );
+  const convertToActivityResponseDto = (
+    data: ActivityDetailResponseDto,
+  ): ActivityResponseDto => {
+    return {
+      ...data,
+      currentParticipants: data.participants.length,
+    };
   };
 
   const scrollToBottom = () => {
@@ -95,6 +137,16 @@ export default function ActivityDetail({
 
   return (
     <div className="mx-auto grid w-full max-w-screen-xl grid-cols-1 gap-x-4 gap-y-6 rounded-lg px-4 py-8 max-[1000px]:gap-x-0 max-[1000px]:gap-y-6 min-[1000px]:grid-cols-3">
+      {deleteModalOpen && (
+        <ConfirmDeleteModal
+          message="정말 해당 활동을 삭제하시겠습니까?"
+          modalKey={AtomKeys.DELETE_ACTIVITY_MODAL}
+          request={deleteActivity}
+          params={String(params?.activityId)}
+          onSettled={handleOnSetteld}
+        />
+      )}
+      {updateModalOpen && <UpdateActivityModal useForm={formMethods} />}
       <div className="space-y-4 md:col-span-2">
         <div className="p-6 bg-white rounded-lg shadow-md">
           <div className="flex items-center justify-between mb-10">
@@ -192,7 +244,12 @@ export default function ActivityDetail({
             ) ? (
               <Button fullWidth>신청하기</Button>
             ) : (
-              <Button variant="secondary" fullWidth>
+              <Button
+                variant="secondary"
+                fullWidth
+                disabled={true}
+                className="cursor-not-allowed"
+              >
                 신청마감
               </Button>
             )}
@@ -200,10 +257,16 @@ export default function ActivityDetail({
 
           {isAdmin && (
             <div className="flex items-center justify-center mt-4 gap-x-4">
-              <Button variant="yellow" fullWidth>
+              <Button
+                onClick={() =>
+                  activityUpdate(convertToActivityResponseDto(activity))
+                }
+                variant="yellow"
+                fullWidth
+              >
                 수정하기
               </Button>
-              <Button variant="danger" fullWidth>
+              <Button onClick={handleDeleteActivity} variant="danger" fullWidth>
                 삭제하기
               </Button>
             </div>
