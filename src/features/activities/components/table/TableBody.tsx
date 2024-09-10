@@ -5,7 +5,7 @@ import { AtomKeys } from '../../../../constants';
 import { ActivityResponseDto } from '../../../../types';
 import BodyCell from './BodyCell';
 import { Dropdown } from '../../../../components';
-import { formatTime } from '../../../../utils';
+import { useUpdateActivityModal } from '../../../../hooks/useUpdateActivityModal';
 
 interface TableBodyProps {
   useForm: UseFormReturn<ActivityResponseDto>;
@@ -13,7 +13,7 @@ interface TableBodyProps {
 }
 
 export default function TableBody({ useForm, activities }: TableBodyProps) {
-  const { reset } = useForm;
+  const { activityUpdate } = useUpdateActivityModal(useForm);
 
   const setActiveId = useSetRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
@@ -23,40 +23,8 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
   );
 
-  const updateModalOpen = useSetRecoilState(
-    ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
-  );
-
   const calculatePercentage = (part: number, whole: number): string => {
     return '(' + ((part / whole) * 100).toFixed(2) + '%)';
-  };
-
-  const settingUpdateActivityModalFormValue = (activityId: number) => {
-    const selectedActivity = activities.find(
-      activity => activity.id === activityId,
-    );
-
-    const formatStartDate = formatTime({
-      type: 'format',
-      time: String(selectedActivity?.applicationStartDate),
-    });
-
-    const formatEndDate = formatTime({
-      type: 'format',
-      time: String(selectedActivity?.applicationEndDate),
-    });
-
-    reset({
-      ...selectedActivity,
-      applicationStartDate: formatStartDate,
-      applicationEndDate: formatEndDate,
-    });
-  };
-
-  const handleUpdate = (activityId: number) => {
-    settingUpdateActivityModalFormValue(activityId);
-    setActiveId(activityId);
-    updateModalOpen(true);
   };
 
   const handleDelete = (activityId: number) => {
@@ -115,7 +83,7 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
           </td>
           <td className="px-4 py-2">
             <Dropdown
-              onUpdate={() => handleUpdate(activity.id)}
+              onUpdate={() => activityUpdate(activity)}
               onDelete={() => handleDelete(activity.id)}
             />
           </td>
