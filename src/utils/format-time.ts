@@ -21,9 +21,10 @@ function restoreToOriginalFormat(time: string): string {
 function formatDateToReadableFormat(time: string): string {
   const date = new Date(time);
   const isoDate = moment(date).toISOString();
-  const hour = moment(isoDate).format('A');
 
-  return `${hour === 'PM' ? '오후' : '오전'} ${moment(isoDate).format('hh[시] mm[분]')}`;
+  const formattedTime = moment(isoDate).format('A HH[시] mm[분]');
+
+  return formattedTime.replace('AM', '오전').replace('PM', '오후');
 }
 
 function formatDateToHHmm(time: string): string {
