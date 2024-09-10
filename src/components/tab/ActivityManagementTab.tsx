@@ -28,9 +28,9 @@ export default function ActivityManagementTab() {
     ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_MODAL),
   );
 
-  function handleCreateActivity() {
+  const handleCreateActivity = () => {
     setCreateModalOpen(true);
-  }
+  };
 
   return (
     <section>

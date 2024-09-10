@@ -23,7 +23,7 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
   );
 
-  const activityModalOpen = useSetRecoilState(
+  const updateModalOpen = useSetRecoilState(
     ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
   );
 
@@ -56,7 +56,7 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
   const handleUpdate = (activityId: number) => {
     settingUpdateActivityModalFormValue(activityId);
     setActiveId(activityId);
-    activityModalOpen(true);
+    updateModalOpen(true);
   };
 
   const handleDelete = (activityId: number) => {
