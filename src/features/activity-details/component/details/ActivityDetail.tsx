@@ -1,13 +1,5 @@
-import {
-  ActivityDetailResponseDto,
-  ActivityResponseDto,
-} from '../../../../types';
-import {
-  FaUsers,
-  FaMapMarkerAlt,
-  FaClipboardList,
-  FaArrowDown,
-} from 'react-icons/fa';
+import { ActivityDetailResponseDto } from '../../../../types';
+import { FaUsers, FaMapMarkerAlt, FaClipboardList } from 'react-icons/fa';
 import { Button } from '../../../../components';
 import {
   statusOptions,
@@ -16,20 +8,10 @@ import {
 import { formatTime } from '../../../../utils';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { useRef, useState, useEffect } from 'react';
-import { useRecoilValue, useRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../../atoms';
-import { AtomKeys } from '../../../../constants';
-import useDeleteActivity from '../../../activities/api/delete-activity';
-import { ConfirmDeleteModal } from '../../../modals';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { useUpdateActivityModal } from '../../../../hooks/useUpdateActivityModal';
-import { UpdateActivityModal } from '../../../activities';
+import { useState, useEffect } from 'react';
 
 interface ActivityDetailProps {
   activity: ActivityDetailResponseDto;
-  isAdmin: boolean;
 }
 
 function isApplicationAllowed(
@@ -72,81 +54,24 @@ function getFormattedApplicationPeriod(startTime: string, endTime: string) {
   );
 }
 
-export default function ActivityDetail({
-  activity,
-  isAdmin,
-}: ActivityDetailProps) {
-  const navigate = useNavigate();
-  const params = useParams();
-
-  const formMethods = useForm<ActivityResponseDto>();
-
-  const { activityUpdate } = useUpdateActivityModal(formMethods);
-
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState<boolean>(false);
-
-  const { deleteActivity } = useDeleteActivity();
-
-  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
-    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
-  );
-  const updateModalOpen = useRecoilValue(
-    ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
-  );
-
-  const handleDeleteActivity = () => {
-    setDeleteModalOpen(true);
-  };
-
-  const handleOnSetteld = () => {
-    navigate('/');
-  };
-
-  const convertToActivityResponseDto = (
-    data: ActivityDetailResponseDto,
-  ): ActivityResponseDto => {
-    return {
-      ...data,
-      currentParticipants: data.participants.length,
-    };
-  };
-
-  const scrollToBottom = () => {
-    bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
-  };
+export default function ActivityDetail({ activity }: ActivityDetailProps) {
+  const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollTop = window.scrollY;
-      const screenWidth = window.innerWidth;
-
-      setIsVisible(screenWidth <= 1000 && scrollTop < 100);
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 1000);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleScroll);
-
-    handleScroll();
+    window.addEventListener('resize', handleResize);
+    handleResize();
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   return (
-    <div className="mx-auto grid w-full max-w-screen-xl grid-cols-1 gap-x-4 gap-y-6 rounded-lg px-4 py-8 max-[1000px]:gap-x-0 max-[1000px]:gap-y-6 min-[1000px]:grid-cols-3">
-      {deleteModalOpen && (
-        <ConfirmDeleteModal
-          message="정말 해당 활동을 삭제하시겠습니까?"
-          modalKey={AtomKeys.DELETE_ACTIVITY_MODAL}
-          request={deleteActivity}
-          params={String(params?.activityId)}
-          onSettled={handleOnSetteld}
-        />
-      )}
-      {updateModalOpen && <UpdateActivityModal useForm={formMethods} />}
+    <div className="mx-auto grid w-full max-w-screen-xl grid-cols-1 rounded-lg max-[1000px]:mb-[5.5rem] min-[1000px]:grid-cols-3 min-[1000px]:gap-x-4 min-[1000px]:px-4 min-[1000px]:py-8">
       <div className="space-y-4 md:col-span-2">
         <div className="p-6 bg-white rounded-lg shadow-md">
           <div className="flex items-center justify-between mb-10">
@@ -171,6 +96,7 @@ export default function ActivityDetail({
               {getStatusLabel(activity.status)}
             </span>
           </div>
+
           <div className="grid grid-cols-1 gap-6 min-[1000px]:grid-cols-2">
             <div className="flex items-center space-x-3">
               <FaMapMarkerAlt className="text-xl text-blue-500" />
@@ -185,12 +111,24 @@ export default function ActivityDetail({
                 {activity.maxParticipants}
               </span>
             </div>
+            {isSmallScreen && (
+              <div className="flex items-center space-x-3">
+                <FaClipboardList className="text-xl text-green-500" />
+                <span className="text-lg font-semibold">
+                  신청 기간:{' '}
+                  {getFormattedApplicationPeriod(
+                    activity.applicationStartDate,
+                    activity.applicationEndDate,
+                  )}
+                </span>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="p-6 bg-white rounded-lg shadow-md">
           <h2 className="mb-4 text-2xl font-semibold">참가자 목록</h2>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 min-[1000px]:grid-cols-2 lg:grid-cols-3">
             {activity.participants.map((participant, index) => (
               <div
                 key={index}
@@ -206,87 +144,81 @@ export default function ActivityDetail({
         </div>
       </div>
 
-      <div
-        className={`w-full rounded-lg bg-white p-6 shadow-md ${
-          isAdmin ? 'h-96 md:h-[25rem]' : 'md:h-[21rem]'
-        }`}
-      >
-        <h2 className="mb-8 text-2xl font-semibold">신청 정보</h2>
-        <div className="flex flex-col">
-          <div>
-            <div className="flex items-center">
-              <FaMapMarkerAlt className="inline-block mr-2 text-red-500" />
-              <span className="text-lg font-semibold">장소</span>
+      {!isSmallScreen && (
+        <div className="w-full rounded-lg bg-white p-6 shadow-md md:h-[21rem]">
+          <h2 className="mb-8 text-2xl font-semibold">신청 정보</h2>
+          <div className="flex flex-col">
+            <div>
+              <div className="flex items-center">
+                <FaMapMarkerAlt className="inline-block mr-2 text-red-500" />
+                <span className="text-lg font-semibold">장소</span>
+              </div>
+              <div className="text-gray-700">{activity.location}</div>
+            </div>
+            <div className="mt-6">
+              <div className="flex items-center">
+                <FaClipboardList className="inline-block mr-2 text-blue-500" />
+                <span className="text-lg font-semibold">신청 기간:</span>
+              </div>
+              <div className="font-semibold text-gray-700">
+                {getFormattedApplicationPeriod(
+                  activity.applicationStartDate,
+                  activity.applicationEndDate,
+                )}
+              </div>
             </div>
 
-            <div className="text-gray-700">{activity.location}</div>
-          </div>
-          <div className="mt-6">
-            <div className="flex items-center">
-              <FaClipboardList className="inline-block mr-2 text-blue-500" />
-              <span className="text-lg font-semibold">신청 기간:</span>
-            </div>
-            <div className="font-semibold text-gray-700">
-              {getFormattedApplicationPeriod(
-                activity.applicationStartDate,
+            <div className="mt-14">
+              {isApplicationAllowed(
+                activity.status,
+                activity.participants.length,
+                activity.maxParticipants,
                 activity.applicationEndDate,
+                activity.applicationStartDate,
+              ) ? (
+                <Button fullWidth>신청하기</Button>
+              ) : (
+                <Button
+                  variant="secondary"
+                  fullWidth
+                  disabled={true}
+                  className="cursor-not-allowed"
+                >
+                  신청마감
+                </Button>
               )}
             </div>
           </div>
+        </div>
+      )}
 
-          <div className="mt-14">
-            {isApplicationAllowed(
-              activity.status,
-              activity.participants.length,
-              activity.maxParticipants,
-              activity.applicationEndDate,
-              activity.applicationStartDate,
-            ) ? (
-              <Button fullWidth>신청하기</Button>
-            ) : (
+      {isSmallScreen && (
+        <div className="fixed bottom-0 left-0 w-full p-4 bg-white shadow-md">
+          {isApplicationAllowed(
+            activity.status,
+            activity.participants.length,
+            activity.maxParticipants,
+            activity.applicationEndDate,
+            activity.applicationStartDate,
+          ) ? (
+            <div className="flex items-center justify-between w-full font-semibold">
+              <p>지금 신청하시면 참여하실 수 있습니다!</p>
+              <Button className="px-8">신청하기</Button>
+            </div>
+          ) : (
+            <div className="flex items-center justify-between w-full font-semibold">
+              <p>신청이 마감되었어요.</p>
               <Button
                 variant="secondary"
-                fullWidth
                 disabled={true}
-                className="cursor-not-allowed"
+                className="px-8 cursor-not-allowed"
               >
                 신청마감
-              </Button>
-            )}
-          </div>
-
-          {isAdmin && (
-            <div className="flex items-center justify-center mt-4 gap-x-4">
-              <Button
-                onClick={() =>
-                  activityUpdate(convertToActivityResponseDto(activity))
-                }
-                variant="yellow"
-                fullWidth
-              >
-                수정하기
-              </Button>
-              <Button onClick={handleDeleteActivity} variant="danger" fullWidth>
-                삭제하기
-              </Button>
+              </Button>{' '}
             </div>
           )}
         </div>
-      </div>
-
-      {isVisible && (
-        <div className="fixed z-50 bottom-4 right-4">
-          <Button
-            variant="primary"
-            onClick={scrollToBottom}
-            className="flex items-center space-x-1 rounded-full"
-          >
-            <FaArrowDown className="text-lg" />
-            <span>신청으로 이동</span>
-          </Button>
-        </div>
       )}
-      <div ref={bottomRef} />
     </div>
   );
 }
