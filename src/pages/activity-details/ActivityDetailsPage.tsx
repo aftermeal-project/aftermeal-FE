@@ -6,7 +6,6 @@ import {
   ActivityDetails,
   ActivityDetailsSkeleton,
 } from '../../features/activity-details/component';
-import { ActivityDetailResponseDto } from '../../types';
 
 export default function ActivityDetailsPage() {
   return (
@@ -17,15 +16,7 @@ export default function ActivityDetailsPage() {
     >
       <Suspense fallback={<ActivityDetailsSkeleton />}>
         <ActivityDetailsFetcher>
-          {({
-            isAdmin,
-            activityDetails,
-          }: {
-            isAdmin: boolean;
-            activityDetails: ActivityDetailResponseDto;
-          }) => (
-            <ActivityDetails isAdmin={isAdmin} activity={activityDetails} />
-          )}
+          {activityDetails => <ActivityDetails activity={activityDetails} />}
         </ActivityDetailsFetcher>
       </Suspense>
     </FetchErrorBoundary>
