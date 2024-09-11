@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom';
 import { Header } from '../header';
 import Path from '../../routes/path';
 import Routing from '../../routes/routing';
+import { Toaster } from 'react-hot-toast';
 
 export default function Layout() {
   const location = useLocation();
@@ -14,6 +15,15 @@ export default function Layout() {
   return (
     <>
       {isNotNormalDomain && <Header />}
+      <Toaster
+        toastOptions={{
+          style: {
+            borderRadius: '10px',
+            background: '#333',
+            color: '#fff',
+          },
+        }}
+      />
       <Routing />
     </>
   );
