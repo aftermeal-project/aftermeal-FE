@@ -16,28 +16,19 @@ export function useUpdateActivityModal(
     ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
   );
 
-  const settingUpdateActivityModalFormValue = (
-    activity: ActivityResponseDto,
-  ) => {
-    const formatStartDate = formatTime({
-      type: 'format',
-      time: String(activity.applicationStartDate),
-    });
+  const formatActivityDate = (time: string) =>
+    formatTime({ type: 'format', time });
 
-    const formatEndDate = formatTime({
-      type: 'format',
-      time: String(activity.applicationEndDate),
-    });
-
+  const setFormValues = (activity: ActivityResponseDto) => {
     reset({
       ...activity,
-      applicationStartDate: formatStartDate,
-      applicationEndDate: formatEndDate,
+      applicationStartDate: formatActivityDate(activity.applicationStartDate),
+      applicationEndDate: formatActivityDate(activity.applicationEndDate),
     });
   };
 
   const handleUpdate = (activity: ActivityResponseDto) => {
-    settingUpdateActivityModalFormValue(activity);
+    setFormValues(activity);
     setActiveId(activity.id);
     updateModalOpen(true);
   };
