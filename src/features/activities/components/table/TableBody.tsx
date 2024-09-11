@@ -89,8 +89,14 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
           </td>
           <td className="px-4 py-2">
             <Dropdown
-              onUpdate={() => handleUpdate(activity)}
-              onDelete={() => handleDelete(activity.id)}
+              onUpdate={e => {
+                e.stopPropagation();
+                handleUpdate(activity);
+              }}
+              onDelete={e => {
+                e.stopPropagation();
+                handleDelete(activity.id);
+              }}
             />
           </td>
         </tr>
