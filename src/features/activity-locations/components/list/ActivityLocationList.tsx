@@ -1,12 +1,11 @@
 import { ActivityLocationListResponseDto } from '../../../../types';
 import { useState } from 'react';
 import { ActivityLocationCard } from '../card';
-import { useRecoilState, useResetRecoilState } from 'recoil';
+import { useSetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
-import useDeleteActivityLocation from '../../api/delete-activity-location';
 import useUpdateActivityLocation from '../../api/update-activity-location';
-import { SearchBar, ConfirmDeleteModal } from '../../../../components';
+import { SearchBar } from '../../../../components';
 
 interface ActivityLocationListProps {
   locations: ActivityLocationListResponseDto[];
@@ -15,27 +14,24 @@ interface ActivityLocationListProps {
 export default function ActivityLocationList({
   locations,
 }: ActivityLocationListProps) {
-  const { deleteActivityLocation } = useDeleteActivityLocation();
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const { updateActivityLocation } = useUpdateActivityLocation();
 
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const [activeLocationId, setActiveLocationId] = useRecoilState(
+  const setActiveLocationId = useSetRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_LOCATION_ID),
   );
-  const resetActiveLocationId = useResetRecoilState(
-    ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_LOCATION_ID),
-  );
-  const [deleteModalOpen, setDeleteModalOpen] = useRecoilState(
+
+  const setDeleteModalOpen = useSetRecoilState(
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_LOCATION_MODAL),
+  );
+
+  const filteredLocations = locations.filter(location =>
+    location.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
   };
-
-  const filteredLocations = locations.filter(location =>
-    location.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
 
   const handleUpdate = (updatedData: ActivityLocationListResponseDto) => {
     updateActivityLocation.mutate(updatedData);
@@ -48,15 +44,6 @@ export default function ActivityLocationList({
 
   return (
     <section>
-      {deleteModalOpen && (
-        <ConfirmDeleteModal
-          message="정말 해당 장소를 삭제하시겠습니까?"
-          modalKey={AtomKeys.DELETE_ACTIVITY_LOCATION_MODAL}
-          request={deleteActivityLocation}
-          params={String(activeLocationId)}
-          onSettled={resetActiveLocationId}
-        />
-      )}
       <SearchBar
         searchValue={searchTerm}
         onSearchChange={handleSearchChange}
