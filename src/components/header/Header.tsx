@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import Token from '../../libs/utils/token';
+import toast from 'react-hot-toast';
 
 export default function Header() {
   const navigate = useNavigate();
@@ -7,7 +8,7 @@ export default function Header() {
 
   const handleLogout = () => {
     token.removeUser();
-    alert('로그아웃 되었습니다.');
+    toast.success('로그아웃 되었습니다');
     navigate('/login');
   };
 

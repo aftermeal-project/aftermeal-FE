@@ -5,6 +5,7 @@ import { UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
 import { SignupAPI } from '../../../libs/api/users';
 import { UserRegistrationRequestDto } from '../../../types';
+import toast from 'react-hot-toast';
 
 interface useSignupProps {
   setError: UseFormSetError<UserRegistrationRequestDto>;
@@ -62,7 +63,8 @@ function handleSignupError({ error, setError }: HandleSignupErrorProps) {
 export default function useSignup({ setError, navigate }: useSignupProps) {
   const mutation = useMutation({
     mutationFn: (data: UserRegistrationRequestDto) => SignupAPI(data),
-    onSuccess: data => {
+    onSuccess: () => {
+      toast.success('가입이 완료 되었습니다');
       navigate('/login');
     },
     onError: (error: any) => {

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { DeleteActivityAPI } from '../../../libs/api/admin.activities';
+import toast from 'react-hot-toast';
 
 async function deleteActivity(activityId: string): Promise<void> {
   await DeleteActivityAPI(activityId);
@@ -31,6 +32,9 @@ export default function useDeleteActivity() {
       }
 
       return { previousActivity };
+    },
+    onSuccess: () => {
+      toast.success('활동을 삭제했습니다.');
     },
     onError: (_error, _variables, context: any) => {
       if (context?.previousActivity) {

@@ -5,6 +5,7 @@ import {
 } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { CreateActivityLocationAPI } from '../../../libs/api/admin.activity-locations';
+import toast from 'react-hot-toast';
 
 async function createActivityLocation(
   data: ActivityLocationCreationRequestDto,
@@ -38,6 +39,9 @@ export default function useCreateActivityLocation() {
         );
 
         return { previousActivityLocations };
+      },
+      onSuccess: () => {
+        toast.success('장소를 추가했습니다.');
       },
       onError: (_error, _variables, context: any) => {
         queryClient.setQueryData(

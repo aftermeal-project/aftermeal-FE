@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { DeleteUserAPI } from '../../../libs/api/admin.users';
+import toast from 'react-hot-toast';
 
 async function deleteUser(userId: string): Promise<void> {
   await DeleteUserAPI(userId);
@@ -31,6 +32,9 @@ export default function useDeleteUser() {
       }
 
       return { previousActivity };
+    },
+    onSuccess: () => {
+      toast.success('유저를 삭제했습니다.');
     },
     onError: (_error, _variables, context: any) => {
       if (context?.previousActivity) {

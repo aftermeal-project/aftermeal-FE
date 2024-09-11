@@ -5,6 +5,7 @@ import {
 } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { CreateActivityAPI } from '../../../libs/api/admin.activities';
+import toast from 'react-hot-toast';
 
 async function createActivity(data: ActivityCreationRequestDto): Promise<void> {
   await CreateActivityAPI(data);
@@ -24,12 +25,17 @@ export default function useCreateActivity() {
 
       const previousActivities = queryClient.getQueryData(['activities']);
 
-      queryClient.setQueryData(['activities'], (old: ActivityResponseDto[]) => [
-        ...old,
-        newActivity,
-      ]);
+      queryClient.setQueryData(
+        ['activities'],
+        (old: ActivityResponseDto[] | undefined) => {
+          return old ? [...old, newActivity] : [newActivity];
+        },
+      );
 
       return { previousActivities };
+    },
+    onSuccess: () => {
+      toast.success('활동을 추가했습니다.');
     },
     onError: (_error, _variables, context: any) => {
       queryClient.setQueryData(['activities'], context.previousActivities);

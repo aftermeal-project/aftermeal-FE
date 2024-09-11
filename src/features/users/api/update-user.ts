@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserListResponseDto, UserUpdateRequestDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { UpdateUserAPI } from '../../../libs/api/admin.users';
+import toast from 'react-hot-toast';
 
 function updateUser(userId: string, data: UserUpdateRequestDto): Promise<void> {
   if (data.type === 'TEACHER') {
@@ -38,6 +39,9 @@ export default function useUpdateUser() {
       queryClient.setQueryData(['users', userId], data);
 
       return { previousUserData };
+    },
+    onSuccess: () => {
+      toast.success('유저를 수정했습니다.');
     },
     onError: (_error, _variables, context: any) => {
       queryClient.setQueryData(

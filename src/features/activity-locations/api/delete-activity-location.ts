@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityLocationListResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { DeleteActivityLocationAPI } from '../../../libs/api/admin.activity-locations';
+import toast from 'react-hot-toast';
 
 async function deleteActivityLocation(
   activityLocationId: string,
@@ -34,6 +35,9 @@ export default function useDeleteActivityLocation() {
       }
 
       return { previousActivityLocation };
+    },
+    onSuccess: () => {
+      toast.success('장소를 삭제했습니다.');
     },
     onError: (_error, _variables, context: any) => {
       if (context?.previousActivityLocation) {

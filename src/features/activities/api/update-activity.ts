@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { UpdateActivityAPI } from '../../../libs/api/admin.activities';
+import toast from 'react-hot-toast';
 
 async function updateActivity(data: ActivityResponseDto): Promise<void> {
   await UpdateActivityAPI(data);
@@ -32,6 +33,9 @@ export default function useUpdateActivty() {
       );
 
       return { previousActivity, updateActivity };
+    },
+    onSuccess: () => {
+      toast.success('활동을 수정했습니다.');
     },
     onError: (_error, _updateActivity, context: any) => {
       queryClient.setQueryData(

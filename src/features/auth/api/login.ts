@@ -6,6 +6,7 @@ import { errorMessages, validationMessages } from '../../../constants';
 import { FieldError, UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
 import { LoginRequestDto, LoginResponseDto } from '../../../types';
+import toast from 'react-hot-toast';
 
 const token = new Token();
 
@@ -53,6 +54,7 @@ function handleOnSuccess(data: LoginResponseDto, navigate: NavigateFunction) {
   delete onlyToken.user;
 
   token.setUser(onlyToken);
+  toast.success('로그인에 성공했습니다');
   navigate('/');
 }
 

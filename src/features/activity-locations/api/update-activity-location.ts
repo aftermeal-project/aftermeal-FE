@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityLocationListResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { UpdateActivityLocationAPI } from '../../../libs/api/admin.activity-locations';
+import toast from 'react-hot-toast';
 
 async function updateActivityLocation(
   data: ActivityLocationListResponseDto,
@@ -35,6 +36,9 @@ export default function useUpdateActivityLocation() {
       );
 
       return { previousActivityLocation, updateActivityLocation };
+    },
+    onSuccess: () => {
+      toast.success('장소를 수정했습니다.');
     },
     onError: (_error, _variables, context: any) => {
       console.log(_error);

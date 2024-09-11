@@ -29,7 +29,7 @@ export default function ActivityManagementTab() {
     ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_MODAL),
   );
   const updateModalOpen = useRecoilValue(
-    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_MODAL),
+    ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
   );
   const deleteModalOpen = useRecoilValue(
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),

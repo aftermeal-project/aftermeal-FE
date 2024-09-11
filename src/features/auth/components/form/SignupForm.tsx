@@ -50,6 +50,7 @@ export default function SignupForm() {
 
     signup(data);
   };
+
   return (
     <>
       <form id="registrationForm" onSubmit={handleSubmit(onValid)}>
