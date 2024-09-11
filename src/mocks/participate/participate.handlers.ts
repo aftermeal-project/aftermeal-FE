@@ -1,0 +1,42 @@
+import { http, HttpResponse } from 'msw';
+import { BASE_URL } from '../../constants';
+
+const url = BASE_URL + '/activities/:activityId';
+
+export const participateHandlers = [
+  /**
+   * 활동 참가 API
+   */
+  http.put<{ activityId: string }, {}>(
+    url + '/participate',
+    async ({ params }) => {
+      if (Number(params.activityId) === 0) {
+        return HttpResponse.json(
+          { message: 'Invalid request data' },
+          { status: 400 },
+        );
+      }
+      return HttpResponse.json(null, {
+        status: 201,
+      });
+    },
+  ),
+
+  /**
+   * 활동 참가 취소 API
+   */
+  http.delete<{ activityId: string }, {}>(
+    url + '/cancel',
+    async ({ params }) => {
+      if (Number(params.activityId) === 0) {
+        return HttpResponse.json(
+          { message: 'Invalid request data' },
+          { status: 400 },
+        );
+      }
+      return HttpResponse.json(null, {
+        status: 201,
+      });
+    },
+  ),
+];
