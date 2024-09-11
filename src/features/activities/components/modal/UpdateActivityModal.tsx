@@ -91,7 +91,7 @@ export default function UpdateActivityModal({
   return (
     <ModalLayout setModal={updateActivityModalOpen}>
       <div
-        className="p-6 mx-auto bg-white rounded-lg shadow-lg w-96"
+        className="mx-auto w-96 rounded-lg bg-white p-6 shadow-lg"
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-8 text-lg font-bold">활동 수정</h2>
@@ -115,7 +115,7 @@ export default function UpdateActivityModal({
               <div className="mb-4">
                 <label
                   htmlFor="location"
-                  className="inline-block mb-2 text-base"
+                  className="mb-2 inline-block text-base"
                 >
                   장소
                 </label>
@@ -129,7 +129,7 @@ export default function UpdateActivityModal({
               <div className="mb-4">
                 <label
                   htmlFor="location"
-                  className="inline-block mb-2 text-base"
+                  className="mb-2 inline-block text-base"
                 >
                   활동 유형
                 </label>
@@ -149,7 +149,7 @@ export default function UpdateActivityModal({
                 error={errors.maxParticipants}
               />
               <div className="mb-4">
-                <label htmlFor="status" className="inline-block mb-2 text-base">
+                <label htmlFor="status" className="mb-2 inline-block text-base">
                   진행 상태
                 </label>
                 <SelectField<ActivityResponseDto>
@@ -190,7 +190,7 @@ export default function UpdateActivityModal({
               />
             </TabPanel>
           </Tabs>
-          <div className="flex justify-end w-full mt-11 gap-x-5">
+          <div className="mt-11 flex w-full justify-end gap-x-5">
             <Button
               type="button"
               onClick={handleModalClose}
