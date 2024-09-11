@@ -6,6 +6,7 @@ import {
 } from '../../types';
 import { getRandomElementFromArray } from './global.utils';
 import moment from 'moment';
+import { formatDate } from '../../utils';
 
 const sports = ['축구', '농구', '배드민턴', '배구', '골프', '탁구'];
 
@@ -38,10 +39,6 @@ function getStartAndEndTimes(type: ActivityResponseDtoType) {
     startTime: '09:00',
     endTime: '10:00',
   };
-}
-
-function formatDate(date: string) {
-  return moment(date).format('YYYY-MM-DD');
 }
 
 export function createRandomActivityDetails(): ActivityDetailResponseDto {

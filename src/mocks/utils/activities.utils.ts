@@ -6,10 +6,7 @@ import {
 } from '../../types';
 import moment from 'moment';
 import { getRandomElementFromArray } from './global.utils';
-
-function formatDate(date: string) {
-  return moment(date).format('YYYY-MM-DD');
-}
+import { formatDate } from '../../utils';
 
 export function createRandomActivity(): ActivityResponseDto {
   return {
