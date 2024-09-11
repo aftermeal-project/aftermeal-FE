@@ -15,19 +15,14 @@ interface TableBodyProps {
 
 export default function TableBody({ useForm, activities }: TableBodyProps) {
   const navigate = useNavigate();
-  const { handleUpdate } = useUpdateActivityModal(useForm);
-
   const setActiveId = useSetRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
   );
-
   const deleteModalOpen = useSetRecoilState(
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
   );
 
-  const calculatePercentage = (part: number, whole: number): string => {
-    return '(' + ((part / whole) * 100).toFixed(2) + '%)';
-  };
+  const { handleUpdate } = useUpdateActivityModal(useForm);
 
   const handleDelete = (activityId: number) => {
     setActiveId(activityId);
@@ -36,6 +31,10 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
 
   const handleActivityClick = (activityId: number) => {
     navigate('/activity/' + String(activityId));
+  };
+
+  const calculatePercentage = (part: number, whole: number): string => {
+    return '(' + ((part / whole) * 100).toFixed(2) + '%)';
   };
 
   return (
