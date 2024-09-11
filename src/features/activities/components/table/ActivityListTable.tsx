@@ -1,30 +1,22 @@
-import { useRecoilValue } from 'recoil';
 import { ActivityResponseDto } from '../../../../types';
 import TableBody from './TableBody';
 import TableHeader from './TableHeader';
-import { ModalAtomFamily } from '../../../../atoms';
-import { AtomKeys } from '../../../../constants';
-import { UpdateActivityModal } from '../modal';
-import { useForm } from 'react-hook-form';
+import { UseFormReturn } from 'react-hook-form';
 
 interface ActivityListTableProps {
+  useForm: UseFormReturn<ActivityResponseDto>;
   activities: ActivityResponseDto[];
 }
 
 export default function ActivityListTable({
+  useForm,
   activities,
 }: ActivityListTableProps) {
-  const formMethods = useForm<ActivityResponseDto>();
-  const updateActivityModalOpen = useRecoilValue(
-    ModalAtomFamily(AtomKeys.UPDATE_ACTIVITY_MODAL),
-  );
-
   return (
     <>
-      {updateActivityModalOpen && <UpdateActivityModal useForm={formMethods} />}
       <table className="w-full min-w-[1400px] overflow-hidden rounded-md bg-white shadow-md">
         <TableHeader />
-        <TableBody useForm={formMethods} activities={activities} />
+        <TableBody useForm={useForm} activities={activities} />
       </table>
     </>
   );

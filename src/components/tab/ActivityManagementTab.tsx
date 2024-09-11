@@ -4,6 +4,7 @@ import {
   ActivityListSkeleton,
   CreateActivityModal,
   ActivityListTable,
+  UpdateActivityModal,
 } from '../../features/activities';
 import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../atoms';
@@ -11,8 +12,12 @@ import { AtomKeys } from '../../constants';
 import useDeleteActivity from '../../features/activities/api/delete-activity';
 import { ConfirmDeleteModal } from '../../features/modals';
 import { Button } from '../button';
+import { ActivityResponseDto } from '../../types';
+import { useForm } from 'react-hook-form';
 
 export default function ActivityManagementTab() {
+  const formMethods = useForm<ActivityResponseDto>();
+
   const resetActivityId = useResetRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
   );
@@ -21,11 +26,14 @@ export default function ActivityManagementTab() {
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
   );
 
-  const deleteModalOpen = useRecoilValue(
-    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
-  );
   const [createModalOpen, setCreateModalOpen] = useRecoilState(
     ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_MODAL),
+  );
+  const updateModalOpen = useRecoilValue(
+    ModalAtomFamily(AtomKeys.CREATE_ACTIVITY_MODAL),
+  );
+  const deleteModalOpen = useRecoilValue(
+    ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
   );
 
   const handleCreateActivity = () => {
@@ -35,6 +43,7 @@ export default function ActivityManagementTab() {
   return (
     <section>
       {createModalOpen && <CreateActivityModal />}
+      {updateModalOpen && <UpdateActivityModal useForm={formMethods} />}
       {deleteModalOpen && (
         <ConfirmDeleteModal
           message="정말 해당 활동을 삭제하시겠습니까?"
@@ -45,7 +54,7 @@ export default function ActivityManagementTab() {
         />
       )}
       <div className="h-full overflow-hidden">
-        <div className="flex items-center justify-between mb-4">
+        <div className="mb-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold">활동 관리</h1>
           <Button
             type="button"
@@ -59,7 +68,12 @@ export default function ActivityManagementTab() {
         <div className="overflow-x-auto">
           <Suspense fallback={<ActivityListSkeleton type="Table" />}>
             <ActivityListFetcher>
-              {activities => <ActivityListTable activities={activities} />}
+              {activities => (
+                <ActivityListTable
+                  useForm={formMethods}
+                  activities={activities}
+                />
+              )}
             </ActivityListFetcher>
           </Suspense>
         </div>
