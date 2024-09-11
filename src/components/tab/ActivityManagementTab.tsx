@@ -10,10 +10,9 @@ import { useRecoilValue, useRecoilState, useResetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../atoms';
 import { AtomKeys } from '../../constants';
 import useDeleteActivity from '../../features/activities/api/delete-activity';
-import { ConfirmDeleteModal } from '../../features/modals';
-import { Button } from '../button';
 import { ActivityResponseDto } from '../../types';
 import { useForm } from 'react-hook-form';
+import { ConfirmDeleteModal, Button } from '../../components';
 
 export default function ActivityManagementTab() {
   const formMethods = useForm<ActivityResponseDto>();
@@ -54,7 +53,7 @@ export default function ActivityManagementTab() {
         />
       )}
       <div className="h-full overflow-hidden">
-        <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center justify-between mb-4">
           <h1 className="text-2xl font-bold">활동 관리</h1>
           <Button
             type="button"

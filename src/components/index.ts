@@ -6,6 +6,7 @@ export * from './header';
 export * from './layout';
 export * from './input';
 export * from './loading';
+export * from './modal';
 export * from './screen';
 export * from './selector';
 export * from './sidebar';

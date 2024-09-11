@@ -4,10 +4,9 @@ import { User, UpdateUserModal } from '../';
 import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
-import { ConfirmDeleteModal } from '../../../modals';
 import useDeleteUser from '../../api/delete-user';
 import { useForm } from 'react-hook-form';
-import { SearchBar } from '../../../../components';
+import { SearchBar, ConfirmDeleteModal } from '../../../../components';
 
 interface UserListContainerProps {
   users: UserListResponseDto[];

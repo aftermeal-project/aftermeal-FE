@@ -5,9 +5,8 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../../../../atoms';
 import { AtomKeys } from '../../../../constants';
 import useDeleteActivityLocation from '../../api/delete-activity-location';
-import { ConfirmDeleteModal } from '../../../modals';
 import useUpdateActivityLocation from '../../api/update-activity-location';
-import { SearchBar } from '../../../../components';
+import { SearchBar, ConfirmDeleteModal } from '../../../../components';
 
 interface ActivityLocationListProps {
   locations: ActivityLocationListResponseDto[];
