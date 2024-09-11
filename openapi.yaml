@@ -1,0 +1,355 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: AfterMeal API Docs
+  description: 에프터밀 API 엔드포인트(Endpoint)와 객체 정보, 파라미터, 요청 및 응답 예제를 살펴보세요.
+
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/doong3373/aftermeal/1.0.0
+  - description: AfterMeal Development API Server
+    url: https://dev-api.aftermeal.online
+  - description: AfterMeal Production API Server
+    url: https://api.aftermeal.online
+
+tags:
+  - name: Users
+    description: 사용자 관련 엔드포인트
+  - name: Activities
+    description: 활동 관련 엔드포인트
+  - name: Authentication
+    description: 인증 관련 엔드포인트
+
+paths:
+  /users:
+    post:
+      tags:
+        - Users
+      operationId: UserController_register
+      summary: 사용자 등록
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationRequestDto'
+      responses:
+        201:
+          description: OK
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+        409:
+          description: Conflict
+
+  /activities:
+    get:
+      tags:
+        - Activities
+      summary: 활동 목록 조회
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityResponseDto'
+
+  /activities/{activityId}:
+    get:
+      tags:
+        - Activities
+      summary: 활동 상세 조회
+      parameters:
+        - name: activityId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityDetailResponseDto'
+
+  /activities/{activityId}/joins:
+    post:
+      tags:
+        - Activities
+      summary: 활동 참여
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: activityId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ActivityJoinRequestDto'
+
+  /activities/{activityId}/joins/{joinId}:
+    delete:
+      tags:
+        - Activities
+      summary: 활동 참여 취소
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: activityId
+          in: path
+          required: true
+          schema:
+            type: integer
+        - name: joinId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Join canceled successfully
+
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: 로그인
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDto'
+      responses:
+        200:
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponseDto'
+
+  /auth/refresh:
+    post:
+      operationId: AuthController_refresh
+      summary: 토큰 갱신
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefreshRequestDto'
+      responses:
+        201:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefreshResponseDto'
+        400:
+          description: Bad Request
+      tags:
+        - Authentication
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    UserRegistrationRequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        type:
+          type: string
+          enum:
+            - STUDENT
+            - TEACHER
+        generationNumber:
+          type: number
+          minimum: 1
+        password:
+          type: string
+      required:
+        - name
+        - email
+        - type
+        - password
+
+    ActivityResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        location:
+          type: string
+        maxParticipants:
+          type: integer
+        currentParticipants:
+          type: integer
+        status:
+          type: string
+          enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
+        type:
+          type: string
+          enum: [LUNCH, DINNER]
+        scheduledDate:
+          type: string
+          format: date
+        applicationStartDate:
+          type: string
+          format: date-time
+        applicationEndDate:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - location
+        - maxParticipants
+        - currentParticipants
+        - status
+        - type
+        - scheduledDate
+        - applicationStartDate
+        - applicationEndDate
+
+    ActivityDetailResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        location:
+          type: string
+        maxParticipants:
+          type: integer
+        participants:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: integer
+              displayName:
+                type: string
+        status:
+          type: string
+          enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
+        type:
+          type: string
+          enum: [LUNCH, DINNER]
+        scheduledDate:
+          type: string
+          format: date
+        applicationStartDate:
+          type: string
+          format: date-time
+        applicationEndDate:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - location
+        - maxParticipants
+        - participants
+        - status
+        - type
+        - scheduledDate
+        - applicationStartDate
+        - applicationEndDate
+
+    ActivityJoinRequestDto:
+      type: object
+      properties:
+        activityId:
+          type: number
+          minimum: 1
+      required:
+        - activityId
+
+    LoginRequestDto:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    LoginResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        tokenType:
+          type: string
+        expiredIn:
+          type: integer
+        refreshToken:
+          type: string
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            roles:
+              type: array
+              items:
+                type: string
+                enum: [USER, ADMIN]
+      required:
+        - accessToken
+        - tokenType
+        - expiredIn
+        - refreshToken
+        - user
+
+    TokenRefreshRequestDto:
+      type: object
+      properties:
+        refreshToken:
+          type: string
+      required:
+        - refreshToken
+
+    TokenRefreshResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        tokenType:
+          type: string
+        expiredIn:
+          type: number
+        refreshToken:
+          type: string
+      required:
+        - accessToken
+        - tokenType
+        - expiredIn
+        - refreshToken

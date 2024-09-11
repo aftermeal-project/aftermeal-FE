@@ -1,53 +1,53 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   AdminPageSidebar,
   ActivityManagementTab,
-} from '../../components/ui/admin';
-import { ActivityListResponseDto, Tab } from '../../types';
-
-const activities: ActivityListResponseDto[] = [
-  {
-    id: 1,
-    name: '축구',
-    location: '운동장',
-    maxParticipants: 18,
-  },
-  {
-    id: 2,
-    name: '배드민턴',
-    location: '강당',
-    maxParticipants: 10,
-  },
-  {
-    id: 3,
-    name: '보드게임',
-    location: '상담실',
-    maxParticipants: 5,
-  },
-  {
-    id: 4,
-    name: '당구',
-    location: '당구장',
-    maxParticipants: 4,
-  },
-];
+  UserManagementTab,
+  ActivityLocationManagementTab,
+  TabsContainer,
+  ErrorScreen,
+  FetchErrorBoundary,
+} from '../../components';
+import { errorMessages } from '../../constants';
+import { Tab } from '../../types';
+import { useRecoilValue } from 'recoil';
+import { UserAtom } from '../../atoms';
 
 export default function AdminPage() {
   const [selectedTab, setSelectedTab] = useState<Tab>('activities');
+  const [roleError, setRoleError] = useState(false);
+  const user = useRecoilValue(UserAtom);
+
+  useEffect(() => {
+    if (!user.roles.includes('ADMIN')) {
+      setRoleError(true);
+    }
+  }, [user]);
+
+  if (roleError) {
+    return <ErrorScreen title="권한 오류" description="잘못된 접근입니다." />;
+  }
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-gray-100">
       <AdminPageSidebar
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
-      <main className="flex-1 p-6 overflow-hidden bg-gray-100">
-        {selectedTab === 'activities' && (
-          <ActivityManagementTab activities={activities} />
-        )}
-        {selectedTab === 'activity-schedules' && <></>}
-        {selectedTab === 'users' && <></>}
-      </main>
+      <TabsContainer>
+        <FetchErrorBoundary
+          fallback={
+            <ErrorScreen
+              title="Oops!"
+              description={errorMessages.DEFAULT_ERROR}
+            />
+          }
+        >
+          {selectedTab === 'activities' && <ActivityManagementTab />}
+          {selectedTab === 'users' && <UserManagementTab />}
+          {selectedTab === 'locations' && <ActivityLocationManagementTab />}
+        </FetchErrorBoundary>
+      </TabsContainer>
     </div>
   );
 }

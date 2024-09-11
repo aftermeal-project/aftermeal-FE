@@ -1,15 +1,15 @@
 import { Suspense } from 'react';
-import ErrorScreen from '../../components/error/ErrorScreen';
-import {
-  ActivitySchedulesListSkeleton,
-  HomePageContainer,
-} from '../../components/ui/home';
 import { errorMessages } from '../../constants';
 import {
-  ActivitySchedulesListFetcher,
-  ActivitySchedulesListContainer,
-} from '../../features/activity-schedules';
-import { FetchErrorBoundary } from '../../components/@global';
+  HomePageContainer,
+  ErrorScreen,
+  FetchErrorBoundary,
+} from '../../components';
+import {
+  ActivityList,
+  ActivityListFetcher,
+  ActivityListSkeleton,
+} from '../../features/activities';
 
 export default function HomePage() {
   return (
@@ -19,14 +19,10 @@ export default function HomePage() {
       }
     >
       <HomePageContainer>
-        <Suspense fallback={<ActivitySchedulesListSkeleton />}>
-          <ActivitySchedulesListFetcher>
-            {activitySchedules => (
-              <ActivitySchedulesListContainer
-                activitySchedules={activitySchedules}
-              />
-            )}
-          </ActivitySchedulesListFetcher>
+        <Suspense fallback={<ActivityListSkeleton type="List" />}>
+          <ActivityListFetcher>
+            {activities => <ActivityList activities={activities} />}
+          </ActivityListFetcher>
         </Suspense>
       </HomePageContainer>
     </FetchErrorBoundary>
