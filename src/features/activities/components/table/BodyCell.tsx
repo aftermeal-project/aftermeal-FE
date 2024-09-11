@@ -72,19 +72,19 @@ export default function BodyCell({ title, value }: BodyCellProps) {
     switch (value) {
       case ActivityResponseDtoStatus.Scheduled:
         className += ' text-blue-500 font-bold';
-        icon = <FaHourglassHalf className="inline-block mr-2" />;
+        icon = <FaHourglassHalf className="mr-2 inline-block" />;
         break;
       case ActivityResponseDtoStatus.InProgress:
         className += ' text-yellow-500 font-bold';
-        icon = <FaExclamationCircle className="inline-block mr-2" />;
+        icon = <FaExclamationCircle className="mr-2 inline-block" />;
         break;
       case ActivityResponseDtoStatus.Canceled:
         className += ' text-red-500 font-bold';
-        icon = <FaTimesCircle className="inline-block mr-2" />;
+        icon = <FaTimesCircle className="mr-2 inline-block" />;
         break;
       case ActivityResponseDtoStatus.Completed:
         className += ' text-green-500 font-bold';
-        icon = <FaCheckCircle className="inline-block mr-2" />;
+        icon = <FaCheckCircle className="mr-2 inline-block" />;
         break;
       default:
         className += ' text-gray-800';
