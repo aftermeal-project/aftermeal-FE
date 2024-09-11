@@ -42,9 +42,9 @@ export function useParticipate() {
     },
 
     onSettled: () => {
-      queryClient.cancelQueries({ queryKey: ['activities'] });
+      queryClient.invalidateQueries({ queryKey: ['activity-details'] });
     },
   });
 
-  return mutation;
+  return { participate: mutation, isParticipateLoading: mutation.isPending };
 }

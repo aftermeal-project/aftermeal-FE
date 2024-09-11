@@ -1,13 +1,13 @@
 import { instance } from '../instance';
 import Token from '../utils/token';
 
-const url = '/activities/:activityId';
+const url = '/activities';
 const token = new Token();
 
 export const ParticipateAPI = async (activityId: string) => {
   await instance({
     method: 'POST',
-    url: url + '/participate',
+    url: url + `/${activityId}/participate`,
     headers: {
       Authorization: 'Bearer ' + token.getLocalAccessToken(),
     },
@@ -20,7 +20,7 @@ export const ParticipateAPI = async (activityId: string) => {
 export const CancelParticipateAPI = async (activityId: string) => {
   await instance({
     method: 'DELETE',
-    url: url + '/cancel',
+    url: url + `/${activityId}/cancel`,
     headers: {
       Authorization: 'Bearer ' + token.getLocalAccessToken(),
     },

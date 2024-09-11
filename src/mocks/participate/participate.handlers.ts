@@ -1,14 +1,14 @@
 import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '../../constants';
 
-const url = BASE_URL + '/activities/:activityId';
+const url = `${BASE_URL}/activities`;
 
 export const participateHandlers = [
   /**
    * 활동 참가 API
    */
-  http.put<{ activityId: string }, {}>(
-    url + '/participate',
+  http.post<{ activityId: string }, {}>(
+    `${url}/:activityId/participate`,
     async ({ params }) => {
       if (Number(params.activityId) === 0) {
         return HttpResponse.json(
@@ -26,7 +26,7 @@ export const participateHandlers = [
    * 활동 참가 취소 API
    */
   http.delete<{ activityId: string }, {}>(
-    url + '/cancel',
+    `${url}/:activityId/cancel`,
     async ({ params }) => {
       if (Number(params.activityId) === 0) {
         return HttpResponse.json(
@@ -35,7 +35,7 @@ export const participateHandlers = [
         );
       }
       return HttpResponse.json(null, {
-        status: 201,
+        status: 204,
       });
     },
   ),

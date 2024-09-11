@@ -43,9 +43,9 @@ export default function useCancelParticipate() {
     },
 
     onSettled: () => {
-      queryClient.cancelQueries({ queryKey: ['activities'] });
+      queryClient.invalidateQueries({ queryKey: ['activity-details'] });
     },
   });
 
-  return mutation;
+  return { cancelParticipate: mutation, isCancelLoading: mutation.isPending };
 }
