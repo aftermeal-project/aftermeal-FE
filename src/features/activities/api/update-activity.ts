@@ -48,11 +48,6 @@ export default function useUpdateActivty() {
       queryClient.invalidateQueries({
         queryKey: ['activities'],
       });
-
-      // 따로 무효화 해줘야 둘다 작동됨. 이유는 아직 모르겠음.
-      queryClient.invalidateQueries({
-        queryKey: ['activity-details'],
-      });
     },
   });
 
