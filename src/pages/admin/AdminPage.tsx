@@ -20,7 +20,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!user.roles.includes('ADMIN')) {
-      setRoleError(false);
+      setRoleError(true);
     }
   }, [user]);
 
