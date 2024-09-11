@@ -1,8 +1,4 @@
 import { FaMapMarkerAlt, FaClipboardList } from 'react-icons/fa';
-import {
-  ActivityDetailResponseDtoStatus,
-  ActivityDetailResponseDtoType,
-} from '../../../../types';
 import { Button } from '../../../../components';
 import { formatTime } from '../../../../utils';
 
@@ -16,20 +12,26 @@ function getFormattedApplicationPeriod(startTime: string, endTime: string) {
 
 interface ApplicationSectionProps {
   location: string;
-  status: ActivityDetailResponseDtoStatus;
-  type: ActivityDetailResponseDtoType;
   applicationStartDate: string;
   applicationEndDate: string;
   isApplicationAllowed: boolean;
+  isParticipating: boolean;
+  isParticipateLoading: boolean;
+  isCancelLoading: boolean;
+  onParticipate: () => void;
+  onCancel: () => void;
 }
 
 export default function ApplicationSection({
   location,
-  type,
-  status,
   applicationStartDate,
   applicationEndDate,
   isApplicationAllowed,
+  isParticipating,
+  isParticipateLoading,
+  isCancelLoading,
+  onParticipate,
+  onCancel,
 }: ApplicationSectionProps) {
   return (
     <div className="w-full rounded-lg bg-white p-6 shadow-md md:h-[21rem]">
@@ -57,7 +59,26 @@ export default function ApplicationSection({
 
         <div className="mt-14">
           {isApplicationAllowed ? (
-            <Button fullWidth>신청하기</Button>
+            <>
+              {isParticipating ? (
+                <Button
+                  onClick={onCancel}
+                  fullWidth
+                  variant="danger"
+                  disabled={isCancelLoading}
+                >
+                  {isCancelLoading ? '취소 중...' : '신청 취소'}
+                </Button>
+              ) : (
+                <Button
+                  onClick={onParticipate}
+                  fullWidth
+                  disabled={isParticipateLoading}
+                >
+                  {isParticipateLoading ? '신청 중...' : '신청 하기'}
+                </Button>
+              )}
+            </>
           ) : (
             <Button
               variant="secondary"

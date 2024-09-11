@@ -7,13 +7,21 @@ import {
   ApplicationSection,
   ApplicationFooter,
 } from '../details';
+import { useRecoilValue } from 'recoil';
+import { UserAtom } from '../../../../atoms';
+import { useParticipate } from '../../../participate/api/participate';
+import useCancelParticipate from '../../../participate/api/cancel-participate';
 
 interface ActivityDetailProps {
   activity: ActivityDetailResponseDto;
 }
 
 export default function ActivityDetail({ activity }: ActivityDetailProps) {
+  const user = useRecoilValue(UserAtom);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
+
+  const { participate, isParticipateLoading } = useParticipate();
+  const { cancelParticipate, isCancelLoading } = useCancelParticipate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -44,6 +52,18 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
     return isStatusValid && hasSpaceAvailable && isWithinApplicationPeriod;
   };
 
+  const isParticipating = activity.participants.some(
+    participant => participant.displayName === user.name,
+  );
+
+  const handleParticipate = (activityId: number) => {
+    participate.mutate(String(activityId));
+  };
+
+  const handleCancel = (activityId: number) => {
+    cancelParticipate.mutate(String(activityId));
+  };
+
   return (
     <div className="mx-auto grid w-full max-w-screen-xl grid-cols-1 rounded-lg max-[1000px]:mb-[5.5rem] min-[1000px]:grid-cols-3 min-[1000px]:gap-x-4 min-[1000px]:py-8">
       <div className="space-y-4 md:col-span-2">
@@ -53,17 +73,22 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
       {!isSmallScreen && (
         <ApplicationSection
           location={activity.location}
-          status={activity.status}
-          type={activity.type}
           applicationStartDate={activity.applicationStartDate}
           applicationEndDate={activity.applicationEndDate}
-          isApplicationAllowed={isApplicationAllowed(
-            activity.status,
-            activity.participants.length,
-            activity.maxParticipants,
-            activity.applicationStartDate,
-            activity.applicationEndDate,
-          )}
+          isApplicationAllowed={
+            !isApplicationAllowed(
+              activity.status,
+              activity.participants.length,
+              activity.maxParticipants,
+              activity.applicationStartDate,
+              activity.applicationEndDate,
+            )
+          }
+          isParticipating={isParticipating}
+          onParticipate={() => handleParticipate(activity.id)}
+          onCancel={() => handleCancel(activity.id)}
+          isParticipateLoading={isParticipateLoading}
+          isCancelLoading={isCancelLoading}
         />
       )}
       {isSmallScreen && (
@@ -75,6 +100,11 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
             activity.applicationEndDate,
             activity.applicationStartDate,
           )}
+          isParticipating={isParticipating}
+          onParticipate={() => handleParticipate(activity.id)}
+          onCancel={() => handleCancel(activity.id)}
+          isParticipateLoading={isParticipateLoading}
+          isCancelLoading={isCancelLoading}
         />
       )}
     </div>
