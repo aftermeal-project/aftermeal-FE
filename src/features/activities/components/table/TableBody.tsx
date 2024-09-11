@@ -15,7 +15,7 @@ interface TableBodyProps {
 
 export default function TableBody({ useForm, activities }: TableBodyProps) {
   const navigate = useNavigate();
-  const { activityUpdate } = useUpdateActivityModal(useForm);
+  const { handleUpdate } = useUpdateActivityModal(useForm);
 
   const setActiveId = useSetRecoilState(
     ActiveIdAtomFamily(AtomKeys.ACTIVE_ACTIVITY_ID),
@@ -90,7 +90,7 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
           </td>
           <td className="px-4 py-2">
             <Dropdown
-              onUpdate={() => activityUpdate(activity)}
+              onUpdate={() => handleUpdate(activity)}
               onDelete={() => handleDelete(activity.id)}
             />
           </td>
