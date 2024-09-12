@@ -61,7 +61,10 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
     const now = moment();
     const startTime = moment(activity.applicationStartDate);
     const duration = moment.duration(startTime.diff(now));
-    return Math.max(Math.floor(duration.asSeconds()), 0) > 0;
+    return (
+      Math.max(Math.floor(duration.asSeconds()), 0) > 0 &&
+      activity.status === 'SCHEDULED'
+    );
   };
 
   const handleParticipate = (activityId: number) => {
