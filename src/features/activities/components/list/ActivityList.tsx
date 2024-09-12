@@ -1,6 +1,9 @@
 import { ActivityResponseDto } from '../../../../types';
-import { ActivityCard } from '..';
-
+import moment from 'moment';
+import 'moment/locale/ko';
+import { useState } from 'react';
+import ListTab from '../tab/ListTab';
+import { Activity } from '../item';
 interface ActivityListContainerProps {
   activities: ActivityResponseDto[];
 }
@@ -8,23 +11,42 @@ interface ActivityListContainerProps {
 export default function ActivityListContainer({
   activities,
 }: ActivityListContainerProps) {
+  const getToday = () => {
+    return moment().format('YYYY년 MM월 DD일 dddd');
+  };
+  const getCurrentHour = () => {
+    const currentHour = moment().hour();
+    return currentHour <= 13 ? 'LUNCH' : 'DINNER';
+  };
+
+  const [selectedTab, setSelectedTab] = useState<string>(getCurrentHour);
+
+  const filteredUsers = activities.filter(
+    activity => activity.type === selectedTab,
+  );
+
   return (
-    <>
-      {activities.map(activity => (
-        <ActivityCard
+    <section>
+      <div className="flex items-center justify-between mt-5 mb-9">
+        <div className="p-2 bg-green-400 rounded-md w-fit">
+          <h1 className="text-[19px] font-bold tracking-tighter text-white">
+            {getToday()}
+          </h1>
+        </div>
+        <ListTab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+      </div>
+      {filteredUsers.map(activity => (
+        <Activity
           key={activity.id}
           id={activity.id}
           title={activity.title}
-          maxParticipants={activity.maxParticipants}
-          currentParticipants={activity.currentParticipants}
+          type={activity.type}
           location={activity.location}
           status={activity.status}
-          type={activity.type}
-          scheduledDate={activity.scheduledDate}
-          applicationStartDate={activity.applicationStartDate}
-          applicationEndDate={activity.applicationEndDate}
+          maxParticipants={activity.maxParticipants}
+          currentParticipants={activity.currentParticipants}
         />
       ))}
-    </>
+    </section>
   );
 }
