@@ -23,7 +23,7 @@ export default function ActivityListContainer({
 
   const [selectedTab, setSelectedTab] = useState<string>(getCurrentHour);
 
-  const filteredUsers = activities.filter(
+  const filteredActivities = activities.filter(
     activity => activity.type === selectedTab,
   );
 
@@ -39,9 +39,9 @@ export default function ActivityListContainer({
       </div>
       {activities.length > 0 ? (
         <>
-          {filteredUsers.length > 0 ? (
+          {filteredActivities.length > 0 ? (
             <>
-              {filteredUsers.map(activity => (
+              {filteredActivities.map(activity => (
                 <Activity
                   key={activity.id}
                   id={activity.id}
