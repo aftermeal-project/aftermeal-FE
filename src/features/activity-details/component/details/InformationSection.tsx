@@ -1,21 +1,8 @@
 import { FaMapMarkerAlt, FaUsers, FaClipboardList } from 'react-icons/fa';
 import { ActivityDetailResponseDto } from '../../../../types';
-import {
-  statusOptions,
-  typeOptions,
-} from '../../../activities/constants/options';
-import { formatTime } from '../../../../utils';
+
+import { formatTime, getStatusLabel, getTypeLabel } from '../../../../utils';
 import moment from 'moment';
-
-function getStatusLabel(status: string) {
-  const statusOption = statusOptions.find(option => option.value === status);
-  return statusOption ? statusOption.label : status;
-}
-
-function getTypeLabel(type: string) {
-  const typeOption = typeOptions.find(option => option.value === type);
-  return typeOption ? typeOption.label : type;
-}
 
 function getFormattedTitle(date: string, type: string, title: string) {
   const formattedDate = moment(date).format('YYYY년 MM월 DD일 dddd');
