@@ -1,5 +1,6 @@
 import { FaMapMarkerAlt, FaClipboardList } from 'react-icons/fa';
 import { Button } from '../../../../components';
+import RenamingTime from './RemainingTime';
 import { formatTime } from '../../../../utils';
 
 function getFormattedApplicationPeriod(startTime: string, endTime: string) {
@@ -15,6 +16,7 @@ interface ApplicationSectionProps {
   applicationStartDate: string;
   applicationEndDate: string;
   isApplicationAllowed: boolean;
+  isBeforeApplicationStart: boolean;
   isParticipating: boolean;
   isParticipateLoading: boolean;
   isCancelLoading: boolean;
@@ -27,6 +29,7 @@ export default function ApplicationSection({
   applicationStartDate,
   applicationEndDate,
   isApplicationAllowed,
+  isBeforeApplicationStart,
   isParticipating,
   isParticipateLoading,
   isCancelLoading,
@@ -49,46 +52,55 @@ export default function ApplicationSection({
             <FaClipboardList className="inline-block mr-2 text-blue-500" />
             <span className="text-lg font-semibold">신청 기간:</span>
           </div>
-          <div className="font-semibold text-gray-700">
+          <div className="flex flex-col font-semibold text-gray-700 gap-y-8">
             {getFormattedApplicationPeriod(
               applicationStartDate,
               applicationEndDate,
             )}
-          </div>
-        </div>
-
-        <div className="mt-14">
-          {isApplicationAllowed ? (
             <>
-              {isParticipating ? (
-                <Button
-                  onClick={onCancel}
-                  fullWidth
-                  variant="danger"
-                  disabled={isCancelLoading}
-                >
-                  {isCancelLoading ? '취소 중...' : '신청 취소'}
-                </Button>
+              {isApplicationAllowed ? (
+                <>
+                  {isParticipating ? (
+                    <Button
+                      onClick={onCancel}
+                      fullWidth
+                      variant="danger"
+                      disabled={isCancelLoading}
+                    >
+                      {isCancelLoading ? '취소 중...' : '신청 취소'}
+                    </Button>
+                  ) : (
+                    <Button
+                      onClick={onParticipate}
+                      fullWidth
+                      disabled={isParticipateLoading}
+                    >
+                      {isParticipateLoading ? '신청 중...' : '신청 하기'}
+                    </Button>
+                  )}
+                </>
               ) : (
                 <Button
-                  onClick={onParticipate}
+                  variant="secondary"
                   fullWidth
-                  disabled={isParticipateLoading}
+                  disabled={true}
+                  className="cursor-not-allowed"
                 >
-                  {isParticipateLoading ? '신청 중...' : '신청 하기'}
+                  {isBeforeApplicationStart ? '예정됨' : '신청마감'}
                 </Button>
               )}
             </>
-          ) : (
-            <Button
-              variant="secondary"
-              fullWidth
-              disabled={true}
-              className="cursor-not-allowed"
-            >
-              신청마감
-            </Button>
-          )}
+          </div>
+        </div>
+
+        <div className="mx-auto mt-2 w-fit">
+          <RenamingTime
+            isApplicationAllowed={isApplicationAllowed}
+            isBeforeApplicationStart={isBeforeApplicationStart}
+            applicationStartDate={applicationStartDate}
+            applicationEndDate={applicationEndDate}
+            size="small"
+          />
         </div>
       </div>
     </div>
