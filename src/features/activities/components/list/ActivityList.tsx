@@ -4,6 +4,8 @@ import 'moment/locale/ko';
 import { useState } from 'react';
 import ListTab from '../tab/ListTab';
 import { Activity } from '../item';
+import NoActivity from './NoActivity';
+import { getTypeLabel } from '../../../../utils';
 interface ActivityListContainerProps {
   activities: ActivityResponseDto[];
 }
@@ -35,18 +37,30 @@ export default function ActivityListContainer({
         </div>
         <ListTab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       </div>
-      {filteredUsers.map(activity => (
-        <Activity
-          key={activity.id}
-          id={activity.id}
-          title={activity.title}
-          type={activity.type}
-          location={activity.location}
-          status={activity.status}
-          maxParticipants={activity.maxParticipants}
-          currentParticipants={activity.currentParticipants}
-        />
-      ))}
+      {activities.length > 0 ? (
+        <>
+          {filteredUsers.length > 0 ? (
+            <>
+              {filteredUsers.map(activity => (
+                <Activity
+                  key={activity.id}
+                  id={activity.id}
+                  title={activity.title}
+                  type={activity.type}
+                  location={activity.location}
+                  status={activity.status}
+                  maxParticipants={activity.maxParticipants}
+                  currentParticipants={activity.currentParticipants}
+                />
+              ))}
+            </>
+          ) : (
+            <NoActivity text={'오늘 ' + getTypeLabel(selectedTab) + '은'} />
+          )}
+        </>
+      ) : (
+        <NoActivity text={'오늘은'} />
+      )}
     </section>
   );
 }
