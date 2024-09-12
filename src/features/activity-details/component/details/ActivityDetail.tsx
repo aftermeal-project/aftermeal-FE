@@ -73,7 +73,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
   };
 
   return (
-    <div className="mx-auto grid w-full max-w-screen-xl grid-cols-1 rounded-lg max-[1000px]:mb-[5.5rem] min-[1000px]:grid-cols-3 min-[1000px]:gap-x-4 min-[1000px]:py-8">
+    <div className="mx-auto grid w-full max-w-[1000px] grid-cols-1 rounded-lg max-[1000px]:mb-[5.5rem] min-[1000px]:grid-cols-3 min-[1000px]:gap-x-4 min-[1000px]:py-8">
       <div className="space-y-4 md:col-span-2">
         <InformationSection activity={activity} isSmallScreen={isSmallScreen} />
         <ParticipantsListSection participants={activity.participants} />

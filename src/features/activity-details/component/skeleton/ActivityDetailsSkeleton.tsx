@@ -3,7 +3,7 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function ActivityDetailSkeleton() {
   return (
-    <div className="mx-auto grid w-full max-w-screen-xl grid-cols-1 gap-x-4 gap-y-6 rounded-lg px-4 py-8 max-[1000px]:gap-x-0 max-[1000px]:gap-y-6 min-[1000px]:grid-cols-3">
+    <div className="mx-auto grid w-full max-w-[1000px] grid-cols-1 gap-x-4 gap-y-6 rounded-lg px-4 py-8 max-[1000px]:gap-x-0 max-[1000px]:gap-y-6 min-[1000px]:grid-cols-3">
       <div className="space-y-4 md:col-span-2">
         <div className="p-6 bg-white rounded-lg shadow-md">
           <div className="flex items-center justify-between mb-10">
