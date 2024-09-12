@@ -14,15 +14,15 @@ export default function Header() {
 
   return (
     <header className="relative flex items-center w-full h-16 px-4 bg-header-gradient sm:h-20 lg:h-24">
-      <div className="relative flex items-center justify-between w-full max-w-screen-xl mx-auto text-white">
+      <div className="relative mx-auto flex w-full max-w-[1000px] items-center justify-between text-white">
         <div className="flex items-center gap-x-3">
           <img
             src="/after-meal.png"
             alt="logo"
-            className="object-cover w-12 h-12 border-2 border-white rounded-full cursor-pointer"
+            className="object-cover border-2 border-white rounded-full cursor-pointer h-11 w-11"
             onClick={() => navigate('/')}
           />
-          <a href="/" className="text-2xl font-bold sm:text-3xl">
+          <a href="/" className="text-[26px] font-bold">
             에프터밀
           </a>
         </div>
