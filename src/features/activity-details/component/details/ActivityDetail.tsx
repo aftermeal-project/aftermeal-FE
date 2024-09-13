@@ -54,7 +54,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
   };
 
   const isParticipated = activity.participants.some(
-    participant => participant.displayName === user.name,
+    participant => participant.id === Number(user.id),
   );
 
   const isBeforeApplicationStart = () => {
