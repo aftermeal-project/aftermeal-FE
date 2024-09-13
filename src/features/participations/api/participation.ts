@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { ParticipateAPI } from '../../../libs/api/participate';
+import { ParticipationAPI } from '../../../libs/api/participations';
 import { ActivityResponseDto } from '../../../types';
 
-export function useParticipate() {
+export function useParticipation() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<void, Error, string>({
-    mutationFn: ParticipateAPI,
+    mutationFn: ParticipationAPI,
     onMutate: async activityId => {
       await queryClient.cancelQueries({ queryKey: ['activities'] });
 
@@ -46,5 +46,5 @@ export function useParticipate() {
     },
   });
 
-  return { participate: mutation, isParticipateLoading: mutation.isPending };
+  return { participation: mutation, isParticipateLoading: mutation.isPending };
 }

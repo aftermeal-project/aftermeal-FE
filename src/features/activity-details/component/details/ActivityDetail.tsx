@@ -9,9 +9,9 @@ import {
 } from '../details';
 import { useRecoilValue } from 'recoil';
 import { UserAtom } from '../../../../atoms';
-import { useParticipate } from '../../../participate/api/participate';
-import useCancelParticipate from '../../../participate/api/cancel-participate';
 import moment from 'moment';
+import { useParticipation } from '../../../participations/api/participation';
+import { useCancelParticipation } from '../../../participations/api/cancel-participation';
 
 interface ActivityDetailProps {
   activity: ActivityDetailResponseDto;
@@ -21,8 +21,8 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
   const user = useRecoilValue(UserAtom);
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
 
-  const { participate, isParticipateLoading } = useParticipate();
-  const { cancelParticipate, isCancelLoading } = useCancelParticipate();
+  const { participation, isParticipateLoading } = useParticipation();
+  const { cancelParticipation, isCancelLoading } = useCancelParticipation();
 
   useEffect(() => {
     const handleResize = () => {
@@ -53,7 +53,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
     return isStatusValid && hasSpaceAvailable && isWithinApplicationPeriod;
   };
 
-  const isParticipating = activity.participants.some(
+  const isParticipated = activity.participants.some(
     participant => participant.displayName === user.name,
   );
 
@@ -68,11 +68,11 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
   };
 
   const handleParticipate = (activityId: number) => {
-    participate.mutate(String(activityId));
+    participation.mutate(String(activityId));
   };
 
   const handleCancel = (activityId: number) => {
-    cancelParticipate.mutate(String(activityId));
+    cancelParticipation.mutate(String(activityId));
   };
 
   return (
@@ -94,7 +94,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
             activity.applicationEndDate,
           )}
           isBeforeApplicationStart={isBeforeApplicationStart()}
-          isParticipating={isParticipating}
+          isParticipated={isParticipated}
           onParticipate={() => handleParticipate(activity.id)}
           onCancel={() => handleCancel(activity.id)}
           isParticipateLoading={isParticipateLoading}
@@ -112,7 +112,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
             activity.applicationStartDate,
           )}
           isBeforeApplicationStart={isBeforeApplicationStart()}
-          isParticipating={isParticipating}
+          isParticipated={isParticipated}
           onParticipate={() => handleParticipate(activity.id)}
           onCancel={() => handleCancel(activity.id)}
           isParticipateLoading={isParticipateLoading}

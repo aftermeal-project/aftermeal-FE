@@ -6,8 +6,7 @@ interface ApplicationFooterProps {
   applicationEndDate: string;
   isApplicationAllowed: boolean;
   isBeforeApplicationStart: boolean;
-
-  isParticipating: boolean;
+  isParticipated: boolean;
   isParticipateLoading: boolean;
   isCancelLoading: boolean;
   onParticipate: () => void;
@@ -19,7 +18,7 @@ export default function ApplicationFooter({
   applicationEndDate,
   isApplicationAllowed,
   isBeforeApplicationStart,
-  isParticipating,
+  isParticipated,
   isParticipateLoading,
   isCancelLoading,
   onParticipate,
@@ -37,7 +36,7 @@ export default function ApplicationFooter({
             size="large"
           />
           <>
-            {isParticipating ? (
+            {isParticipated ? (
               <Button
                 onClick={onCancel}
                 variant="danger"

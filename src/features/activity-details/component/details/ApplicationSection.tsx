@@ -17,7 +17,7 @@ interface ApplicationSectionProps {
   applicationEndDate: string;
   isApplicationAllowed: boolean;
   isBeforeApplicationStart: boolean;
-  isParticipating: boolean;
+  isParticipated: boolean;
   isParticipateLoading: boolean;
   isCancelLoading: boolean;
   onParticipate: () => void;
@@ -30,7 +30,7 @@ export default function ApplicationSection({
   applicationEndDate,
   isApplicationAllowed,
   isBeforeApplicationStart,
-  isParticipating,
+  isParticipated,
   isParticipateLoading,
   isCancelLoading,
   onParticipate,
@@ -60,7 +60,7 @@ export default function ApplicationSection({
             <>
               {isApplicationAllowed ? (
                 <>
-                  {isParticipating ? (
+                  {isParticipated ? (
                     <Button
                       onClick={onCancel}
                       fullWidth

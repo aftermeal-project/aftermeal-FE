@@ -1,13 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
-import { CancelParticipateAPI } from '../../../libs/api/participate';
+import { CancelParticipationAPI } from '../../../libs/api/participations';
 import { ActivityResponseDto } from '../../../types';
 
-export default function useCancelParticipate() {
+export function useCancelParticipation() {
   const queryClient = useQueryClient();
 
   const mutation = useMutation<void, Error, string>({
-    mutationFn: CancelParticipateAPI,
+    mutationFn: CancelParticipationAPI,
     onMutate: async activityId => {
       await queryClient.cancelQueries({ queryKey: ['activities'] });
 
@@ -47,5 +47,5 @@ export default function useCancelParticipate() {
     },
   });
 
-  return { cancelParticipate: mutation, isCancelLoading: mutation.isPending };
+  return { cancelParticipation: mutation, isCancelLoading: mutation.isPending };
 }
