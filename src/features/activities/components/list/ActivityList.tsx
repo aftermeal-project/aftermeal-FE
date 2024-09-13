@@ -7,7 +7,7 @@ import { Activity } from '../item';
 import NoActivity from './NoActivity';
 import { getTypeLabel } from '../../../../utils';
 interface ActivityListContainerProps {
-  activities: ActivityResponseDto[];
+  activities: ActivityResponseDto[] | null;
 }
 
 export default function ActivityListContainer({
@@ -23,9 +23,9 @@ export default function ActivityListContainer({
 
   const [selectedTab, setSelectedTab] = useState<string>(getCurrentHour);
 
-  const filteredActivities = activities?.filter(
-    activity => activity.type === selectedTab,
-  );
+  const filteredActivities = Array.isArray(activities)
+    ? activities.filter(activity => activity.type === selectedTab)
+    : [];
 
   return (
     <section>
@@ -37,7 +37,7 @@ export default function ActivityListContainer({
         </div>
         <ListTab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
       </div>
-      {activities.length > 0 ? (
+      {Array.isArray(activities) && activities.length > 0 ? (
         <>
           {filteredActivities.length > 0 ? (
             <>
