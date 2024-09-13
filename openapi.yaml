@@ -18,6 +18,8 @@ tags:
     description: 사용자 관련 엔드포인트
   - name: Activities
     description: 활동 관련 엔드포인트
+  - name: Participations
+    description: 참가 관련 엔드포인트
   - name: Authentication
     description: 인증 관련 엔드포인트
 
@@ -26,7 +28,6 @@ paths:
     post:
       tags:
         - Users
-      operationId: UserController_register
       summary: 사용자 등록
       requestBody:
         required: true
@@ -57,7 +58,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ActivityResponseDto'
+                  $ref: '#/components/schemas/ActivityListResponseDto'
 
   /activities/{activityId}:
     get:
@@ -78,48 +79,49 @@ paths:
               schema:
                 $ref: '#/components/schemas/ActivityDetailResponseDto'
 
-  /activities/{activityId}/joins:
+  /participations:
     post:
       tags:
-        - Activities
-      summary: 활동 참여
+        - Participations
+      summary: 참가 신청
       security:
         - bearerAuth: []
-      parameters:
-        - name: activityId
-          in: path
-          required: true
-          schema:
-            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ParticipationApplicationRequestDto'
       responses:
         201:
           description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ActivityJoinRequestDto'
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
+        409:
+          description: Conflict
 
-  /activities/{activityId}/joins/{joinId}:
+  /participations/{participationId}:
     delete:
       tags:
-        - Activities
-      summary: 활동 참여 취소
+        - Participations
+      summary: 참가 취소
       security:
         - bearerAuth: []
       parameters:
-        - name: activityId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: joinId
+        - name: participationId
           in: path
           required: true
           schema:
             type: integer
       responses:
         204:
-          description: Join canceled successfully
+          description: Participation canceled successfully
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
 
   /auth/login:
     post:
@@ -142,7 +144,6 @@ paths:
 
   /auth/refresh:
     post:
-      operationId: AuthController_refresh
       summary: 토큰 갱신
       requestBody:
         required: true
@@ -192,7 +193,7 @@ components:
         - type
         - password
 
-    ActivityResponseDto:
+    ActivityListResponseDto:
       type: object
       properties:
         id:
@@ -279,7 +280,7 @@ components:
         - applicationStartDate
         - applicationEndDate
 
-    ActivityJoinRequestDto:
+    ParticipationApplicationRequestDto:
       type: object
       properties:
         activityId:

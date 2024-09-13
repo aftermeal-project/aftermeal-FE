@@ -21,6 +21,8 @@ tags:
     description: 활동 관련 엔드포인트
   - name: Activity Locations
     description: 활동 장소 관련 엔드포인트
+  - name: Participations
+    description: 참가 관련 엔드포인트
   - name: Authentication
     description: 인증 관련 엔드포인트
 
@@ -173,28 +175,6 @@ paths:
         204:
           description: Activity deleted successfully
 
-  /admin/activities/{activityId}/joins/{joinId}:
-    delete:
-      tags:
-        - Activities
-      summary: 활동 참여 취소
-      security:
-        - bearerAuth: []
-      parameters:
-        - name: activityId
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: joinId
-          in: path
-          required: true
-          schema:
-            type: integer
-      responses:
-        204:
-          description: Join deleted successfully
-
   /admin/activity-locations:
     post:
       tags:
@@ -272,6 +252,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ActivityLocationListResponseDto'
+
+  /admin/participations/{participationId}:
+    delete:
+      tags:
+        - Participations
+      summary: 참가 취소
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: participationId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: Participation canceled successfully
+        400:
+          description: Bad Request
+        404:
+          description: Not Found
 
   /auth/login:
     post:
@@ -440,6 +441,8 @@ components:
           type: string
         maxParticipants:
           type: integer
+        location:
+          type: string
         status:
           type: string
           enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
