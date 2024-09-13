@@ -1,10 +1,12 @@
-import { GetActivitiesResponse } from '../../types/activities';
+import { ActivityResponseDto } from '../../types';
 import { instance } from '../instance';
 
+const url = '/activities';
+
 export const GetActivitiesAPI = async () => {
-  const response = await instance<GetActivitiesResponse>({
+  const response = await instance<ActivityResponseDto[]>({
     method: 'GET',
-    url: '/v1/activities',
+    url: url,
   });
 
   return response.data;

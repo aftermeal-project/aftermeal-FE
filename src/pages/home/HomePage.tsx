@@ -1,16 +1,15 @@
 import { Suspense } from 'react';
-import ErrorScreen from '../../components/error/ErrorScreen';
-import {
-  ActivityListSkeleton,
-  HomePageContainer,
-} from '../../components/ui/home';
 import { errorMessages } from '../../constants';
-import { Activity } from '../../types/activities';
 import {
+  HomePageContainer,
+  ErrorScreen,
+  FetchErrorBoundary,
+} from '../../components';
+import {
+  ActivityList,
   ActivityListFetcher,
-  ActivityListContainer,
-} from '../../features/activity';
-import { FetchErrorBoundary } from '../../components/@global';
+  ActivityListSkeleton,
+} from '../../features/activities';
 
 export default function HomePage() {
   return (
@@ -20,11 +19,9 @@ export default function HomePage() {
       }
     >
       <HomePageContainer>
-        <Suspense fallback={<ActivityListSkeleton />}>
+        <Suspense fallback={<ActivityListSkeleton type="List" />}>
           <ActivityListFetcher>
-            {(activities: Activity[]) => (
-              <ActivityListContainer activities={activities} />
-            )}
+            {activities => <ActivityList activities={activities} />}
           </ActivityListFetcher>
         </Suspense>
       </HomePageContainer>

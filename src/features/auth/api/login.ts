@@ -1,22 +1,23 @@
 import { useMutation } from '@tanstack/react-query';
 import { LoginAPI } from '../../../libs/api/auth';
 import Token from '../../../libs/utils/token';
-import { LoginRequest } from '../../../types/auth';
 import { AxiosError } from 'axios';
 import { errorMessages, validationMessages } from '../../../constants';
 import { FieldError, UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
+import { LoginRequestDto, LoginResponseDto } from '../../../types';
+import toast from 'react-hot-toast';
 
 const token = new Token();
 
 interface useLoginProps {
-  setError: UseFormSetError<LoginRequest>;
+  setError: UseFormSetError<LoginRequestDto>;
   navigate: NavigateFunction;
 }
 
 interface handleLoginErrorProps {
   error: any;
-  setError: UseFormSetError<LoginRequest>;
+  setError: UseFormSetError<LoginRequestDto>;
 }
 
 function handleLoginError({ error, setError }: handleLoginErrorProps) {
@@ -48,16 +49,20 @@ function handleLoginError({ error, setError }: handleLoginErrorProps) {
   }
 }
 
+function handleOnSuccess(data: LoginResponseDto, navigate: NavigateFunction) {
+  let onlyToken = JSON.parse(JSON.stringify(data));
+  delete onlyToken.user;
+
+  token.setUser(onlyToken);
+  toast.success('로그인에 성공했습니다');
+  navigate('/');
+}
+
 export default function useLogin({ setError, navigate }: useLoginProps) {
   const mutation = useMutation({
-    mutationFn: (data: LoginRequest) => LoginAPI(data),
-    onSuccess: data => {
-      token.setUser(data);
-      navigate('/');
-    },
-    onError: (error: any) => {
-      handleLoginError({ error, setError });
-    },
+    mutationFn: (data: LoginRequestDto) => LoginAPI(data),
+    onSuccess: (data: LoginResponseDto) => handleOnSuccess(data, navigate),
+    onError: (error: any) => handleLoginError({ error, setError }),
   });
 
   return {

@@ -3,17 +3,18 @@ import { AxiosError } from 'axios';
 import { errorMessages, validationMessages } from '../../../constants';
 import { UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
-import { SignupAPI } from '../../../libs/api/user';
-import { SignupRequest } from '../../../types/user';
+import { SignupAPI } from '../../../libs/api/users';
+import { UserRegistrationRequestDto } from '../../../types';
+import toast from 'react-hot-toast';
 
 interface useSignupProps {
-  setError: UseFormSetError<SignupRequest>;
+  setError: UseFormSetError<UserRegistrationRequestDto>;
   navigate: NavigateFunction;
 }
 
 interface HandleSignupErrorProps {
   error: any;
-  setError: UseFormSetError<SignupRequest>;
+  setError: UseFormSetError<UserRegistrationRequestDto>;
 }
 
 function handleSignupError({ error, setError }: HandleSignupErrorProps) {
@@ -22,7 +23,7 @@ function handleSignupError({ error, setError }: HandleSignupErrorProps) {
 
     const errorMapping: Record<
       number,
-      { field: keyof SignupRequest; message: string }
+      { field: keyof UserRegistrationRequestDto; message: string }
     > = {
       400: {
         field: 'generationNumber',
@@ -61,8 +62,9 @@ function handleSignupError({ error, setError }: HandleSignupErrorProps) {
 
 export default function useSignup({ setError, navigate }: useSignupProps) {
   const mutation = useMutation({
-    mutationFn: (data: SignupRequest) => SignupAPI(data),
-    onSuccess: data => {
+    mutationFn: (data: UserRegistrationRequestDto) => SignupAPI(data),
+    onSuccess: () => {
+      toast.success('가입이 완료 되었습니다');
       navigate('/login');
     },
     onError: (error: any) => {

@@ -1,26 +1,28 @@
-import { LoginRequest, LoginResponse } from '../../types/auth';
+import {
+  LoginRequestDto,
+  LoginResponseDto,
+  TokenRefreshRequestDto,
+  TokenRefreshResponseDto,
+} from '../../types';
 import { instance } from '../instance';
-import Token from '../utils/token';
 
-const token = new Token();
-
-export const LoginAPI = async (loginRequest: LoginRequest) => {
-  const response = await instance<LoginResponse>({
+export const LoginAPI = async (loginRequest: LoginRequestDto) => {
+  const response = await instance<LoginResponseDto>({
     method: 'POST',
-    url: '/v1/auth/login',
+    url: '/auth/login',
     data: loginRequest,
   });
 
   return response.data;
 };
 
-export const RefreshAPI = async () => {
-  const response = await instance<LoginResponse>({
+export const RefreshAPI = async (
+  tokenRefreshRequest: TokenRefreshRequestDto,
+) => {
+  const response = await instance<TokenRefreshResponseDto>({
     method: 'POST',
-    url: '/v1/auth/refresh',
-    data: {
-      refreshToken: token.getLocalRefreshToken(),
-    },
+    url: '/auth/refresh',
+    data: tokenRefreshRequest,
   });
 
   return response.data;
