@@ -23,7 +23,7 @@ export default function ActivityListContainer({
 
   const [selectedTab, setSelectedTab] = useState<string>(getCurrentHour);
 
-  const filteredActivities = activities.filter(
+  const filteredActivities = activities?.filter(
     activity => activity.type === selectedTab,
   );
 
