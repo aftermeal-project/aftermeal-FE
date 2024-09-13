@@ -81,7 +81,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
         <InformationSection activity={activity} isSmallScreen={isSmallScreen} />
         <ParticipantsListSection participants={activity.participants} />
       </div>
-      {!isSmallScreen && (
+      {!isSmallScreen ? (
         <ApplicationSection
           location={activity.location}
           applicationStartDate={activity.applicationStartDate}
@@ -100,8 +100,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
           isParticipateLoading={isParticipateLoading}
           isCancelLoading={isCancelLoading}
         />
-      )}
-      {isSmallScreen && (
+      ) : (
         <ApplicationFooter
           applicationStartDate={activity.applicationStartDate}
           applicationEndDate={activity.applicationEndDate}
