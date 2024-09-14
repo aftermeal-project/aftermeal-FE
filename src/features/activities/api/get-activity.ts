@@ -1,6 +1,4 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { errorMessages } from '../../../constants';
 import { GetActivitiesAPI } from '../../../libs/api/activities';
 import { UserListResponseDtoRoles } from '../../../types';
 import { AdminGetActivitiesAPI } from '../../../libs/api/admin.activities';
@@ -20,32 +18,11 @@ async function getActivities({
   }
 }
 
-function handleGetActivitiesError(error: any) {
-  if (!error) return null;
-
-  if (error instanceof AxiosError) {
-    const { response } = error;
-
-    if (!response) {
-      return errorMessages.ERR_NETWORK;
-    }
-
-    switch (response.status) {
-      case 500:
-        return errorMessages.SERVER_ERROR;
-      default:
-        return errorMessages.DEFAULT_ERROR;
-    }
-  }
-
-  return errorMessages.UNKNOWN_ERROR;
-}
-
 export default function useGetActivities(roles?: UserListResponseDtoRoles[]) {
   const token = new Token();
   const isLoggedIn = token.getLocalAccessToken() !== null;
 
-  const { data, error } = useSuspenseQuery({
+  const { data } = useSuspenseQuery({
     queryKey: isLoggedIn ? ['activities', roles] : ['activities'],
     queryFn: getActivities,
     retry: false,
@@ -54,6 +31,5 @@ export default function useGetActivities(roles?: UserListResponseDtoRoles[]) {
 
   return {
     data,
-    error: handleGetActivitiesError(error),
   };
 }

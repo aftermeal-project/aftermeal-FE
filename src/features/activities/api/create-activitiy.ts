@@ -11,10 +11,6 @@ async function createActivity(data: ActivityCreationRequestDto): Promise<void> {
   await CreateActivityAPI(data);
 }
 
-function handleCreateActivityError() {
-  alert(errorMessages.UNKNOWN_ERROR);
-}
-
 export default function useCreateActivity() {
   const queryClient = useQueryClient();
 
@@ -39,7 +35,7 @@ export default function useCreateActivity() {
     },
     onError: (_error, _variables, context: any) => {
       queryClient.setQueryData(['activities'], context.previousActivities);
-      handleCreateActivityError();
+      alert(errorMessages.UNKNOWN_ERROR);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['activities'] });

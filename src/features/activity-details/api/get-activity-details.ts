@@ -1,6 +1,4 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
-import { errorMessages } from '../../../constants';
 import { UserListResponseDtoRoles } from '../../../types';
 import Token from '../../../libs/utils/token';
 import { AdminGetActivityDetailsAPI } from '../../../libs/api/admin.activity-details';
@@ -15,34 +13,13 @@ async function getActivityDetails({
     roles?: UserListResponseDtoRoles[],
   ];
 }) {
-  const [activityId, roles] = queryKey;
+  const [_key, activityId, roles] = queryKey;
 
   if (roles?.includes('ADMIN')) {
     return AdminGetActivityDetailsAPI(activityId);
   } else {
     return GetActivityDetailsAPI(activityId);
   }
-}
-
-function handleGetActivityDetailsError(error: any) {
-  if (!error) return null;
-
-  if (error instanceof AxiosError) {
-    const { response } = error;
-
-    if (!response) {
-      return errorMessages.ERR_NETWORK;
-    }
-
-    switch (response.status) {
-      case 500:
-        return errorMessages.SERVER_ERROR;
-      default:
-        return errorMessages.DEFAULT_ERROR;
-    }
-  }
-
-  return errorMessages.UNKNOWN_ERROR;
 }
 
 export default function useGetActivityDetails(
@@ -52,7 +29,7 @@ export default function useGetActivityDetails(
   const token = new Token();
   const isLoggedIn = token.getLocalAccessToken() !== null;
 
-  const { data, error } = useSuspenseQuery({
+  const { data } = useSuspenseQuery({
     queryKey: isLoggedIn
       ? ['activity-details', activityId, roles]
       : ['activity-details', activityId],
@@ -63,6 +40,5 @@ export default function useGetActivityDetails(
 
   return {
     data,
-    error: handleGetActivityDetailsError(error),
   };
 }

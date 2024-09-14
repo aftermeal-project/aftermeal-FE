@@ -9,6 +9,7 @@ import {
 import { errorMessages } from '../../../../constants';
 import useGetActivityLocation from '../../../activity-locations/api/get-activity-locations';
 import { SelectInput } from '../select';
+import { ActivityLocationListResponseDto } from '../../../../types';
 
 interface LocationSelectInputProps<T extends FieldValues> {
   title: Path<T>;
@@ -30,7 +31,7 @@ export default function LocationSelectInput<T extends FieldValues>({
 
   const options = loading
     ? [{ value: 'none', label: 'Loading ...' }]
-    : data?.map(location => ({
+    : data?.map((location: ActivityLocationListResponseDto) => ({
         value: location.name.toString(),
         label: location.name,
       })) || [];

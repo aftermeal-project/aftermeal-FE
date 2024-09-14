@@ -1,16 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
-import { AxiosError } from 'axios';
 import { errorMessages, validationMessages } from '../../../constants';
 import { UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
 import { SignupAPI } from '../../../libs/api/users';
 import { UserRegistrationRequestDto } from '../../../types';
 import toast from 'react-hot-toast';
-
-interface useSignupProps {
-  setError: UseFormSetError<UserRegistrationRequestDto>;
-  navigate: NavigateFunction;
-}
+import { HTTPError } from '../../../libs/utils/error';
 
 interface HandleSignupErrorProps {
   error: any;
@@ -18,8 +13,8 @@ interface HandleSignupErrorProps {
 }
 
 function handleSignupError({ error, setError }: HandleSignupErrorProps) {
-  if (error instanceof AxiosError) {
-    const { response } = error;
+  if (error instanceof HTTPError) {
+    const { statusCode } = error;
 
     const errorMapping: Record<
       number,
@@ -39,7 +34,7 @@ function handleSignupError({ error, setError }: HandleSignupErrorProps) {
       },
     };
 
-    const errorDetail = errorMapping[Number(response?.status)];
+    const errorDetail = errorMapping[Number(statusCode)];
 
     if (errorDetail) {
       setError(errorDetail.field, {
@@ -58,6 +53,11 @@ function handleSignupError({ error, setError }: HandleSignupErrorProps) {
       message: errorMessages.UNKNOWN_ERROR,
     });
   }
+}
+
+interface useSignupProps {
+  setError: UseFormSetError<UserRegistrationRequestDto>;
+  navigate: NavigateFunction;
 }
 
 export default function useSignup({ setError, navigate }: useSignupProps) {

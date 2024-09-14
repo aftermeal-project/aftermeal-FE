@@ -9,11 +9,7 @@ interface ActivityLocationListFetcherProps {
 export default function ActivityLocationListFetcher({
   children,
 }: ActivityLocationListFetcherProps) {
-  const { data, error } = useGetActivityLocation();
-
-  if (error) {
-    throw new Error(error);
-  }
+  const { data } = useGetActivityLocation();
 
   return <>{data && children(data)}</>;
 }

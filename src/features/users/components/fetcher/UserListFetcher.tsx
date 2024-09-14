@@ -9,11 +9,7 @@ interface UserListFetcherProps {
 export default function ActivityListFetcher({
   children,
 }: UserListFetcherProps) {
-  const { data, error } = useGetUsers();
-
-  if (error) {
-    throw new Error(error);
-  }
+  const { data } = useGetUsers();
 
   return <>{data && children(data)}</>;
 }

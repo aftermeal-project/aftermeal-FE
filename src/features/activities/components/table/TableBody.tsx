@@ -39,68 +39,69 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
 
   return (
     <tbody>
-      {activities.map(activity => (
-        <tr
-          key={activity.id}
-          onClick={() => handleActivityClick(activity.id)}
-          className="border-b border-gray-200 cursor-pointer hover:bg-gray-100"
-        >
-          <td className="px-4 py-2">
-            <BodyCell title="scheduledDate" value={activity.scheduledDate} />
-          </td>
-          <td className="px-4 py-2">
-            <BodyCell title="title" value={activity.title} />
-          </td>
-          <td className="px-4 py-2">
-            <BodyCell title="location" value={activity.location} />
-          </td>
-          <td className="px-4 py-2">
-            <BodyCell title="type" value={activity.type} />
-          </td>
-          <td className="px-4 py-2">
-            <BodyCell title="status" value={activity.status} />
-          </td>
-          <td className="px-4 py-2">
-            <BodyCell
-              title="applicationStartDate"
-              value={activity.applicationStartDate}
-            />
-          </td>
-          <td className="px-4 py-2">
-            <BodyCell
-              title="applicationEndDate"
-              value={activity.applicationEndDate}
-            />
-          </td>
-          <td className="px-4 py-2">
-            <BodyCell
-              title="maxParticipants"
-              value={
-                activity.currentParticipants +
-                '/' +
-                activity.maxParticipants +
-                '명 ' +
-                calculatePercentage(
-                  activity.currentParticipants,
-                  activity.maxParticipants,
-                )
-              }
-            />
-          </td>
-          <td className="px-4 py-2">
-            <Dropdown
-              onUpdate={e => {
-                e.stopPropagation();
-                handleUpdate(activity);
-              }}
-              onDelete={e => {
-                e.stopPropagation();
-                handleDelete(activity.id);
-              }}
-            />
-          </td>
-        </tr>
-      ))}
+      {Array.isArray(activities) &&
+        activities.map(activity => (
+          <tr
+            key={activity.id}
+            onClick={() => handleActivityClick(activity.id)}
+            className="border-b border-gray-200 cursor-pointer hover:bg-gray-100"
+          >
+            <td className="px-4 py-2">
+              <BodyCell title="scheduledDate" value={activity.scheduledDate} />
+            </td>
+            <td className="px-4 py-2">
+              <BodyCell title="title" value={activity.title} />
+            </td>
+            <td className="px-4 py-2">
+              <BodyCell title="location" value={activity.location} />
+            </td>
+            <td className="px-4 py-2">
+              <BodyCell title="type" value={activity.type} />
+            </td>
+            <td className="px-4 py-2">
+              <BodyCell title="status" value={activity.status} />
+            </td>
+            <td className="px-4 py-2">
+              <BodyCell
+                title="applicationStartDate"
+                value={activity.applicationStartDate}
+              />
+            </td>
+            <td className="px-4 py-2">
+              <BodyCell
+                title="applicationEndDate"
+                value={activity.applicationEndDate}
+              />
+            </td>
+            <td className="px-4 py-2">
+              <BodyCell
+                title="maxParticipants"
+                value={
+                  activity.currentParticipants +
+                  '/' +
+                  activity.maxParticipants +
+                  '명 ' +
+                  calculatePercentage(
+                    activity.currentParticipants,
+                    activity.maxParticipants,
+                  )
+                }
+              />
+            </td>
+            <td className="px-4 py-2">
+              <Dropdown
+                onUpdate={e => {
+                  e.stopPropagation();
+                  handleUpdate(activity);
+                }}
+                onDelete={e => {
+                  e.stopPropagation();
+                  handleDelete(activity.id);
+                }}
+              />
+            </td>
+          </tr>
+        ))}
     </tbody>
   );
 }

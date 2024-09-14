@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserListResponseDto, UserUpdateRequestDto } from '../../../types';
-import { errorMessages } from '../../../constants';
 import { UpdateUserAPI } from '../../../libs/api/admin.users';
 import toast from 'react-hot-toast';
+import { errorMessages } from '../../../constants';
 
 function updateUser(userId: string, data: UserUpdateRequestDto): Promise<void> {
   if (data.type === 'TEACHER') {
@@ -11,10 +11,6 @@ function updateUser(userId: string, data: UserUpdateRequestDto): Promise<void> {
   }
 
   return UpdateUserAPI(userId, data);
-}
-
-function handleUpdateUserError(_error: Error) {
-  alert(errorMessages.UNKNOWN_ERROR);
 }
 
 export default function useUpdateUser() {
@@ -48,7 +44,8 @@ export default function useUpdateUser() {
         ['users', _variables.userId],
         context?.previousUserData,
       );
-      handleUpdateUserError(_error);
+
+      alert(errorMessages.UNKNOWN_ERROR);
     },
     onSettled: async (_data, _error, variables, _con) => {
       await queryClient.invalidateQueries({

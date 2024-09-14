@@ -8,10 +8,6 @@ async function deleteActivity(activityId: string): Promise<void> {
   await DeleteActivityAPI(activityId);
 }
 
-function handleDeleteActivityError(_error: Error) {
-  alert(errorMessages.UNKNOWN_ERROR);
-}
-
 export default function useDeleteActivity() {
   const queryClient = useQueryClient();
   const mutation = useMutation<void, Error, string>({
@@ -43,12 +39,12 @@ export default function useDeleteActivity() {
           context.previousActivity,
         );
       }
-      handleDeleteActivityError(_error);
+      alert(errorMessages.UNKNOWN_ERROR);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['activities'] });
     },
   });
 
-  return { deleteActivity: mutation, error: mutation.error };
+  return { deleteActivity: mutation };
 }

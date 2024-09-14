@@ -13,11 +13,7 @@ export default function ActivityListFetcher({
 }: ActivityListFetcherProps) {
   const user = useRecoilValue(UserAtom);
 
-  const { data, error } = useGetActivities(user.roles);
-
-  if (error) {
-    throw new Error(error);
-  }
+  const { data } = useGetActivities(user.roles);
 
   return <>{data && children(data)}</>;
 }

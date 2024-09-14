@@ -1,15 +1,11 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityResponseDto } from '../../../types';
-import { errorMessages } from '../../../constants';
 import { DeleteUserAPI } from '../../../libs/api/admin.users';
 import toast from 'react-hot-toast';
+import { errorMessages } from '../../../constants';
 
 async function deleteUser(userId: string): Promise<void> {
   await DeleteUserAPI(userId);
-}
-
-function handleDeleteUserError(_error: Error) {
-  alert(errorMessages.UNKNOWN_ERROR);
 }
 
 export default function useDeleteUser() {
@@ -43,7 +39,7 @@ export default function useDeleteUser() {
           context.previousActivity,
         );
       }
-      handleDeleteUserError(_error);
+      alert(errorMessages.UNKNOWN_ERROR);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });
