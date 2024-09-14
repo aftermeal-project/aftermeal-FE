@@ -1,3 +1,3 @@
-export { default as ErrorScreen } from './ErrorScreen';
+export { default as ErrorFallback } from './ErrorFallback';
 export { default as FormErrorMessages } from './FormErrorMessages';
-export { default as FetchErrorBoundary } from './FetchErrorBoundary';
+export { default as ErrorBoundary } from './ErrorBoundary';
