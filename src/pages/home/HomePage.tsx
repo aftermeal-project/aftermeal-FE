@@ -1,9 +1,8 @@
 import { Suspense } from 'react';
-import { errorMessages } from '../../constants';
 import {
   HomePageContainer,
-  ErrorScreen,
-  FetchErrorBoundary,
+  ErrorFallback,
+  ErrorBoundary,
 } from '../../components';
 import {
   ActivityList,
@@ -13,11 +12,7 @@ import {
 
 export default function HomePage() {
   return (
-    <FetchErrorBoundary
-      fallback={
-        <ErrorScreen title="Oops!" description={errorMessages.DEFAULT_ERROR} />
-      }
-    >
+    <ErrorBoundary Fallback={ErrorFallback}>
       <HomePageContainer>
         <Suspense fallback={<ActivityListSkeleton type="List" />}>
           <ActivityListFetcher>
@@ -25,6 +20,6 @@ export default function HomePage() {
           </ActivityListFetcher>
         </Suspense>
       </HomePageContainer>
-    </FetchErrorBoundary>
+    </ErrorBoundary>
   );
 }

@@ -5,10 +5,9 @@ import {
   UserManagementTab,
   ActivityLocationManagementTab,
   TabsContainer,
-  ErrorScreen,
-  FetchErrorBoundary,
+  ErrorFallback,
+  ErrorBoundary,
 } from '../../components';
-import { errorMessages } from '../../constants';
 import { Tab } from '../../types';
 import { useRecoilValue } from 'recoil';
 import { UserAtom } from '../../atoms';
@@ -20,12 +19,12 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!user.roles.includes('ADMIN')) {
-      setRoleError(true);
+      setRoleError(false);
     }
   }, [user]);
 
   if (roleError) {
-    return <ErrorScreen title="권한 오류" description="잘못된 접근입니다." />;
+    return <ErrorFallback statusCode={403} />;
   }
 
   return (
@@ -35,18 +34,11 @@ export default function AdminPage() {
         setSelectedTab={setSelectedTab}
       />
       <TabsContainer>
-        <FetchErrorBoundary
-          fallback={
-            <ErrorScreen
-              title="Oops!"
-              description={errorMessages.DEFAULT_ERROR}
-            />
-          }
-        >
+        <ErrorBoundary Fallback={ErrorFallback}>
           {selectedTab === 'activities' && <ActivityManagementTab />}
           {selectedTab === 'users' && <UserManagementTab />}
           {selectedTab === 'locations' && <ActivityLocationManagementTab />}
-        </FetchErrorBoundary>
+        </ErrorBoundary>
       </TabsContainer>
     </div>
   );
