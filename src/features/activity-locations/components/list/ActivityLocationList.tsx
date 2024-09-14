@@ -50,7 +50,7 @@ export default function ActivityLocationList({
         placeholder="장소 검색 ..."
       />
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-        {filteredLocations.length > 0 ? (
+        {Array.isArray(locations) && filteredLocations.length > 0 ? (
           filteredLocations.map(location => (
             <ActivityLocationCard
               key={location.id}
