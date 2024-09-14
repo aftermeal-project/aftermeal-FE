@@ -44,6 +44,10 @@ function redirectTo(path: string) {
 function handleAPIError(error: AxiosError<ErrorResponseData>) {
   if (!error.response) throw error;
 
+  if (error.message === 'timeout') {
+    alert('요청 시간이 초과되었습니다. 다시 시도해 주세요.');
+  }
+
   const { status, data } = error.response;
   const errorMessage = data.message ? data.message : '알 수 없는 오류입니다.';
 
