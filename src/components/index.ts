@@ -3,6 +3,7 @@ export * from './container';
 export * from './dropdown';
 export * from './error';
 export * from './header';
+export * from './helmet';
 export * from './layout';
 export * from './input';
 export * from './loading';
