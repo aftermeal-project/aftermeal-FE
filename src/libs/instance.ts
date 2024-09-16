@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { RefreshAPI } from './api/auth';
 import Token from './utils/token';
 import { BASE_URL } from '../constants';
-import { HTTPError } from './utils/error';
+import { HTTPError } from './utils/http-error';
 import { ErrorResponseData } from '../types';
 
 const token = new Token();

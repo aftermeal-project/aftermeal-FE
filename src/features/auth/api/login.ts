@@ -6,7 +6,7 @@ import { FieldError, UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
 import { LoginRequestDto, LoginResponseDto } from '../../../types';
 import toast from 'react-hot-toast';
-import { HTTPError } from '../../../libs/utils/error';
+import { HTTPError } from '../../../libs/utils/http-error';
 
 interface handleLoginErrorProps {
   error: any;

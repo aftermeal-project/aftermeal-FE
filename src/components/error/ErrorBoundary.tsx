@@ -1,5 +1,5 @@
 import { PropsWithChildren, ComponentType, Component, ReactNode } from 'react';
-import { HTTPError } from '../../libs/utils/error';
+import { HTTPError } from '../../libs/utils/http-error';
 
 export interface ErrorProps {
   statusCode?: number;
