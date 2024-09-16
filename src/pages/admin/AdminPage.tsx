@@ -7,6 +7,7 @@ import {
   TabsContainer,
   ErrorFallback,
   ErrorBoundary,
+  SEOHelmet,
 } from '../../components';
 import { Tab } from '../../types';
 import { useRecoilValue } from 'recoil';
@@ -29,6 +30,11 @@ export default function AdminPage() {
 
   return (
     <div className="flex h-screen bg-gray-100">
+      <SEOHelmet
+        title="어드민 페이지"
+        description="어드민 페이지에서 사용자와 활동을 관리하고 업데이트하며 시스템 설정을 제어하세요."
+        url="/admin"
+      />
       <AdminPageSidebar
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
