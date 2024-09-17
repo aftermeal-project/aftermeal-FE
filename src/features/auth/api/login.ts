@@ -4,9 +4,15 @@ import Token from '../../../libs/utils/token';
 import { errorMessages, validationMessages } from '../../../constants';
 import { FieldError, UseFormSetError } from 'react-hook-form';
 import { NavigateFunction } from 'react-router-dom';
-import { LoginRequestDto, LoginResponseDto } from '../../../types';
+import {
+  LoginRequestDto,
+  LoginResponseDto,
+  LoginResponseDtoUser,
+} from '../../../types';
 import toast from 'react-hot-toast';
 import { HTTPError } from '../../../libs/utils/http-error';
+import { SetterOrUpdater, useSetRecoilState } from 'recoil';
+import { UserAtom } from '../../../atoms';
 
 interface handleLoginErrorProps {
   error: any;
@@ -45,11 +51,14 @@ function handleLoginError({ error, setError }: handleLoginErrorProps) {
 interface handleLoginSuccessProps {
   data: LoginResponseDto;
   navigate: NavigateFunction;
+  setUser: SetterOrUpdater<LoginResponseDtoUser>;
 }
 
 const token = new Token();
 
-function handleOnSuccess({ data, navigate }: handleLoginSuccessProps) {
+function handleOnSuccess({ data, navigate, setUser }: handleLoginSuccessProps) {
+  setUser(data.user);
+
   let onlyToken = JSON.parse(JSON.stringify(data));
   delete onlyToken.user;
 
@@ -64,9 +73,12 @@ interface useLoginProps {
 }
 
 export default function useLogin({ setError, navigate }: useLoginProps) {
+  const setUser = useSetRecoilState(UserAtom);
+
   const mutation = useMutation({
     mutationFn: (data: LoginRequestDto) => LoginAPI(data),
-    onSuccess: (data: LoginResponseDto) => handleOnSuccess({ data, navigate }),
+    onSuccess: (data: LoginResponseDto) =>
+      handleOnSuccess({ data, navigate, setUser }),
     onError: error => handleLoginError({ error, setError }),
   });
 
