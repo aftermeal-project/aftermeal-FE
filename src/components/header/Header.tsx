@@ -1,15 +1,23 @@
 import { useNavigate } from 'react-router-dom';
 import Token from '../../libs/utils/token';
 import toast from 'react-hot-toast';
+import { ProfileDropdown } from '..';
+import { useRecoilValue } from 'recoil';
+import { UserAtom } from '../../atoms';
 
 export default function Header() {
   const navigate = useNavigate();
   const token = new Token();
+  const user = useRecoilValue(UserAtom);
 
   const handleLogout = () => {
     token.removeUser();
     toast.success('로그아웃 되었습니다');
     navigate('/login');
+  };
+
+  const handleNavigateToAdminPage = () => {
+    navigate('/admin');
   };
 
   return (
@@ -30,12 +38,11 @@ export default function Header() {
           <ul className="flex space-x-6 text-base sm:text-lg">
             {token.getLocalAccessToken() ? (
               <li>
-                <span
-                  onClick={handleLogout}
-                  className="transition duration-300 ease-in-out cursor-pointer hover:text-yellow-400 active:text-yellow-500"
-                >
-                  로그아웃
-                </span>
+                <ProfileDropdown
+                  user={user}
+                  onLogout={handleLogout}
+                  onNavigateToAdminPage={handleNavigateToAdminPage}
+                />
               </li>
             ) : (
               <li>
