@@ -62,7 +62,7 @@ export default function InformationSection({
         <div className="flex items-center space-x-3">
           <FaUsers className="text-xl text-purple-500" />
           <span className="text-lg font-semibold">
-            참가자: {activity.participants.length}/{activity.maxParticipants}
+            참가자: {activity.participations.length}/{activity.maxParticipants}
           </span>
         </div>
         {isSmallScreen && (

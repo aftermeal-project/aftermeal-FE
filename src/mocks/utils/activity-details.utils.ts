@@ -3,6 +3,7 @@ import {
   ActivityResponseDtoType,
   ActivityResponseDtoStatus,
   ActivityDetailResponseDto,
+  UserListResponseDtoType,
 } from '../../types';
 import { getRandomElementFromArray } from './global.utils';
 import moment from 'moment';
@@ -14,10 +15,15 @@ const getRandomSport = () => {
   return faker.helpers.arrayElement(sports);
 };
 
-function getParticipants() {
+function getParticipations() {
   const participants = {
     id: faker.number.int({ min: 1, max: 1000000 }),
-    displayName: faker.person.firstName(),
+    user: {
+      id: faker.number.int({ min: 1, max: 1000000 }),
+      name: faker.person.firstName(),
+      type: getRandomElementFromArray(Object.values(UserListResponseDtoType)),
+      generationNumber: faker.number.int({ min: 6, max: 8 }),
+    },
   };
 
   return participants;
@@ -67,6 +73,6 @@ export function createRandomActivityDetails(): ActivityDetailResponseDto {
     scheduledDate: formatDate(moment(faker.date.soon()).toISOString()),
     applicationStartDate: String(startDate),
     applicationEndDate: String(endDate),
-    participants: Array.from({ length: 5 }, () => getParticipants()),
+    participations: Array.from({ length: 5 }, () => getParticipations()),
   };
 }

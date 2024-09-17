@@ -251,8 +251,17 @@ components:
             properties:
               id:
                 type: integer
-              displayName:
+              name:
                 type: string
+              type:
+                type: string
+                enum: [STUDNET, TEACHER]
+              generationNumber:
+                type: number
+            required:
+              - id
+              - name
+              - type
         status:
           type: string
           enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]

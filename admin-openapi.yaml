@@ -135,7 +135,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ActivityResponseDto'
+                $ref: '#/components/schemas/ActivityDetailResponseDto'
 
     patch:
       tags:
@@ -432,7 +432,7 @@ components:
         - applicationStartDate
         - applicationEndDate
 
-    ActivityResponseDto:
+    ActivityDetailResponseDto:
       type: object
       properties:
         id:
@@ -458,15 +458,32 @@ components:
         applicationEndDate:
           type: string
           format: date-time
-        participants:
+        participations:
           type: array
           items:
             type: object
             properties:
               id:
                 type: integer
-              displayName:
-                type: string
+              user:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  name:
+                    type: string
+                  type:
+                    type: string
+                    enum: [STUDENT, TEACHER]
+                  generationNumber:
+                    type: number
+                required:
+                  - id
+                  - name
+                  - type
+            required:
+              - id
+              - user
       required:
         - id
         - title
@@ -476,7 +493,7 @@ components:
         - scheduledDate
         - applicationStartDate
         - applicationEndDate
-        - participants
+        - participations
 
     ActivityUpdateDto:
       type: object
