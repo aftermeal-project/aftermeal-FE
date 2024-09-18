@@ -1,19 +1,21 @@
+import { ConfirmLogoutModal, ProfileDropdown } from '..';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { ModalAtomFamily, UserAtom } from '../../atoms';
+import { AtomKeys } from '../../constants';
 import { useNavigate } from 'react-router-dom';
 import Token from '../../libs/utils/token';
-import toast from 'react-hot-toast';
-import { ProfileDropdown } from '..';
-import { useRecoilValue } from 'recoil';
-import { UserAtom } from '../../atoms';
 
 export default function Header() {
   const navigate = useNavigate();
   const token = new Token();
   const user = useRecoilValue(UserAtom);
 
+  const [logoutModalOpen, setLogoutModalOpen] = useRecoilState(
+    ModalAtomFamily(AtomKeys.LOGOUT_MODAL),
+  );
+
   const handleLogout = () => {
-    token.removeUser();
-    toast.success('로그아웃 되었습니다');
-    navigate('/login');
+    setLogoutModalOpen(true);
   };
 
   const handleNavigateToAdminPage = () => {
@@ -22,6 +24,7 @@ export default function Header() {
 
   return (
     <header className="relative flex items-center w-full h-16 px-4 bg-header-gradient sm:h-20 lg:h-24">
+      {logoutModalOpen && <ConfirmLogoutModal />}
       <div className="relative mx-auto flex w-full max-w-[1000px] items-center justify-between text-white">
         <div className="flex items-center gap-x-3">
           <img
