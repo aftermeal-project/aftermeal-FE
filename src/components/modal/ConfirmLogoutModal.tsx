@@ -23,18 +23,19 @@ export default function ConfirmLogoutModal() {
     token.removeUser();
     toast.success('로그아웃 되었습니다');
     navigate('/login');
+    setLogoutModalOpen(false);
   };
 
   return (
     <ModalLayout setModal={setLogoutModalOpen}>
       <div
-        className="max-w-sm p-6 mx-auto bg-white rounded-lg shadow-lg"
+        className="mx-auto max-w-sm rounded-lg bg-white p-6 shadow-lg"
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-4 text-lg font-bold">로그아웃 확인</h2>
         <p>정말 로그아웃 하시겠습니까?</p>
 
-        <div className="flex justify-between w-full mt-4">
+        <div className="mt-4 flex w-full justify-between">
           <Button type="button" onClick={handleModalClose} variant="secondary">
             취소
           </Button>
