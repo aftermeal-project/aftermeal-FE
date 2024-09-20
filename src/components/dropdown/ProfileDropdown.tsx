@@ -19,16 +19,16 @@ export default function ProfileDropdown({
     <div className="relative inline-block text-left">
       <Menu as="div" className="relative inline-block text-left">
         <div>
-          <MenuButton className="flex items-center justify-center font-medium text-gray-700 text-md gap-x-2">
+          <MenuButton className="text-md flex items-center justify-center gap-x-2 font-medium text-gray-700">
             <p className="tracking-wide text-white">{user.name}님</p>
-            <FaChevronDown className="w-5 h-5 text-white" aria-hidden="true" />
+            <FaChevronDown className="h-5 w-5 text-white" aria-hidden="true" />
           </MenuButton>
         </div>
-        <MenuItems className="absolute right-0 z-50 w-32 mt-2 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <MenuItems className="absolute right-0 z-50 mt-2 w-32 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           <MenuItem>
             <div
               onClick={onLogout}
-              className="flex items-center px-3 py-2 text-sm text-gray-900 cursor-pointer rounded-t-md hover:bg-gray-100"
+              className="flex cursor-pointer items-center rounded-t-md px-3 py-2 text-sm text-gray-900 hover:bg-gray-100"
             >
               <span role="img" aria-label="briefcase">
                 🚪
@@ -36,11 +36,11 @@ export default function ProfileDropdown({
               <span className="ml-2">로그아웃</span>
             </div>
           </MenuItem>
-          {!isAdmin && (
+          {isAdmin && (
             <MenuItem>
               <div
                 onClick={onNavigateToAdminPage}
-                className="flex items-center px-3 py-2 text-sm text-black cursor-pointer rounded-b-md hover:bg-gray-100"
+                className="flex cursor-pointer items-center rounded-b-md px-3 py-2 text-sm text-black hover:bg-gray-100"
               >
                 <span role="img" aria-label="settings">
                   ⚙️
