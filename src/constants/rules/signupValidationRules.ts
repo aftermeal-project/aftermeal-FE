@@ -4,7 +4,7 @@ const signupValidationRules = {
   nameValidationRules: {
     required: validationMessages.REQUIRED_NAME,
     maxLength: {
-      value: 40,
+      value: 10,
       message: validationMessages.MAX_LENGTH_NAME,
     },
   },
