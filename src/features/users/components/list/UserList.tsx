@@ -40,7 +40,8 @@ export default function UserList({ users }: UserListContainerProps) {
   const filteredUsers = users.filter(
     user =>
       user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.email.toLowerCase().includes(searchTerm.toLowerCase()),
+      (user.email &&
+        user.email.toLowerCase().includes(searchTerm.toLowerCase())),
   );
 
   const settingUpdateUserModalFormValue = (userId: number) => {
