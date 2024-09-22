@@ -7,7 +7,6 @@ interface DropDownProps {
 }
 
 export default function Dropdown({ onUpdate, onDelete }: DropDownProps) {
-  console.log(onUpdate);
   return (
     <Menu as="div" className="relative">
       <MenuButton
