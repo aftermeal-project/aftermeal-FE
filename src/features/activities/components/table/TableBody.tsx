@@ -30,7 +30,7 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
   };
 
   const handleActivityClick = (activityId: number) => {
-    navigate('/activity/' + String(activityId));
+    navigate('/admin/activity/' + String(activityId));
   };
 
   const calculatePercentage = (part: number, whole: number): string => {
