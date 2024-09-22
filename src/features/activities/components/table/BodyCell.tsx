@@ -1,7 +1,6 @@
 import {
   ActivityResponseDto,
   ActivityResponseDtoStatus,
-  ActivityResponseDtoType,
 } from '../../../../types';
 import {
   FaCheckCircle,
@@ -9,7 +8,7 @@ import {
   FaHourglassHalf,
   FaTimesCircle,
 } from 'react-icons/fa';
-import { formatTime } from '../../../../utils';
+import { formatTime, getStatusLabel, getTypeLabel } from '../../../../utils';
 
 interface BodyCellProps {
   title: keyof ActivityResponseDto;
@@ -26,43 +25,11 @@ export default function BodyCell({ title, value }: BodyCellProps) {
     }
 
     if (title === 'status') {
-      let formatStatueValue = '';
-
-      switch (value) {
-        case ActivityResponseDtoStatus.Scheduled:
-          formatStatueValue = '예정됨';
-          break;
-        case ActivityResponseDtoStatus.InProgress:
-          formatStatueValue = '진행 중';
-          break;
-        case ActivityResponseDtoStatus.Canceled:
-          formatStatueValue = '취소됨';
-          break;
-        case ActivityResponseDtoStatus.Completed:
-          formatStatueValue = '완료됨';
-          break;
-        default:
-          value as string;
-      }
-
-      return formatStatueValue;
+      return getStatusLabel(value as string);
     }
 
     if (title === 'type') {
-      let formatTypeValue = '';
-
-      switch (value) {
-        case ActivityResponseDtoType.Lunch:
-          formatTypeValue = '점심 활동';
-          break;
-        case ActivityResponseDtoType.Dinner:
-          formatTypeValue = '저녁 활동';
-          break;
-        default:
-          value as string;
-      }
-
-      return formatTypeValue;
+      return getTypeLabel(value as string) + ' 활동';
     }
 
     return value as string;
@@ -71,20 +38,20 @@ export default function BodyCell({ title, value }: BodyCellProps) {
   if (title === 'status') {
     switch (value) {
       case ActivityResponseDtoStatus.Scheduled:
-        className += ' text-blue-500 font-bold';
-        icon = <FaHourglassHalf className="mr-2 inline-block" />;
+        className += ' text-gray-400 font-bold';
+        icon = <FaHourglassHalf className="inline-block mr-2" />;
         break;
       case ActivityResponseDtoStatus.InProgress:
         className += ' text-yellow-500 font-bold';
-        icon = <FaExclamationCircle className="mr-2 inline-block" />;
+        icon = <FaExclamationCircle className="inline-block mr-2" />;
         break;
       case ActivityResponseDtoStatus.Canceled:
         className += ' text-red-500 font-bold';
-        icon = <FaTimesCircle className="mr-2 inline-block" />;
+        icon = <FaTimesCircle className="inline-block mr-2" />;
         break;
       case ActivityResponseDtoStatus.Completed:
         className += ' text-green-500 font-bold';
-        icon = <FaCheckCircle className="mr-2 inline-block" />;
+        icon = <FaCheckCircle className="inline-block mr-2" />;
         break;
       default:
         className += ' text-gray-800';
