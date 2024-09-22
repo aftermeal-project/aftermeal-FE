@@ -13,6 +13,7 @@ async function getActivityDetails({
     roles?: UserListResponseDtoRoles[],
   ];
 }) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_key, activityId, roles] = queryKey;
 
   if (roles?.includes('ADMIN')) {
