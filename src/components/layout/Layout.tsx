@@ -6,15 +6,16 @@ import { Toaster } from 'react-hot-toast';
 
 export default function Layout() {
   const location = useLocation();
+  const isAdminPage = location.pathname.includes('/admin');
 
-  const isNotNormalDomain =
+  const isNormalDomain =
     location.pathname !== Path.LoginPage &&
     location.pathname !== Path.SignupPage &&
-    location.pathname !== Path.AdminPage;
+    !isAdminPage;
 
   return (
     <>
-      {isNotNormalDomain && <Header />}
+      {isNormalDomain && <Header />}
       <Toaster
         toastOptions={{
           style: {
