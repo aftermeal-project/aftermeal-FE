@@ -1,17 +1,16 @@
-import { ActivityDetailResponseDto } from '../../../../types';
-import 'moment/locale/ko';
+import moment from 'moment';
 import { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { UserAtom } from '../../../../../atoms';
+import { ActivityDetailResponseDto } from '../../../../../types';
+import { useCancelParticipation } from '../../../../participations/api/cancel-participation';
+import { useParticipation } from '../../../../participations/api/participation';
+import { ApplicationFooter } from '../footer';
 import {
   InformationSection,
   ParticipationsListSection,
   ApplicationSection,
-  ApplicationFooter,
-} from '../details';
-import { useRecoilValue } from 'recoil';
-import { UserAtom } from '../../../../atoms';
-import moment from 'moment';
-import { useParticipation } from '../../../participations/api/participation';
-import { useCancelParticipation } from '../../../participations/api/cancel-participation';
+} from '../section';
 
 interface ActivityDetailProps {
   activity: ActivityDetailResponseDto;

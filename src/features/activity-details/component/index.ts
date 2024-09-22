@@ -1,4 +1,4 @@
 export * from './fetcher';
-export * from './details';
+export * from './user';
 export * from './skeleton';
 export * from './admin';
