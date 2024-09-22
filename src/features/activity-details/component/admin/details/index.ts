@@ -1,1 +1,1 @@
-export { default as AdminActivityDetails } from './AdminActivityDeatails';
+export { default as AdminActivityDetails } from './AdminActivityDetails';
