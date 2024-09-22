@@ -18,6 +18,7 @@ import { validationMessages } from '../../../../../constants';
 import { formatTime } from '../../../../../utils';
 import useUpdateActivty from '../../../../activities/api/update-activity';
 import { ButtonField } from '../button';
+import 'react-tabs/style/react-tabs.css';
 
 function validateActivity(data: ActivityResponseDto): string | null {
   const isTitleInValid = data.title.length > 20 || data?.title.length < 2;
@@ -115,13 +116,13 @@ export default function UpdateActivityForm({
   return (
     <form onSubmit={handleSubmit(onValid)}>
       <Tabs>
-        <TabList className="border-b border-gray-300 gap-x-2">
+        <TabList className="gap-x-2 border-b border-gray-300">
           <Tab onClick={() => handleTabClick('Basic')}>기본 정보</Tab>
           <Tab onClick={() => handleTabClick('Schedule')}>일정 정보</Tab>
           <Tab onClick={() => handleTabClick('User')}>참가자 목록</Tab>
         </TabList>
 
-        <TabPanel className="px-3 mt-8">
+        <TabPanel className="mt-8 px-3">
           <Input<ActivityDetailResponseDto>
             label="활동명"
             name="title"
@@ -132,7 +133,7 @@ export default function UpdateActivityForm({
             error={errors.title}
           />
           <div className="mb-4">
-            <label htmlFor="location" className="inline-block mb-2 text-base">
+            <label htmlFor="location" className="mb-2 inline-block text-base">
               장소
             </label>
             <SelectField<ActivityDetailResponseDto>
@@ -143,7 +144,7 @@ export default function UpdateActivityForm({
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="location" className="inline-block mb-2 text-base">
+            <label htmlFor="location" className="mb-2 inline-block text-base">
               활동 유형
             </label>
             <SelectField<ActivityDetailResponseDto>
@@ -162,7 +163,7 @@ export default function UpdateActivityForm({
             error={errors.maxParticipants}
           />
           <div className="mb-4">
-            <label htmlFor="status" className="inline-block mb-2 text-base">
+            <label htmlFor="status" className="mb-2 inline-block text-base">
               진행 상태
             </label>
             <SelectField<ActivityDetailResponseDto>

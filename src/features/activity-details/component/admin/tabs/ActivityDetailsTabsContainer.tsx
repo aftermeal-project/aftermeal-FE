@@ -2,13 +2,14 @@ import { ActivityDetailResponseDto } from '../../../../../types';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { BasicTab, ScheduleTab, UserTab } from '.';
 import { TabType } from '../details/AdminActivityDetails';
+import 'react-tabs/style/react-tabs.css';
 
 interface ActivityDetailsTabsContainerProps {
   activity: ActivityDetailResponseDto;
   setTab: React.Dispatch<React.SetStateAction<TabType>>;
 }
 
-export default function ActivityDetailsTabsContainer({
+export default function zaActivityDetailsTabsContainer({
   activity,
   setTab,
 }: ActivityDetailsTabsContainerProps) {
@@ -18,7 +19,7 @@ export default function ActivityDetailsTabsContainer({
 
   return (
     <Tabs>
-      <TabList className="gap-x-2 border-b border-gray-300">
+      <TabList>
         <Tab onClick={() => handleTabClick('Basic')}>기본 정보</Tab>
         <Tab onClick={() => handleTabClick('Schedule')}>일정 정보</Tab>
         <Tab onClick={() => handleTabClick('User')}>참가자 목록</Tab>
