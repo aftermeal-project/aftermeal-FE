@@ -5,7 +5,6 @@ import { AtomKeys } from '../../../../constants';
 import { ActivityResponseDto } from '../../../../types';
 import BodyCell from './BodyCell';
 import { Dropdown } from '../../../../components';
-import { useUpdateActivityModal } from '../../../../hooks/useUpdateActivityModal';
 import { useNavigate } from 'react-router-dom';
 
 interface TableBodyProps {
@@ -22,7 +21,7 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_MODAL),
   );
 
-  const { handleUpdate } = useUpdateActivityModal(useForm);
+  // const { handleUpdate } = useUpdateActivityForm(useForm);
 
   const handleDelete = (activityId: number) => {
     setActiveId(activityId);
@@ -92,7 +91,7 @@ export default function TableBody({ useForm, activities }: TableBodyProps) {
               <Dropdown
                 onUpdate={e => {
                   e.stopPropagation();
-                  handleUpdate(activity);
+                  console.log('ds');
                 }}
                 onDelete={e => {
                   e.stopPropagation();
