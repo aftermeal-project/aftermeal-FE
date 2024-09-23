@@ -57,7 +57,7 @@ function handleAPIError(error: AxiosError<ErrorResponseData>) {
 let authTokenRequest: Promise<any> | null = null;
 
 instance.interceptors.response.use(
-  response => response,
+  response => response.data,
   async error => {
     const { config, response } = error;
     const originalRequest = config;
