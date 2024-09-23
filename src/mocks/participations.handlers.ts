@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../../constants';
+import { BASE_URL } from '../constants';
 
 const url = BASE_URL + '/participations';
 

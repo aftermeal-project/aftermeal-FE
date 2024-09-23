@@ -1,14 +1,14 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../../constants';
+import { BASE_URL } from '../constants';
 import {
   ActivityLocationCreationRequestDto,
   ActivityLocationListResponseDto,
-} from '../../types';
-import { createRandomActivityLocation } from '../utils/activity-locations.utils';
+} from '../types';
+import { createRandomActivityLocation } from './utils/activity-locations.utils';
 
-const url = BASE_URL + '/admin/activity-locations';
+const url = BASE_URL + '/activity-locations';
 
-export const adminActivityLocationsHandlers = [
+export const activityLocationsHandlers = [
   /**
    * 활동 장소 조회 API
    */

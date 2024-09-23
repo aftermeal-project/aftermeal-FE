@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../../constants';
-import { ActivityDetailResponseDto } from '../../types';
-import { createRandomActivityDetails } from '../utils/activity-details.utils';
+import { BASE_URL } from '../constants';
+import { ActivityDetailResponseDto } from '../types';
+import { createRandomActivityDetails } from './utils/activity-details.utils';
 
 const url = BASE_URL + '/activities';
 

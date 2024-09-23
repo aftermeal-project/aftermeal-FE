@@ -1,11 +1,25 @@
 import { http, HttpResponse } from 'msw';
-import { BASE_URL } from '../../constants';
-import { UserListResponseDto, UserUpdateRequestDto } from '../../types';
-import { createRandomUser } from '../utils/users.utils';
+import { UserListResponseDto, UserUpdateRequestDto } from '../types';
+import { createRandomUser } from './utils/users.utils';
+import { BASE_URL } from '../constants';
 
-const url = BASE_URL + '/admin/users';
+const url = BASE_URL + '/users';
 
-export const adminUsersHandlers = [
+export const userHandlers = [
+  http.post(BASE_URL + '/v1/users', async ({ request }) => {
+    try {
+      await request.json();
+
+      return HttpResponse.json({ success: true });
+    } catch (error) {
+      console.error('Error processing request:', error);
+      return HttpResponse.json(
+        { error: 'Request processing failed' },
+        { status: 500 },
+      );
+    }
+  }),
+
   /**
    * 유저 목록 조회 API
    */
