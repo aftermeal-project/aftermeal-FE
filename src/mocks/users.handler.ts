@@ -6,7 +6,10 @@ import { BASE_URL } from '../constants';
 const url = BASE_URL + '/users';
 
 export const userHandlers = [
-  http.post(BASE_URL + '/v1/users', async ({ request }) => {
+  /**
+   * 유저 등록  API
+   */
+  http.post(url, async ({ request }) => {
     try {
       await request.json();
 
