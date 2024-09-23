@@ -15,13 +15,19 @@ function getRandomRoles(): UserListResponseDtoRoles[] {
 }
 
 export function createRandomUser(): UserListResponseDto {
+  const type = getRandomElementFromArray(
+    Object.values(UserListResponseDtoType),
+  );
+
   return {
     id: faker.number.int({ min: 1, max: 1000000 }),
     name: faker.person.fullName(),
     email: faker.internet.exampleEmail(),
     roles: getRandomRoles(),
-    type: getRandomElementFromArray(Object.values(UserListResponseDtoType)),
+    type: type,
     status: getRandomElementFromArray(Object.values(UserListResponseDtoStatus)),
-    generationNumber: faker.number.int({ min: 6, max: 8 }),
+    ...(type !== 'TEACHER' && {
+      generationNumber: faker.number.int({ min: 6, max: 8 }),
+    }),
   };
 }

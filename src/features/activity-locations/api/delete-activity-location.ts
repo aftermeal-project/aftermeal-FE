@@ -10,10 +10,6 @@ async function deleteActivityLocation(
   await DeleteActivityLocationAPI(activityLocationId);
 }
 
-function handleDeleteActivityLocationError(_error: Error) {
-  alert(errorMessages.UNKNOWN_ERROR);
-}
-
 export default function useDeleteActivityLocation() {
   const queryClient = useQueryClient();
   const mutation = useMutation<void, Error, string>({
@@ -46,7 +42,8 @@ export default function useDeleteActivityLocation() {
           context.previousActivityLocation,
         );
       }
-      handleDeleteActivityLocationError(_error);
+
+      alert(errorMessages.UNKNOWN_ERROR);
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['activity-locations'] });

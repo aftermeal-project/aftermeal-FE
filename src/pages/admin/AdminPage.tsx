@@ -5,10 +5,10 @@ import {
   UserManagementTab,
   ActivityLocationManagementTab,
   TabsContainer,
-  ErrorScreen,
-  FetchErrorBoundary,
+  ErrorFallback,
+  ErrorBoundary,
+  SEOHelmet,
 } from '../../components';
-import { errorMessages } from '../../constants';
 import { Tab } from '../../types';
 import { useRecoilValue } from 'recoil';
 import { UserAtom } from '../../atoms';
@@ -25,28 +25,26 @@ export default function AdminPage() {
   }, [user]);
 
   if (roleError) {
-    return <ErrorScreen title="권한 오류" description="잘못된 접근입니다." />;
+    return <ErrorFallback statusCode={403} />;
   }
 
   return (
     <div className="flex h-screen bg-gray-100">
+      <SEOHelmet
+        title="어드민 페이지"
+        description="어드민 페이지에서 사용자와 활동을 관리하고 업데이트하며 시스템 설정을 제어하세요."
+        url="/admin"
+      />
       <AdminPageSidebar
         selectedTab={selectedTab}
         setSelectedTab={setSelectedTab}
       />
       <TabsContainer>
-        <FetchErrorBoundary
-          fallback={
-            <ErrorScreen
-              title="Oops!"
-              description={errorMessages.DEFAULT_ERROR}
-            />
-          }
-        >
+        <ErrorBoundary Fallback={ErrorFallback}>
           {selectedTab === 'activities' && <ActivityManagementTab />}
           {selectedTab === 'users' && <UserManagementTab />}
           {selectedTab === 'locations' && <ActivityLocationManagementTab />}
-        </FetchErrorBoundary>
+        </ErrorBoundary>
       </TabsContainer>
     </div>
   );

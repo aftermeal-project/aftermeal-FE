@@ -1,6 +1,6 @@
 const validationMessages = {
   REQUIRED_NAME: '이름은 필수 입력입니다.',
-  MAX_LENGTH_NAME: '이름은 최대 40자 이하여야 합니다.',
+  MAX_LENGTH_NAME: '이름은 최대 10자 이하여야 합니다.',
   REQUIRED_EMAIL: '이메일은 필수 입력입니다.',
   INVALID_EMAIL: '유효한 이메일 주소를 입력해주세요.',
   INVALID_STUDENT_EMAIL: '학생은 학교 이메일을 입력해야 합니다.',

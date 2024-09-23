@@ -8,6 +8,7 @@ import { adminActivityLocationsHandlers } from './activity-locations/admin.activ
 import { activityDetailsHandler } from './activity-details/activity-details.handlers';
 import { adminActivityDetailsHandler } from './activity-details/admin.activity-details.handlers';
 import { participationsHandlers } from './participations/participations.handlers';
+import { adminParticipationsHandlers } from './participations/admin.participations.handlers';
 
 export const worker = setupWorker(
   ...authHandlers,
@@ -19,4 +20,5 @@ export const worker = setupWorker(
   ...adminActivityDetailsHandler,
   ...adminActivityLocationsHandlers,
   ...participationsHandlers,
+  ...adminParticipationsHandlers,
 );

@@ -1,8 +1,7 @@
 import { FaMapMarkerAlt, FaUsers, FaClipboardList } from 'react-icons/fa';
-import { ActivityDetailResponseDto } from '../../../../types';
-
-import { formatTime, getStatusLabel, getTypeLabel } from '../../../../utils';
 import moment from 'moment';
+import { ActivityDetailResponseDto } from '../../../../../types';
+import { getTypeLabel, formatTime, getStatusLabel } from '../../../../../utils';
 
 function getFormattedTitle(date: string, type: string, title: string) {
   const formattedDate = moment(date).format('YYYY년 MM월 DD일 dddd');
@@ -28,8 +27,8 @@ export default function InformationSection({
   isSmallScreen,
 }: InformationSectionProps) {
   return (
-    <div className="p-6 bg-white rounded-lg shadow-md">
-      <div className="flex items-center justify-between mb-10">
+    <div className="rounded-lg bg-white p-6 shadow-md">
+      <div className="mb-10 flex items-center justify-between">
         <h1 className="text-xl font-bold min-[530px]:text-2xl sm:text-3xl">
           {getFormattedTitle(
             activity.scheduledDate,
@@ -62,7 +61,7 @@ export default function InformationSection({
         <div className="flex items-center space-x-3">
           <FaUsers className="text-xl text-purple-500" />
           <span className="text-lg font-semibold">
-            참가자: {activity.participants.length}/{activity.maxParticipants}
+            참가자: {activity.participations.length}/{activity.maxParticipants}
           </span>
         </div>
         {isSmallScreen && (

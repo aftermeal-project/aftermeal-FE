@@ -13,10 +13,6 @@ async function createActivityLocation(
   await CreateActivityLocationAPI(data);
 }
 
-function handleCreateActivityLocationError() {
-  alert(errorMessages.UNKNOWN_ERROR);
-}
-
 export default function useCreateActivityLocation() {
   const queryClient = useQueryClient();
 
@@ -48,7 +44,8 @@ export default function useCreateActivityLocation() {
           ['activity-locations'],
           context.previousActivityLocations,
         );
-        handleCreateActivityLocationError();
+
+        alert(errorMessages.UNKNOWN_ERROR);
       },
       onSettled: () => {
         queryClient.invalidateQueries({ queryKey: ['activity-locations'] });

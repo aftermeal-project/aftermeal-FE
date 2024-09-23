@@ -26,11 +26,12 @@ export default function SelectInput<T extends FieldValues>({
         onChange={onChange}
         {...rest}
       >
-        {options.map(option => (
-          <option key={option.value} value={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {Array.isArray(options) &&
+          options.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
       </select>
     </div>
   );

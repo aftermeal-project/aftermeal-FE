@@ -1,7 +1,8 @@
 export * from './activities/activity-creation-request-dto';
 export * from './activities/activity-join-request-dto';
 export * from './activities/activity-response-dto';
-export * from './activities/activity-detail-response-dto-participants-inner';
+export * from './activities/activity-detail-response-dto-participations-inner';
+export * from './activities/activity-detail-response-dto-participations-inner-user';
 export * from './activities/activity-detail-response-dto';
 export * from './activities/activity-response-dto';
 export * from './activities/activity-update-request-dto';
@@ -23,3 +24,5 @@ export * from './users/user-update-request-dto';
 
 export * from './ui/tab';
 export * from './ui/option';
+
+export * from './error/error-response';

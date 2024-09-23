@@ -3,10 +3,10 @@ import { useSetRecoilState } from 'recoil';
 import { ActiveIdAtomFamily, ModalAtomFamily } from '../atoms';
 import { AtomKeys } from '../constants';
 import { formatTime } from '../utils';
-import { ActivityResponseDto } from '../types';
+import { ActivityDetailResponseDto } from '../types';
 
-export function useUpdateActivityModal(
-  useForm: UseFormReturn<ActivityResponseDto>,
+export function useUpdateActivityForm(
+  useForm: UseFormReturn<ActivityDetailResponseDto>,
 ) {
   const { reset } = useForm;
   const setActiveId = useSetRecoilState(
@@ -19,7 +19,7 @@ export function useUpdateActivityModal(
   const formatActivityDate = (time: string) =>
     formatTime({ type: 'format', time });
 
-  const setFormValues = (activity: ActivityResponseDto) => {
+  const setFormValues = (activity: ActivityDetailResponseDto) => {
     reset({
       ...activity,
       applicationStartDate: formatActivityDate(activity.applicationStartDate),
@@ -27,7 +27,7 @@ export function useUpdateActivityModal(
     });
   };
 
-  const handleUpdate = (activity: ActivityResponseDto) => {
+  const handleUpdate = (activity: ActivityDetailResponseDto) => {
     setFormValues(activity);
     setActiveId(activity.id);
     updateModalOpen(true);

@@ -1,17 +1,16 @@
-import { ActivityDetailResponseDto } from '../../../../types';
-import 'moment/locale/ko';
+import moment from 'moment';
 import { useState, useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { UserAtom } from '../../../../../atoms';
+import { ActivityDetailResponseDto } from '../../../../../types';
+import { useCancelParticipation } from '../../../../participations/api/cancel-participation';
+import { useParticipation } from '../../../../participations/api/participation';
+import { ApplicationFooter } from '../footer';
 import {
   InformationSection,
-  ParticipantsListSection,
+  ParticipationsListSection,
   ApplicationSection,
-  ApplicationFooter,
-} from '../details';
-import { useRecoilValue } from 'recoil';
-import { UserAtom } from '../../../../atoms';
-import moment from 'moment';
-import { useParticipation } from '../../../participations/api/participation';
-import { useCancelParticipation } from '../../../participations/api/cancel-participation';
+} from '../section';
 
 interface ActivityDetailProps {
   activity: ActivityDetailResponseDto;
@@ -53,7 +52,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
     return isStatusValid && hasSpaceAvailable && isWithinApplicationPeriod;
   };
 
-  const isParticipated = activity.participants.some(
+  const isParticipated = activity.participations.some(
     participant => participant.id === Number(user.id),
   );
 
@@ -79,16 +78,16 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
     <div className="mx-auto grid w-full max-w-[1000px] grid-cols-1 rounded-lg max-[1000px]:mb-[5.5rem] min-[1000px]:grid-cols-3 min-[1000px]:gap-x-4 min-[1000px]:py-8">
       <div className="space-y-4 md:col-span-2">
         <InformationSection activity={activity} isSmallScreen={isSmallScreen} />
-        <ParticipantsListSection participants={activity.participants} />
+        <ParticipationsListSection participations={activity.participations} />
       </div>
       {!isSmallScreen ? (
         <ApplicationSection
-          location={activity.location}
+          location={String(activity.location)}
           applicationStartDate={activity.applicationStartDate}
           applicationEndDate={activity.applicationEndDate}
           isApplicationAllowed={isApplicationAllowed(
             activity.status,
-            activity.participants.length,
+            activity.participations.length,
             activity.maxParticipants,
             activity.applicationStartDate,
             activity.applicationEndDate,
@@ -106,7 +105,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
           applicationEndDate={activity.applicationEndDate}
           isApplicationAllowed={isApplicationAllowed(
             activity.status,
-            activity.participants.length,
+            activity.participations.length,
             activity.maxParticipants,
             activity.applicationEndDate,
             activity.applicationStartDate,

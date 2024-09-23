@@ -2,39 +2,18 @@ import axios, { AxiosError } from 'axios';
 import { RefreshAPI } from './api/auth';
 import Token from './utils/token';
 import { BASE_URL } from '../constants';
+import { HTTPError } from './utils/http-error';
+import { ErrorResponseData } from '../types';
 
 const token = new Token();
 
 export const instance = axios.create({
   baseURL: BASE_URL,
+  timeout: 10000,
   headers: {
     'Access-Control-Allow-Origin': true,
   },
 });
-
-async function refreshAuthToken() {
-  const refreshToken = token.getLocalRefreshToken();
-
-  try {
-    return await RefreshAPI(refreshToken);
-  } catch (error) {
-    throw new Error('Failed to refresh auth token');
-  }
-}
-
-function axiosErrorHandler(error: unknown) {
-  if (error instanceof AxiosError) {
-    const { response } = error;
-
-    if (response?.status === 500) {
-      alert('서버 오류가 발생했습니다. 나중에 다시 시도해 주세요.');
-    } else if (error instanceof Error && error.message === 'timeout') {
-      alert('요청 시간이 초과되었습니다. 다시 시도해 주세요.');
-    }
-  }
-
-  return Promise.reject(error);
-}
 
 instance.interceptors.request.use(
   config => {
@@ -47,12 +26,35 @@ instance.interceptors.request.use(
   error => Promise.reject(error),
 );
 
-let authTokenRequest: Promise<any> | null = null;
+async function refreshAuthToken() {
+  const refreshToken = token.getLocalRefreshToken();
+
+  try {
+    return await RefreshAPI(refreshToken);
+  } catch (error) {
+    throw new Error('Failed to refresh auth token');
+  }
+}
 
 function redirectTo(path: string) {
   window.history.pushState({}, '', path);
   window.location.reload();
 }
+
+function handleAPIError(error: AxiosError<ErrorResponseData>) {
+  if (!error.response) throw error;
+
+  if (error.message === 'timeout') {
+    alert('요청 시간이 초과되었습니다. 다시 시도해 주세요.');
+  }
+
+  const { status, data } = error.response;
+  const errorMessage = data.message ? data.message : '알 수 없는 오류입니다.';
+
+  throw new HTTPError(status, errorMessage);
+}
+
+let authTokenRequest: Promise<any> | null = null;
 
 instance.interceptors.response.use(
   response => response,
@@ -85,6 +87,6 @@ instance.interceptors.response.use(
       }
     }
 
-    return axiosErrorHandler(error);
+    return handleAPIError(error);
   },
 );

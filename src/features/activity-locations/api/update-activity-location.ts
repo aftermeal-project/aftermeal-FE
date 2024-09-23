@@ -10,10 +10,6 @@ async function updateActivityLocation(
   await UpdateActivityLocationAPI(String(data.id), data.name);
 }
 
-function handleUpdateActivityLocationError(_error: Error) {
-  alert(errorMessages.UNKNOWN_ERROR);
-}
-
 export default function useUpdateActivityLocation() {
   const queryClient = useQueryClient();
 
@@ -41,13 +37,12 @@ export default function useUpdateActivityLocation() {
       toast.success('장소를 수정했습니다.');
     },
     onError: (_error, _variables, context: any) => {
-      console.log(_error);
-
       queryClient.setQueryData(
         ['activity-locations', context.updateActivityLocation.id],
         context.previousActivityLocation,
       );
-      handleUpdateActivityLocationError(_error);
+
+      alert(errorMessages.UNKNOWN_ERROR);
     },
     onSettled: (_data, _error, variables, _context) => {
       queryClient.invalidateQueries({

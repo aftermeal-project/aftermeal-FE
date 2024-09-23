@@ -1,6 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '../../constants';
 import {
+  ErrorResponseData,
   LoginRequestDto,
   LoginResponseDto,
   LoginResponseDtoUser,
@@ -16,15 +17,21 @@ function createRandomUser(): LoginResponseDtoUser {
 }
 
 export const authHandlers = [
-  http.post<{}, LoginRequestDto, LoginResponseDto>(
+  http.post<{}, LoginRequestDto, LoginResponseDto | ErrorResponseData>(
     BASE_URL + '/auth/login',
     async ({ request }) => {
       const data = await request.json();
 
       if (data.email !== 'test@example.com' || data.password !== '12345678') {
-        return HttpResponse.json(null, {
-          status: 404,
-        });
+        return HttpResponse.json(
+          {
+            statusCode: 404,
+            message: 'Invalid credentials',
+          },
+          {
+            status: 404,
+          },
+        );
       } else {
         return HttpResponse.json({
           tokenType: 'jwt',

@@ -8,10 +8,6 @@ async function updateActivity(data: ActivityResponseDto): Promise<void> {
   await UpdateActivityAPI(data);
 }
 
-function handleUpdateActivityError(_error: Error) {
-  alert(errorMessages.UNKNOWN_ERROR);
-}
-
 export default function useUpdateActivty() {
   const queryClient = useQueryClient();
 
@@ -42,7 +38,8 @@ export default function useUpdateActivty() {
         ['activities', context.newActivity.id],
         context.previousActivity,
       );
-      handleUpdateActivityError(_error);
+
+      alert(errorMessages.UNKNOWN_ERROR);
     },
     onSettled: (_data, _error, _variables, _context) => {
       queryClient.invalidateQueries({

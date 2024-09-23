@@ -15,14 +15,7 @@ export default function ActivityDetailsFetcher({
   const user = useRecoilValue(UserAtom);
   const params = useParams();
 
-  const { data, error } = useGetActivityDetails(
-    String(params.activityId),
-    user.roles,
-  );
-
-  if (error) {
-    throw new Error(error);
-  }
+  const { data } = useGetActivityDetails(String(params.activityId), user.roles);
 
   return <>{data && children(data)}</>;
 }

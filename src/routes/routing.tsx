@@ -11,14 +11,18 @@ export default function Routing() {
   return (
     <Routes>
       <Route path={Path.HomePage} element={<HomePage />} />
-      <Route
-        path={Path.ActivityDetailsPage}
-        element={<ActivityDetailsPage />}
-      />
       <Route path={Path.LoginPage} element={<LoginPage />} />
       <Route path={Path.SignupPage} element={<SignupPage />} />
       <Route path={Path.AdminPage} element={<AdminPage />} />
       <Route path={Path.NotFoundPage} element={<NotFoundPage />} />
+      <Route
+        path={Path.ActivityDetailsPage}
+        element={<ActivityDetailsPage />}
+      />
+      <Route
+        path={Path.AdminActivityDetailsPage}
+        element={<ActivityDetailsPage />}
+      />
     </Routes>
   );
 }

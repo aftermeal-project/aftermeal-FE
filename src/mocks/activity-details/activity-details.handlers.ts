@@ -11,8 +11,14 @@ export const activityDetailsHandler = [
    */
   http.get<{ activityId: string }, {}, ActivityDetailResponseDto>(
     url + '/:activityId',
-    async () => {
+    async ({ params }) => {
       const data = createRandomActivityDetails();
+
+      if (params.activityId === '0') {
+        return HttpResponse.json(null, {
+          status: 404,
+        });
+      }
 
       return HttpResponse.json(data);
     },
