@@ -37,12 +37,14 @@ export default function UserList({ users }: UserListContainerProps) {
     setSearchTerm(event.target.value);
   };
 
-  const filteredUsers = users.filter(
-    user =>
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (user.email &&
-        user.email.toLowerCase().includes(searchTerm.toLowerCase())),
-  );
+  const filteredUsers = Array.isArray(users)
+    ? users.filter(
+        user =>
+          user.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          (user.email &&
+            user.email.toLowerCase().includes(searchTerm.toLowerCase())),
+      )
+    : [];
 
   const settingUpdateUserModalFormValue = (userId: number) => {
     const selectedUser = users.find(user => user.id === userId);
@@ -96,7 +98,7 @@ export default function UserList({ users }: UserListContainerProps) {
                 ))}
               </>
             ) : (
-              <h1 className="py-3 font-bold text-md">검색 결과가 없습니다!</h1>
+              <h1 className="text-md py-3 font-bold">검색 결과가 없습니다!</h1>
             )}
           </ul>
         </div>

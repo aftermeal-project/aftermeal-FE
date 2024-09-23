@@ -26,3 +26,13 @@ export const CancelParticipationAPI = async (participationId: string) => {
     },
   });
 };
+
+export const CancelUserParticipationAPI = async (participationId: string) => {
+  await instance({
+    method: 'DELETE',
+    url: url + `/${participationId}`,
+    headers: {
+      Authorization: 'Bearer ' + token.getLocalAccessToken(),
+    },
+  });
+};

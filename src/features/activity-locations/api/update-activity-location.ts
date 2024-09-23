@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityLocationListResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
-import { UpdateActivityLocationAPI } from '../../../libs/api/admin.activity-locations';
+import { UpdateActivityLocationAPI } from '../../../libs/api/activity-locations';
 import toast from 'react-hot-toast';
 
 async function updateActivityLocation(
@@ -48,6 +48,7 @@ export default function useUpdateActivityLocation() {
       queryClient.invalidateQueries({
         queryKey: ['activity-locations'],
       });
+      console.log('SETTLED');
     },
   });
 

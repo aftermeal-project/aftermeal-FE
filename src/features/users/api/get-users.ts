@@ -1,5 +1,5 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { GetUsersAPI } from '../../../libs/api/admin.users';
+import { GetUsersAPI } from '../../../libs/api/users';
 
 function getUsers() {
   const response = GetUsersAPI();

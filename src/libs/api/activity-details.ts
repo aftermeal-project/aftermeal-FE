@@ -9,5 +9,5 @@ export const GetActivityDetailsAPI = async (activityId: string) => {
     url: url + `/${activityId}`,
   });
 
-  return response.data;
+  return response.data || [];
 };

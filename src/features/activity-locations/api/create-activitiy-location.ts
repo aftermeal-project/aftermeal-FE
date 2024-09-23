@@ -4,7 +4,7 @@ import {
   ActivityLocationListResponseDto,
 } from '../../../types';
 import { errorMessages } from '../../../constants';
-import { CreateActivityLocationAPI } from '../../../libs/api/admin.activity-locations';
+import { CreateActivityLocationAPI } from '../../../libs/api/activity-locations';
 import toast from 'react-hot-toast';
 
 async function createActivityLocation(
@@ -44,6 +44,8 @@ export default function useCreateActivityLocation() {
           ['activity-locations'],
           context.previousActivityLocations,
         );
+
+        console.log(_error);
 
         alert(errorMessages.UNKNOWN_ERROR);
       },

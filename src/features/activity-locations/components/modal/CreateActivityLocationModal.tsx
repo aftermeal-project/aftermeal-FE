@@ -45,7 +45,7 @@ export default function CreateActivityLocationModal() {
   return (
     <ModalLayout setModal={createActivityLocationModalOpen}>
       <div
-        className="p-6 mx-auto bg-white rounded-lg shadow-lg w-80"
+        className="mx-auto w-80 rounded-lg bg-white p-6 shadow-lg"
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-8 text-lg font-bold">장소 추가</h2>
@@ -61,16 +61,15 @@ export default function CreateActivityLocationModal() {
             error={errors.name}
           />
           <FormErrorMessages errors={errors} fields={['name']} />
-          <div className="flex justify-between w-full mt-11">
+          <div className="mt-11 flex w-full justify-between">
+            <Button type="submit">추가</Button>
+
             <Button
               type="button"
               onClick={handleModalClose}
               variant="secondary"
             >
               취소
-            </Button>
-            <Button type="submit" onClick={handleModalClose}>
-              추가
             </Button>
           </div>
         </form>

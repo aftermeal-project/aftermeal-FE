@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
-import { UpdateActivityAPI } from '../../../libs/api/admin.activities';
+import { UpdateActivityAPI } from '../../../libs/api/activities';
 import toast from 'react-hot-toast';
 
 async function updateActivity(data: ActivityResponseDto): Promise<void> {

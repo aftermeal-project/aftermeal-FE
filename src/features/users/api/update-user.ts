@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { UserListResponseDto, UserUpdateRequestDto } from '../../../types';
-import { UpdateUserAPI } from '../../../libs/api/admin.users';
+import { UpdateUserAPI } from '../../../libs/api/users';
 import toast from 'react-hot-toast';
 import { errorMessages } from '../../../constants';
 

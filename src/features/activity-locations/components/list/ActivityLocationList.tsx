@@ -25,9 +25,11 @@ export default function ActivityLocationList({
     ModalAtomFamily(AtomKeys.DELETE_ACTIVITY_LOCATION_MODAL),
   );
 
-  const filteredLocations = locations.filter(location =>
-    location.name.toLowerCase().includes(searchTerm.toLowerCase()),
-  );
+  const filteredLocations = Array.isArray(locations)
+    ? locations.filter(location =>
+        location.name.toLowerCase().includes(searchTerm.toLowerCase()),
+      )
+    : [];
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -60,7 +62,7 @@ export default function ActivityLocationList({
             />
           ))
         ) : (
-          <h1 className="py-3 font-bold text-md">검색 결과가 없습니다!</h1>
+          <h1 className="text-md py-3 font-bold">검색 결과가 없습니다!</h1>
         )}
       </div>
     </section>

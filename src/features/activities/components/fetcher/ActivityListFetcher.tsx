@@ -1,6 +1,4 @@
 import { ReactElement } from 'react';
-import { useRecoilValue } from 'recoil';
-import { UserAtom } from '../../../../atoms';
 import { ActivityResponseDto } from '../../../../types';
 import useGetActivities from '../../api/get-activity';
 
@@ -11,9 +9,7 @@ interface ActivityListFetcherProps {
 export default function ActivityListFetcher({
   children,
 }: ActivityListFetcherProps) {
-  const user = useRecoilValue(UserAtom);
-
-  const { data } = useGetActivities(user.roles);
+  const { data } = useGetActivities();
 
   return <>{data && children(data)}</>;
 }

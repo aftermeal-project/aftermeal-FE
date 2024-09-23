@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityLocationListResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
-import { DeleteActivityLocationAPI } from '../../../libs/api/admin.activity-locations';
+import { DeleteActivityLocationAPI } from '../../../libs/api/activity-locations';
 import toast from 'react-hot-toast';
 
 async function deleteActivityLocation(

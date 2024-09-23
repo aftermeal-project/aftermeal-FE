@@ -1,17 +1,14 @@
-import {
-  ActivityLocationCreationRequestDto,
-  ActivityLocationListResponseDto,
-} from '../../types';
+import { ActivityLocationCreationRequestDto } from '../../types';
 import { instance } from '../instance';
 import Token from '../utils/token';
 
 const token = new Token();
 
-const url = '/admin/activity-locations';
+const url = '/activity-locations';
 const accessToken = 'Bearer ' + token.getLocalAccessToken();
 
 export const GetActivityLocationAPI = async () => {
-  const response = await instance<ActivityLocationListResponseDto[]>({
+  const response = await instance({
     method: 'GET',
     headers: {
       Authorization: accessToken,
@@ -19,7 +16,7 @@ export const GetActivityLocationAPI = async () => {
     url: url,
   });
 
-  return response.data;
+  return response.data?.data;
 };
 
 export const CreateActivityLocationAPI = async (

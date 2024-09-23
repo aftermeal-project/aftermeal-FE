@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
-import { DeleteActivityAPI } from '../../../libs/api/admin.activities';
+import { DeleteActivityAPI } from '../../../libs/api/activities';
 import toast from 'react-hot-toast';
 
 async function deleteActivity(activityId: string): Promise<void> {

@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ActivityResponseDto } from '../../../types';
-import { DeleteUserAPI } from '../../../libs/api/admin.users';
+import { DeleteUserAPI } from '../../../libs/api/users';
 import toast from 'react-hot-toast';
 import { errorMessages } from '../../../constants';
 
