@@ -35,10 +35,6 @@ export default function ActivityLocationList({
     setSearchTerm(event.target.value);
   };
 
-  const handleUpdate = (updatedData: ActivityLocationListResponseDto) => {
-    updateActivityLocation.mutate(updatedData);
-  };
-
   const handleDelete = (locationId: number) => {
     setActiveLocationId(locationId);
     setDeleteModalOpen(true);
@@ -55,9 +51,9 @@ export default function ActivityLocationList({
         {Array.isArray(locations) && filteredLocations.length > 0 ? (
           filteredLocations.map(location => (
             <ActivityLocationCard
-              key={location.id}
+              key={crypto.randomUUID()}
               location={location}
-              onUpdate={() => handleUpdate(location)}
+              onUpdate={updateActivityLocation}
               onDelete={() => handleDelete(location.id)}
             />
           ))

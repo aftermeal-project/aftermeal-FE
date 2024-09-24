@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ActivityLocationListResponseDto } from '../../../../types';
 import { Button } from '../../../../components';
+import { UseMutationResult } from '@tanstack/react-query';
 
 interface ActivityLocationCardProps {
   location: ActivityLocationListResponseDto;
-  onUpdate: (updatedData: ActivityLocationListResponseDto) => void;
+  onUpdate: UseMutationResult<void, Error, ActivityLocationListResponseDto>;
   onDelete: (id: number) => void;
 }
 
@@ -17,19 +18,20 @@ export default function ActivityLocationCard({
   const [name, setName] = useState(location.name);
 
   const handleSave = () => {
-    onUpdate({ id: location.id, name: name });
     setIsEditing(false);
+    const updatedData = { ...location, name: name };
+    onUpdate.mutate(updatedData);
   };
 
   return (
-    <div className="p-4 transition-shadow border border-gray-200 rounded-lg shadow-md hover:shadow-lg">
+    <div className="rounded-lg border border-gray-200 p-4 shadow-md transition-shadow hover:shadow-lg">
       {isEditing ? (
         <div className="flex flex-col gap-3">
           <input
             type="text"
             value={name}
             onChange={e => setName(e.target.value)}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           <div className="flex justify-between gap-x-8">
             <Button
