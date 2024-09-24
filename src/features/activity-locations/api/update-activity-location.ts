@@ -48,7 +48,6 @@ export default function useUpdateActivityLocation() {
       queryClient.invalidateQueries({
         queryKey: ['activity-locations'],
       });
-      console.log('SETTLED');
     },
   });
 
