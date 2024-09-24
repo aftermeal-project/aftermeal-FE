@@ -1,11 +1,11 @@
-import { ActivityListResponseDto } from '../../../../types';
+import { ActivityListResponseDto } from '../../../../../types';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useState } from 'react';
-import ListTab from '../tab/ListTab';
+import ListTab from '../../tab/ListTab';
 import { Activity } from '../item';
 import NoActivity from './NoActivity';
-import { getTypeLabel } from '../../../../utils';
+import { getTypeLabel } from '../../../../../utils';
 interface ActivityListContainerProps {
   activities: ActivityListResponseDto[] | null;
 }

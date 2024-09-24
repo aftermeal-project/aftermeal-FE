@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import {
   ActivityListResponseDtoType,
   ActivityListResponseDtoStatus,
-} from '../../../../types';
-import { getTypeLabel } from '../../../../utils';
-import { Button } from '../../../../components';
+} from '../../../../../types';
+import { getTypeLabel } from '../../../../../utils';
+import { Button } from '../../../../../components';
 
 interface ListItemProps {
   id: number;

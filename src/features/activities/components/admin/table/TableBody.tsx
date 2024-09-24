@@ -1,4 +1,4 @@
-import { ActivityListResponseDto } from '../../../../types';
+import { ActivityListResponseDto } from '../../../../../types';
 import BodyCell from './BodyCell';
 import { useNavigate } from 'react-router-dom';
 

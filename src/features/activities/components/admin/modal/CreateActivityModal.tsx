@@ -1,22 +1,22 @@
 import { useForm } from 'react-hook-form';
 import { useSetRecoilState } from 'recoil';
-import { ModalAtomFamily } from '../../../../atoms';
+import { ModalAtomFamily } from '../../../../../atoms';
 import {
   Button,
   FormErrorMessages,
   Input,
   ModalLayout,
-} from '../../../../components';
+} from '../../../../../components';
 import {
   AtomKeys,
   createActivityValidationRules,
   errorMessages,
   validationMessages,
-} from '../../../../constants';
-import { ActivityCreationRequestDto } from '../../../../types';
-import useCreateActivity from '../../api/create-activitiy';
+} from '../../../../../constants';
+import { ActivityCreationRequestDto } from '../../../../../types';
+import useCreateActivity from '../../../api/create-activitiy';
+import { typeOptions } from '../../../constants/options';
 import { SelectField } from '../select';
-import { typeOptions } from '../../constants/options';
 
 export default function CreateActivityModal() {
   const {

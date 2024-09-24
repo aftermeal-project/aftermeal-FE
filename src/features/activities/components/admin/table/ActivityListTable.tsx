@@ -1,4 +1,4 @@
-import { ActivityListResponseDto } from '../../../../types';
+import { ActivityListResponseDto } from '../../../../../types';
 import TableBody from './TableBody';
 import TableHeader from './TableHeader';
 

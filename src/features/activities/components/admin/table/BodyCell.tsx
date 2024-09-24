@@ -1,14 +1,14 @@
 import {
   ActivityListResponseDto,
   ActivityListResponseDtoStatus,
-} from '../../../../types';
+} from '../../../../../types';
 import {
   FaCheckCircle,
   FaExclamationCircle,
   FaHourglassHalf,
   FaTimesCircle,
 } from 'react-icons/fa';
-import { formatTime, getStatusLabel, getTypeLabel } from '../../../../utils';
+import { formatTime, getStatusLabel, getTypeLabel } from '../../../../../utils';
 
 interface BodyCellProps {
   title: keyof ActivityListResponseDto;

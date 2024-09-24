@@ -6,10 +6,10 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from 'react-hook-form';
-import { errorMessages } from '../../../../constants';
-import useGetActivityLocation from '../../../activity-locations/api/get-activity-locations';
+import { errorMessages } from '../../../../../constants';
+import useGetActivityLocation from '../../../../activity-locations/api/get-activity-locations';
 import { SelectInput } from '../select';
-import { ActivityLocationListResponseDto } from '../../../../types';
+import { ActivityLocationListResponseDto } from '../../../../../types';
 
 interface LocationSelectInputProps<T extends FieldValues> {
   title: Path<T>;
