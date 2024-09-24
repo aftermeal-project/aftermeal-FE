@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ActivityResponseDto } from '../../../types';
+import { ActivityListResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { DeleteActivityAPI } from '../../../libs/api/activities';
 import toast from 'react-hot-toast';
@@ -17,12 +17,12 @@ export default function useDeleteActivity() {
         queryKey: ['activites'],
       });
 
-      const previousActivity = queryClient.getQueryData<ActivityResponseDto[]>([
-        'activities',
-      ]);
+      const previousActivity = queryClient.getQueryData<
+        ActivityListResponseDto[]
+      >(['activities']);
 
       if (previousActivity) {
-        queryClient.setQueryData<ActivityResponseDto[]>(['items'], old =>
+        queryClient.setQueryData<ActivityListResponseDto[]>(['items'], old =>
           old?.filter(item => item.id !== Number(activityId)),
         );
       }
@@ -34,7 +34,7 @@ export default function useDeleteActivity() {
     },
     onError: (_error, _variables, context: any) => {
       if (context?.previousActivity) {
-        queryClient.setQueryData<ActivityResponseDto[]>(
+        queryClient.setQueryData<ActivityListResponseDto[]>(
           ['activities'],
           context.previousActivity,
         );

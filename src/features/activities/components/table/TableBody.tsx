@@ -1,9 +1,9 @@
-import { ActivityResponseDto } from '../../../../types';
+import { ActivityListResponseDto } from '../../../../types';
 import BodyCell from './BodyCell';
 import { useNavigate } from 'react-router-dom';
 
 interface TableBodyProps {
-  activities: ActivityResponseDto[];
+  activities: ActivityListResponseDto[];
 }
 
 export default function TableBody({ activities }: TableBodyProps) {

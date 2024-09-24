@@ -1,7 +1,7 @@
 import {
   ActivityDetailResponseDto,
   ActivityDetailResponseDtoParticipationsInner,
-  ActivityResponseDto,
+  ActivityListResponseDto,
 } from '../../../../../types';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import { ModeType, TabType } from '../details/AdminActivityDetails';
@@ -20,7 +20,7 @@ import useUpdateActivty from '../../../../activities/api/update-activity';
 import { ButtonField } from '../button';
 import 'react-tabs/style/react-tabs.css';
 
-function validateActivity(data: ActivityResponseDto): string | null {
+function validateActivity(data: ActivityListResponseDto): string | null {
   const isTitleInValid = data.title.length > 20 || data?.title.length < 2;
   const isLocationInValid = data.location === 'none';
   const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
@@ -78,7 +78,7 @@ export default function UpdateActivityForm({
       time: String(data.applicationEndDate),
     });
 
-    const submitData: ActivityResponseDto = {
+    const submitData: ActivityListResponseDto = {
       id: data.id,
       title: data.title,
       location: String(data.location),

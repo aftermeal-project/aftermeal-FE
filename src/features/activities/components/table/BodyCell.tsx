@@ -1,6 +1,6 @@
 import {
-  ActivityResponseDto,
-  ActivityResponseDtoStatus,
+  ActivityListResponseDto,
+  ActivityListResponseDtoStatus,
 } from '../../../../types';
 import {
   FaCheckCircle,
@@ -11,7 +11,7 @@ import {
 import { formatTime, getStatusLabel, getTypeLabel } from '../../../../utils';
 
 interface BodyCellProps {
-  title: keyof ActivityResponseDto;
+  title: keyof ActivityListResponseDto;
   value: string | number;
 }
 
@@ -19,7 +19,7 @@ export default function BodyCell({ title, value }: BodyCellProps) {
   let icon = null;
   let className = 'flex items-center text-gray-800';
 
-  const formattingValue = (title: keyof ActivityResponseDto): string => {
+  const formattingValue = (title: keyof ActivityListResponseDto): string => {
     if (title === 'applicationStartDate' || title === 'applicationEndDate') {
       return formatTime({ type: 'readable', time: value as string });
     }
@@ -37,21 +37,21 @@ export default function BodyCell({ title, value }: BodyCellProps) {
 
   if (title === 'status') {
     switch (value) {
-      case ActivityResponseDtoStatus.Scheduled:
+      case ActivityListResponseDtoStatus.Scheduled:
         className += ' text-gray-400 font-bold';
-        icon = <FaHourglassHalf className="inline-block mr-2" />;
+        icon = <FaHourglassHalf className="mr-2 inline-block" />;
         break;
-      case ActivityResponseDtoStatus.InProgress:
+      case ActivityListResponseDtoStatus.InProgress:
         className += ' text-yellow-500 font-bold';
-        icon = <FaExclamationCircle className="inline-block mr-2" />;
+        icon = <FaExclamationCircle className="mr-2 inline-block" />;
         break;
-      case ActivityResponseDtoStatus.Canceled:
+      case ActivityListResponseDtoStatus.Canceled:
         className += ' text-red-500 font-bold';
-        icon = <FaTimesCircle className="inline-block mr-2" />;
+        icon = <FaTimesCircle className="mr-2 inline-block" />;
         break;
-      case ActivityResponseDtoStatus.Completed:
+      case ActivityListResponseDtoStatus.Completed:
         className += ' text-green-500 font-bold';
-        icon = <FaCheckCircle className="inline-block mr-2" />;
+        icon = <FaCheckCircle className="mr-2 inline-block" />;
         break;
       default:
         className += ' text-gray-800';

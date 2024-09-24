@@ -1,8 +1,8 @@
 import { FaSun, FaMoon } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 import {
-  ActivityResponseDtoType,
-  ActivityResponseDtoStatus,
+  ActivityListResponseDtoType,
+  ActivityListResponseDtoStatus,
 } from '../../../../types';
 import { getTypeLabel } from '../../../../utils';
 import { Button } from '../../../../components';
@@ -10,9 +10,9 @@ import { Button } from '../../../../components';
 interface ListItemProps {
   id: number;
   title: string;
-  type: ActivityResponseDtoType;
+  type: ActivityListResponseDtoType;
   location: string;
-  status: ActivityResponseDtoStatus;
+  status: ActivityListResponseDtoStatus;
   currentParticipants: number;
   maxParticipants: number;
 }
@@ -57,7 +57,7 @@ export default function ListItem({
   return (
     <div
       onClick={() => handleActivityClick(id)}
-      className="flex items-center justify-between px-1 py-3 border-b border-gray-200 divide-y divide-gray-200 cursor-pointer"
+      className="flex cursor-pointer items-center justify-between divide-y divide-gray-200 border-b border-gray-200 px-1 py-3"
     >
       <div className="flex items-center space-x-9">
         <div className="flex items-center gap-x-2">

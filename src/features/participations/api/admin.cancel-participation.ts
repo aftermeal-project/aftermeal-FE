@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { CancelParticipationAPI } from '../../../libs/api/participations';
-import { ActivityResponseDto } from '../../../types';
+import { ActivityListResponseDto } from '../../../types';
 
 export function useCancelUserParticipation() {
   const queryClient = useQueryClient();
@@ -12,12 +12,12 @@ export function useCancelUserParticipation() {
       await queryClient.cancelQueries({ queryKey: ['activities'] });
 
       const previousActivities = queryClient.getQueryData<
-        ActivityResponseDto[]
+        ActivityListResponseDto[]
       >(['activities']);
 
       queryClient.setQueryData(
         ['activities'],
-        (old: ActivityResponseDto[] | undefined) =>
+        (old: ActivityListResponseDto[] | undefined) =>
           old
             ? old.map(activity =>
                 activity.id === Number(activityId)
