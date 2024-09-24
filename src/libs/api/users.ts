@@ -1,4 +1,8 @@
-import { UserRegistrationRequestDto, UserUpdateRequestDto } from '../../types';
+import {
+  UserListResponseModel,
+  UserRegistrationRequestDto,
+  UserUpdateRequestDto,
+} from '../../types';
 import { instance } from '../instance';
 import Token from '../utils/token';
 
@@ -20,16 +24,16 @@ export const SignupAPI = async (
     data: userRegistationRequest,
   });
 
-  return response.data?.data;
+  return response.data;
 };
 
 export const GetUsersAPI = async () => {
-  const response = await instance({
+  const response = await instance<UserListResponseModel>({
     method: 'GET',
     url: url,
   });
 
-  return response.data;
+  return response.data?.data;
 };
 
 export const UpdateUserAPI = async (
