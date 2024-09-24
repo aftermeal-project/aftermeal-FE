@@ -1,8 +1,8 @@
 import { faker } from '@faker-js/faker';
 import {
-  ActivityResponseDtoType,
-  ActivityResponseDtoStatus,
-  ActivityResponseDto,
+  ActivityListResponseDtoType,
+  ActivityListResponseDtoStatus,
+  ActivityListResponseDto,
 } from '../../types';
 import moment from 'moment';
 import { getRandomElementFromArray } from './global.utils';
@@ -14,7 +14,7 @@ const getRandomSport = () => {
   return faker.helpers.arrayElement(sports);
 };
 
-function getStartAndEndTimes(type: ActivityResponseDtoType) {
+function getStartAndEndTimes(type: ActivityListResponseDtoType) {
   if (type === 'LUNCH') {
     return {
       startTime: '11:30',
@@ -32,9 +32,9 @@ function getStartAndEndTimes(type: ActivityResponseDtoType) {
   };
 }
 
-export function createRandomActivity(): ActivityResponseDto {
+export function createRandomActivity(): ActivityListResponseDto {
   const type = getRandomElementFromArray(
-    Object.values(ActivityResponseDtoType),
+    Object.values(ActivityListResponseDtoType),
   );
 
   const { startTime, endTime } = getStartAndEndTimes(type);
@@ -55,8 +55,10 @@ export function createRandomActivity(): ActivityResponseDto {
     maxParticipants: faker.number.int({ min: 2, max: 20 }),
     currentParticipants: faker.number.int({ min: 0, max: 1 }),
     location: faker.location.city(),
-    status: getRandomElementFromArray(Object.values(ActivityResponseDtoStatus)),
-    type: getRandomElementFromArray(Object.values(ActivityResponseDtoType)),
+    status: getRandomElementFromArray(
+      Object.values(ActivityListResponseDtoStatus),
+    ),
+    type: getRandomElementFromArray(Object.values(ActivityListResponseDtoType)),
     scheduledDate: formatDate(moment(faker.date.soon()).toISOString()),
     applicationStartDate: String(startDate),
     applicationEndDate: String(endDate),

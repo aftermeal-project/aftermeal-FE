@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '../constants';
-import { ActivityDetailResponseDto } from '../types';
+import { ActivityDetailResponseModel } from '../types';
 import { createRandomActivityDetails } from './utils/activity-details.utils';
 
 const url = BASE_URL + '/activities';
@@ -9,7 +9,7 @@ export const activityDetailsHandler = [
   /**
    * 활동 목록 상세 조회 API
    */
-  http.get<{ activityId: string }, {}, ActivityDetailResponseDto>(
+  http.get<{ activityId: string }, {}, ActivityDetailResponseModel>(
     url + '/:activityId',
     async ({ params }) => {
       const data = createRandomActivityDetails();
@@ -20,7 +20,10 @@ export const activityDetailsHandler = [
         });
       }
 
-      return HttpResponse.json(data);
+      return HttpResponse.json({
+        success: true,
+        data: data,
+      });
     },
   ),
 ];

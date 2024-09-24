@@ -2,7 +2,7 @@ import { http, HttpResponse } from 'msw';
 import { BASE_URL } from '../constants';
 import {
   ActivityLocationCreationRequestDto,
-  ActivityLocationListResponseDto,
+  ActivityLocationListResponseModel,
 } from '../types';
 import { createRandomActivityLocation } from './utils/activity-locations.utils';
 
@@ -12,12 +12,15 @@ export const activityLocationsHandlers = [
   /**
    * 활동 장소 조회 API
    */
-  http.get<{}, {}, ActivityLocationListResponseDto[]>(url, async () => {
+  http.get<{}, {}, ActivityLocationListResponseModel>(url, async () => {
     const data = Array.from({ length: 5 }, () =>
       createRandomActivityLocation(),
     );
 
-    return HttpResponse.json(data);
+    return HttpResponse.json({
+      success: true,
+      data: data,
+    });
   }),
 
   /**
