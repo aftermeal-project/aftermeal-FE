@@ -22,10 +22,11 @@ import 'react-tabs/style/react-tabs.css';
 
 function validateActivity(data: ActivityListResponseDto): string | null {
   const isTitleInValid = data.title.length > 20 || data?.title.length < 2;
-  const isLocationInValid = data.location === 'none';
+  const isLocationInValid = !data.activityLocationId;
   const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
     data.applicationEndDate,
   );
+
   const isLunchPM =
     data.type === 'LUNCH' &&
     moment(data.applicationStartDate).format('A') === 'PM';
@@ -81,7 +82,7 @@ export default function UpdateActivityForm({
     const submitData: ActivityListResponseDto = {
       id: data.id,
       title: data.title,
-      location: String(data.location),
+      activityLocationId: Number(data.location),
       maxParticipants: data.maxParticipants,
       currentParticipants: data.participations.length,
       status: data.status,

@@ -30,11 +30,14 @@ export default function LocationSelectInput<T extends FieldValues>({
   const { data, error, loading } = useGetActivityLocation();
 
   const options = loading
-    ? [{ value: 'none', label: 'Loading ...' }]
-    : data?.map((location: ActivityLocationListResponseDto) => ({
-        value: location.name.toString(),
-        label: location.name,
-      })) || [];
+    ? [{ value: 'none', label: '불러오는 중 ...' }]
+    : [
+        { value: '', label: '장소를 선택해주세요' },
+        ...(data?.map((location: ActivityLocationListResponseDto) => ({
+          value: location.id.toString(),
+          label: location.name,
+        })) || []),
+      ];
 
   useEffect(() => {
     if (setValue && data?.length) {

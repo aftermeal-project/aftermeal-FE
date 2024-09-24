@@ -11,6 +11,7 @@ import {
   AtomKeys,
   createActivityValidationRules,
   errorMessages,
+  validationMessages,
 } from '../../../../constants';
 import { ActivityCreationRequestDto } from '../../../../types';
 import useCreateActivity from '../../api/create-activitiy';
@@ -23,6 +24,7 @@ export default function CreateActivityModal() {
     handleSubmit,
     reset,
     setValue,
+    setError,
     formState: { errors },
   } = useForm<ActivityCreationRequestDto>({
     defaultValues: {
@@ -38,7 +40,21 @@ export default function CreateActivityModal() {
   );
 
   const onValid = (data: ActivityCreationRequestDto) => {
-    createActivity.mutate(data, {
+    if (!data.location) {
+      setError('location', {
+        message: validationMessages.INVALID_LOCATION,
+      });
+      return;
+    }
+
+    const { location, ...rest } = data;
+
+    const createActivityData = {
+      activityLocationId: Number(data.location),
+      ...rest,
+    };
+
+    createActivity.mutate(createActivityData, {
       onError: () => {
         alert(errorMessages.UNKNOWN_ERROR);
       },
@@ -57,7 +73,7 @@ export default function CreateActivityModal() {
   return (
     <ModalLayout setModal={createActivityModalOpen}>
       <div
-        className="p-6 mx-auto bg-white rounded-lg shadow-lg w-80"
+        className="mx-auto w-80 rounded-lg bg-white p-6 shadow-lg"
         onClick={e => e.stopPropagation()}
       >
         <h2 className="mb-8 text-lg font-bold">활동 추가</h2>
@@ -73,7 +89,7 @@ export default function CreateActivityModal() {
             error={errors.title}
           />
           <div className="mb-4">
-            <label htmlFor="location" className="inline-block mb-2 text-base">
+            <label htmlFor="location" className="mb-2 inline-block text-base">
               장소
             </label>
             <SelectField<ActivityCreationRequestDto>
@@ -96,7 +112,7 @@ export default function CreateActivityModal() {
             error={errors.maxParticipants}
           />
           <div className="mb-4">
-            <label htmlFor="location" className="inline-block mb-2 text-base">
+            <label htmlFor="location" className="mb-2 inline-block text-base">
               세션 유형
             </label>
             <SelectField<ActivityCreationRequestDto>
@@ -127,7 +143,7 @@ export default function CreateActivityModal() {
               'scheduledDate',
             ]}
           />
-          <div className="flex justify-between w-full mt-11">
+          <div className="mt-11 flex w-full justify-between">
             <Button
               type="button"
               onClick={handleModalClose}
