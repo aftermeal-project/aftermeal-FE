@@ -47,7 +47,7 @@ export default function ActivityListContainer({
                   id={activity.id}
                   title={activity.title}
                   type={activity.type}
-                  location={activity.location}
+                  location={String(activity.location)}
                   status={activity.status}
                   maxParticipants={activity.maxParticipants}
                   currentParticipants={activity.currentParticipants}

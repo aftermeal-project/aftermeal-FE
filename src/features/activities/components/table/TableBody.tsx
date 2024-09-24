@@ -33,7 +33,7 @@ export default function TableBody({ activities }: TableBodyProps) {
               <BodyCell title="title" value={activity.title} />
             </td>
             <td className="px-4 py-2">
-              <BodyCell title="location" value={activity.location} />
+              <BodyCell title="location" value={String(activity.location)} />
             </td>
             <td className="px-4 py-2">
               <BodyCell title="type" value={activity.type} />
