@@ -15,84 +15,84 @@
 /**
  *
  * @export
- * @interface ActivityResponseDto
+ * @interface ActivityListResponseDto
  */
-export interface ActivityResponseDto {
+export interface ActivityListResponseDto {
   /**
    *
    * @type {number}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
   id: number;
   /**
    *
    * @type {string}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
   title: string;
   /**
    *
    * @type {string}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
   location: string;
   /**
    *
    * @type {number}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
   maxParticipants: number;
   /**
    *
    * @type {number}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
   currentParticipants: number;
   /**
    *
    * @type {string}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
-  status: ActivityResponseDtoStatus;
+  status: ActivityListResponseDtoStatus;
   /**
    *
    * @type {string}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
-  type: ActivityResponseDtoType;
+  type: ActivityListResponseDtoType;
   /**
    *
    * @type {string}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
   scheduledDate: string;
   /**
    *
    * @type {string}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
   applicationStartDate: string;
   /**
    *
    * @type {string}
-   * @memberof ActivityResponseDto
+   * @memberof ActivityListResponseDto
    */
   applicationEndDate: string;
 }
 
-export const ActivityResponseDtoStatus = {
+export const ActivityListResponseDtoStatus = {
   Scheduled: 'SCHEDULED',
   InProgress: 'IN_PROGRESS',
   Canceled: 'CANCELED',
   Completed: 'COMPLETED',
 } as const;
 
-export type ActivityResponseDtoStatus =
-  (typeof ActivityResponseDtoStatus)[keyof typeof ActivityResponseDtoStatus];
-export const ActivityResponseDtoType = {
+export type ActivityListResponseDtoStatus =
+  (typeof ActivityListResponseDtoStatus)[keyof typeof ActivityListResponseDtoStatus];
+export const ActivityListResponseDtoType = {
   Lunch: 'LUNCH',
   Dinner: 'DINNER',
 } as const;
 
-export type ActivityResponseDtoType =
-  (typeof ActivityResponseDtoType)[keyof typeof ActivityResponseDtoType];
+export type ActivityListResponseDtoType =
+  (typeof ActivityListResponseDtoType)[keyof typeof ActivityListResponseDtoType];
