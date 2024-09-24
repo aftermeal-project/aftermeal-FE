@@ -32,10 +32,16 @@ export interface ActivityListResponseDto {
   title: string;
   /**
    *
+   * @type {number}
+   * @memberof ActivityListResponseDto
+   */
+  activityLocationId?: number;
+  /**
+   *
    * @type {string}
    * @memberof ActivityListResponseDto
    */
-  location: string;
+  location?: string;
   /**
    *
    * @type {number}
