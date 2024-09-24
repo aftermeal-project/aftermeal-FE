@@ -49,7 +49,11 @@ export const activityHandlers = [
   >(url + '/:activityId', async ({ request, params }) => {
     const data = await request.json();
 
-    if (!data.title || Number(data.maxParticipants) <= 0 || !data.location) {
+    if (
+      !data.title ||
+      Number(data.maxParticipants) <= 0 ||
+      !data.activityLocationId
+    ) {
       return HttpResponse.json(
         { message: 'Invalid request data' },
         { status: 400 },
