@@ -39,7 +39,7 @@ export const UpdateActivityAPI = async (
   const { id, currentParticipants, ...rest } = activityUpdateData;
 
   await instance({
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       Authorization: accessToken,
     },
