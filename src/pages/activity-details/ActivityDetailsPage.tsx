@@ -5,6 +5,7 @@ import {
   ActivityDetails,
   ActivityDetailsSkeleton,
   AdminActivityDetails,
+  AdminActivityDetailsSkeleton,
 } from '../../features/activity-details/component';
 import { useLocation } from 'react-router-dom';
 
@@ -24,7 +25,15 @@ export default function ActivityDetailsPage() {
         url={location.pathname}
       />
       <ErrorBoundary Fallback={ErrorFallback}>
-        <Suspense fallback={<ActivityDetailsSkeleton />}>
+        <Suspense
+          fallback={
+            isAdminPage ? (
+              <AdminActivityDetailsSkeleton />
+            ) : (
+              <ActivityDetailsSkeleton />
+            )
+          }
+        >
           <ActivityDetailsFetcher>
             {activityDetails => (
               <>

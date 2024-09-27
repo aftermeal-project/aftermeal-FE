@@ -18,7 +18,8 @@ export const instance = axios.create({
 instance.interceptors.request.use(
   config => {
     const accessToken = token.getLocalAccessToken();
-    if (accessToken) {
+
+    if (accessToken && config.url !== '/auth/refresh') {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return config;
@@ -31,7 +32,7 @@ async function refreshAuthToken() {
 
   try {
     return await RefreshAPI(refreshToken);
-  } catch (error) {
+  } catch {
     throw new Error('Failed to refresh auth token');
   }
 }

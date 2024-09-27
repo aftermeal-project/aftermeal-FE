@@ -1,4 +1,8 @@
-import { ActivityCreationRequestDto, ActivityResponseDto } from '../../types';
+import {
+  ActivityCreationRequestDto,
+  ActivityListResponseDto,
+  ActivityListResponseModel,
+} from '../../types';
 import { instance } from '../instance';
 import Token from '../utils/token';
 
@@ -8,7 +12,7 @@ const url = '/activities';
 const accessToken = 'Bearer ' + token.getLocalAccessToken();
 
 export const GetActivitiesAPI = async () => {
-  const response = await instance({
+  const response = await instance<ActivityListResponseModel>({
     method: 'GET',
     url: url,
   });
@@ -30,12 +34,12 @@ export const CreateActivityAPI = async (
 };
 
 export const UpdateActivityAPI = async (
-  activityUpdateData: ActivityResponseDto,
+  activityUpdateData: ActivityListResponseDto,
 ) => {
   const { id, currentParticipants, ...rest } = activityUpdateData;
 
   await instance({
-    method: 'PUT',
+    method: 'PATCH',
     headers: {
       Authorization: accessToken,
     },

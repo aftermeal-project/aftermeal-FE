@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import { GetActivityLocationAPI } from '../../../libs/api/activity-locations';
 
-async function getActivityLocations() {
-  return await GetActivityLocationAPI();
+function getActivityLocations() {
+  return GetActivityLocationAPI();
 }
 
 export default function useGetActivityLocation() {

@@ -13,6 +13,7 @@ import { AtomKeys } from '../../../../../constants';
 import { ConfirmDeleteModal } from '../../../../../components';
 import useDeleteActivity from '../../../../activities/api/delete-activity';
 import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 
 export type ModeType = 'Read' | 'Update';
 export type TabType = 'Basic' | 'Schedule' | 'User';
@@ -75,13 +76,20 @@ export default function AdminActivityDetails({
           onSettled={handleSettled}
         />
       )}
-      <h2 className="mb-9 text-3xl font-bold text-gray-800">
-        {getFormattedTitle(
-          activity.scheduledDate,
-          activity.type,
-          activity.title,
-        )}
-      </h2>
+      <div className="mb-9 flex w-full items-center justify-between">
+        <h2 className="text-3xl font-bold text-gray-800">
+          {getFormattedTitle(
+            activity.scheduledDate,
+            activity.type,
+            activity.title,
+          )}
+        </h2>
+        <FaArrowLeft
+          onClick={handleSettled}
+          className="cursor-pointer text-3xl text-blue-500"
+        />
+      </div>
+
       {mode === 'Read' ? (
         <ActivityDetailsTabsContainer activity={activity} setTab={setTab} />
       ) : (

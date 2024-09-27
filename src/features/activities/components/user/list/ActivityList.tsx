@@ -1,13 +1,13 @@
-import { ActivityResponseDto } from '../../../../types';
+import { ActivityListResponseDto } from '../../../../../types';
 import moment from 'moment';
 import 'moment/locale/ko';
 import { useState } from 'react';
-import ListTab from '../tab/ListTab';
+import ListTab from '../../tab/ListTab';
 import { Activity } from '../item';
 import NoActivity from './NoActivity';
-import { getTypeLabel } from '../../../../utils';
+import { getTypeLabel } from '../../../../../utils';
 interface ActivityListContainerProps {
-  activities: ActivityResponseDto[] | null;
+  activities: ActivityListResponseDto[] | null;
 }
 
 export default function ActivityListContainer({
@@ -29,8 +29,8 @@ export default function ActivityListContainer({
 
   return (
     <section>
-      <div className="flex items-center justify-between mt-5 mb-9">
-        <div className="p-2 bg-green-400 rounded-md w-fit">
+      <div className="mb-9 mt-5 flex items-center justify-between">
+        <div className="w-fit rounded-md bg-green-400 p-2">
           <h1 className="text-[19px] font-bold tracking-tighter text-white">
             {getToday()}
           </h1>
@@ -47,7 +47,7 @@ export default function ActivityListContainer({
                   id={activity.id}
                   title={activity.title}
                   type={activity.type}
-                  location={activity.location}
+                  location={String(activity.location)}
                   status={activity.status}
                   maxParticipants={activity.maxParticipants}
                   currentParticipants={activity.currentParticipants}

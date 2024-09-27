@@ -6,7 +6,7 @@ import {
   FaClock,
   FaTags,
 } from 'react-icons/fa';
-import { HeaderCell } from '../';
+import { HeaderCell } from '..';
 
 export default function TableHeader() {
   return (

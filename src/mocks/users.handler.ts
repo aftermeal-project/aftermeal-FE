@@ -1,5 +1,5 @@
 import { http, HttpResponse } from 'msw';
-import { UserListResponseDto, UserUpdateRequestDto } from '../types';
+import { UserListResponseModel, UserUpdateRequestDto } from '../types';
 import { createRandomUser } from './utils/users.utils';
 import { BASE_URL } from '../constants';
 
@@ -26,9 +26,12 @@ export const userHandlers = [
   /**
    * 유저 목록 조회 API
    */
-  http.get<{}, {}, UserListResponseDto[]>(url, async () => {
+  http.get<{}, {}, UserListResponseModel>(url, async () => {
     const data = Array.from({ length: 10 }, () => createRandomUser());
-    return HttpResponse.json(data);
+    return HttpResponse.json({
+      success: true,
+      data: data,
+    });
   }),
 
   /**

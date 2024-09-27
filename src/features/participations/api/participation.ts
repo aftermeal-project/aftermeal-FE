@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import { ParticipationAPI } from '../../../libs/api/participations';
-import { ActivityResponseDto } from '../../../types';
+import { ActivityListResponseDto } from '../../../types';
 
 export function useParticipation() {
   const queryClient = useQueryClient();
@@ -12,10 +12,10 @@ export function useParticipation() {
       await queryClient.cancelQueries({ queryKey: ['activities'] });
 
       const previousActivities = queryClient.getQueryData<
-        ActivityResponseDto[]
+        ActivityListResponseDto[]
       >(['activities']);
 
-      queryClient.setQueryData<ActivityResponseDto[]>(
+      queryClient.setQueryData<ActivityListResponseDto[]>(
         ['activities'],
         oldActivities => {
           return oldActivities?.map(activity =>

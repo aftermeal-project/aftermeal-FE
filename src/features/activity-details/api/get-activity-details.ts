@@ -1,5 +1,4 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { UserListResponseDtoRoles } from '../../../types';
 import { GetActivityDetailsAPI } from '../../../libs/api/activity-details';
 
 async function getActivityDetails({
@@ -13,10 +12,7 @@ async function getActivityDetails({
   return GetActivityDetailsAPI(activityId);
 }
 
-export default function useGetActivityDetails(
-  activityId: string,
-  roles?: UserListResponseDtoRoles[],
-) {
+export default function useGetActivityDetails(activityId: string) {
   const { data } = useSuspenseQuery({
     queryKey: ['activity-details', activityId],
     queryFn: getActivityDetails,

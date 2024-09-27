@@ -3,8 +3,8 @@ import { BASE_URL } from '../constants';
 import {
   ErrorResponseData,
   LoginRequestDto,
-  LoginResponseDto,
   LoginResponseDtoUser,
+  LoginResponseModel,
 } from '../types';
 import { faker } from '@faker-js/faker';
 
@@ -17,7 +17,7 @@ function createRandomUser(): LoginResponseDtoUser {
 }
 
 export const authHandlers = [
-  http.post<{}, LoginRequestDto, LoginResponseDto | ErrorResponseData>(
+  http.post<{}, LoginRequestDto, LoginResponseModel | ErrorResponseData>(
     BASE_URL + '/auth/login',
     async ({ request }) => {
       const data = await request.json();
@@ -34,11 +34,14 @@ export const authHandlers = [
         );
       } else {
         return HttpResponse.json({
-          tokenType: 'jwt',
-          accessToken: 'test',
-          refreshToken: 'test',
-          expiredIn: 3600,
-          user: createRandomUser(),
+          success: true,
+          data: {
+            tokenType: 'jwt',
+            accessToken: 'test',
+            refreshToken: 'test',
+            expiredIn: 3600,
+            user: createRandomUser(),
+          },
         });
       }
     },

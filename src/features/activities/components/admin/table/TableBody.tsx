@@ -1,9 +1,9 @@
-import { ActivityResponseDto } from '../../../../types';
+import { ActivityListResponseDto } from '../../../../../types';
 import BodyCell from './BodyCell';
 import { useNavigate } from 'react-router-dom';
 
 interface TableBodyProps {
-  activities: ActivityResponseDto[];
+  activities: ActivityListResponseDto[];
 }
 
 export default function TableBody({ activities }: TableBodyProps) {
@@ -33,7 +33,7 @@ export default function TableBody({ activities }: TableBodyProps) {
               <BodyCell title="title" value={activity.title} />
             </td>
             <td className="px-4 py-2">
-              <BodyCell title="location" value={activity.location} />
+              <BodyCell title="location" value={String(activity.location)} />
             </td>
             <td className="px-4 py-2">
               <BodyCell title="type" value={activity.type} />

@@ -1,7 +1,7 @@
 import {
   LoginRequestDto,
   TokenRefreshRequestDto,
-  TokenRefreshResponseDto,
+  TokenRefreshResponseModel,
 } from '../../types';
 import { instance } from '../instance';
 
@@ -12,18 +12,19 @@ export const LoginAPI = async (loginRequest: LoginRequestDto) => {
     data: loginRequest,
   });
 
-  console.log(response.data);
   return response.data?.data;
 };
 
 export const RefreshAPI = async (
   tokenRefreshRequest: TokenRefreshRequestDto,
 ) => {
-  const response = await instance<TokenRefreshResponseDto>({
+  const response = await instance<TokenRefreshResponseModel>({
     method: 'POST',
     url: '/auth/refresh',
-    data: tokenRefreshRequest,
+    data: {
+      refreshToken: String(tokenRefreshRequest),
+    },
   });
 
-  return response.data;
+  return response.data?.data;
 };

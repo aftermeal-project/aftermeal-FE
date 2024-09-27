@@ -6,10 +6,10 @@ import {
   UseFormRegister,
   UseFormSetValue,
 } from 'react-hook-form';
-import { errorMessages } from '../../../../constants';
-import useGetActivityLocation from '../../../activity-locations/api/get-activity-locations';
+import { errorMessages } from '../../../../../constants';
+import useGetActivityLocation from '../../../../activity-locations/api/get-activity-locations';
 import { SelectInput } from '../select';
-import { ActivityLocationListResponseDto } from '../../../../types';
+import { ActivityLocationListResponseDto } from '../../../../../types';
 
 interface LocationSelectInputProps<T extends FieldValues> {
   title: Path<T>;
@@ -30,11 +30,14 @@ export default function LocationSelectInput<T extends FieldValues>({
   const { data, error, loading } = useGetActivityLocation();
 
   const options = loading
-    ? [{ value: 'none', label: 'Loading ...' }]
-    : data?.map((location: ActivityLocationListResponseDto) => ({
-        value: location.name.toString(),
-        label: location.name,
-      })) || [];
+    ? [{ value: 'none', label: '불러오는 중 ...' }]
+    : [
+        { value: '', label: '장소를 선택해주세요' },
+        ...(data?.map((location: ActivityLocationListResponseDto) => ({
+          value: location.id.toString(),
+          label: location.name,
+        })) || []),
+      ];
 
   useEffect(() => {
     if (setValue && data?.length) {

@@ -1,27 +1,26 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ActivityResponseDto } from '../../../types';
+import { ActivityListResponseDto } from '../../../types';
 import { errorMessages } from '../../../constants';
 import { UpdateActivityAPI } from '../../../libs/api/activities';
 import toast from 'react-hot-toast';
 
-async function updateActivity(data: ActivityResponseDto): Promise<void> {
+async function updateActivity(data: ActivityListResponseDto): Promise<void> {
   await UpdateActivityAPI(data);
 }
 
 export default function useUpdateActivty() {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<void, Error, ActivityResponseDto>({
+  const mutation = useMutation<void, Error, ActivityListResponseDto>({
     mutationFn: updateActivity,
-    onMutate: async (updateActivity: ActivityResponseDto) => {
+    onMutate: async (updateActivity: ActivityListResponseDto) => {
       await queryClient.cancelQueries({
         queryKey: ['activities', updateActivity.id],
       });
 
-      const previousActivity = queryClient.getQueryData<ActivityResponseDto[]>([
-        'activities',
-        updateActivity.id,
-      ]);
+      const previousActivity = queryClient.getQueryData<
+        ActivityListResponseDto[]
+      >(['activities', updateActivity.id]);
 
       queryClient.setQueryData(
         ['activities', updateActivity.id],

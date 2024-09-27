@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ActivityResponseDto } from '../../../types';
+import { ActivityListResponseDto } from '../../../types';
 import { DeleteUserAPI } from '../../../libs/api/users';
 import toast from 'react-hot-toast';
 import { errorMessages } from '../../../constants';
@@ -17,12 +17,12 @@ export default function useDeleteUser() {
         queryKey: ['users'],
       });
 
-      const previousActivity = queryClient.getQueryData<ActivityResponseDto[]>([
-        'users',
-      ]);
+      const previousActivity = queryClient.getQueryData<
+        ActivityListResponseDto[]
+      >(['users']);
 
       if (previousActivity) {
-        queryClient.setQueryData<ActivityResponseDto[]>(['items'], old =>
+        queryClient.setQueryData<ActivityListResponseDto[]>(['items'], old =>
           old?.filter(item => item.id !== Number(userId)),
         );
       }
@@ -34,7 +34,7 @@ export default function useDeleteUser() {
     },
     onError: (_error, _variables, context: any) => {
       if (context?.previousActivity) {
-        queryClient.setQueryData<ActivityResponseDto[]>(
+        queryClient.setQueryData<ActivityListResponseDto[]>(
           ['users'],
           context.previousActivity,
         );
