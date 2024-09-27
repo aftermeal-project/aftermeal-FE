@@ -32,7 +32,7 @@ async function refreshAuthToken() {
 
   try {
     return await RefreshAPI(refreshToken);
-  } catch (error) {
+  } catch {
     throw new Error('Failed to refresh auth token');
   }
 }
