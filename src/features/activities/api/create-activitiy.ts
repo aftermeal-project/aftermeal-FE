@@ -1,5 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ActivityCreationRequestDto } from '../../../types';
+import {
+  ActivityCreationRequestDto,
+  ActivityListResponseDto,
+} from '../../../types';
 import { errorMessages } from '../../../constants';
 import toast from 'react-hot-toast';
 import { CreateActivityAPI } from '../../../libs/api/activities';
@@ -19,12 +22,12 @@ export default function useCreateActivity() {
 
       const previousActivities = queryClient.getQueryData(['activities']);
 
-      // queryClient.setQueryData(
-      //   ['activities'],
-      //   (old: ActivityResponseDto[] | undefined) => {
-      //     return old ? [...old, newActivity] : [newActivity];
-      //   },
-      // );
+      queryClient.setQueryData(
+        ['activities'],
+        (old: ActivityListResponseDto[] | undefined) => {
+          return old ? [...old, newActivity] : [newActivity];
+        },
+      );
 
       return { previousActivities };
     },
