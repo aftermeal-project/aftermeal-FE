@@ -18,7 +18,8 @@ export const instance = axios.create({
 instance.interceptors.request.use(
   config => {
     const accessToken = token.getLocalAccessToken();
-    if (accessToken) {
+
+    if (accessToken && config.url !== '/auth/refresh') {
       config.headers['Authorization'] = `Bearer ${accessToken}`;
     }
     return config;
