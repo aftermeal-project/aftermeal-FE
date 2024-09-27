@@ -1,4 +1,5 @@
 import { ActivityDetailResponseDtoParticipationsInner } from '../../../../../types';
+import { useCancelParticipation } from '../../../../participations/api/cancel-participation';
 import { User } from '../../../../users';
 
 interface ParticipantsTabProps {
@@ -8,6 +9,14 @@ interface ParticipantsTabProps {
 export default function ParticipantsTab({
   participations,
 }: ParticipantsTabProps) {
+  const { cancelParticipation, isCancelLoading } = useCancelParticipation();
+
+  const handleDeleteParticipation = (participationId: number) => {
+    if (!isCancelLoading) {
+      cancelParticipation.mutate(String(participationId));
+    }
+  };
+
   return (
     <div>
       <p className="mb-2 font-bold">참가자 목록</p>
@@ -16,7 +25,7 @@ export default function ParticipantsTab({
           <User
             key={item.id}
             user={item.user}
-            onDelete={() => console.log('d')}
+            onDelete={() => handleDeleteParticipation(item.user.id)}
           />
         ))
       ) : (

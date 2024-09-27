@@ -70,8 +70,8 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
     participation.mutate(String(activityId));
   };
 
-  const handleCancel = (activityId: number) => {
-    cancelParticipation.mutate(String(activityId));
+  const handleCancel = (participationId: number) => {
+    cancelParticipation.mutate(String(participationId));
   };
 
   return (
@@ -95,7 +95,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
           isBeforeApplicationStart={isBeforeApplicationStart()}
           isParticipated={isParticipated}
           onParticipate={() => handleParticipate(activity.id)}
-          onCancel={() => handleCancel(activity.id)}
+          onCancel={() => handleCancel(activity.participations[0].id)}
           isParticipateLoading={isParticipateLoading}
           isCancelLoading={isCancelLoading}
         />
@@ -113,7 +113,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
           isBeforeApplicationStart={isBeforeApplicationStart()}
           isParticipated={isParticipated}
           onParticipate={() => handleParticipate(activity.id)}
-          onCancel={() => handleCancel(activity.id)}
+          onCancel={() => handleCancel(activity.participations[0].id)}
           isParticipateLoading={isParticipateLoading}
           isCancelLoading={isCancelLoading}
         />

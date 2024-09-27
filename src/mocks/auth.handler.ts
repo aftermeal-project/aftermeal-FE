@@ -12,7 +12,7 @@ function createRandomUser(): LoginResponseDtoUser {
   return {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
-    roles: ['USER'],
+    roles: ['USER', 'ADMIN'],
   };
 }
 
