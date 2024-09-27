@@ -12,7 +12,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     const clearUserOnTokenInvalidation = () => {
-      if (user && !token.getUser()) {
+      if (user && !token.getLocalAccessToken()) {
         resetUser();
       }
     };
