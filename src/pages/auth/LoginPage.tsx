@@ -8,6 +8,7 @@ import Token from '../../libs/utils/token';
 export default function LoginPage() {
   const user = useRecoilValue(UserAtom);
   const resetUser = useResetRecoilState(UserAtom);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const token = new Token();
 
   useEffect(() => {
@@ -18,7 +19,7 @@ export default function LoginPage() {
     };
 
     clearUserOnTokenInvalidation();
-  }, [resetUser, user]);
+  }, [resetUser, token, user]);
 
   return (
     <>
