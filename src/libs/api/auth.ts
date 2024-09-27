@@ -21,7 +21,9 @@ export const RefreshAPI = async (
   const response = await instance<TokenRefreshResponseModel>({
     method: 'POST',
     url: '/auth/refresh',
-    data: tokenRefreshRequest,
+    data: {
+      refreshToken: String(tokenRefreshRequest),
+    },
   });
 
   return response.data?.data;
