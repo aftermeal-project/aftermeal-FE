@@ -39,9 +39,6 @@ export default function TableBody({ activities }: TableBodyProps) {
               <BodyCell title="type" value={activity.type} />
             </td>
             <td className="px-4 py-2">
-              <BodyCell title="status" value={activity.status} />
-            </td>
-            <td className="px-4 py-2">
               <BodyCell
                 title="applicationStartAt"
                 value={activity.applicationStartAt}

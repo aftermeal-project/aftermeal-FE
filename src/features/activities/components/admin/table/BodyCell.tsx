@@ -1,14 +1,5 @@
-import {
-  ActivityListResponseDto,
-  ActivityListResponseDtoStatus,
-} from '../../../../../types';
-import {
-  FaCheckCircle,
-  FaExclamationCircle,
-  FaHourglassHalf,
-  FaTimesCircle,
-} from 'react-icons/fa';
-import { formatTime, getStatusLabel, getTypeLabel } from '../../../../../utils';
+import { ActivityListResponseDto } from '../../../../../types';
+import { formatTime, getTypeLabel } from '../../../../../utils';
 
 interface BodyCellProps {
   title: keyof ActivityListResponseDto;
@@ -24,39 +15,12 @@ export default function BodyCell({ title, value }: BodyCellProps) {
       return formatTime({ type: 'readable', time: value as string });
     }
 
-    if (title === 'status') {
-      return getStatusLabel(value as string);
-    }
-
     if (title === 'type') {
       return getTypeLabel(value as string) + ' 활동';
     }
 
     return value as string;
   };
-
-  if (title === 'status') {
-    switch (value) {
-      case ActivityListResponseDtoStatus.Scheduled:
-        className += ' text-gray-400 font-bold';
-        icon = <FaHourglassHalf className="inline-block mr-2" />;
-        break;
-      case ActivityListResponseDtoStatus.InProgress:
-        className += ' text-yellow-500 font-bold';
-        icon = <FaExclamationCircle className="inline-block mr-2" />;
-        break;
-      case ActivityListResponseDtoStatus.Canceled:
-        className += ' text-red-500 font-bold';
-        icon = <FaTimesCircle className="inline-block mr-2" />;
-        break;
-      case ActivityListResponseDtoStatus.Completed:
-        className += ' text-green-500 font-bold';
-        icon = <FaCheckCircle className="inline-block mr-2" />;
-        break;
-      default:
-        className += ' text-gray-800';
-    }
-  }
 
   return (
     <span

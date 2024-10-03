@@ -37,19 +37,17 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
   }, []);
 
   const isApplicationAllowed = (
-    status: string,
     participantsCount: number,
     maxParticipants: number,
     applicationStartAt: string,
     applicationEndAt: string,
   ) => {
-    const isStatusValid = status === 'SCHEDULED';
     const hasSpaceAvailable = participantsCount < maxParticipants;
     const isWithinApplicationPeriod =
       new Date() >= new Date(applicationStartAt) &&
       new Date() <= new Date(applicationEndAt);
 
-    return isStatusValid && hasSpaceAvailable && isWithinApplicationPeriod;
+    return hasSpaceAvailable && isWithinApplicationPeriod;
   };
 
   const isParticipated = activity.participations.some(
@@ -60,10 +58,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
     const now = moment();
     const startTime = moment(activity.applicationStartAt);
     const duration = moment.duration(startTime.diff(now));
-    return (
-      Math.max(Math.floor(duration.asSeconds()), 0) > 0 &&
-      activity.status === 'SCHEDULED'
-    );
+    return Math.max(Math.floor(duration.asSeconds()), 0) > 0;
   };
 
   const handleParticipate = (activityId: number) => {
@@ -86,7 +81,6 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
           applicationStartAt={activity.applicationStartAt}
           applicationEndAt={activity.applicationEndAt}
           isApplicationAllowed={isApplicationAllowed(
-            activity.status,
             activity.participations.length,
             activity.maxParticipants,
             activity.applicationStartAt,
@@ -104,7 +98,6 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
           applicationStartAt={activity.applicationStartAt}
           applicationEndAt={activity.applicationEndAt}
           isApplicationAllowed={isApplicationAllowed(
-            activity.status,
             activity.participations.length,
             activity.maxParticipants,
             activity.applicationEndAt,

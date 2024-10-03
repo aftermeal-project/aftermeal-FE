@@ -30,7 +30,6 @@ export default function zaActivityDetailsTabsContainer({
           title={activity.title}
           location={activity.location}
           type={activity.type}
-          status={activity.status}
           maxParticipants={activity.maxParticipants}
         />
       </TabPanel>

@@ -29,8 +29,8 @@ export default function ActivityListContainer({
 
   return (
     <section>
-      <div className="mb-9 mt-5 flex items-center justify-between">
-        <div className="w-fit rounded-md bg-green-400 p-2">
+      <div className="flex items-center justify-between mt-5 mb-9">
+        <div className="p-2 bg-green-400 rounded-md w-fit">
           <h1 className="text-[19px] font-bold tracking-tighter text-white">
             {getToday()}
           </h1>
@@ -48,7 +48,6 @@ export default function ActivityListContainer({
                   title={activity.title}
                   type={activity.type}
                   location={String(activity.location)}
-                  status={activity.status}
                   maxParticipants={activity.maxParticipants}
                   currentParticipants={activity.currentParticipants}
                 />

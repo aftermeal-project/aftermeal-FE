@@ -1,7 +1,7 @@
 import { FaMapMarkerAlt, FaUsers, FaClipboardList } from 'react-icons/fa';
 import moment from 'moment';
 import { ActivityDetailResponseDto } from '../../../../../types';
-import { getTypeLabel, formatTime, getStatusLabel } from '../../../../../utils';
+import { getTypeLabel, formatTime } from '../../../../../utils';
 
 function getFormattedTitle(date: string, type: string, title: string) {
   const formattedDate = moment(date).format('YYYY년 MM월 DD일 dddd');
@@ -36,19 +36,6 @@ export default function InformationSection({
             activity.title,
           )}
         </h1>
-        <span
-          className={`rounded-full px-2 py-2 text-sm font-bold min-[530px]:px-4 ${
-            activity.status === 'SCHEDULED'
-              ? 'bg-blue-100 text-blue-800'
-              : activity.status === 'IN_PROGRESS'
-                ? 'bg-green-100 text-green-800'
-                : activity.status === 'CANCELED'
-                  ? 'bg-red-100 text-red-800'
-                  : 'bg-gray-100 text-gray-800'
-          }`}
-        >
-          {getStatusLabel(activity.status)}
-        </span>
       </div>
 
       <div className="grid grid-cols-1 gap-6 min-[1000px]:grid-cols-2">

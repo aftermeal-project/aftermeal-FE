@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import {
   ActivityListResponseDtoType,
-  ActivityListResponseDtoStatus,
   ActivityDetailResponseDto,
   UserListResponseDtoType,
 } from '../../types';
@@ -68,9 +67,6 @@ export function createRandomActivityDetails(): ActivityDetailResponseDto {
     title: getRandomSport(),
     location: faker.location.city(),
     maxParticipants: faker.number.int({ min: 2, max: 20 }),
-    status: getRandomElementFromArray(
-      Object.values(ActivityListResponseDtoStatus),
-    ),
     type: type,
     scheduledDate: formatDate(moment(faker.date.soon()).toISOString()),
     applicationStartAt: String(startDate),

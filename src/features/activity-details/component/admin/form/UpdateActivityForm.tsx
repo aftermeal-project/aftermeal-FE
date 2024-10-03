@@ -8,10 +8,7 @@ import { ModeType, TabType } from '../details/AdminActivityDetails';
 import { UserTab } from '../tabs';
 import { UseFormReturn } from 'react-hook-form';
 import { SelectField } from '../../../../activities';
-import {
-  typeOptions,
-  statusOptions,
-} from '../../../../activities/constants/options';
+import { typeOptions } from '../../../../activities/constants/options';
 import { Input } from '../../../../../components';
 import moment from 'moment';
 import { validationMessages } from '../../../../../constants';
@@ -85,7 +82,6 @@ export default function UpdateActivityForm({
       activityLocationId: Number(data.location),
       maxParticipants: data.maxParticipants,
       currentParticipants: data.participations.length,
-      status: data.status,
       type: data.type,
       scheduledDate: data.scheduledDate,
       applicationStartAt: data.applicationStartAt,
@@ -163,16 +159,6 @@ export default function UpdateActivityForm({
             margin="mb-4"
             error={errors.maxParticipants}
           />
-          <div className="mb-4">
-            <label htmlFor="status" className="inline-block mb-2 text-base">
-              진행 상태
-            </label>
-            <SelectField<ActivityDetailResponseDto>
-              title="status"
-              options={statusOptions}
-              register={register}
-            />
-          </div>
         </TabPanel>
 
         <TabPanel className="px-3">
