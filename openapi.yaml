@@ -5,9 +5,6 @@ info:
   description: 에프터밀 API 엔드포인트(Endpoint)와 객체 정보, 파라미터, 요청 및 응답 예제를 살펴보세요.
 
 servers:
-  # Added by API Auto Mocking Plugin
-  - description: SwaggerHub API Auto Mocking
-    url: https://virtserver.swaggerhub.com/doong3373/aftermeal/1.0.0
   - description: AfterMeal Development API Server
     url: https://dev-api.aftermeal.online
   - description: AfterMeal Production API Server
@@ -166,7 +163,7 @@ paths:
                   data:
                     type: array
                     items:
-                      $ref: '#/components/schemas/ActivityListResponseDto'
+                      $ref: '#/components/schemas/ActivitySummaryResponseDto'
 
   /activities/{activityId}:
     get:
@@ -536,65 +533,22 @@ components:
           type: integer
         title:
           type: string
-        maxParticipants:
-          type: integer
-        currentParticipants:
-          type: integer
-        location:
-          type: string
-        status:
-          type: string
-          enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
-        type:
-          type: string
-          enum: [LUNCH, DINNER]
-        scheduledDate:
-          type: string
-          format: date
-        applicationStartDate:
-          type: string
-          format: date-time
-        applicationEndDate:
-          type: string
-          format: date-time
-      required:
-        - id
-        - title
-        - maxParticipants
-        - currentParticipants
-        - location
-        - status
-        - type
-        - scheduledDate
-        - applicationStartDate
-        - applicationEndDate
-
-    ActivityListResponseDto:
-      type: object
-      properties:
-        id:
-          type: integer
-        title:
-          type: string
         location:
           type: string
         maxParticipants:
           type: integer
         currentParticipants:
           type: integer
-        status:
-          type: string
-          enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
         type:
           type: string
           enum: [LUNCH, DINNER]
         scheduledDate:
           type: string
           format: date
-        applicationStartDate:
+        applicationStartAt:
           type: string
           format: date-time
-        applicationEndDate:
+        applicationEndAt:
           type: string
           format: date-time
       required:
@@ -603,11 +557,10 @@ components:
         - location
         - maxParticipants
         - currentParticipants
-        - status
         - type
         - scheduledDate
-        - applicationStartDate
-        - applicationEndDate
+        - applicationStartAt
+        - applicationEndAt
 
     ActivityDetailResponseDto:
       type: object
@@ -620,19 +573,16 @@ components:
           type: string
         maxParticipants:
           type: integer
-        status:
-          type: string
-          enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
         type:
           type: string
           enum: [LUNCH, DINNER]
         scheduledDate:
           type: string
           format: date
-        applicationStartDate:
+        applicationStartAt:
           type: string
           format: date-time
-        applicationEndDate:
+        applicationEndAt:
           type: string
           format: date-time
         participations:
@@ -666,11 +616,10 @@ components:
         - title
         - location
         - maxParticipants
-        - status
         - type
         - scheduledDate
-        - applicationStartDate
-        - applicationEndDate
+        - applicationStartAt
+        - applicationEndAt
         - participations
 
     ActivityUpdateDto:
@@ -681,23 +630,15 @@ components:
         maxParticipants:
           type: integer
           minimum: 1
-        location:
-          type: string
-        status:
-          type: string
-          enum: [SCHEDULED, IN_PROGRESS, CANCELED, COMPLETED]
+        locationId:
+          type: integer
+          minimum: 1
         type:
           type: string
           enum: [LUNCH, DINNER]
         scheduledDate:
           type: string
           format: date
-        applicationStartDate:
-          type: string
-          format: date-time
-        applicationEndDate:
-          type: string
-          format: date-time
 
     ActivityLocationCreationRequestDto:
       type: object
@@ -705,18 +646,6 @@ components:
         name:
           type: string
       required:
-        - name
-
-    ActivityLocationCreationResponseDto:
-      type: object
-      properties:
-        id:
-          type: number
-          minimum: 1
-        name:
-          type: string
-      required:
-        - id
         - name
 
     ActivityLocationListResponseDto:
