@@ -13,8 +13,8 @@ function getFormattedApplicationPeriod(startTime: string, endTime: string) {
 
 interface ApplicationSectionProps {
   location: string;
-  applicationStartDate: string;
-  applicationEndDate: string;
+  applicationStartAt: string;
+  applicationEndAt: string;
   isApplicationAllowed: boolean;
   isBeforeApplicationStart: boolean;
   isParticipated: boolean;
@@ -26,8 +26,8 @@ interface ApplicationSectionProps {
 
 export default function ApplicationSection({
   location,
-  applicationStartDate,
-  applicationEndDate,
+  applicationStartAt,
+  applicationEndAt,
   isApplicationAllowed,
   isBeforeApplicationStart,
   isParticipated,
@@ -42,20 +42,20 @@ export default function ApplicationSection({
       <div className="flex flex-col">
         <div>
           <div className="flex items-center">
-            <FaMapMarkerAlt className="mr-2 inline-block text-red-500" />
+            <FaMapMarkerAlt className="inline-block mr-2 text-red-500" />
             <span className="text-lg font-semibold">장소</span>
           </div>
           <div className="text-gray-700">{location}</div>
         </div>
         <div className="mt-6">
           <div className="flex items-center">
-            <FaClipboardList className="mr-2 inline-block text-blue-500" />
+            <FaClipboardList className="inline-block mr-2 text-blue-500" />
             <span className="text-lg font-semibold">신청 기간:</span>
           </div>
-          <div className="flex flex-col gap-y-8 font-semibold text-gray-700">
+          <div className="flex flex-col font-semibold text-gray-700 gap-y-8">
             {getFormattedApplicationPeriod(
-              applicationStartDate,
-              applicationEndDate,
+              applicationStartAt,
+              applicationEndAt,
             )}
             <>
               {isApplicationAllowed ? (
@@ -97,8 +97,8 @@ export default function ApplicationSection({
           <RenamingTime
             isApplicationAllowed={isApplicationAllowed}
             isBeforeApplicationStart={isBeforeApplicationStart}
-            applicationStartDate={applicationStartDate}
-            applicationEndDate={applicationEndDate}
+            applicationStartAt={applicationStartAt}
+            applicationEndAt={applicationEndAt}
             size="small"
           />
         </div>

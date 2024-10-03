@@ -20,7 +20,7 @@ export default function BodyCell({ title, value }: BodyCellProps) {
   let className = 'flex items-center text-gray-800';
 
   const formattingValue = (title: keyof ActivityListResponseDto): string => {
-    if (title === 'applicationStartDate' || title === 'applicationEndDate') {
+    if (title === 'applicationStartAt' || title === 'applicationEndAt') {
       return formatTime({ type: 'readable', time: value as string });
     }
 
@@ -39,19 +39,19 @@ export default function BodyCell({ title, value }: BodyCellProps) {
     switch (value) {
       case ActivityListResponseDtoStatus.Scheduled:
         className += ' text-gray-400 font-bold';
-        icon = <FaHourglassHalf className="mr-2 inline-block" />;
+        icon = <FaHourglassHalf className="inline-block mr-2" />;
         break;
       case ActivityListResponseDtoStatus.InProgress:
         className += ' text-yellow-500 font-bold';
-        icon = <FaExclamationCircle className="mr-2 inline-block" />;
+        icon = <FaExclamationCircle className="inline-block mr-2" />;
         break;
       case ActivityListResponseDtoStatus.Canceled:
         className += ' text-red-500 font-bold';
-        icon = <FaTimesCircle className="mr-2 inline-block" />;
+        icon = <FaTimesCircle className="inline-block mr-2" />;
         break;
       case ActivityListResponseDtoStatus.Completed:
         className += ' text-green-500 font-bold';
-        icon = <FaCheckCircle className="mr-2 inline-block" />;
+        icon = <FaCheckCircle className="inline-block mr-2" />;
         break;
       default:
         className += ' text-gray-800';

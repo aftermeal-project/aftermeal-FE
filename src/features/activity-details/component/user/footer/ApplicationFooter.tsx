@@ -2,8 +2,8 @@ import { Button } from '../../../../../components';
 import { RenamingTime } from '../time';
 
 interface ApplicationFooterProps {
-  applicationStartDate: string;
-  applicationEndDate: string;
+  applicationStartAt: string;
+  applicationEndAt: string;
   isApplicationAllowed: boolean;
   isBeforeApplicationStart: boolean;
   isParticipated: boolean;
@@ -14,8 +14,8 @@ interface ApplicationFooterProps {
 }
 
 export default function ApplicationFooter({
-  applicationStartDate,
-  applicationEndDate,
+  applicationStartAt,
+  applicationEndAt,
   isApplicationAllowed,
   isBeforeApplicationStart,
   isParticipated,
@@ -25,12 +25,12 @@ export default function ApplicationFooter({
   onCancel,
 }: ApplicationFooterProps) {
   return (
-    <div className="fixed bottom-0 left-0 w-full rounded-t-lg border-t border-gray-200 bg-white bg-gradient-to-r from-white to-gray-100 p-4 shadow-lg">
+    <div className="fixed bottom-0 left-0 w-full p-4 bg-white border-t border-gray-200 rounded-t-lg shadow-lg bg-gradient-to-r from-white to-gray-100">
       {isApplicationAllowed ? (
-        <div className="flex w-full items-center justify-between font-semibold">
+        <div className="flex items-center justify-between w-full font-semibold">
           <RenamingTime
-            applicationEndDate={applicationEndDate}
-            applicationStartDate={applicationStartDate}
+            applicationEndAt={applicationEndAt}
+            applicationStartAt={applicationStartAt}
             isApplicationAllowed={isApplicationAllowed}
             isBeforeApplicationStart={isBeforeApplicationStart}
             size="large"
@@ -52,7 +52,7 @@ export default function ApplicationFooter({
           </>
         </div>
       ) : (
-        <div className="flex w-full items-center justify-between font-semibold">
+        <div className="flex items-center justify-between w-full font-semibold">
           <p className="text-gray-500">
             {isBeforeApplicationStart
               ? '아직 신청할 수 없습니다.'
@@ -61,7 +61,7 @@ export default function ApplicationFooter({
           <Button
             variant="secondary"
             disabled={true}
-            className="cursor-not-allowed bg-gray-200 px-8 text-gray-600 shadow-inner"
+            className="px-8 text-gray-600 bg-gray-200 shadow-inner cursor-not-allowed"
           >
             {isBeforeApplicationStart ? '예정됨' : '신청마감'}
           </Button>

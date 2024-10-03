@@ -25,7 +25,7 @@ export default function zaActivityDetailsTabsContainer({
         <Tab onClick={() => handleTabClick('User')}>참가자 목록</Tab>
       </TabList>
 
-      <TabPanel className="mt-8 px-3">
+      <TabPanel className="px-3 mt-8">
         <BasicTab
           title={activity.title}
           location={activity.location}
@@ -38,8 +38,8 @@ export default function zaActivityDetailsTabsContainer({
       <TabPanel className="px-3">
         <ScheduleTab
           scheduledDate={activity.scheduledDate}
-          applicationStartDate={activity.applicationStartDate}
-          applicationEndDate={activity.applicationEndDate}
+          applicationStartAt={activity.applicationStartAt}
+          applicationEndAt={activity.applicationEndAt}
         />
       </TabPanel>
 

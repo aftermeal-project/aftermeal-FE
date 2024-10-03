@@ -60,7 +60,7 @@ export function createRandomActivity(): ActivityListResponseDto {
     ),
     type: getRandomElementFromArray(Object.values(ActivityListResponseDtoType)),
     scheduledDate: formatDate(moment(faker.date.soon()).toISOString()),
-    applicationStartDate: String(startDate),
-    applicationEndDate: String(endDate),
+    applicationStartAt: String(startDate),
+    applicationEndAt: String(endDate),
   };
 }

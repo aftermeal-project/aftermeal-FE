@@ -59,13 +59,13 @@ export interface ActivityUpdateRequestDto {
    * @type {string}
    * @memberof ActivityUpdateRequestDto
    */
-  applicationStartDate?: string;
+  applicationStartAt?: string;
   /**
    *
    * @type {string}
    * @memberof ActivityUpdateRequestDto
    */
-  applicationEndDate?: string;
+  applicationEndAt?: string;
 }
 
 export const ActivityUpdateRequestDtoStatus = {

@@ -27,8 +27,8 @@ export default function InformationSection({
   isSmallScreen,
 }: InformationSectionProps) {
   return (
-    <div className="rounded-lg bg-white p-6 shadow-md">
-      <div className="mb-10 flex items-center justify-between">
+    <div className="p-6 bg-white rounded-lg shadow-md">
+      <div className="flex items-center justify-between mb-10">
         <h1 className="text-xl font-bold min-[530px]:text-2xl sm:text-3xl">
           {getFormattedTitle(
             activity.scheduledDate,
@@ -70,8 +70,8 @@ export default function InformationSection({
             <span className="text-lg font-semibold">
               신청 기간:{' '}
               {getFormattedApplicationPeriod(
-                activity.applicationStartDate,
-                activity.applicationEndDate,
+                activity.applicationStartAt,
+                activity.applicationEndAt,
               )}
             </span>
           </div>

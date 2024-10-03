@@ -75,15 +75,15 @@ export interface ActivityListResponseDto {
   /**
    *
    * @type {string}
-   * @memberof ActivityListResponseDto
+   * @memberof ActivityDetailResponseDto
    */
-  applicationStartDate: string;
+  applicationStartAt: string;
   /**
    *
    * @type {string}
-   * @memberof ActivityListResponseDto
+   * @memberof ActivityDetailResponseDto
    */
-  applicationEndDate: string;
+  applicationEndAt: string;
 }
 
 export const ActivityListResponseDtoStatus = {

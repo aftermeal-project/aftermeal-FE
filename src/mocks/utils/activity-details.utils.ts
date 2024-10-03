@@ -73,8 +73,8 @@ export function createRandomActivityDetails(): ActivityDetailResponseDto {
     ),
     type: type,
     scheduledDate: formatDate(moment(faker.date.soon()).toISOString()),
-    applicationStartDate: String(startDate),
-    applicationEndDate: String(endDate),
+    applicationStartAt: String(startDate),
+    applicationEndAt: String(endDate),
     participations: Array.from({ length: 5 }, () => getParticipations()),
   };
 }

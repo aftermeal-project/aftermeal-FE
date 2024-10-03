@@ -40,14 +40,14 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
     status: string,
     participantsCount: number,
     maxParticipants: number,
-    applicationEndDate: string,
-    applicationStartDate: string,
+    applicationStartAt: string,
+    applicationEndAt: string,
   ) => {
     const isStatusValid = status === 'SCHEDULED';
     const hasSpaceAvailable = participantsCount < maxParticipants;
     const isWithinApplicationPeriod =
-      new Date() >= new Date(applicationStartDate) &&
-      new Date() <= new Date(applicationEndDate);
+      new Date() >= new Date(applicationStartAt) &&
+      new Date() <= new Date(applicationEndAt);
 
     return isStatusValid && hasSpaceAvailable && isWithinApplicationPeriod;
   };
@@ -58,7 +58,7 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
 
   const isBeforeApplicationStart = () => {
     const now = moment();
-    const startTime = moment(activity.applicationStartDate);
+    const startTime = moment(activity.applicationStartAt);
     const duration = moment.duration(startTime.diff(now));
     return (
       Math.max(Math.floor(duration.asSeconds()), 0) > 0 &&
@@ -83,14 +83,14 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
       {!isSmallScreen ? (
         <ApplicationSection
           location={String(activity.location)}
-          applicationStartDate={activity.applicationStartDate}
-          applicationEndDate={activity.applicationEndDate}
+          applicationStartAt={activity.applicationStartAt}
+          applicationEndAt={activity.applicationEndAt}
           isApplicationAllowed={isApplicationAllowed(
             activity.status,
             activity.participations.length,
             activity.maxParticipants,
-            activity.applicationStartDate,
-            activity.applicationEndDate,
+            activity.applicationStartAt,
+            activity.applicationEndAt,
           )}
           isBeforeApplicationStart={isBeforeApplicationStart()}
           isParticipated={isParticipated}
@@ -101,14 +101,14 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
         />
       ) : (
         <ApplicationFooter
-          applicationStartDate={activity.applicationStartDate}
-          applicationEndDate={activity.applicationEndDate}
+          applicationStartAt={activity.applicationStartAt}
+          applicationEndAt={activity.applicationEndAt}
           isApplicationAllowed={isApplicationAllowed(
             activity.status,
             activity.participations.length,
             activity.maxParticipants,
-            activity.applicationEndDate,
-            activity.applicationStartDate,
+            activity.applicationEndAt,
+            activity.applicationStartAt,
           )}
           isBeforeApplicationStart={isBeforeApplicationStart()}
           isParticipated={isParticipated}

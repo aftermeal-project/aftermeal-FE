@@ -23,16 +23,16 @@ import 'react-tabs/style/react-tabs.css';
 function validateActivity(data: ActivityListResponseDto): string | null {
   const isTitleInValid = data.title.length > 20 || data?.title.length < 2;
   const isLocationInValid = !data.activityLocationId;
-  const isStartAfterEnd = moment(data.applicationStartDate).isAfter(
-    data.applicationEndDate,
+  const isStartAfterEnd = moment(data.applicationStartAt).isAfter(
+    data.applicationEndAt,
   );
 
   const isLunchPM =
     data.type === 'LUNCH' &&
-    moment(data.applicationStartDate).format('A') === 'PM';
+    moment(data.applicationStartAt).format('A') === 'PM';
   const isDinnerAM =
     data.type === 'DINNER' &&
-    moment(data.applicationStartDate).format('A') === 'AM';
+    moment(data.applicationStartAt).format('A') === 'AM';
   const isMaxParticipantsLess = data.maxParticipants < data.currentParticipants;
 
   if (isStartAfterEnd) return validationMessages.START_BEFORE_END;
@@ -70,13 +70,13 @@ export default function UpdateActivityForm({
   const { updateActivity } = useUpdateActivty();
 
   const onValid = (data: ActivityDetailResponseDto) => {
-    data.applicationStartDate = formatTime({
+    data.applicationStartAt = formatTime({
       type: 'restore',
-      time: String(data.applicationStartDate),
+      time: String(data.applicationStartAt),
     });
-    data.applicationEndDate = formatTime({
+    data.applicationEndAt = formatTime({
       type: 'restore',
-      time: String(data.applicationEndDate),
+      time: String(data.applicationEndAt),
     });
 
     const submitData: ActivityListResponseDto = {
@@ -88,8 +88,8 @@ export default function UpdateActivityForm({
       status: data.status,
       type: data.type,
       scheduledDate: data.scheduledDate,
-      applicationStartDate: data.applicationStartDate,
-      applicationEndDate: data.applicationEndDate,
+      applicationStartAt: data.applicationStartAt,
+      applicationEndAt: data.applicationEndAt,
     };
 
     const validationError = validateActivity(submitData);
@@ -117,13 +117,13 @@ export default function UpdateActivityForm({
   return (
     <form onSubmit={handleSubmit(onValid)}>
       <Tabs>
-        <TabList className="gap-x-2 border-b border-gray-300">
+        <TabList className="border-b border-gray-300 gap-x-2">
           <Tab onClick={() => handleTabClick('Basic')}>기본 정보</Tab>
           <Tab onClick={() => handleTabClick('Schedule')}>일정 정보</Tab>
           <Tab onClick={() => handleTabClick('User')}>참가자 목록</Tab>
         </TabList>
 
-        <TabPanel className="mt-8 px-3">
+        <TabPanel className="px-3 mt-8">
           <Input<ActivityDetailResponseDto>
             label="활동명"
             name="title"
@@ -134,7 +134,7 @@ export default function UpdateActivityForm({
             error={errors.title}
           />
           <div className="mb-4">
-            <label htmlFor="location" className="mb-2 inline-block text-base">
+            <label htmlFor="location" className="inline-block mb-2 text-base">
               장소
             </label>
             <SelectField<ActivityDetailResponseDto>
@@ -145,7 +145,7 @@ export default function UpdateActivityForm({
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="location" className="mb-2 inline-block text-base">
+            <label htmlFor="location" className="inline-block mb-2 text-base">
               활동 유형
             </label>
             <SelectField<ActivityDetailResponseDto>
@@ -164,7 +164,7 @@ export default function UpdateActivityForm({
             error={errors.maxParticipants}
           />
           <div className="mb-4">
-            <label htmlFor="status" className="mb-2 inline-block text-base">
+            <label htmlFor="status" className="inline-block mb-2 text-base">
               진행 상태
             </label>
             <SelectField<ActivityDetailResponseDto>
@@ -187,21 +187,21 @@ export default function UpdateActivityForm({
           />
           <Input<ActivityDetailResponseDto>
             label="신청 시작 시간"
-            name="applicationStartDate"
+            name="applicationStartAt"
             type="time"
             placeholder="신청 시작 시간"
             register={register}
             margin="mb-4"
-            error={errors.applicationStartDate}
+            error={errors.applicationStartAt}
           />
           <Input<ActivityDetailResponseDto>
             label="신청 마감 시간"
-            name="applicationEndDate"
+            name="applicationEndAt"
             type="time"
             placeholder="신청 마감 시간"
             register={register}
             margin="mb-4"
-            error={errors.applicationEndDate}
+            error={errors.applicationEndAt}
           />
         </TabPanel>
 
