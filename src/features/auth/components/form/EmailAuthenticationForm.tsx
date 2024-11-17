@@ -1,4 +1,4 @@
-import { CheckEmailIcon } from '../../../../resources';
+import { CheckEmailIcon } from '../../../../assets';
 
 interface Props {
   email: string;
