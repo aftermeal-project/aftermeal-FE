@@ -116,7 +116,7 @@ export default function UpdateUserModal({ useForm }: UpdateUserModalProps) {
             >
               취소
             </Button>
-            <Button type="submit">추가</Button>
+            <Button type="submit">수정</Button>
           </div>
         </form>
       </div>
