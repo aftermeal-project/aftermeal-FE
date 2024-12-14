@@ -5,3 +5,4 @@ export * from './login-response-model';
 export * from './token-refresh-request-dto';
 export * from './token-refresh-response-dto';
 export * from './token-refresh-response-model';
+export * from './email-verify-request-dto';

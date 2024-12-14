@@ -8,7 +8,7 @@ import { RecoilRoot } from 'recoil';
 import { HelmetProvider } from 'react-helmet-async';
 
 async function enableMocking() {
-  if (process.env.NODE_ENV !== 'development') {
+  if (process.env.NODE_ENV === 'development') {
     return;
   }
 
