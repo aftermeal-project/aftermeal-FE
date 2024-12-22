@@ -1,7 +1,7 @@
 import validationMessages from '../messages/validationMessages';
-import { format } from 'date-fns';
+import { formatDate } from '../../utils';
 
-const today = format(new Date(), 'yyyy-MM-dd');
+const today = formatDate(new Date().toISOString());
 
 const createActivityValidationRules = {
   titleValidationRules: {
@@ -26,10 +26,14 @@ const createActivityValidationRules = {
       message: validationMessages.MAX_PARTICIPANTS_MAX,
     },
   },
+
   scheduledDateValidationRules: {
     required: validationMessages.REQUIRED_SCHEDULED_DATE,
-    validate: (value: string) =>
-      value >= today || validationMessages.SCHEDULED_DATE_NOT_PAST,
+    validate: (value: string) => {
+      const isDateNotPast =
+        value >= today || validationMessages.SCHEDULED_DATE_NOT_PAST;
+      return isDateNotPast;
+    },
   },
 };
 
