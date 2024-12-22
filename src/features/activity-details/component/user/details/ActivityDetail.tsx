@@ -95,7 +95,6 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
         />
       ) : (
         <ApplicationFooter
-          applicationStartAt={activity.applicationStartAt}
           applicationEndAt={activity.applicationEndAt}
           isApplicationAllowed={isApplicationAllowed(
             activity.participations.length,
