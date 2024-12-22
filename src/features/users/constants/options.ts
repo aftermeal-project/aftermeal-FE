@@ -4,6 +4,6 @@ export const typeOptions = [
 ];
 
 export const statusOptions = [
-  { value: 'ACTIVATE', label: '활성화' },
-  { value: 'DEACTIVATE', label: '비활성화' },
+  { value: 'ACTIVATED', label: '활성화' },
+  { value: 'DEACTIVATED', label: '비활성화' },
 ];

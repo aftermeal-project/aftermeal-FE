@@ -13,7 +13,7 @@ export default function ProfileDropdown({
   onLogout,
   onNavigateToAdminPage,
 }: ProfileDropdownProps) {
-  const isAdmin = user.roles.includes('ADMIN');
+  const isAdmin = user.role === 'ADMIN';
 
   return (
     <div className="relative inline-block text-left">

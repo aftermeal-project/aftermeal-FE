@@ -25,7 +25,7 @@ export default function ParticipantsTab({
           <User
             key={item.id}
             user={item.user}
-            onDelete={() => handleDeleteParticipation(item.user.id)}
+            onDelete={() => handleDeleteParticipation(item.id)}
           />
         ))
       ) : (

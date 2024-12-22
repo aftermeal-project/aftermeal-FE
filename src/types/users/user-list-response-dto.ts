@@ -41,7 +41,7 @@ export interface UserListResponseDto {
    * @type {Array<string>}
    * @memberof UserListResponseDto
    */
-  roles?: Array<UserListResponseDtoRoles>;
+  role?: UserListResponseDtoRoles;
   /**
    *
    * @type {string}
@@ -77,8 +77,9 @@ export const UserListResponseDtoType = {
 export type UserListResponseDtoType =
   (typeof UserListResponseDtoType)[keyof typeof UserListResponseDtoType];
 export const UserListResponseDtoStatus = {
-  Activate: 'ACTIVATE',
-  Deactivate: 'DEACTIVATE',
+  Activated: 'ACTIVATED',
+  Deactivated: 'DEACTIVATED',
+  Candidate: 'CANDIDATE',
 } as const;
 
 export type UserListResponseDtoStatus =

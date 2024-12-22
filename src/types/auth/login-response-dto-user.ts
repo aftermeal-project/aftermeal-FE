@@ -35,7 +35,7 @@ export interface LoginResponseDtoUser {
    * @type {Array<string>}
    * @memberof LoginResponseDtoUser
    */
-  roles: Array<LoginResponseDtoUserRoles>;
+  role: LoginResponseDtoUserRoles;
 }
 
 export const LoginResponseDtoUserRoles = {

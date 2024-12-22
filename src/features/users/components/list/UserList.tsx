@@ -50,7 +50,7 @@ export default function UserList({ users }: UserListContainerProps) {
     const selectedUser = users.find(user => user.id === userId);
 
     if (selectedUser) {
-      const { id, email, roles, ...rest } = selectedUser;
+      const { id, email, role, ...rest } = selectedUser;
       reset(rest);
     }
   };
@@ -102,7 +102,7 @@ export default function UserList({ users }: UserListContainerProps) {
                 ))}
               </>
             ) : (
-              <h1 className="py-3 font-bold text-md">검색 결과가 없습니다!</h1>
+              <h1 className="text-md py-3 font-bold">검색 결과가 없습니다!</h1>
             )}
           </ul>
         </div>

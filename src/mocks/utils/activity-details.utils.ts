@@ -36,7 +36,7 @@ function getStartAndEndTimes(type: ActivityListResponseDtoType) {
     };
   } else if (type === 'DINNER') {
     return {
-      startTime: '17:30',
+      startTime: '14:30',
       endTime: '18:20',
     };
   }

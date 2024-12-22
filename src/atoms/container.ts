@@ -14,7 +14,7 @@ export const UserAtom = atom<LoginResponseDtoUser>({
   default: {
     id: '0',
     name: '',
-    roles: ['USER'],
+    role: 'USER',
   },
   effects_UNSTABLE: [persistAtom],
 });
