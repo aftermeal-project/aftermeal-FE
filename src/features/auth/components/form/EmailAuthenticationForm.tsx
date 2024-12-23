@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CheckEmailIcon } from '../../../../assets';
 import useEmailVerify from '../../api/email-verify';
 import { AuthLoadingSpinner } from '../../../../components';
@@ -67,6 +67,38 @@ export default function EmailAuthenticationForm({ email }: Props) {
       prevInput?.focus();
     }
   };
+
+  const handleValuePaste = (e: ClipboardEvent) => {
+    e.preventDefault();
+    const pastedValue = e.clipboardData?.getData('text') || '';
+
+    if (
+      /^[a-zA-Z0-9]*$/.test(pastedValue) &&
+      pastedValue.length === AUTH_CODE_LENGTH
+    ) {
+      const newCodes = pastedValue
+        .toUpperCase()
+        .split('')
+        .slice(0, AUTH_CODE_LENGTH);
+      setCodes(newCodes);
+
+      emailVerify({ email: email, code: newCodes.join('') });
+    } else {
+      toast.error('6자리의 올바른 코드를 붙여넣어주세요.');
+    }
+  };
+
+  useEffect(() => {
+    const firstInput = document.getElementById('input1');
+    firstInput?.addEventListener('paste', handleValuePaste as EventListener);
+
+    return () => {
+      firstInput?.removeEventListener(
+        'paste',
+        handleValuePaste as EventListener,
+      );
+    };
+  }, []);
 
   return (
     <>
