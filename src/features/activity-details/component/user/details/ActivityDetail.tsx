@@ -11,14 +11,21 @@ import {
   ParticipationsListSection,
   ApplicationSection,
 } from '../section';
+import Token from '../../../../../libs/utils/token';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface ActivityDetailProps {
   activity: ActivityDetailResponseDto;
 }
 
 export default function ActivityDetail({ activity }: ActivityDetailProps) {
+  const token = new Token();
+
   const user = useRecoilValue(UserAtom);
+  const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
+  const isLoggedIn = token.getLocalAccessToken();
 
   const { participation, isParticipateLoading } = useParticipation();
   const { cancelParticipation, isCancelLoading } = useCancelParticipation();
@@ -62,7 +69,12 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
   };
 
   const handleParticipate = (activityId: number) => {
-    participation.mutate(String(activityId));
+    if (isLoggedIn) {
+      participation.mutate(String(activityId));
+    } else {
+      toast.error('신청을 위해서는 로그인이 필요합니다.');
+      navigate('/login');
+    }
   };
 
   const handleCancel = (participationId: number) => {
