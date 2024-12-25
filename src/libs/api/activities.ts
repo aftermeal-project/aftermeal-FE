@@ -11,10 +11,10 @@ const token = new Token();
 const url = '/activities';
 const accessToken = 'Bearer ' + token.getLocalAccessToken();
 
-export const GetActivitiesAPI = async () => {
+export const GetActivitiesAPI = async (scheduleDate?: string) => {
   const response = await instance<ActivityListResponseModel>({
     method: 'GET',
-    url: url,
+    url: scheduleDate ? `${url}?scheduleDate=${scheduleDate}` : url,
   });
 
   return response.data?.data;
