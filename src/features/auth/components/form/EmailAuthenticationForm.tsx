@@ -68,27 +68,27 @@ export default function EmailAuthenticationForm({ email }: Props) {
     }
   };
 
-  const handleValuePaste = (e: ClipboardEvent) => {
-    e.preventDefault();
-    const pastedValue = e.clipboardData?.getData('text') || '';
-
-    if (
-      /^[a-zA-Z0-9]*$/.test(pastedValue) &&
-      pastedValue.length === AUTH_CODE_LENGTH
-    ) {
-      const newCodes = pastedValue
-        .toUpperCase()
-        .split('')
-        .slice(0, AUTH_CODE_LENGTH);
-      setCodes(newCodes);
-
-      emailVerify({ email: email, code: newCodes.join('') });
-    } else {
-      toast.error('6자리의 올바른 코드를 붙여넣어주세요.');
-    }
-  };
-
   useEffect(() => {
+    const handleValuePaste = (e: ClipboardEvent) => {
+      e.preventDefault();
+      const pastedValue = e.clipboardData?.getData('text') || '';
+
+      if (
+        /^[a-zA-Z0-9]*$/.test(pastedValue) &&
+        pastedValue.length === AUTH_CODE_LENGTH
+      ) {
+        const newCodes = pastedValue
+          .toUpperCase()
+          .split('')
+          .slice(0, AUTH_CODE_LENGTH);
+        setCodes(newCodes);
+
+        emailVerify({ email: email, code: newCodes.join('') });
+      } else {
+        toast.error('6자리의 올바른 코드를 붙여넣어주세요.');
+      }
+    };
+
     const firstInput = document.getElementById('input1');
     firstInput?.addEventListener('paste', handleValuePaste as EventListener);
 
@@ -98,11 +98,11 @@ export default function EmailAuthenticationForm({ email }: Props) {
         handleValuePaste as EventListener,
       );
     };
-  }, []);
+  }, [email, emailVerify]);
 
   return (
     <>
-      <div className="mb-6 flex items-center justify-center text-3xl">
+      <div className="flex items-center justify-center mb-6 text-3xl">
         <CheckEmailIcon />
       </div>
       <p className="mb-1 text-2xl font-bold">코드를 이메일에서 확인하세요</p>
@@ -110,7 +110,7 @@ export default function EmailAuthenticationForm({ email }: Props) {
         <span className="font-bold">{email ? email : 's21065@gsm.hs.kr'}</span>
         에 6자리 코드를 전송했습니다. 코드를 입력하여 인증 절차를 완료해주세요.
       </p>
-      <form className="mb-14 flex items-center justify-center space-x-1">
+      <form className="flex items-center justify-center space-x-1 mb-14">
         {codes.map((code, index) => (
           <div key={index} className="relative flex items-center">
             <input
