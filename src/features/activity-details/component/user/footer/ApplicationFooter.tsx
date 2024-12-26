@@ -1,9 +1,8 @@
 import { Button } from '../../../../../components';
-import { RenamingTime } from '../time';
+import RemainingTime from '../time/RemainingTime';
 
 interface ApplicationFooterProps {
-  applicationStartDate: string;
-  applicationEndDate: string;
+  applicationEndAt: string;
   isApplicationAllowed: boolean;
   isBeforeApplicationStart: boolean;
   isParticipated: boolean;
@@ -14,8 +13,7 @@ interface ApplicationFooterProps {
 }
 
 export default function ApplicationFooter({
-  applicationStartDate,
-  applicationEndDate,
+  applicationEndAt,
   isApplicationAllowed,
   isBeforeApplicationStart,
   isParticipated,
@@ -28,9 +26,8 @@ export default function ApplicationFooter({
     <div className="fixed bottom-0 left-0 w-full rounded-t-lg border-t border-gray-200 bg-white bg-gradient-to-r from-white to-gray-100 p-4 shadow-lg">
       {isApplicationAllowed ? (
         <div className="flex w-full items-center justify-between font-semibold">
-          <RenamingTime
-            applicationEndDate={applicationEndDate}
-            applicationStartDate={applicationStartDate}
+          <RemainingTime
+            applicationEndAt={applicationEndAt}
             isApplicationAllowed={isApplicationAllowed}
             isBeforeApplicationStart={isBeforeApplicationStart}
             size="large"

@@ -11,14 +11,21 @@ import {
   ParticipationsListSection,
   ApplicationSection,
 } from '../section';
+import Token from '../../../../../libs/utils/token';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 interface ActivityDetailProps {
   activity: ActivityDetailResponseDto;
 }
 
 export default function ActivityDetail({ activity }: ActivityDetailProps) {
+  const token = new Token();
+
   const user = useRecoilValue(UserAtom);
+  const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState<boolean>(false);
+  const isLoggedIn = token.getLocalAccessToken();
 
   const { participation, isParticipateLoading } = useParticipation();
   const { cancelParticipation, isCancelLoading } = useCancelParticipation();
@@ -37,41 +44,41 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
   }, []);
 
   const isApplicationAllowed = (
-    status: string,
     participantsCount: number,
     maxParticipants: number,
-    applicationEndDate: string,
-    applicationStartDate: string,
+    applicationStartAt: string,
+    applicationEndAt: string,
   ) => {
-    const isStatusValid = status === 'SCHEDULED';
     const hasSpaceAvailable = participantsCount < maxParticipants;
     const isWithinApplicationPeriod =
-      new Date() >= new Date(applicationStartDate) &&
-      new Date() <= new Date(applicationEndDate);
+      new Date() >= new Date(applicationStartAt) &&
+      new Date() <= new Date(applicationEndAt);
 
-    return isStatusValid && hasSpaceAvailable && isWithinApplicationPeriod;
+    return hasSpaceAvailable && isWithinApplicationPeriod;
   };
 
   const isParticipated = activity.participations.some(
-    participant => participant.id === Number(user.id),
+    participant => participant.user.id === Number(user.id),
   );
 
   const isBeforeApplicationStart = () => {
     const now = moment();
-    const startTime = moment(activity.applicationStartDate);
+    const startTime = moment(activity.applicationStartAt);
     const duration = moment.duration(startTime.diff(now));
-    return (
-      Math.max(Math.floor(duration.asSeconds()), 0) > 0 &&
-      activity.status === 'SCHEDULED'
-    );
+    return Math.max(Math.floor(duration.asSeconds()), 0) > 0;
   };
 
   const handleParticipate = (activityId: number) => {
-    participation.mutate(String(activityId));
+    if (isLoggedIn) {
+      participation.mutate(String(activityId));
+    } else {
+      toast.error('신청을 위해서는 로그인이 필요합니다.');
+      navigate('/login');
+    }
   };
 
-  const handleCancel = (activityId: number) => {
-    cancelParticipation.mutate(String(activityId));
+  const handleCancel = (participationId: number) => {
+    cancelParticipation.mutate(String(participationId));
   };
 
   return (
@@ -83,37 +90,34 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
       {!isSmallScreen ? (
         <ApplicationSection
           location={String(activity.location)}
-          applicationStartDate={activity.applicationStartDate}
-          applicationEndDate={activity.applicationEndDate}
+          applicationStartAt={activity.applicationStartAt}
+          applicationEndAt={activity.applicationEndAt}
           isApplicationAllowed={isApplicationAllowed(
-            activity.status,
             activity.participations.length,
             activity.maxParticipants,
-            activity.applicationStartDate,
-            activity.applicationEndDate,
+            activity.applicationStartAt,
+            activity.applicationEndAt,
           )}
           isBeforeApplicationStart={isBeforeApplicationStart()}
           isParticipated={isParticipated}
           onParticipate={() => handleParticipate(activity.id)}
-          onCancel={() => handleCancel(activity.id)}
+          onCancel={() => handleCancel(activity.participations[0].id)}
           isParticipateLoading={isParticipateLoading}
           isCancelLoading={isCancelLoading}
         />
       ) : (
         <ApplicationFooter
-          applicationStartDate={activity.applicationStartDate}
-          applicationEndDate={activity.applicationEndDate}
+          applicationEndAt={activity.applicationEndAt}
           isApplicationAllowed={isApplicationAllowed(
-            activity.status,
             activity.participations.length,
             activity.maxParticipants,
-            activity.applicationEndDate,
-            activity.applicationStartDate,
+            activity.applicationStartAt,
+            activity.applicationEndAt,
           )}
           isBeforeApplicationStart={isBeforeApplicationStart()}
           isParticipated={isParticipated}
           onParticipate={() => handleParticipate(activity.id)}
-          onCancel={() => handleCancel(activity.id)}
+          onCancel={() => handleCancel(activity.participations[0].id)}
           isParticipateLoading={isParticipateLoading}
           isCancelLoading={isCancelLoading}
         />

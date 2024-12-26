@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 import {
   AuthUserTypeSelector,
   AuthLoadingSpinner,
@@ -13,35 +12,49 @@ import {
 import useSignup from '../../api/signup';
 import { FormErrorMessages, Input } from '../../../../components';
 import { UserRegistrationRequestDto } from '../../../../types';
+import { CurrentStepType } from '../../../../pages/auth/SignupPage';
 
 type UserType = 'STUDENT' | 'TEACHER';
 
-export default function SignupForm() {
-  const [type, setType] = useState<UserType>('STUDENT');
-  const navigate = useNavigate();
+interface Props {
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentStep: React.Dispatch<React.SetStateAction<CurrentStepType>>;
+}
+
+export default function SignupForm({ setEmail, setCurrentStep }: Props) {
+  const [userType, setUserType] = useState<UserType>('STUDENT');
 
   const {
     register,
     handleSubmit,
     setError,
     reset,
+    getValues,
     formState: { errors },
   } = useForm<UserRegistrationRequestDto>();
 
-  const { signup, isLoading } = useSignup({ setError, navigate });
+  const handleOnSignupSuccess = () => {
+    setEmail(getValues('email'));
+    setCurrentStep('email-verify');
+  };
+
+  const { signup, isLoading } = useSignup({
+    setError,
+    handleOnSuccess: handleOnSignupSuccess,
+  });
 
   const handlerUserTypeChange = (type: UserType) => {
     reset();
-    setType(type);
+    setUserType(type);
   };
 
   const onValid = async (data: UserRegistrationRequestDto) => {
-    data.type = type;
+    data.type = userType;
     data.generationNumber = Number(data.generationNumber);
 
     const GSM_EMAIL_FORMAT = new RegExp('s[0-9]{5}@gsm\\.hs\\.kr');
 
-    if (type === 'STUDENT' && !GSM_EMAIL_FORMAT.test(data.email)) {
+    if (userType === 'STUDENT' && !GSM_EMAIL_FORMAT.test(data.email)) {
       setError('email', {
         message: validationMessages.IS_NOT_SCHOOL_EMAIL,
       });
@@ -55,7 +68,7 @@ export default function SignupForm() {
     <>
       <form id="registrationForm" onSubmit={handleSubmit(onValid)}>
         <AuthUserTypeSelector
-          selectedType={type}
+          selectedType={userType}
           onChangeType={handlerUserTypeChange}
         />
         <Input<UserRegistrationRequestDto>
@@ -78,7 +91,7 @@ export default function SignupForm() {
           margin="mb-4"
           error={errors.email}
         />
-        {type === 'STUDENT' && (
+        {userType === 'STUDENT' && (
           <Input<UserRegistrationRequestDto>
             label="기수"
             name="generationNumber"
@@ -103,7 +116,7 @@ export default function SignupForm() {
         <FormErrorMessages
           errors={errors}
           fields={
-            type === 'STUDENT'
+            userType === 'STUDENT'
               ? ['name', 'email', 'generationNumber', 'password']
               : ['name', 'email', 'password']
           }
@@ -115,7 +128,7 @@ export default function SignupForm() {
           fullWidth
           disabled={isLoading}
         >
-          등록
+          이메일 인증
         </Button>
       </form>
       <AuthLoadingSpinner loading={isLoading} text={'가입 중'} />

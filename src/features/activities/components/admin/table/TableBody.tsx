@@ -24,7 +24,7 @@ export default function TableBody({ activities }: TableBodyProps) {
           <tr
             key={activity.id}
             onClick={() => handleActivityClick(activity.id)}
-            className="cursor-pointer border-b border-gray-200 hover:bg-gray-100"
+            className="border-b border-gray-200 cursor-pointer hover:bg-gray-100"
           >
             <td className="px-4 py-2">
               <BodyCell title="scheduledDate" value={activity.scheduledDate} />
@@ -39,18 +39,15 @@ export default function TableBody({ activities }: TableBodyProps) {
               <BodyCell title="type" value={activity.type} />
             </td>
             <td className="px-4 py-2">
-              <BodyCell title="status" value={activity.status} />
-            </td>
-            <td className="px-4 py-2">
               <BodyCell
-                title="applicationStartDate"
-                value={activity.applicationStartDate}
+                title="applicationStartAt"
+                value={activity.applicationStartAt}
               />
             </td>
             <td className="px-4 py-2">
               <BodyCell
-                title="applicationEndDate"
-                value={activity.applicationEndDate}
+                title="applicationEndAt"
+                value={activity.applicationEndAt}
               />
             </td>
             <td className="px-4 py-2">

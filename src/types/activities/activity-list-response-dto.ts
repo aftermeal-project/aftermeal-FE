@@ -59,12 +59,6 @@ export interface ActivityListResponseDto {
    * @type {string}
    * @memberof ActivityListResponseDto
    */
-  status: ActivityListResponseDtoStatus;
-  /**
-   *
-   * @type {string}
-   * @memberof ActivityListResponseDto
-   */
   type: ActivityListResponseDtoType;
   /**
    *
@@ -75,26 +69,17 @@ export interface ActivityListResponseDto {
   /**
    *
    * @type {string}
-   * @memberof ActivityListResponseDto
+   * @memberof ActivityDetailResponseDto
    */
-  applicationStartDate: string;
+  applicationStartAt: string;
   /**
    *
    * @type {string}
-   * @memberof ActivityListResponseDto
+   * @memberof ActivityDetailResponseDto
    */
-  applicationEndDate: string;
+  applicationEndAt: string;
 }
 
-export const ActivityListResponseDtoStatus = {
-  Scheduled: 'SCHEDULED',
-  InProgress: 'IN_PROGRESS',
-  Canceled: 'CANCELED',
-  Completed: 'COMPLETED',
-} as const;
-
-export type ActivityListResponseDtoStatus =
-  (typeof ActivityListResponseDtoStatus)[keyof typeof ActivityListResponseDtoStatus];
 export const ActivityListResponseDtoType = {
   Lunch: 'LUNCH',
   Dinner: 'DINNER',

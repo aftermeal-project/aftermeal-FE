@@ -34,6 +34,8 @@ const validationMessages = {
     '최대 참가자는 현재 참가자 수보다 적을 수 없습니다.',
   TITLE_LENGTH_ERROR: '활동명은 최소 2자, 최대 20자여야 합니다.',
   INVALID_LOCATION: '올바른 장소를 선택해주세요.',
+  TIME_NOT_LUNCH: '지금은 점심 시간이 아닙니다.',
+  TIME_NOT_DINNER: '지금은 저녁 시간이 아닙니다.',
 };
 
 export default validationMessages;

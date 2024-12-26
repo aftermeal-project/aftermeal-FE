@@ -2,14 +2,14 @@ import { formatDate, formatTime } from '../../../../../utils';
 
 interface ScheduleTabProps {
   scheduledDate: string;
-  applicationStartDate: string;
-  applicationEndDate: string;
+  applicationStartAt: string;
+  applicationEndAt: string;
 }
 
 export default function ScheduleTab({
   scheduledDate,
-  applicationStartDate,
-  applicationEndDate,
+  applicationStartAt,
+  applicationEndAt,
 }: ScheduleTabProps) {
   return (
     <div className="grid grid-cols-1 gap-y-2">
@@ -23,7 +23,7 @@ export default function ScheduleTab({
         <span className="text-gray-700">
           {formatTime({
             type: 'readable',
-            time: applicationStartDate,
+            time: applicationStartAt,
           })}
         </span>
         <hr className="my-2" />
@@ -33,7 +33,7 @@ export default function ScheduleTab({
         <span className="text-gray-700">
           {formatTime({
             type: 'readable',
-            time: applicationEndDate,
+            time: applicationEndAt,
           })}
         </span>
       </div>

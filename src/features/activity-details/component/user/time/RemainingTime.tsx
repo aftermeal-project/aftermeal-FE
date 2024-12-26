@@ -2,16 +2,14 @@ import { useState, useEffect } from 'react';
 import moment from 'moment';
 
 interface RenamingTimeProps {
-  applicationStartDate: string;
-  applicationEndDate: string;
+  applicationEndAt: string;
   isApplicationAllowed: boolean;
   isBeforeApplicationStart: boolean;
   size: 'small' | 'large';
 }
 
-export default function RenamingTime({
-  applicationStartDate,
-  applicationEndDate,
+export default function RemainingTime({
+  applicationEndAt,
   isApplicationAllowed,
   isBeforeApplicationStart,
   size,
@@ -21,7 +19,7 @@ export default function RenamingTime({
   useEffect(() => {
     const calculateTimeRemaining = () => {
       const now = moment();
-      const endTime = moment(applicationEndDate);
+      const endTime = moment(applicationEndAt);
       const duration = moment.duration(endTime.diff(now));
       return Math.max(Math.floor(duration.asSeconds()), 0);
     };
@@ -39,12 +37,13 @@ export default function RenamingTime({
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [applicationEndDate]);
+  }, [applicationEndAt]);
 
   function formatTime(seconds: number): string {
+    const h = Math.floor(seconds / 3600);
     const m = Math.floor((seconds % 3600) / 60);
     const s = seconds % 60;
-    return `${m.toString().padStart(2, '0')}분 ${s.toString().padStart(2, '0')}초`;
+    return `${h.toString().padStart(2, '0')}시 ${m.toString().padStart(2, '0')}분 ${s.toString().padStart(2, '0')}초`;
   }
 
   function getTimeClass(): string {

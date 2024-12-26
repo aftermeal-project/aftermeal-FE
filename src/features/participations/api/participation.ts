@@ -34,7 +34,10 @@ export function useParticipation() {
 
     onError: (_error, _variables, context: any) => {
       queryClient.setQueryData(['activities'], context?.previousActivities);
-      toast.error('참가 신청에 실패했습니다.');
+      if (_error.message) {
+        return toast.error(_error.message);
+      }
+      return toast.error('참가에 실패했습니다.');
     },
 
     onSuccess: () => {

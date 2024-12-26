@@ -1,4 +1,5 @@
 import {
+  EmailVerifyRequestDto,
   LoginRequestDto,
   TokenRefreshRequestDto,
   TokenRefreshResponseModel,
@@ -24,6 +25,18 @@ export const RefreshAPI = async (
     data: {
       refreshToken: String(tokenRefreshRequest),
     },
+  });
+
+  return response.data?.data;
+};
+
+export const EmailVerifyAPI = async (
+  emailVerifyRequest: EmailVerifyRequestDto,
+) => {
+  const response = await instance({
+    method: 'POST',
+    url: '/auth/email-verify',
+    data: emailVerifyRequest,
   });
 
   return response.data?.data;

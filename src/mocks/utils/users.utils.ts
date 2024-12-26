@@ -7,11 +7,8 @@ import {
 } from '../../types';
 import { getRandomElementFromArray } from './global.utils';
 
-function getRandomRoles(): UserListResponseDtoRoles[] {
-  const roles = Object.values(UserListResponseDtoRoles);
-  const numberOfRoles = faker.number.int({ min: 1, max: roles.length });
-  const randomRoles = faker.helpers.arrayElements(roles, numberOfRoles);
-  return randomRoles;
+function getRandomRole(): UserListResponseDtoRoles {
+  return 'ADMIN';
 }
 
 export function createRandomUser(): UserListResponseDto {
@@ -23,7 +20,7 @@ export function createRandomUser(): UserListResponseDto {
     id: faker.number.int({ min: 1, max: 1000000 }),
     name: faker.person.fullName(),
     email: faker.internet.exampleEmail(),
-    roles: getRandomRoles(),
+    role: getRandomRole(),
     type: type,
     status: getRandomElementFromArray(Object.values(UserListResponseDtoStatus)),
     ...(type !== 'TEACHER' && {

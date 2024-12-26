@@ -1,7 +1,7 @@
 import { FaMapMarkerAlt, FaClipboardList } from 'react-icons/fa';
-import RenamingTime from '../time/RemainingTime';
 import { formatTime } from '../../../../../utils';
 import { Button } from '../../../../../components';
+import RemainingTime from '../time/RemainingTime';
 
 function getFormattedApplicationPeriod(startTime: string, endTime: string) {
   return (
@@ -13,8 +13,8 @@ function getFormattedApplicationPeriod(startTime: string, endTime: string) {
 
 interface ApplicationSectionProps {
   location: string;
-  applicationStartDate: string;
-  applicationEndDate: string;
+  applicationStartAt: string;
+  applicationEndAt: string;
   isApplicationAllowed: boolean;
   isBeforeApplicationStart: boolean;
   isParticipated: boolean;
@@ -26,8 +26,8 @@ interface ApplicationSectionProps {
 
 export default function ApplicationSection({
   location,
-  applicationStartDate,
-  applicationEndDate,
+  applicationStartAt,
+  applicationEndAt,
   isApplicationAllowed,
   isBeforeApplicationStart,
   isParticipated,
@@ -54,8 +54,8 @@ export default function ApplicationSection({
           </div>
           <div className="flex flex-col gap-y-8 font-semibold text-gray-700">
             {getFormattedApplicationPeriod(
-              applicationStartDate,
-              applicationEndDate,
+              applicationStartAt,
+              applicationEndAt,
             )}
             <>
               {isApplicationAllowed ? (
@@ -94,11 +94,10 @@ export default function ApplicationSection({
         </div>
 
         <div className="mx-auto mt-2 w-fit">
-          <RenamingTime
+          <RemainingTime
             isApplicationAllowed={isApplicationAllowed}
             isBeforeApplicationStart={isBeforeApplicationStart}
-            applicationStartDate={applicationStartDate}
-            applicationEndDate={applicationEndDate}
+            applicationEndAt={applicationEndAt}
             size="small"
           />
         </div>

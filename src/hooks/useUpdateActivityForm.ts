@@ -22,8 +22,8 @@ export function useUpdateActivityForm(
   const setFormValues = (activity: ActivityDetailResponseDto) => {
     reset({
       ...activity,
-      applicationStartDate: formatActivityDate(activity.applicationStartDate),
-      applicationEndDate: formatActivityDate(activity.applicationEndDate),
+      applicationStartAt: formatActivityDate(activity.applicationStartAt),
+      applicationEndAt: formatActivityDate(activity.applicationEndAt),
     });
   };
 

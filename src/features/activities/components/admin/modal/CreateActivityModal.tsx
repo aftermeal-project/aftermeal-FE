@@ -17,6 +17,7 @@ import { ActivityCreationRequestDto } from '../../../../../types';
 import useCreateActivity from '../../../api/create-activitiy';
 import { typeOptions } from '../../../constants/options';
 import { SelectField } from '../select';
+import moment from 'moment';
 
 export default function CreateActivityModal() {
   const {
@@ -43,6 +44,22 @@ export default function CreateActivityModal() {
     if (!data.location) {
       setError('location', {
         message: validationMessages.INVALID_LOCATION,
+      });
+      return;
+    }
+
+    const currentTime = moment();
+    const lunchEndTime = moment('12:30', 'HH:mm');
+    const dinnerEndTime = moment('18:30', 'HH:mm');
+
+    if (data.type === 'LUNCH' && currentTime.isAfter(lunchEndTime)) {
+      setError('scheduledDate', {
+        message: validationMessages.TIME_NOT_LUNCH,
+      });
+      return;
+    } else if (data.type === 'DINNER' && currentTime.isAfter(dinnerEndTime)) {
+      setError('scheduledDate', {
+        message: validationMessages.TIME_NOT_DINNER,
       });
       return;
     }
@@ -133,6 +150,7 @@ export default function CreateActivityModal() {
             margin="mb-4"
             error={errors.scheduledDate}
           />
+
           <FormErrorMessages
             errors={errors}
             fields={[

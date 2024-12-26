@@ -41,12 +41,6 @@ export interface ActivityUpdateRequestDto {
    * @type {string}
    * @memberof ActivityUpdateRequestDto
    */
-  status?: ActivityUpdateRequestDtoStatus;
-  /**
-   *
-   * @type {string}
-   * @memberof ActivityUpdateRequestDto
-   */
   type?: ActivityUpdateRequestDtoType;
   /**
    *
@@ -59,24 +53,15 @@ export interface ActivityUpdateRequestDto {
    * @type {string}
    * @memberof ActivityUpdateRequestDto
    */
-  applicationStartDate?: string;
+  applicationStartAt?: string;
   /**
    *
    * @type {string}
    * @memberof ActivityUpdateRequestDto
    */
-  applicationEndDate?: string;
+  applicationEndAt?: string;
 }
 
-export const ActivityUpdateRequestDtoStatus = {
-  Scheduled: 'SCHEDULED',
-  InProgress: 'IN_PROGRESS',
-  Canceled: 'CANCELED',
-  Completed: 'COMPLETED',
-} as const;
-
-export type ActivityUpdateRequestDtoStatus =
-  (typeof ActivityUpdateRequestDtoStatus)[keyof typeof ActivityUpdateRequestDtoStatus];
 export const ActivityUpdateRequestDtoType = {
   Lunch: 'LUNCH',
   Dinner: 'DINNER',

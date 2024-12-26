@@ -1,7 +1,14 @@
+import { useState } from 'react';
 import { AuthFormContainer, SEOHelmet } from '../../components';
 import { SignupForm } from '../../features/auth';
+import EmailAuthenticationForm from '../../features/auth/components/form/EmailAuthenticationForm';
+
+export type CurrentStepType = 'signup' | 'email-verify';
 
 export default function SignupPage() {
+  const [email, setEmail] = useState('');
+  const [currentStep, setCurrentStep] = useState<CurrentStepType>('signup');
+
   return (
     <>
       <SEOHelmet
@@ -10,7 +17,11 @@ export default function SignupPage() {
         url="/signup"
       />
       <AuthFormContainer title="애프터밀">
-        <SignupForm />
+        {currentStep === 'signup' ? (
+          <SignupForm setEmail={setEmail} setCurrentStep={setCurrentStep} />
+        ) : (
+          <EmailAuthenticationForm email={email} />
+        )}
       </AuthFormContainer>
     </>
   );

@@ -48,7 +48,11 @@ export default function UserList({ users }: UserListContainerProps) {
 
   const settingUpdateUserModalFormValue = (userId: number) => {
     const selectedUser = users.find(user => user.id === userId);
-    reset(selectedUser);
+
+    if (selectedUser) {
+      const { id, email, role, ...rest } = selectedUser;
+      reset(rest);
+    }
   };
 
   const handleUpdateUser = (userId: number) => {

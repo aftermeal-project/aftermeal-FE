@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { UserListResponseModel, UserUpdateRequestDto } from '../types';
 import { createRandomUser } from './utils/users.utils';
 import { BASE_URL } from '../constants';
@@ -10,6 +10,8 @@ export const userHandlers = [
    * 유저 등록  API
    */
   http.post(url, async ({ request }) => {
+    await delay(3000);
+
     try {
       await request.json();
 

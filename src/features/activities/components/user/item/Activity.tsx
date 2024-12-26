@@ -1,9 +1,6 @@
 import { FaSun, FaMoon } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import {
-  ActivityListResponseDtoType,
-  ActivityListResponseDtoStatus,
-} from '../../../../../types';
+import { ActivityListResponseDtoType } from '../../../../../types';
 import { getTypeLabel } from '../../../../../utils';
 import { Button } from '../../../../../components';
 
@@ -12,7 +9,6 @@ interface ListItemProps {
   title: string;
   type: ActivityListResponseDtoType;
   location: string;
-  status: ActivityListResponseDtoStatus;
   currentParticipants: number;
   maxParticipants: number;
 }
@@ -22,33 +18,10 @@ export default function ListItem({
   title,
   type,
   location,
-  status,
   currentParticipants,
   maxParticipants,
 }: ListItemProps) {
   const navigate = useNavigate();
-
-  const getStatusButton = () => {
-    switch (status) {
-      case 'SCHEDULED':
-        return (
-          <Button size="small" className="pointer-events-none">
-            신청 가능
-          </Button>
-        );
-
-      default:
-        return (
-          <Button
-            variant="secondary"
-            size="small"
-            className="pointer-events-none"
-          >
-            신청 마감
-          </Button>
-        );
-    }
-  };
 
   const handleActivityClick = (activityId: number) => {
     navigate('/activity/' + activityId);
@@ -57,7 +30,7 @@ export default function ListItem({
   return (
     <div
       onClick={() => handleActivityClick(id)}
-      className="flex cursor-pointer items-center justify-between divide-y divide-gray-200 border-b border-gray-200 px-1 py-3"
+      className="flex items-center justify-between px-1 py-3 border-b border-gray-200 divide-y divide-gray-200 cursor-pointer"
     >
       <div className="flex items-center space-x-9">
         <div className="flex items-center gap-x-2">
@@ -93,7 +66,9 @@ export default function ListItem({
           </div>
         </div>
       </div>
-      {getStatusButton()}
+      <Button size="small" className="pointer-events-none">
+        신청 가능
+      </Button>
     </div>
   );
 }

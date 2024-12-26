@@ -1,6 +1,7 @@
-import { http, HttpResponse } from 'msw';
+import { delay, http, HttpResponse } from 'msw';
 import { BASE_URL } from '../constants';
 import {
+  EmailVerifyRequestDto,
   ErrorResponseData,
   LoginRequestDto,
   LoginResponseDtoUser,
@@ -12,7 +13,7 @@ function createRandomUser(): LoginResponseDtoUser {
   return {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
-    roles: ['USER'],
+    role: 'USER',
   };
 }
 
@@ -44,6 +45,30 @@ export const authHandlers = [
           },
         });
       }
+    },
+  ),
+  http.post<{}, EmailVerifyRequestDto>(
+    BASE_URL + '/auth/email-verify',
+    async ({ request }) => {
+      const data = await request.json();
+
+      await delay(3000);
+
+      if (data.code === '222222') {
+        return HttpResponse.json(
+          {
+            statusCode: 404,
+            message: 'Invalid credentials',
+          },
+          {
+            status: 404,
+          },
+        );
+      }
+
+      return HttpResponse.json({
+        success: true,
+      });
     },
   ),
 ];

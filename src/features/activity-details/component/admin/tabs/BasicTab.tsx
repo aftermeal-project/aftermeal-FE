@@ -1,14 +1,10 @@
-import {
-  ActivityDetailResponseDtoStatus,
-  ActivityDetailResponseDtoType,
-} from '../../../../../types';
-import { getStatusLabel, getTypeLabel } from '../../../../../utils';
+import { ActivityDetailResponseDtoType } from '../../../../../types';
+import { getTypeLabel } from '../../../../../utils';
 
 interface BasicTabProps {
   title: string;
   location?: string;
   type: ActivityDetailResponseDtoType;
-  status: ActivityDetailResponseDtoStatus;
   maxParticipants: number;
 }
 
@@ -16,7 +12,6 @@ export default function BasicTab({
   title,
   location,
   type,
-  status,
   maxParticipants,
 }: BasicTabProps) {
   return (
@@ -34,11 +29,6 @@ export default function BasicTab({
       <div className="bg-white rounded-lg">
         <p className="font-semibold">활동 유형</p>
         <span className="text-gray-700">{getTypeLabel(type)}</span>
-        <hr className="my-2" />
-      </div>
-      <div className="bg-white rounded-lg">
-        <p className="font-semibold">진행 상태</p>
-        <span className="text-gray-700">{getStatusLabel(status)}</span>
         <hr className="my-2" />
       </div>
       <div className="bg-white rounded-lg">
