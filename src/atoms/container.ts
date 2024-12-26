@@ -1,6 +1,7 @@
 import { atom, atomFamily } from 'recoil';
-import { LoginResponseDtoUser } from '../types';
+import { ActivityListResponseDtoType, LoginResponseDtoUser } from '../types';
 import { recoilPersist } from 'recoil-persist';
+import moment from 'moment';
 
 const { persistAtom } = recoilPersist();
 
@@ -22,4 +23,14 @@ export const UserAtom = atom<LoginResponseDtoUser>({
 export const ActiveIdAtomFamily = atomFamily({
   key: 'activeId',
   default: 0,
+});
+
+const getCurrentHour = () => {
+  const currentHour = moment().hour();
+  return currentHour <= 13 ? 'LUNCH' : 'DINNER';
+};
+
+export const CurrentActivityTypeAtom = atom<ActivityListResponseDtoType>({
+  key: 'currentActivityType',
+  default: getCurrentHour(),
 });
