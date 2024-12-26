@@ -1,8 +1,10 @@
-import { Dispatch, SetStateAction } from 'react';
 import { FaSun, FaMoon } from 'react-icons/fa';
+import { useRecoilState } from 'recoil';
+import { CurrentActivityTypeAtom } from '../../../../atoms';
+import { ActivityListResponseDtoType } from '../../../../types';
 
 type Tab = {
-  id: string;
+  id: ActivityListResponseDtoType;
   label: string;
 };
 
@@ -11,24 +13,23 @@ const tabs: Tab[] = [
   { id: 'DINNER', label: '저녁' },
 ];
 
-interface ListTabProps {
-  selectedTab: string;
-  setSelectedTab: Dispatch<SetStateAction<string>>;
-}
+export default function ListTab() {
+  const [currentActivityType, setCurrentActivityType] = useRecoilState(
+    CurrentActivityTypeAtom,
+  );
 
-export default function ListTab({ selectedTab, setSelectedTab }: ListTabProps) {
-  const handleTabClick = (id: string) => {
-    setSelectedTab(id);
+  const handleTabClick = (id: ActivityListResponseDtoType) => {
+    setCurrentActivityType(id);
   };
 
   return (
     <div className="flex items-center justify-center">
-      <div className="flex px-1 py-1 space-x-2 bg-gray-200 rounded-full">
+      <div className="flex space-x-2 rounded-full bg-gray-200 px-1 py-1">
         {tabs.map(tab => (
           <button
             key={tab.id}
             className={`rounded-full px-3.5 py-1.5 ${
-              selectedTab === tab.id
+              currentActivityType === tab.id
                 ? 'bg-white font-semibold text-black'
                 : 'text-gray-500'
             }`}

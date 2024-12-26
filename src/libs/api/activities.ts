@@ -1,6 +1,7 @@
 import {
   ActivityCreationRequestDto,
   ActivityListResponseDto,
+  ActivityListResponseDtoType,
   ActivityListResponseModel,
 } from '../../types';
 import { instance } from '../instance';
@@ -11,10 +12,23 @@ const token = new Token();
 const url = '/activities';
 const accessToken = 'Bearer ' + token.getLocalAccessToken();
 
-export const GetActivitiesAPI = async (scheduleDate?: string) => {
+export const GetActivitiesAPI = async (
+  scheduledDate?: string,
+  type?: ActivityListResponseDtoType,
+) => {
+  const params = new URLSearchParams();
+
+  if (scheduledDate) {
+    params.append('scheduledDate', scheduledDate);
+  }
+
+  if (type) {
+    params.append('type', type);
+  }
+
   const response = await instance<ActivityListResponseModel>({
     method: 'GET',
-    url: scheduleDate ? `${url}?scheduleDate=${scheduleDate}` : url,
+    url: `${url}?${params.toString()}`,
   });
 
   return response.data?.data;

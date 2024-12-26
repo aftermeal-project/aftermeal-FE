@@ -1,11 +1,12 @@
 import { ActivityListResponseDto } from '../../../../../types';
 import moment from 'moment';
 import 'moment/locale/ko';
-import { useState } from 'react';
 import ListTab from '../../tab/ListTab';
 import { Activity } from '../item';
 import NoActivity from './NoActivity';
 import { getTypeLabel } from '../../../../../utils';
+import { useRecoilValue } from 'recoil';
+import { CurrentActivityTypeAtom } from '../../../../../atoms';
 interface ActivityListContainerProps {
   activities: ActivityListResponseDto[] | null;
 }
@@ -13,35 +14,27 @@ interface ActivityListContainerProps {
 export default function ActivityListContainer({
   activities,
 }: ActivityListContainerProps) {
+  const currentActivityType = useRecoilValue(CurrentActivityTypeAtom);
+
   const getToday = () => {
     return moment().format('YYYY년 MM월 DD일 dddd');
   };
-  const getCurrentHour = () => {
-    const currentHour = moment().hour();
-    return currentHour <= 13 ? 'LUNCH' : 'DINNER';
-  };
-
-  const [selectedTab, setSelectedTab] = useState<string>(getCurrentHour);
-
-  const filteredActivities = Array.isArray(activities)
-    ? activities.filter(activity => activity.type === selectedTab)
-    : [];
 
   return (
     <section>
-      <div className="flex items-center justify-between mt-5 mb-9">
-        <div className="p-2 bg-green-400 rounded-md w-fit">
+      <div className="mb-9 mt-5 flex items-center justify-between">
+        <div className="w-fit rounded-md bg-green-400 p-2">
           <h1 className="text-[19px] font-bold tracking-tighter text-white">
             {getToday()}
           </h1>
         </div>
-        <ListTab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
+        <ListTab />
       </div>
-      {Array.isArray(activities) && activities.length > 0 ? (
+      {Array.isArray(activities) && (
         <>
-          {filteredActivities.length > 0 ? (
+          {activities.length > 0 ? (
             <>
-              {filteredActivities.map(activity => (
+              {activities.map(activity => (
                 <Activity
                   key={activity.id}
                   id={activity.id}
@@ -54,11 +47,11 @@ export default function ActivityListContainer({
               ))}
             </>
           ) : (
-            <NoActivity text={'오늘 ' + getTypeLabel(selectedTab) + '은'} />
+            <NoActivity
+              text={'오늘 ' + getTypeLabel(currentActivityType) + '은'}
+            />
           )}
         </>
-      ) : (
-        <NoActivity text={'오늘은'} />
       )}
     </section>
   );
