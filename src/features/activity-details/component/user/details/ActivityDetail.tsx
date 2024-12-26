@@ -111,8 +111,8 @@ export default function ActivityDetail({ activity }: ActivityDetailProps) {
           isApplicationAllowed={isApplicationAllowed(
             activity.participations.length,
             activity.maxParticipants,
-            activity.applicationEndAt,
             activity.applicationStartAt,
+            activity.applicationEndAt,
           )}
           isBeforeApplicationStart={isBeforeApplicationStart()}
           isParticipated={isParticipated}
