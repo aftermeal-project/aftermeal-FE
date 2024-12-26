@@ -21,7 +21,7 @@ export default function useGetActivities(
   type: ActivityListResponseDtoType,
 ) {
   const { data } = useSuspenseQuery({
-    queryKey: ['activities', type],
+    queryKey: ['activities', isAdminPath, type],
     queryFn: () => getActivities(isAdminPath, type),
     retry: false,
     refetchOnMount: true,
